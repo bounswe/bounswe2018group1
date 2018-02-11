@@ -1,4 +1,4 @@
-# bounswe2018group1
+# bounswe2018group1(BugBears)
 
 ![myimage-alt-tag](https://i.hizliresim.com/Oo0OYP.png)
 
