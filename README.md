@@ -1,6 +1,7 @@
 # bounswe2018group1(BugBears)
 
-![myimage-alt-tag](https://i.hizliresim.com/Oo0OYP.png)
+
+![alt text](bounswe2018group1/resources/group_icon.jpg)
 
 This project is initiated in Spring 2018 for computer engineering course at Boğaziçi University: CMPE352 - FUNDAMENTALS OF SOFTWARE ENGINEERING. It is also expected to continue in Fall 2018 for CMPE451 - PROJECT DEVELOPMENT IN SOFTWARE ENGINEERING, which is the successor course of CMPE352.
 
