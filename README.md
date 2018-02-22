@@ -1,7 +1,7 @@
-# BugBears :anchor:
+# BugBears :ghost:
 ## BOUN-CmpE 352 Project
 <p align="center">
-<a href = "https://github.com/bounswe/bounswe2018group7/wiki"><img 
+<a href = "https://github.com/bounswe/bounswe2018group1/wiki"><img 
 <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/group_icon.jpg" width="200" height="200"></a>
 </p>
 
