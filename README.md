@@ -28,6 +28,13 @@
 This project is initiated in Spring 2018 for computer engineering course at Boğaziçi University: CMPE352 - FUNDAMENTALS OF SOFTWARE ENGINEERING. It is also expected to continue in Fall 2018 for CMPE451 - PROJECT DEVELOPMENT IN SOFTWARE ENGINEERING, which is the successor course of CMPE352.
 
 ## The Team
+
+## Team
+
+[![Harsh Vijay](https://avatars1.githubusercontent.com/u/12688534?v=3&s=144)](https://github.com/iharsh234)  | [![Quandl.com](https://github.com/iharsh234/WebApp/blob/master/images/quandl.jpg)](https://www.quandl.com/)
+---|---
+[Harsh Vijay ](https://github.com/iharsh234) |[Quandl](https://www.quandl.com)
+
 * [Ahmet Yasin Alp](https://github.com/bounswe/bounswe2018group1/wiki/Ahmet-Yasin-Alp)
 * [Ece Ata](https://github.com/bounswe/bounswe2018group1/wiki/Ece-Ata) (communicator)
 * [Cemal Aytekin](https://github.com/bounswe/bounswe2018group1/wiki/Cemal-Aytekin)
