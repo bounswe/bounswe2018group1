@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-    <a href="https://gitter.im/sebyddd/SDiPhoneVersion?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
-        <img src="https://img.shields.io/badge/gitter-join%20chat-1dce73.svg"
+    <a href="https://github.com/bounswe/bounswe2018group1/wiki/Requirements">
+        <img src="https://img.shields.io/badge/DESCRIPTION-UP%20TO%20DATE-brightgreen.svg"
              alt="Gitter">
     </a>
     <a href="http://sebastiandobrincu.com">
@@ -19,6 +19,8 @@
              alt="Cocoapods Version">
     </a>
 </p>
+
+
 
 This project is initiated in Spring 2018 for computer engineering course at Boğaziçi University: CMPE352 - FUNDAMENTALS OF SOFTWARE ENGINEERING. It is also expected to continue in Fall 2018 for CMPE451 - PROJECT DEVELOPMENT IN SOFTWARE ENGINEERING, which is the successor course of CMPE352.
 
