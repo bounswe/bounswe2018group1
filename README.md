@@ -6,17 +6,20 @@
 </p>
 
 <p align="center">
+    <a href="https://github.com/bounswe/bounswe2018group1/wiki/Project-Description">
+        <img src="https://img.shields.io/badge/DESCRIPTION-ONLINE-orange.svg"
+             alt="Description">
+    </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Requirements">
         <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-brightgreen.svg"
              alt="Requirements">
     </a>
-    <a href="http://sebastiandobrincu.com">
-        <img src="https://img.shields.io/badge/platform-iOS%20%7C%20watchOS%20%7C%20tvOS%20%7C%20macOS-D0547F.svg"
-             alt="Platform">
+    <a href="https://github.com/bounswe/bounswe2018group1/issues">
+        <img src="https://img.shields.io/badge/ISSUES12-CLOSED-red.svg"
+             alt="Issues">
     </a>
-    <a href="http://sebastiandobrincu.com">
-        <img src="http://img.shields.io/cocoapods/v/SDVersion.svg"
-             alt="Cocoapods Version">
+        <img src="https://img.shields.io/badge/LAST%20EDIT-22%2F02-blue.svg"
+             alt="Edit">
     </a>
 </p>
 
