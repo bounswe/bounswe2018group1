@@ -29,21 +29,11 @@ This project is initiated in Spring 2018 for computer engineering course at Boğ
 
 ## The Team
 
-## Team
-
 [![Harsh Vijay](https://avatars1.githubusercontent.com/u/12688534?v=3&s=144)](https://github.com/iharsh234)  | [![Quandl.com](https://github.com/iharsh234/WebApp/blob/master/images/quandl.jpg)](https://www.quandl.com/)
 ---|---
-[Harsh Vijay ](https://github.com/iharsh234) |[Quandl](https://www.quandl.com)
+[Ahmet Yasin Alp](https://github.com/bounswe/bounswe2018group1/wiki/Ahmet-Yasin-Alp) |[Ece Ata](https://github.com/bounswe/bounswe2018group1/wiki/Ece-Ata) |[Cemal Aytekin](https://github.com/bounswe/bounswe2018group1/wiki/Cemal-Aytekin) |[Hatice Melike Ecevit](https://github.com/bounswe/bounswe2018group1/wiki/Hatice-Melike-Ecevit) |[Akın İlerle](https://github.com/bounswe/bounswe2018group1/wiki/Akın-İlerle) |[Öncel Keleş](https://github.com/bounswe/bounswe2018group1/wiki/Öncel-Keleş) |[Volkan Yılmaz](https://github.com/bounswe/bounswe2018group1/wiki/Volkan-Yılmaz) |[Halil Samed Çıldır](https://github.com/bounswe/bounswe2018group1/wiki/Halil-Samed-Çıldır) |[Deniz Etkar](https://github.com/bounswe/bounswe2018group1/wiki/Deniz-Etkar)
 
-* [Ahmet Yasin Alp](https://github.com/bounswe/bounswe2018group1/wiki/Ahmet-Yasin-Alp)
-* [Ece Ata](https://github.com/bounswe/bounswe2018group1/wiki/Ece-Ata) (communicator)
-* [Cemal Aytekin](https://github.com/bounswe/bounswe2018group1/wiki/Cemal-Aytekin)
-* [Hatice Melike Ecevit](https://github.com/bounswe/bounswe2018group1/wiki/Hatice-Melike-Ecevit)
-* [Akın İlerle](https://github.com/bounswe/bounswe2018group1/wiki/Akın-İlerle)
-* [Öncel Keleş](https://github.com/bounswe/bounswe2018group1/wiki/Öncel-Keleş)
-* [Volkan Yılmaz](https://github.com/bounswe/bounswe2018group1/wiki/Volkan-Yılmaz)
-* [Halil Samed Çıldır](https://github.com/bounswe/bounswe2018group1/wiki/Halil-Samed-Çıldır)
-* [Deniz Etkar](https://github.com/bounswe/bounswe2018group1/wiki/Deniz-Etkar)
+
 
 
 For more information about our project group, visit [wiki page](https://github.com/bounswe/bounswe2018group1/wiki).
