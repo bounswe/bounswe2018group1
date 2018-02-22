@@ -7,8 +7,8 @@
 
 <p align="center">
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Requirements">
-        <img src="https://img.shields.io/badge/DESCRIPTION-UP%20TO%20DATE-brightgreen.svg"
-             alt="Gitter">
+        <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-brightgreen.svg"
+             alt="Requirements">
     </a>
     <a href="http://sebastiandobrincu.com">
         <img src="https://img.shields.io/badge/platform-iOS%20%7C%20watchOS%20%7C%20tvOS%20%7C%20macOS-D0547F.svg"
