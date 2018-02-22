@@ -24,12 +24,12 @@
 </p>
 
 
-:tophat: ## Introduction
+## :tophat: Introduction
 
 
 This project is initiated in Spring 2018 for computer engineering course at Boğaziçi University: CMPE352 - FUNDAMENTALS OF SOFTWARE ENGINEERING. It is also expected to continue in Fall 2018 for CMPE451 - PROJECT DEVELOPMENT IN SOFTWARE ENGINEERING, which is the successor course of CMPE352.
 
-:beers: ## The Team
+## :beers: The Team
 
 
 [![Ece Ata](https://avatars2.githubusercontent.com/u/25881738?s=400&v=4)](https://github.com/eceatata) | [![Ahmet Yasin Alp](https://avatars2.githubusercontent.com/u/16453361?s=400&v=4)](https://github.com/ahmetyalp) | [![Cemal Aytekin](https://avatars1.githubusercontent.com/u/32355806?s=400&v=4)](https://github.com/cemal-aytekin-2015400126) | [![Hatice Melike Ecevit](https://avatars3.githubusercontent.com/u/32355785?s=400&v=4)](https://github.com/hatice-ecevit-2016400138) | [![Akın İlerle](https://avatars0.githubusercontent.com/u/25388563?s=400&v=4)](https://github.com/akinilerle) | [![Öncel Keleş](https://avatars0.githubusercontent.com/u/31131763?s=400&v=4)](https://github.com/oncelkeles) | [![Volkan Yılmaz](https://avatars2.githubusercontent.com/u/28186366?s=400&v=4)](https://github.com/yilmazvolkan) | [![Halil Samed Çıldır](https://avatars3.githubusercontent.com/u/8518589?s=400&v=4)](https://github.com/samedcildir) | [![Deniz Etkar](https://avatars3.githubusercontent.com/u/25102252?s=400&v=4)](https://github.com/denizetkar)
