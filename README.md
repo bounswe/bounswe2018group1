@@ -31,13 +31,13 @@ This project creates an environment to users in order to share their memories an
 
 ## :blue_book: Basic Overview
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/dresses_intro.png" width="200" height="200">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/dresses_intro.png">
 </p>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/pong_game_intro.png" width="200" height="200">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/pong_game_intro.png">
 </p>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/trolleybus_intro.png" width="200" height="200">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/trolleybus_intro.png">
 </p>
 
 
