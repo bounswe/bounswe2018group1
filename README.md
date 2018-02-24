@@ -56,5 +56,3 @@ This is the outlook of some possible memories. Users can share them with a story
 
 
 
-
-For more information about our project group, visit [wiki page](https://github.com/bounswe/bounswe2018group1/wiki).
