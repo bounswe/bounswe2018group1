@@ -15,11 +15,12 @@
              alt="Requirements">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES12-CLOSED-red.svg"
+        <img src="https://img.shields.io/badge/ISSUES 13-CLOSED-red.svg"
              alt="Issues">
     </a>
-        <img src="https://img.shields.io/badge/LAST%20EDIT-22%2F02-blue.svg"
-             alt="Edit">
+    <a href="https://github.com/bounswe/bounswe2018group1/wiki">
+        <https://img.shields.io/badge/HOME-WIKI-blue.svg"
+             alt="Home">
     </a>
 </p>
 
