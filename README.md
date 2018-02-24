@@ -29,6 +29,13 @@
 
 This project creates an environment to users in order to share their memories and search other memories from other people. These memories varies such as images, audio, and video formats. Memories consists of different stories with them, including location, time, and story. Living history stories may refer to tangible things or not, such as an antique trolleybus or it can also be how people used to visit each other during holidays. Since users can see and comment, like, and even annotate existing items of other memory posts, stories can be transmitted through generations. Annotations may support various purposes, such as elaboration, translation, meta information, question, and answer so that memories can be understood by others unambiguously. Memories can be also reached through the map, therefore people can see memories with their stories near them easily as memories are often related to places. This application can also recommend things as well.
 
+## :blue_book: Basic Overview
+<p align="center">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/dresses_intro.png" width="200" height="200">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/pong_game_intro.png" width="200" height="200">
+    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/trolleybus_intro.png" width="200" height="200">
+</p>
+
 
 ## :beers: The Team
 
