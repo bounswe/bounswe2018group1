@@ -19,7 +19,7 @@
              alt="Requirements">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 13-CLOSED-red.svg"
+        <img src="https://img.shields.io/badge/ISSUES 14-CLOSED-red.svg"
              alt="Issues">
     </a>
 </p>
