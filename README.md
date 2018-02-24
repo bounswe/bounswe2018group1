@@ -31,7 +31,7 @@ This project creates an environment to users in order to share their memories an
 
 ## :blue_book: Basic Overview
 
-This is the outlook of some possible memories. Users can share them with a story, location and time. Annotations can be marked on memories to share particular information.
+This is the outlook of some possible memories. Users can share them with a story, location and time. Annotations can be marked on memories to share particular information. Figures 1, 2, and 3 show examples of experiences of people from different places and different times.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/dresses_intro.png" width="640" height="220">
