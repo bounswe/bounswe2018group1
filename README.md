@@ -24,10 +24,10 @@
 </p>
 
 
-## :tophat: Introduction
+## :tophat: A Living History - A Crowdsourcing Platform
 
 
-This project is initiated in Spring 2018 for computer engineering course at Boğaziçi University: CMPE352 - FUNDAMENTALS OF SOFTWARE ENGINEERING. It is also expected to continue in Fall 2018 for CMPE451 - PROJECT DEVELOPMENT IN SOFTWARE ENGINEERING, which is the successor course of CMPE352.
+This project creates an environment to users in order to share their memories and search other memories from other people. These memories varies such as images, audio, and video formats. Memories consists of different stories with them, including location, time, and story. Living history stories may refer to tangible things or not, such as an antique trolleybus or it can also be how people used to visit each other during holidays. Since users can see and comment, like, and even annotate existing items of other memory posts, stories can be transmitted through generations. Annotations may support various purposes, such as elaboration, translation, meta information, question, and answer so that memories can be understood by others unambiguously. Memories can be also reached through the map, therefore people can see memories with their stories near them easily as memories are often related to places. This application can also recommend things as well.
 
 
 ## :beers: The Team
