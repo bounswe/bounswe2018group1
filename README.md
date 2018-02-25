@@ -18,8 +18,12 @@
         <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-brightgreen.svg"
              alt="Requirements">
     </a>
+    <a href="https://github.com/bounswe/bounswe2018group1/wiki/Project-Plan">
+        <img src="https://img.shields.io/badge/PROJECT%20-PLAN-ORANGE.svg"
+             alt="Plan">
+    </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 14-CLOSED-red.svg"
+        <img src="https://img.shields.io/badge/ISSUES 16-CLOSED-red.svg"
              alt="Issues">
     </a>
 </p>
