@@ -7,23 +7,23 @@
 
 <p align="center">
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Project-Description">
-        <img src="https://img.shields.io/badge/DESCRIPTION-ONLINE-#cc2435.svg"
+        <img src="https://img.shields.io/badge/DESCRIPTION-ONLINE-cc2435.svg"
              alt="Description">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki">
-        <img src="https://img.shields.io/badge/HOME-WIKI-#b01e2d.svg"
+        <img src="https://img.shields.io/badge/HOME-WIKI-b01e2d.svg"
              alt="Home">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Requirements">
-        <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-#931926.svg"
+        <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-931926.svg"
              alt="Requirements">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Project-Plan">
-        <img src="https://img.shields.io/badge/PROJECT%20-PLAN-#76141e.svg"
+        <img src="https://img.shields.io/badge/PROJECT%20-PLAN-76141e.svg"
              alt="Plan">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 16-CLOSED-#4a0d13.svg"
+        <img src="https://img.shields.io/badge/ISSUES 16-CLOSED-4a0d13.svg"
              alt="Issues">
     </a>
 </p>
