@@ -19,7 +19,7 @@
              alt="Requirements">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/blob/master/resources/Project%20Plan.pdf">
-        <img src="https://img.shields.io/badge/PROJECT%20-PLAN-a11c2a.svg"
+        <img src="https://img.shields.io/badge/PROJECT PLAN-UP TO DATE-a11c2a.svg"
              alt="Plan">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
