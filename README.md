@@ -18,7 +18,7 @@
         <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-cc2435.svg"
              alt="Requirements">
     </a>
-    <a href="https://github.com/bounswe/bounswe2018group1/wiki/Project-Plan">
+    <a href="https://github.com/bounswe/bounswe2018group1/blob/master/resources/Project%20Plan.pdf">
         <img src="https://img.shields.io/badge/PROJECT%20-PLAN-a11c2a.svg"
              alt="Plan">
     </a>
