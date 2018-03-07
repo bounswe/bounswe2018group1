@@ -23,7 +23,7 @@
              alt="Plan">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 29-CLOSED-76141e.svg"
+        <img src="https://img.shields.io/badge/ISSUES 30-CLOSED-76141e.svg"
              alt="Issues">
     </a>
 </p>
