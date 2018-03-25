@@ -39,13 +39,13 @@ This project creates an environment to users in order to share their memories an
 This is the outlook of some possible memories. Users can share them with a story, location and time. Annotations can be marked on memories to share particular information. Figures 1, 2, and 3 show examples of experiences of people from different places and different times.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/dresses_intro.png" width="640" height="220">
+    <img src="https://github.com/bounswe/bounswe2018group1/blob/master/resources/exampleMemories/dresses_intro.png" width="640" height="220">
 </p>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/pong_game_intro.png" width="540" height="240">
+    <img src="https://github.com/bounswe/bounswe2018group1/blob/master/resources/exampleMemories/pong_game_intro.png" width="540" height="240">
 </p>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/bounswe/bounswe2018group1/master/resources/trolleybus_intro.png" width="540" height="240">
+    <img src="https://github.com/bounswe/bounswe2018group1/blob/master/resources/exampleMemories/trolleybus_intro.png" width="540" height="240">
 </p>
 
 
