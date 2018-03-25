@@ -11,7 +11,7 @@
              alt="Description">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki">
-        <img src="https://img.shields.io/badge/HOME-WIKI-e15361.svg"
+        <img src="https://img.shields.io/badge/WIKI-PAGE-e15361.svg"
              alt="Home">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/wiki/Requirements">
@@ -23,7 +23,7 @@
              alt="Plan">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 44-CLOSED-76141e.svg"
+        <img src="https://img.shields.io/badge/ISSUES 46-CLOSED-76141e.svg"
              alt="Issues">
     </a>
 </p>
@@ -33,8 +33,6 @@
 
 
 This project creates an environment to users in order to share their memories and search other memories from other people. These memories varies such as images, audio, and video formats. Memories consists of different stories with them, including location, and time. Living history stories may refer to tangible things or not, such as an antique trolleybus or it can also be how people used to visit each other during holidays. Since users can see and comment, like, and even annotate existing items of other memory posts, stories can be transmitted through generations. Annotations may support various purposes, such as elaboration, translation, meta information, question, and answer so that memories can be understood by others unambiguously. Memories can be also reached through the map, therefore people can see memories with their stories near them easily as memories are often related to places. This application can also recommend things as well.
-
-### [Wiki](https://github.com/bounswe/bounswe2018group1/wiki) Page
 
 ## :blue_book: Basic Overview
 
