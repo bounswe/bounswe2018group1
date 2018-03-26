@@ -18,12 +18,12 @@
         <img src="https://img.shields.io/badge/REQUIREMENTS-UP%20TO%20DATE-cc2435.svg"
              alt="Requirements">
     </a>
-    <a href="https://github.com/bounswe/bounswe2018group1/raw/master/resources/Living%20History%20Project%20(2).pdf">
+    <a href="https://github.com/bounswe/bounswe2018group1/raw/master/resources/Project%20Plan.png">
         <img src="https://img.shields.io/badge/PROJECT PLAN-UP TO DATE-a11c2a.svg"
              alt="Plan">
     </a>
     <a href="https://github.com/bounswe/bounswe2018group1/issues">
-        <img src="https://img.shields.io/badge/ISSUES 46-CLOSED-76141e.svg"
+        <img src="https://img.shields.io/badge/ISSUES 50-CLOSED-76141e.svg"
              alt="Issues">
     </a>
 </p>
