@@ -1,6 +1,7 @@
 package com.cmpe352_group1.twitter_project.controller;
 
-import com.cmpe352_group1.twitter_project.data.TrendingTopicsEntity;
+import com.cmpe352_group1.twitter_project.data.TrendingTopicEntity;
+import com.cmpe352_group1.twitter_project.data.TweetEntity;
 import com.cmpe352_group1.twitter_project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,13 +19,15 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value = "")
-    public String homepage(){
-        return "hello world!";
-    }
 
     @RequestMapping(value = "/trendingTopics", method=RequestMethod.GET)
-    public List<TrendingTopicsEntity> getTT(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+    public List<TrendingTopicEntity> getTT(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
         return projectService.getTT(date);
+    }
+
+
+    @RequestMapping(value = "/tweets", method=RequestMethod.GET)
+    public List<TweetEntity> getTweets(@RequestParam long topicId){
+        return projectService.getTweets(topicId);
     }
 }
