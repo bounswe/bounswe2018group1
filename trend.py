@@ -1,11 +1,15 @@
 import tweepy as tp
 import time
    
+# get credentials from the credentials.text file
+file = open("credentials.text", "r") 
+f = file.readlines();
+
 # credentials to login to twitter api
-consumerKey = ''
-consumerSecret = ''
-accessToken = ''
-accessTokenSecret = ''
+consumerKey = f[0][:-1]
+consumerSecret = f[1][:-1]
+accessToken = f[2][:-1]
+accessTokenSecret = f[3][:-1]
 
 while True:
 	# login to twitter account api
