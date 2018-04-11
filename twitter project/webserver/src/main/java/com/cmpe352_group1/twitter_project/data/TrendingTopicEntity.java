@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Document
-public class TrendingTopicsEntity {
+public class TrendingTopicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,12 +16,13 @@ public class TrendingTopicsEntity {
     private String name;
     private Date date;
 
-    public TrendingTopicsEntity(String name, Date date) {
+
+    public TrendingTopicEntity(String name, Date date) {
         this.name = name;
         this.date = date;
     }
 
-    public TrendingTopicsEntity() {
+    public TrendingTopicEntity() {
     }
 
     public long getId() {
