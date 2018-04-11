@@ -2,13 +2,10 @@ package com.cmpe352_group1.twitter_project.data;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.Date;
-import java.util.List;
 
 @Document
 public class TrendingTopicEntity {
