@@ -11,6 +11,6 @@ public interface TrendingTopicRepository extends
 
     List<TrendingTopicEntity> findByDate(Date date);
 
-    TrendingTopicEntity findById(long id);
+    void deleteById(Long id);
 
 }
