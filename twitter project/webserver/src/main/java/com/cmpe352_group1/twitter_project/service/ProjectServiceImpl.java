@@ -1,7 +1,9 @@
 package com.cmpe352_group1.twitter_project.service;
 
-import com.cmpe352_group1.twitter_project.data.TrendingTopicsEntity;
-import com.cmpe352_group1.twitter_project.data.TrendingTopicsRepository;
+import com.cmpe352_group1.twitter_project.data.TrendingTopicEntity;
+import com.cmpe352_group1.twitter_project.data.TrendingTopicRepository;
+import com.cmpe352_group1.twitter_project.data.TweetEntity;
+import com.cmpe352_group1.twitter_project.data.TweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,19 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
-    private TrendingTopicsRepository trendingTopicsRepository;
+    private TrendingTopicRepository trendingTopicRepository;
+
+    @Autowired
+    private TweetRepository tweetRepository;
 
     @Override
-    public List<TrendingTopicsEntity> getTT(Date date) {
-        return trendingTopicsRepository.findByDate(date);
+    public List<TrendingTopicEntity> getTT(Date date) {
+        return trendingTopicRepository.findByDate(date);
     }
+
+    @Override
+    public List<TweetEntity> getTweets(long topicId) {
+        return tweetRepository.findAllByTrendingTopicId(topicId);
+    }
+
 }

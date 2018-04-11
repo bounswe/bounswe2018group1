@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     @ResponseBody
     public ResponseEntity defaultExceptionHandler(Exception exception) {
+        exception.printStackTrace();
         return new ResponseEntity<>(exception.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
