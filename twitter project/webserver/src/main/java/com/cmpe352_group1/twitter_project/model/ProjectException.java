@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public class ProjectException extends RuntimeException{
 
-    HttpStatus httpStatus;
+    private HttpStatus httpStatus;
 
     public ProjectException(String message, HttpStatus httpStatus) {
         super(message);
