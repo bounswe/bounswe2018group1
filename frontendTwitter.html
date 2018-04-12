@@ -164,11 +164,18 @@
 
   <script>
     $(document).ready(function(){
-      $('#datepicker').datepicker({
+      $('#datepicker').datepicker({ 
         weekStart: 1,
         todayHighlight: true
       });
     });
+
+    function fun(i){
+      console.log(i);
+
+      $('#hashtaglist').find('.active').removeClass('active');
+      $('#hashtaglist a:nth-child(' + i + ')').addClass('active');
+    }
   </script>
 </head>
 
@@ -190,10 +197,39 @@
         </div>
       </div>
 
+      <div style="margin-left: 20px; margin-top: 15px;" id="datepicker"> </div>
+
+      <ul class="list-group" id="hashtaglist" style="margin-top: 15px; width: 250px; margin-left: 20px;">
+        <a onclick="fun(1);" class="list-group-item active">#tag1</a>
+        <a onclick="fun(2);" class="list-group-item">#tag2</a>
+        <a onclick="fun(3);" class="list-group-item">#tag3</a>
+        <a onclick="fun(4);" class="list-group-item">#tag4</a>
+        <a onclick="fun(5);" class="list-group-item">#tag5</a>
+        <a onclick="fun(6);" class="list-group-item">#tag6</a>
+        <a onclick="fun(7);" class="list-group-item">#tag7</a>
+        <a onclick="fun(8);" class="list-group-item">#tag8</a>
+        <a onclick="fun(9);" class="list-group-item">#tag9</a>
+        <a onclick="fun(10);" class="list-group-item">#tag10</a>
+      </ul>
+    </div>
     <div style="background: lightblue; margin-left: 315px; position: fixed; height: 100%; width: 2px;"> </div>
+    <div class="col-middle center_wrapper" style="height: 100%; margin-top: 30px; overflow-y: scroll;">
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">My name is trendhist!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296202316877824?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
 
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I&#39;am a robot!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+
+    </div>
     <div class="col-fixed-300" style="background: #005580; right: 0px; top: 0px;">
-
+      
     </div>
   </div>
 </body>
