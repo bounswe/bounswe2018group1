@@ -20,8 +20,8 @@ public class ProjectServiceImpl implements ProjectService {
     private TweetRepository tweetRepository;
 
     @Override
-    public List<TrendingTopicEntity> getTT(Date date) {
-        return trendingTopicRepository.findByDate(date);
+    public List<TrendingTopicEntity> getTT(String date, Long regionId) {
+        return trendingTopicRepository.findByDateAndRegionId(date, regionId);
     }
 
     @Override

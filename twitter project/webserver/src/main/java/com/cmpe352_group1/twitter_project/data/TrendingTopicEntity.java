@@ -14,15 +14,24 @@ public class TrendingTopicEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Date date;
-
-
-    public TrendingTopicEntity(String name, Date date) {
-        this.name = name;
-        this.date = date;
-    }
+    private String date;
+    private Long regionId;
 
     public TrendingTopicEntity() {
+    }
+
+    public TrendingTopicEntity(String name, String date, Long regionId) {
+        this.name = name;
+        this.date = date;
+        // Reference about the region ID:
+        // https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference/get-trends-place
+        this.regionId = regionId;
+    }
+
+    public TrendingTopicEntity(String name, String date) {
+        this.name = name;
+        this.date = date;
+        this.regionId = 1L;
     }
 
     public long getId() {
@@ -42,12 +51,20 @@ public class TrendingTopicEntity {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public Long getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
     }
 
 }

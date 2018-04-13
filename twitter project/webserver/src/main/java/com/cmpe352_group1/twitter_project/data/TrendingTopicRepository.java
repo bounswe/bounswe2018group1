@@ -9,7 +9,7 @@ import java.util.List;
 public interface TrendingTopicRepository extends
         MongoRepository<TrendingTopicEntity, Long>, PagingAndSortingRepository<TrendingTopicEntity, Long> {
 
-    List<TrendingTopicEntity> findByDate(Date date);
+    List<TrendingTopicEntity> findByDateAndRegionId(String date, Long regionId);
 
     void deleteById(Long id);
 

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProjectService {
-    List<TrendingTopicEntity> getTT(Date date);
+    List<TrendingTopicEntity> getTT(String date, Long regionId);
 
     List<TweetEntity> getTweets(long topicId);
 }
