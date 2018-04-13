@@ -59,6 +59,7 @@ public class TrendingTopicRepositoryTests {
 
         assertThat(continentInserted.getName(), is(equalTo("Another")));
         assertThat(mongoOps.findById(10L, TrendingTopicEntity.class).getName(), is(equalTo("Another")));
+        trendingTopicRepository.deleteById(10L);
     }
 
 }

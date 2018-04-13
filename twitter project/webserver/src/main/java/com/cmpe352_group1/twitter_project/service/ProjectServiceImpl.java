@@ -7,7 +7,6 @@ import com.cmpe352_group1.twitter_project.data.TweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +20,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<TrendingTopicEntity> getTT(String date, Long regionId) {
-        return trendingTopicRepository.findByDateAndRegionId(date, regionId);
+        return trendingTopicRepository.findAllByDateAndRegionId(date, regionId);
     }
 
     @Override
