@@ -20,7 +20,7 @@ while True:
 
 	for tweet in tweepy.Cursor(api.search,q="#followfriday",count=100,
 		                   lang="en",
-		                   since="2017-04-03").items():
+		                   since="2018-04-12").items():
 	    api.update_status("#ff Its Friday! Here is a retweet from that tt: "+tweet.text)
 	    if i == 1:
 		break
