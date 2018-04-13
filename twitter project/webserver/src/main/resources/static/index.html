@@ -163,18 +163,90 @@
   </style>
 
   <script>
+    var date = new Date();
+    var type = 1;
+
+    Date.prototype.yyyymmdd = function() {
+      var mm = this.getMonth() + 1; // getMonth() is zero-based
+      var dd = this.getDate();
+
+      return [this.getFullYear(), "-",
+              (mm>9 ? '' : '0') + mm, "-",
+              (dd>9 ? '' : '0') + dd
+             ].join('');
+    };
+
     $(document).ready(function(){
       $('#datepicker').datepicker({ 
         weekStart: 1,
         todayHighlight: true
       });
+
+
+      $('#datepicker').datepicker()
+        .on('changeDate', function(e) {
+          console.log(e.date);
+
+          date = e.date;
+
+          if (type == 1){
+            loadTopics(date.yyyymmdd(), "tr");
+          }
+          else {
+            loadTopics(date.yyyymmdd(), "ww");
+          }
+        });
     });
+
+    function loadTopics(date, type) {
+      $.get("http://54.147.221.99:8080/trendingTopics?date=" + date + "&type=" + type,
+        function (data) {
+          populateTopics(data);
+        }
+      );
+    }
+    function populateTopics(data) {
+      var items = [];
+      $.each(data, function (id, topic) {
+        items.push('<a onclick="fun(' + (id + 1) + ');" id="' + topic.id + '" class="list-group-item">' + topic.name + '</a>');
+      });  
+      $('#hastaglist').html(items.join(''));
+    }
+
+    function loadTweets(topicID) {
+      $.get("http://54.147.221.99:8080/tweets?topicID=" + topicID,
+        function (data) {
+          populateTweets(data);
+        }
+      );
+    }
+    function populateTweets(data) {
+      var items = [];
+      $.each(data, function (id, tweet) {
+        items.push(tweet.twitterHtml);
+      });  
+      $('#tweets_box').html(items.join(''));
+    }
 
     function fun(i){
       console.log(i);
 
       $('#hashtaglist').find('.active').removeClass('active');
       $('#hashtaglist a:nth-child(' + i + ')').addClass('active');
+
+      loadTweets($('#hashtaglist a:nth-child(' + i + ')').attr('id'))
+    }
+
+    function fun2(i){
+      console.log(i);
+
+      type = i;
+      if (type == 1){
+        loadTopics(date.yyyymmdd(), "tr");
+      }
+      else {
+        loadTopics(date.yyyymmdd(), "ww");
+      }
     }
   </script>
 </head>
@@ -188,11 +260,11 @@
 
       <div class="funkyradio" style="width:250px; margin-left: 20px;">
         <div class="funkyradio-success">
-            <input type="radio" name="radio" id="radio1" checked/>
+            <input onclick="fun2(1)" type="radio" name="radio" id="radio1" checked/>
             <label for="radio1" style="margin-top: 15px;">Turkey</label>
         </div>
         <div class="funkyradio-info">
-            <input type="radio" name="radio" id="radio2" />
+            <input onclick="fun2(2)" type="radio" name="radio" id="radio2" />
             <label for="radio2" style="margin-top: 15px;">Worldwide</label>
         </div>
       </div>
@@ -203,33 +275,19 @@
         <a onclick="fun(1);" class="list-group-item active">#tag1</a>
         <a onclick="fun(2);" class="list-group-item">#tag2</a>
         <a onclick="fun(3);" class="list-group-item">#tag3</a>
-        <a onclick="fun(4);" class="list-group-item">#tag4</a>
-        <a onclick="fun(5);" class="list-group-item">#tag5</a>
-        <a onclick="fun(6);" class="list-group-item">#tag6</a>
-        <a onclick="fun(7);" class="list-group-item">#tag7</a>
-        <a onclick="fun(8);" class="list-group-item">#tag8</a>
-        <a onclick="fun(9);" class="list-group-item">#tag9</a>
-        <a onclick="fun(10);" class="list-group-item">#tag10</a>
+        <a onclick="fun(4);" class="list-group-item">#tag3</a>
+        <a onclick="fun(5);" class="list-group-item">#tag3</a>
+        <a onclick="fun(6);" class="list-group-item">#tag3</a>
+        <a onclick="fun(7);" class="list-group-item">#tag3</a>
+        <a onclick="fun(8);" class="list-group-item">#tag3</a>
+        <a onclick="fun(9);" class="list-group-item">#tag3</a>
+        <a onclick="fun(10);" class="list-group-item">#tag3</a>
       </ul>
     </div>
     <div style="background: lightblue; margin-left: 315px; position: fixed; height: 100%; width: 2px;"> </div>
-    <div class="col-middle center_wrapper" style="height: 100%; margin-top: 30px; overflow-y: scroll;">
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">My name is trendhist!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296202316877824?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+    <div class="col-middle center_wrapper" id="tweets_box" style="height: 100%; margin-top: 30px; overflow-y: scroll;">
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">My name is trendhist!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296202316877824?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
 
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I&#39;am a robot!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I'am a robot!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
 
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>&mdash; Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-
-    </div>
-    <div class="col-fixed-300" style="background: #005580; right: 0px; top: 0px;">
-      
-    </div>
-  </div>
-</body>
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https:
