@@ -4,7 +4,7 @@ import twitter
 import time
 
 while True:
-    api = twitter.Api(consumer_key='EcOAEWDtEVZY3OUufZ6pZTsK4', consumer_secret='uRnMaFAupLsHdaHnWDez8Ygmyn8BTlf0lb6rUKQbF138ILsCtn', access_token_key='983279804282757120-RLafAkrFQZ3MP2titMB2YtLbAtNPcU7', access_token_secret='r7CRZAbsA3gxzcVIkApl36evej6ECKhfpDafmzRXgY3BN')
+    api = twitter.Api(consumer_key='', consumer_secret='', access_token_key='', access_token_secret='')
 
     client = MongoClient('mongodb://backend:123123@ds241869.mlab.com:41869/cmpe352twitter-proj-dev')
     db = client['cmpe352twitter-proj-dev']
