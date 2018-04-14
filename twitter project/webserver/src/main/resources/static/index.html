@@ -1,4 +1,4 @@
-<head>
+﻿<head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
@@ -164,7 +164,7 @@
 
   <script>
     var date = new Date();
-    var type = 1;
+    var regionId = 1;
 
     Date.prototype.yyyymmdd = function() {
       var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -189,7 +189,7 @@
 
           date = e.date;
 
-          if (type == 1){
+          if (regionId == 1){
             loadTopics(date.yyyymmdd(), "tr");
           }
           else {
@@ -198,8 +198,8 @@
         });
     });
 
-    function loadTopics(date, type) {
-      $.get("http://54.147.221.99:8080/trendingTopics?date=" + date + "&type=" + type,
+    function loadTopics(date, regionId) {
+      $.get("http://54.147.221.99:8080/trendingTopics?date=" + date + "&regionId=" + regionId,
         function (data) {
           populateTopics(data);
         }
@@ -240,8 +240,8 @@
     function fun2(i){
       console.log(i);
 
-      type = i;
-      if (type == 1){
+      regionId = i;
+      if (regionId == 1){
         loadTopics(date.yyyymmdd(), "tr");
       }
       else {
@@ -290,4 +290,18 @@
 
       <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I'am a robot!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
 
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https:
+      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+
+    </div>
+    <div class="col-fixed-300" style="background: #005580; right: 0px; top: 0px;">
+      
+    </div>
+  </div>
+</body>
