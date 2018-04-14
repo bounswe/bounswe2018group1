@@ -14,7 +14,7 @@ while True:
     year = datetime.datetime.today().year
     month = datetime.datetime.today().month
     day = datetime.datetime.today().day
-    date = str(day) + "-" +  str(month) + "-" + str(year)
+    date = str(year) + "-" +  str(month) + "-" + str(day)
 
     trend = api.GetTrendsWoeid(23424969)
     trend = trend[0:10]
@@ -22,8 +22,9 @@ while True:
     for topic in trend:
         tweets = api.GetSearch(term=topic.name , count = 100)
         trend_id = topics.insert_one({
-            "date" : datetr ,
-            "name" : topic.name
+            "date" : date ,
+            "name" : topic.name , 
+            "regionId" : 23424969
         }).inserted_id
         for tw in tweets:
             html = api.GetStatusOembed(status_id = tw.id , omit_script=False)
@@ -39,8 +40,9 @@ while True:
     for topic in trend:
         tweets = api.GetSearch(term=topic.name, count=100)
         trend_id = topics.insert_one({
-            "date": dateww,
-            "name": topic.name
+            "date": date,
+            "name": topic.name , 
+            "regionId" : 1
         }).inserted_id
         for tw in tweets:
             html = api.GetStatusOembed(status_id=tw.id, omit_script=False)
