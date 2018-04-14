@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,13 +52,14 @@ public class TrendingTopicRepositoryTests {
 
     @Test
     public void testSave() {
-        TrendingTopicEntity another = new TrendingTopicEntity("Another", new Date());
+        TrendingTopicEntity another = new TrendingTopicEntity("Another", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         another.setId(10L);
 
         TrendingTopicEntity continentInserted = trendingTopicRepository.save(another);
 
         assertThat(continentInserted.getName(), is(equalTo("Another")));
         assertThat(mongoOps.findById(10L, TrendingTopicEntity.class).getName(), is(equalTo("Another")));
+        trendingTopicRepository.deleteById(10L);
     }
 
 }

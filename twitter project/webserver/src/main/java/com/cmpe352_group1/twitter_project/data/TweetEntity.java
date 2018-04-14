@@ -12,9 +12,13 @@ public class TweetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long twitterId;
-
+    private String url;
     private long trendingTopicId;
+
+    public TweetEntity(String url, long trendingTopicId) {
+        this.url = url;
+        this.trendingTopicId = trendingTopicId;
+    }
 
     public long getId() {
         return id;
@@ -24,12 +28,12 @@ public class TweetEntity {
         this.id = id;
     }
 
-    public long getTwitterId() {
-        return twitterId;
+    public String getUrl() {
+        return url;
     }
 
-    public void setTwitterId(long twitterId) {
-        this.twitterId = twitterId;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public long getTrendingTopicId() {
