@@ -1,307 +1,336 @@
 ﻿<head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+    <!--  jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.standalone.min.css"
+          rel="stylesheet">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-
-<!--  jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-
-<!-- Bootstrap Date-Picker Plugin -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 
 
-  <style type="text/css">
-    .center_wrapper {
-      text-align: center;
-    }
-    .twitter-tweet {
-      display: inline-block !important;
-    }
+    <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
 
-    .ui-datepicker-inline{
-      width: 250px;
-    }
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-    .col-absolute-300{
-      width:300px;
-      position:absolute;
-      height:100%;
-      z-index:1;
-    }
-    .col-fixed-300{
-      width:300px;
-      position:fixed;
-      height:100%;
-      z-index:1;
-    }
-    .col-middle{
-      padding-left:300px;
-      margin-right:300px;
-      z-index:0;
-    }
-
-    .funkyradio div {
-      clear: both;
-      overflow: hidden;
-    }
-
-    .funkyradio label {
-      width: 100%;
-      border-radius: 3px;
-      border: 1px solid #D1D3D4;
-      font-weight: normal;
-    }
-
-    .funkyradio input[type="radio"]:empty,
-    .funkyradio input[type="checkbox"]:empty {
-      display: none;
-    }
-
-    .funkyradio input[type="radio"]:empty ~ label,
-    .funkyradio input[type="checkbox"]:empty ~ label {
-      position: relative;
-      line-height: 2.5em;
-      text-indent: 3.25em;
-      margin-top: 2em;
-      cursor: pointer;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-    }
-
-    .funkyradio input[type="radio"]:empty ~ label:before,
-    .funkyradio input[type="checkbox"]:empty ~ label:before {
-      position: absolute;
-      display: block;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      content: '';
-      width: 2.5em;
-      background: #D1D3D4;
-      border-radius: 3px 0 0 3px;
-    }
-
-    .funkyradio input[type="radio"]:hover:not(:checked) ~ label,
-    .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
-      color: #888;
-    }
-
-    .funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
-    .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
-      content: '\2714';
-      text-indent: .9em;
-      color: #C2C2C2;
-    }
-
-    .funkyradio input[type="radio"]:checked ~ label,
-    .funkyradio input[type="checkbox"]:checked ~ label {
-      color: #777;
-    }
-
-    .funkyradio input[type="radio"]:checked ~ label:before,
-    .funkyradio input[type="checkbox"]:checked ~ label:before {
-      content: '\2714';
-      text-indent: .9em;
-      color: #333;
-      background-color: #ccc;
-    }
-
-    .funkyradio input[type="radio"]:focus ~ label:before,
-    .funkyradio input[type="checkbox"]:focus ~ label:before {
-      box-shadow: 0 0 0 3px #999;
-    }
-
-    .funkyradio-default input[type="radio"]:checked ~ label:before,
-    .funkyradio-default input[type="checkbox"]:checked ~ label:before {
-      color: #333;
-      background-color: #ccc;
-    }
-
-    .funkyradio-primary input[type="radio"]:checked ~ label:before,
-    .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
-      color: #fff;
-      background-color: #337ab7;
-    }
-
-    .funkyradio-success input[type="radio"]:checked ~ label:before,
-    .funkyradio-success input[type="checkbox"]:checked ~ label:before {
-      color: #fff;
-      background-color: #5cb85c;
-    }
-
-    .funkyradio-danger input[type="radio"]:checked ~ label:before,
-    .funkyradio-danger input[type="checkbox"]:checked ~ label:before {
-      color: #fff;
-      background-color: #d9534f;
-    }
-
-    .funkyradio-warning input[type="radio"]:checked ~ label:before,
-    .funkyradio-warning input[type="checkbox"]:checked ~ label:before {
-      color: #fff;
-      background-color: #f0ad4e;
-    }
-
-    .funkyradio-info input[type="radio"]:checked ~ label:before,
-    .funkyradio-info input[type="checkbox"]:checked ~ label:before {
-      color: #fff;
-      background-color: #5bc0de;
-    }
-  </style>
-
-  <script>
-    var date = new Date();
-    var regionId = 1;
-
-    Date.prototype.yyyymmdd = function() {
-      var mm = this.getMonth() + 1; // getMonth() is zero-based
-      var dd = this.getDate();
-
-      return [this.getFullYear(), "-",
-              (mm>9 ? '' : '0') + mm, "-",
-              (dd>9 ? '' : '0') + dd
-             ].join('');
-    };
-
-    $(document).ready(function(){
-      $('#datepicker').datepicker({ 
-        weekStart: 1,
-        todayHighlight: true
-      });
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-      $('#datepicker').datepicker()
-        .on('changeDate', function(e) {
-          console.log(e.date);
+    <style type="text/css">
+        .center_wrapper {
+            text-align: center;
+        }
 
-          date = e.date;
+        .twitter-tweet {
+            display: inline-block !important;
+        }
 
-          if (regionId == 1){
-            loadTopics(date.yyyymmdd(), 1);
-          }
-          else {
-            loadTopics(date.yyyymmdd(), 23424969);
-          }
+        .ui-datepicker-inline {
+            width: 250px;
+        }
+
+        .col-absolute-300 {
+            width: 300px;
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .col-fixed-300 {
+            width: 300px;
+            position: fixed;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .col-middle {
+            padding-left: 300px;
+            margin-right: 300px;
+            z-index: 0;
+        }
+
+        .funkyradio div {
+            clear: both;
+            overflow: hidden;
+        }
+
+        .funkyradio label {
+            width: 100%;
+            border-radius: 3px;
+            border: 1px solid #D1D3D4;
+            font-weight: normal;
+        }
+
+        .funkyradio input[type="radio"]:empty,
+        .funkyradio input[type="checkbox"]:empty {
+            display: none;
+        }
+
+        .funkyradio input[type="radio"]:empty ~ label,
+        .funkyradio input[type="checkbox"]:empty ~ label {
+            position: relative;
+            line-height: 2.5em;
+            text-indent: 3.25em;
+            margin-top: 2em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .funkyradio input[type="radio"]:empty ~ label:before,
+        .funkyradio input[type="checkbox"]:empty ~ label:before {
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            content: '';
+            width: 2.5em;
+            background: #D1D3D4;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .funkyradio input[type="radio"]:hover:not(:checked) ~ label,
+        .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+            color: #888;
+        }
+
+        .funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
+        .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+            content: '\2714';
+            text-indent: .9em;
+            color: #C2C2C2;
+        }
+
+        .funkyradio input[type="radio"]:checked ~ label,
+        .funkyradio input[type="checkbox"]:checked ~ label {
+            color: #777;
+        }
+
+        .funkyradio input[type="radio"]:checked ~ label:before,
+        .funkyradio input[type="checkbox"]:checked ~ label:before {
+            content: '\2714';
+            text-indent: .9em;
+            color: #333;
+            background-color: #ccc;
+        }
+
+        .funkyradio input[type="radio"]:focus ~ label:before,
+        .funkyradio input[type="checkbox"]:focus ~ label:before {
+            box-shadow: 0 0 0 3px #999;
+        }
+
+        .funkyradio-default input[type="radio"]:checked ~ label:before,
+        .funkyradio-default input[type="checkbox"]:checked ~ label:before {
+            color: #333;
+            background-color: #ccc;
+        }
+
+        .funkyradio-primary input[type="radio"]:checked ~ label:before,
+        .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+            color: #fff;
+            background-color: #337ab7;
+        }
+
+        .funkyradio-success input[type="radio"]:checked ~ label:before,
+        .funkyradio-success input[type="checkbox"]:checked ~ label:before {
+            color: #fff;
+            background-color: #5cb85c;
+        }
+
+        .funkyradio-danger input[type="radio"]:checked ~ label:before,
+        .funkyradio-danger input[type="checkbox"]:checked ~ label:before {
+            color: #fff;
+            background-color: #d9534f;
+        }
+
+        .funkyradio-warning input[type="radio"]:checked ~ label:before,
+        .funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+            color: #fff;
+            background-color: #f0ad4e;
+        }
+
+        .funkyradio-info input[type="radio"]:checked ~ label:before,
+        .funkyradio-info input[type="checkbox"]:checked ~ label:before {
+            color: #fff;
+            background-color: #5bc0de;
+        }
+    </style>
+
+    <script>
+        var date = new Date();
+        var regionId = 1;
+
+        Date.prototype.yyyymmdd = function () {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(), "-",
+                (mm > 9 ? '' : '0') + mm, "-",
+                (dd > 9 ? '' : '0') + dd
+            ].join('');
+        };
+
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                weekStart: 1,
+                todayHighlight: true
+            });
+
+
+            $('#datepicker').datepicker()
+                .on('changeDate', function (e) {
+                    console.log(e.date);
+
+                    date = e.date;
+
+                    if (regionId == 1) {
+                        loadTopics(date.yyyymmdd(), 1);
+                    }
+                    else {
+                        loadTopics(date.yyyymmdd(), 23424969);
+                    }
+                });
         });
-    });
 
-    function loadTopics(date, regionId) {
-      $.get("http://54.147.221.99:8080/trendingTopics?date=" + date + "&regionId=" + regionId,
-        function (data) {
-          populateTopics(data);
+        function loadTopics(date, regionId) {
+            $.get("http://cildir.gq/cmpe352_proxy/trendingTopics?date=" + date + "&regionId=" + regionId,
+                function (data) {
+                    populateTopics(data);
+                }
+            );
         }
-      );
-    }
-    function populateTopics(data) {
-      var items = [];
-      $.each(data, function (id, topic) {
-        items.push('<a onclick="fun(' + (id + 1) + ');" id="' + topic.id + '" class="list-group-item">' + topic.name + '</a>');
-      });  
-      $('#hastaglist').html(items.join(''));
-    }
 
-    function loadTweets(topicID) {
-      $.get("http://54.147.221.99:8080/tweets?topicID=" + topicID,
-        function (data) {
-          populateTweets(data);
+        function populateTopics(data) {
+            var items = [];
+            $.each(data, function (id, topic) {
+                items.push('<a onclick="fun(' + (id + 1) + ');" id="' + topic.id + '" class="list-group-item">' + topic.name + '</a>');
+            });
+            $('#hastaglist').html(items.join(''));
         }
-      );
-    }
-    function populateTweets(data) {
-      var items = [];
-      $.each(data, function (id, tweet) {
-        items.push(tweet.twitterHtml);
-      });  
-      $('#tweets_box').html(items.join(''));
-    }
 
-    function fun(i){
-      console.log(i);
+        function loadTweets(topicID) {
+            $.get("http://cildir.gq/cmpe352_proxy/tweets?topicID=" + topicID,
+                function (data) {
+                    populateTweets(data);
+                }
+            );
+        }
 
-      $('#hashtaglist').find('.active').removeClass('active');
-      $('#hashtaglist a:nth-child(' + i + ')').addClass('active');
+        function populateTweets(data) {
+            var items = [];
+            $.each(data, function (id, tweet) {
+                items.push(tweet.twitterHtml);
+            });
+            $('#tweets_box').html(items.join(''));
+        }
 
-      loadTweets($('#hashtaglist a:nth-child(' + i + ')').attr('id'))
-    }
+        function fun(i) {
+            console.log(i);
 
-    function fun2(i){
-      console.log(i);
+            $('#hashtaglist').find('.active').removeClass('active');
+            $('#hashtaglist a:nth-child(' + i + ')').addClass('active');
 
-      regionId = i;
-      if (regionId == 1){
-        loadTopics(date.yyyymmdd(), 1);
-      }
-      else {
-        loadTopics(date.yyyymmdd(), 23424969);
-      }
-    }
-  </script>
+            loadTweets($('#hashtaglist a:nth-child(' + i + ')').attr('id'))
+        }
+
+        function fun2(i) {
+            console.log(i);
+
+            regionId = i;
+            if (regionId == 1) {
+                loadTopics(date.yyyymmdd(), 1);
+            }
+            else {
+                loadTopics(date.yyyymmdd(), 23424969);
+            }
+        }
+    </script>
 </head>
 
 <body style="margin-top: -30px;">
-  <div>
+<div>
     <div class="col-absolute-300">
-      <div class="row text-left">
-        <h2 style="margin-left: 35px; margin-top: 30px; margin-bottom: 10px; color: lightblue;">Trend Topics</h>
-      </div>
-
-      <div class="funkyradio" style="width:250px; margin-left: 20px;">
-        <div class="funkyradio-success">
-            <input onclick="fun2(1)" type="radio" name="radio" id="radio1" checked/>
-            <label for="radio1" style="margin-top: 15px;">Turkey</label>
+        <div class="row text-left">
+            <h2 style="margin-left: 35px; margin-top: 30px; margin-bottom: 10px; color: lightblue;">Trend Topics</h>
         </div>
-        <div class="funkyradio-info">
-            <input onclick="fun2(2)" type="radio" name="radio" id="radio2" />
-            <label for="radio2" style="margin-top: 15px;">Worldwide</label>
+
+        <div class="funkyradio" style="width:250px; margin-left: 20px;">
+            <div class="funkyradio-success">
+                <input onclick="fun2(1)" type="radio" name="radio" id="radio1" checked/>
+                <label for="radio1" style="margin-top: 15px;">Turkey</label>
+            </div>
+            <div class="funkyradio-info">
+                <input onclick="fun2(2)" type="radio" name="radio" id="radio2"/>
+                <label for="radio2" style="margin-top: 15px;">Worldwide</label>
+            </div>
         </div>
-      </div>
 
-      <div style="margin-left: 20px; margin-top: 15px;" id="datepicker"> </div>
+        <div style="margin-left: 20px; margin-top: 15px;" id="datepicker"></div>
 
-      <ul class="list-group" id="hashtaglist" style="margin-top: 15px; width: 250px; margin-left: 20px;">
-        <a onclick="fun(1);" class="list-group-item active">#tag1</a>
-        <a onclick="fun(2);" class="list-group-item">#tag2</a>
-        <a onclick="fun(3);" class="list-group-item">#tag3</a>
-        <a onclick="fun(4);" class="list-group-item">#tag3</a>
-        <a onclick="fun(5);" class="list-group-item">#tag3</a>
-        <a onclick="fun(6);" class="list-group-item">#tag3</a>
-        <a onclick="fun(7);" class="list-group-item">#tag3</a>
-        <a onclick="fun(8);" class="list-group-item">#tag3</a>
-        <a onclick="fun(9);" class="list-group-item">#tag3</a>
-        <a onclick="fun(10);" class="list-group-item">#tag3</a>
-      </ul>
+        <ul class="list-group" id="hashtaglist" style="margin-top: 15px; width: 250px; margin-left: 20px;">
+            <a onclick="fun(1);" class="list-group-item active">#tag1</a>
+            <a onclick="fun(2);" class="list-group-item">#tag2</a>
+            <a onclick="fun(3);" class="list-group-item">#tag3</a>
+            <a onclick="fun(4);" class="list-group-item">#tag3</a>
+            <a onclick="fun(5);" class="list-group-item">#tag3</a>
+            <a onclick="fun(6);" class="list-group-item">#tag3</a>
+            <a onclick="fun(7);" class="list-group-item">#tag3</a>
+            <a onclick="fun(8);" class="list-group-item">#tag3</a>
+            <a onclick="fun(9);" class="list-group-item">#tag3</a>
+            <a onclick="fun(10);" class="list-group-item">#tag3</a>
+        </ul>
     </div>
-    <div style="background: lightblue; margin-left: 315px; position: fixed; height: 100%; width: 2px;"> </div>
+    <div style="background: lightblue; margin-left: 315px; position: fixed; height: 100%; width: 2px;"></div>
     <div class="col-middle center_wrapper" id="tweets_box" style="height: 100%; margin-top: 30px; overflow-y: scroll;">
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">My name is trendhist!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296202316877824?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">My name is trendhist!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296202316877824?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
 
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I'am a robot!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">I'am a robot!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296158310326272?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
 
-      <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan 2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
+        <blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">Hello World!</p>— Trend History
+            (@trendhist) <a href="https://twitter.com/trendhist/status/983296114391691264?ref_src=twsrc%5Etfw">9 Nisan
+                2018</a></blockquote>
 
     </div>
     <div class="col-fixed-300" style="background: #005580; right: 0px; top: 0px;">
-      
+
     </div>
-  </div>
+</div>
 </body>
