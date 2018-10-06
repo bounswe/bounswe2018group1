@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class SessionUtil {
     public long getUserId(HttpServletRequest httpServletRequest) {
-        return (long) httpServletRequest.getSession().getAttribute("id");
+        return (long) httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
     }
 }

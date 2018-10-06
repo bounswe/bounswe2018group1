@@ -31,11 +31,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity uniqueConstraintExceptionHandler(DataIntegrityViolationException exception) {
 
         if (exception.getMessage().contains("PUBLIC.USER(EMAIL)")) {
-            return new ResponseEntity<>(new ErrorResponse("Bu emaile bağlı başka bir hesap bulunmaktadır."), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("There already is an account with this email."), HttpStatus.BAD_REQUEST);
         }
 
         if (exception.getMessage().contains("PUBLIC.USER(NICK_NAME)")) {
-            return new ResponseEntity<>(new ErrorResponse("Bu nickname kullanılmaktadır."), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("This nickname is already in use."), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity notNullConstraintExceptionHandler(ConstraintViolationException exception) {
 
         if (exception.getMessage().contains("javax.validation.constraints.NotNull")) {
-            return new ResponseEntity<>(new ErrorResponse("Zorunlu alanlar boş bırakılmamalıdır."), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Please fill all the necessary fields."), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);

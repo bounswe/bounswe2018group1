@@ -29,12 +29,12 @@ public class AuthenticationServiceImp implements AuthenticationService {
         } else if (loginRequestBody.getNickname() != null && !loginRequestBody.getNickname().equals("")) {
             user = userRepository.findByNickname(loginRequestBody.getNickname());
         } else {
-            throw new RetroException("Hem mail adresi hem de kullanıcı adı boş olamaz", HttpStatus.BAD_REQUEST);
+            throw new RetroException("You can not leave both email and nickname empty.", HttpStatus.BAD_REQUEST);
         }
 
         //TODO:HASHING
         if (user == null || !user.getPassword().equals(loginRequestBody.getPassword())) {
-            throw new RetroException("Girdiğiniz bilgiler hatalıdır.", HttpStatus.UNAUTHORIZED);
+            throw new RetroException("Incorrect login information.", HttpStatus.UNAUTHORIZED);
         }
 
         return user.getId();

@@ -1,5 +1,6 @@
 package com.cmpe451.retro.controllers;
 
+import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.services.AuthenticationService;
@@ -20,18 +21,16 @@ public class AuthenticationController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
-    private String idAttributeKey = "id"; //TODO: move it to constant class
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public void loginAttempt(@RequestBody LoginRequestBody loginRequest) {
         long userId = authenticationService.login(loginRequest);
-        httpServletRequest.getSession().setAttribute(idAttributeKey, userId);
+        httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(@RequestBody RegisterRequestBody registerRequestBody) {
         long userId = authenticationService.register(registerRequestBody);
-        httpServletRequest.getSession().setAttribute(idAttributeKey, userId);
+        httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
 
     }
 
