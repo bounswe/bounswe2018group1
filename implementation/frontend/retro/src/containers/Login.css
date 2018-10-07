@@ -1,10 +1,23 @@
 @media all and (min-width: 480px) {
   .Login {
-    padding: 60px 0;
+    padding: 220px 0;
+    background: url(./Login-bg02.jpg) no-repeat center center fixed;
+    background-size: cover;
   }
 
-  .Login form {
+  .Login-form {
     margin: 0 auto;
-    max-width: 320px;
+    max-width: 220px;
+    display: inline-block;
+    align-items: center;
+  }
+
+  .Login-title {
+    color: #C93745;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 40px;
+    display: inline-block;
+    align-items: center;
   }
 }
