@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0B0B0"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="27dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="Log in"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewSignin"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:clickable="true"
+            android:gravity="end|center_vertical"
+            android:text="Sign in"
+            android:textColor="#B00000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewLName"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Nickname or Email" />
+
+        <EditText
+            android:id="@+id/editTextLName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewLPassword"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/editTextLPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textViewForgot"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:clickable="true"
+            android:gravity="end|center_vertical"
+            android:text="Forgot your password?"
+            android:textColor="#B00000"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="81dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="81dp"
+            android:layout_marginBottom="27dp"
+            android:background="#B04038"
+            android:text="Log in"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonLFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="27dp"
+            android:background="#2C58A0"
+            android:text="Log in with Facebook"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonLGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:layout_marginBottom="27dp"
+            android:background="#D84028"
+            android:text="Log in with Google"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>

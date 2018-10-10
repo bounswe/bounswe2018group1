@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0B0B0"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/textViewRegister"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_margin="27dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="Register"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewRNickname"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Nickname" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewRFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="First Name" />
+
+        <EditText
+            android:id="@+id/editTextRFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewRSurname"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Surname" />
+
+        <EditText
+            android:id="@+id/editTextRSurname"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewREmail"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Email" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewRPassword"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewRConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:text="Confirm Password" />
+
+        <EditText
+            android:id="@+id/editTextPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="81dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginRight="81dp"
+            android:layout_marginBottom="27dp"
+            android:background="#B04038"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="27dp"
+            android:background="#2C58A0"
+            android:text="Sign in with Facebook"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonSGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:layout_marginBottom="27dp"
+            android:background="#D84028"
+            android:text="Sign in with Google"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>
