@@ -27,6 +27,18 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textViewAlreadyRegistered"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:clickable="true"
+            android:gravity="end|center_vertical"
+            android:text="Already registered?"
+            android:textColor="#B00000"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/textViewRNickname"
             android:layout_width="match_parent"
             android:layout_height="15dp"

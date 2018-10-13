@@ -1,8 +1,8 @@
-package emre.cmpe451;
+package bounswe2018group1.cmpe451;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
