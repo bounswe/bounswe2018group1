@@ -1,9 +1,11 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textViewAlreadyRegistered = null;
     private Button buttonRegister = null;
     private VolleySingleton volleySingleton = null;
+    private InputMethodManager inputManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
         buttonRegister = findViewById(R.id.buttonRegister);
         volleySingleton = VolleySingleton.getInstance(this);
+        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         textViewAlreadyRegistered.setOnClickListener(new View.OnClickListener() {
 
@@ -71,6 +75,10 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 try {
+                    // Remove keyboard
+                    if(getCurrentFocus() != null)
+                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                     sendRegisterRequest();
                 } catch (JSONException e) {
                     e.printStackTrace();

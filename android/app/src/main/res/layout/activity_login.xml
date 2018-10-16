@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0B0B0"
+    android:background="#E9EBEE"
     tools:context=".LoginActivity">
 
     <LinearLayout
+        android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
@@ -49,6 +50,8 @@
 
         <EditText
             android:id="@+id/editTextLName"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginLeft="27dp"
@@ -69,6 +72,8 @@
 
         <EditText
             android:id="@+id/editTextLPassword"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginLeft="27dp"

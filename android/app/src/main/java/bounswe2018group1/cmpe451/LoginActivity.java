@@ -1,10 +1,14 @@
 package bounswe2018group1.cmpe451;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     private TextView editTextLPassword = null;
     private Button buttonLogin = null;
     private VolleySingleton volleySingleton = null;
+    private InputMethodManager inputManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -38,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextLPassword = findViewById(R.id.editTextLPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         volleySingleton = VolleySingleton.getInstance(this);
+        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         textViewSignup.setOnClickListener(new View.OnClickListener() {
 
@@ -56,6 +63,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 try {
+                    // Remove keyboard
+                    if(getCurrentFocus() != null)
+                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                     sendLoginRequest();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -75,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendLoginRequest() throws JSONException {
+
         JSONObject postParamsEmail = new JSONObject();
         postParamsEmail.put("email", editTextLName.getText().toString().trim());
         postParamsEmail.put("nickname", "");
@@ -84,7 +96,8 @@ public class LoginActivity extends AppCompatActivity {
         postParamsEmail.put("nickname", editTextLName.getText().toString().trim());
         postParamsEmail.put("password", editTextLPassword.getText().toString());
 
-        final JsonObjectRequest jsonObjReqByNickname = new NullResponseJsonObjectRequest(Request.Method.POST,
+        final JsonObjectRequest jsonObjReqByNickname = new NullResponseJsonObjectRequest(
+                Request.Method.POST,
                 URLs.URL_LOGIN, postParamsNickname,
                 new Response.Listener() {
                     @Override
@@ -111,7 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 });
-        JsonObjectRequest jsonObjReqByEmail = new NullResponseJsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonObjReqByEmail = new NullResponseJsonObjectRequest(
+                Request.Method.POST,
                 URLs.URL_LOGIN, postParamsEmail,
                 new Response.Listener() {
                     @Override
