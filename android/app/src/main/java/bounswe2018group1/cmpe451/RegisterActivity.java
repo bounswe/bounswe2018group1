@@ -63,10 +63,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!editTextPassword.getText().equals(editTextPassword2.getText())){
+                if(!editTextPassword.getText().toString().equals(editTextPassword2.getText().toString())){
                     editTextPassword.setText("");
                     editTextPassword2.setText("");
                     Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 try {
