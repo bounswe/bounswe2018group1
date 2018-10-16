@@ -9,12 +9,16 @@ export default class Login extends Component {
 
     this.state = {
       email: "",
+      nickname: "",
       password: ""
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    return re.test(this.state.email) && this.state.password.length > 7 && this.state.nickname.length > 0;
   }
 
   handleChange = event => {
@@ -25,6 +29,24 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    try {
+      var xhr = new XMLHttpRequest();
+      var url = "http://34.201.171.46:5000/login";
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.email + ", " + json.password);
+        }
+      };
+      var data = JSON.stringify({"email": this.state.email, "password": this.state.password});
+      xhr.send(data);
+    }
+    catch (e) {
+
+    }
   }
 
   render() {
