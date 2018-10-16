@@ -9,6 +9,9 @@ import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.models.RetroException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,6 +22,8 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public long login(LoginRequestBody loginRequestBody) {
@@ -32,8 +37,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
             throw new RetroException("You can not leave both email and nickname empty.", HttpStatus.BAD_REQUEST);
         }
 
-        //TODO:HASHING
-        if (user == null || !user.getPassword().equals(loginRequestBody.getPassword())) {
+        if (user == null || !passwordEncoder.matches(loginRequestBody.getPassword(),user.getPassword())) {
             throw new RetroException("Incorrect login information.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -51,7 +55,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     private User createUser(RegisterRequestBody registerRequestBody) {
         User user = new User();
-        user.setPassword(registerRequestBody.getPassword());
+        user.setPassword(passwordEncoder.encode(registerRequestBody.getPassword()));
         user.setEmail(registerRequestBody.getEmail());
         user.setNickname(registerRequestBody.getNickname());
         user.setFirstName(registerRequestBody.getFirstName());
@@ -61,9 +65,9 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.setDateOfCreation(now);
         user.setDateOfUpdate(now);
 
-
-
         return user;
     }
+
+
 
 }

@@ -14,7 +14,7 @@ import javax.validation.ConstraintViolationException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(RetroException.class)
     @ResponseBody
     public ResponseEntity indibuExceptionHandler(RetroException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), exception.getHttpStatus());

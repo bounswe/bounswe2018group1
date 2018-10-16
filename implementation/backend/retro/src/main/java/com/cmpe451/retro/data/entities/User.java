@@ -32,6 +32,7 @@ public class User {
     @NotNull
     private String email;
 
+    @Column(length=60)
     @NotNull
     private String password;
 
