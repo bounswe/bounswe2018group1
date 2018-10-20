@@ -1,8 +1,8 @@
 @media all and (min-width: 480px) {
   .Memory {
     padding: 190px 0;
-    background: url(./Login-bg02.jpg) no-repeat center center fixed;
     background-size: cover;
+    text-align: center;
   }
 
   .Memory-title {
