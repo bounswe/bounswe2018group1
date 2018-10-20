@@ -7,13 +7,24 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
+      name: "",
       email: "",
       password: ""
     };
   }
 
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+  validateLoginForm() {
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    return re.test(this.state.email) && this.state.password.length > 7;
+  }
+
+  validateRegisterForm() {
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    return this.state.name.length > 0 && re.test(this.state.email) && this.state.password.length > 7;
   }
 
   handleChange = event => {
@@ -22,23 +33,57 @@ export default class Login extends Component {
     });
   }
 
-  handleSubmit = event => {
+  handleSubmitLogin = event => {
     event.preventDefault();
+
+    try {
+      var xhr = new XMLHttpRequest();
+      var url =  Constants.API + "/login";
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.email + ", " + json.password);
+        }
+      };
+      var data = JSON.stringify({"email": this.state.email, "password": this.state.password});
+      xhr.send(data);
+    }
+    catch (e) {
+      // Exception handling
+    }
+  }
+
+  handleSubmitRegister = event => {
+    event.preventDefault();
+
+    try {
+      var xhr = new XMLHttpRequest();
+      var url =  Constants.API + "/register";
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.name + "," + json.email + ", " + json.password);
+        }
+      };
+      var data = JSON.stringify({"name": this.state.name, "email": this.state.email, "password": this.state.password});
+      xhr.send(data);
+    }
+    catch (e) {
+      // Exception handling
+    }
   }
 
   render() {
     return (
-        <div className="Login">
-          <div className="Login-background"></div>
-          <p className="Retro-logo">
-            RETRO
-          </p>
-          <figure className="Login-box">
-            <p className="Login-title">
-              Login
-            </p>
+      <SplitterLayout>
+        <div className="Login-Register">
+            <p className="Title"> Login </p>
 
-            <form onSubmit={this.handleSubmit}>
+            <form name="Login" onSubmit={this.handleSubmitLogin}>
               <FormGroup controlId="email" bsSize="large">
                 <ControlLabel>Email</ControlLabel>
                 <FormControl
@@ -46,7 +91,7 @@ export default class Login extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.handleChange}
-                />
+                  />
               </FormGroup>
               <FormGroup controlId="password" bsSize="large">
                 <ControlLabel>Password</ControlLabel>
@@ -54,22 +99,21 @@ export default class Login extends Component {
                   value={this.state.password}
                   onChange={this.handleChange}
                   type="password"
-                />
+                  />
               </FormGroup>
               <Button
                 block
                 bsSize="large"
-                disabled={!this.validateForm()}
+                disabled={!this.validateLoginForm()}
                 type="submit"
               >
                 Login
-              </Button>
-            </form>
-            <p className="Login-title">
-              Register
-            </p>
+            </Button>
+          </form>
 
-            <form onSubmit={this.handleSubmit}>
+            <p className="Title"> Register </p>
+
+            <form name="Register" onSubmit={this.handleSubmitRegister}>
               <FormGroup controlId="name" bsSize="large">
                 <ControlLabel>Name</ControlLabel>
                 <FormControl
@@ -78,34 +122,33 @@ export default class Login extends Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup controlId="email" bsSize="large">
-                <ControlLabel>Email</ControlLabel>
-                <FormControl
+                </FormGroup>
+                <FormGroup controlId="email" bsSize="large">
+                  <ControlLabel>Email</ControlLabel>
+                  <FormControl
                   autoFocus
                   type="email"
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup controlId="password" bsSize="large">
-                <ControlLabel>Password</ControlLabel>
-                <FormControl
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  type="password"
-                />
-              </FormGroup>
-              <Button
-                block
-                bsSize="large"
-                disabled={!this.validateForm()}
-                type="submit"
+                </FormGroup>
+                <FormGroup controlId="password" bsSize="large">
+                  <ControlLabel>Password</ControlLabel>
+                  <FormControl
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    type="password"
+                  />
+                  </FormGroup>
+                <Button
+                  block
+                  bsSize="large"
+                  disabled={!this.validateRegisterForm()}
+                  type="submit"
                 >
-                Login
-              </Button>
-            </form>
-          </figure>
+                  Register
+                </Button>
+          </form>
         </div>
     );
   }

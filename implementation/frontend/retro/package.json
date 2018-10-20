@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "darwin": "0.0.5",
     "material-ui": "^0.20.2",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
@@ -11,7 +12,8 @@
     "react-scripts": "2.0.4",
     "react-split-pane": "^0.1.84",
     "react-splitter-layout": "^3.0.1",
-    "react-tap-event-plugin": "^3.0.3"
+    "react-tap-event-plugin": "^3.0.3",
+    "yarn": "^1.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
