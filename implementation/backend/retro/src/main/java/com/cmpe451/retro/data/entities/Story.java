@@ -35,7 +35,7 @@ public class Story {
     //TODO: add image and video and audio
 
     public String getHeadline() {
-        return headline;
+        return this.headline;
     }
 
     public void setHeadline(String headline) {
@@ -43,7 +43,7 @@ public class Story {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -51,7 +51,7 @@ public class Story {
     }
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(long id) {
