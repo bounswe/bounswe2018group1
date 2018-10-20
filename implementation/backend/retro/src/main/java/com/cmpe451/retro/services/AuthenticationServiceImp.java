@@ -2,6 +2,7 @@ package com.cmpe451.retro.services;
 
 
 
+import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.LoginRequestBody;
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Optional;
 
 
 @Service
@@ -24,6 +27,9 @@ public class AuthenticationServiceImp implements AuthenticationService {
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @Override
     public long login(LoginRequestBody loginRequestBody) {
@@ -69,5 +75,16 @@ public class AuthenticationServiceImp implements AuthenticationService {
     }
 
 
+    @Override
+    public User getUser() {
+
+        long userID = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        Optional<User> user = userRepository.findById(userID);
+
+        if(user.isPresent())
+            return user.get();
+
+        throw new RetroException("You have tried to access an authorised page. Please login and try again.",HttpStatus.UNAUTHORIZED);
+    }
 
 }
