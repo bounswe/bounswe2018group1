@@ -1,14 +1,13 @@
 package bounswe2018group1.cmpe451;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
@@ -62,15 +60,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                try {
-                    // Remove keyboard
-                    if(getCurrentFocus() != null)
-                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                // Remove keyboard
+                if(getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                    sendLoginRequest();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                sendLoginRequest();
 
             }
         });
@@ -85,71 +79,54 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void sendLoginRequest() throws JSONException {
+    private void sendLoginRequest() {
 
-        JSONObject postParamsEmail = new JSONObject();
-        postParamsEmail.put("email", editTextLName.getText().toString().trim());
-        postParamsEmail.put("nickname", "");
-        postParamsEmail.put("password", editTextLPassword.getText().toString());
-        JSONObject postParamsNickname = new JSONObject();
-        postParamsEmail.put("email", "");
-        postParamsEmail.put("nickname", editTextLName.getText().toString().trim());
-        postParamsEmail.put("password", editTextLPassword.getText().toString());
+        JSONObject postParams = new JSONObject();
+        try {
+            postParams.put("password", editTextLPassword.getText().toString());
+            // Check if user has entered nick or email
+            if (editTextLName.getText().toString().contains(".")) {
+                postParams.put("nickname", "");
+                postParams.put("email", editTextLName.getText().toString().trim());
+            }
+            else{
+                postParams.put("nickname", editTextLName.getText().toString().trim());
+                postParams.put("email", "");
+            }
 
-        final JsonObjectRequest jsonObjReqByNickname = new NullResponseJsonObjectRequest(
-                Request.Method.POST,
-                URLs.URL_LOGIN, postParamsNickname,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
 
-                        Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-                        if(response == null) return;
-                        if(response instanceof JSONObject) {
-                            //Success Callback
-                            JSONObject r = (JSONObject)response;
-                            System.out.println("Response: " + r.toString());
-                        } else {
-                            System.out.println("Response: " + response.toString());
-                        }
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
+            Request.Method.POST,
+            URLs.URL_LOGIN, postParams,
+            new Response.Listener() {
+                @Override
+                public void onResponse(Object response) {
 
+                    Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show(); // TODO remove!
+                    if(response == null) return;
+                    if(response instanceof JSONObject) {
+                        //Success Callback
+                        JSONObject r = (JSONObject)response;
+                        System.out.println("Response: " + r.toString());
+                    } else {
+                        System.out.println("Response: " + response.toString());
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Failure Callback
-                        Toast.makeText(getApplicationContext(), "Login fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error!!!!");
-                        error.printStackTrace();
-                    }
-                });
-        JsonObjectRequest jsonObjReqByEmail = new NullResponseJsonObjectRequest(
-                Request.Method.POST,
-                URLs.URL_LOGIN, postParamsEmail,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
 
-                        Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-                        if(response == null) return;
-                        if(response instanceof JSONObject) {
-                            //Success Callback
-                            JSONObject r = (JSONObject)response;
-                            System.out.println("Response: " + r.toString());
-                        } else {
-                            System.out.println("Response: " + response.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Failure Callback
-                        volleySingleton.addToRequestQueue(jsonObjReqByNickname, VolleySingleton.Tags.LOGIN_REQ_TAG);
-                    }
-                });
-        volleySingleton.addToRequestQueue(jsonObjReqByEmail, VolleySingleton.Tags.LOGIN_REQ_TAG);
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //Failure Callback
+                    Toast.makeText(getApplicationContext(), "Login fail!", Toast.LENGTH_LONG).show();
+                    System.err.println("Error in login!");
+                    error.printStackTrace();
+                }
+            }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGIN_REQ_TAG);
     }
 }
