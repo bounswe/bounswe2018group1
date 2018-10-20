@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+import Constants from "../constants.js";
 
 export default class Login extends Component {
   constructor(props) {
@@ -79,11 +80,18 @@ export default class Login extends Component {
 
   render() {
     return (
-      <SplitterLayout>
-        <div className="Login-Register">
-            <p className="Title"> Login </p>
 
-            <form name="Login" onSubmit={this.handleSubmitLogin}>
+      <div className="Login">
+        <div className="Login-background"></div>
+          <p className="Retro-logo">
+            RETRO
+          </p>
+          <figure className="Login-box">
+            <p className="Login-title">
+              Login
+            </p>
+
+            <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="email" bsSize="large">
                 <ControlLabel>Email</ControlLabel>
                 <FormControl
@@ -91,7 +99,7 @@ export default class Login extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.handleChange}
-                  />
+                />
               </FormGroup>
               <FormGroup controlId="password" bsSize="large">
                 <ControlLabel>Password</ControlLabel>
@@ -99,8 +107,9 @@ export default class Login extends Component {
                   value={this.state.password}
                   onChange={this.handleChange}
                   type="password"
-                  />
+                />
               </FormGroup>
+
               <Button
                 block
                 bsSize="large"
@@ -108,12 +117,15 @@ export default class Login extends Component {
                 type="submit"
               >
                 Login
-            </Button>
-          </form>
+              </Button>
 
-            <p className="Title"> Register </p>
+            </form>
 
-            <form name="Register" onSubmit={this.handleSubmitRegister}>
+            <p className="Login-title">
+              Register
+            </p>
+
+            <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="name" bsSize="large">
                 <ControlLabel>Name</ControlLabel>
                 <FormControl
@@ -122,33 +134,34 @@ export default class Login extends Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
-                </FormGroup>
-                <FormGroup controlId="email" bsSize="large">
-                  <ControlLabel>Email</ControlLabel>
-                  <FormControl
+              </FormGroup>
+              <FormGroup controlId="email" bsSize="large">
+                <ControlLabel>Email</ControlLabel>
+                <FormControl
                   autoFocus
                   type="email"
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
-                </FormGroup>
-                <FormGroup controlId="password" bsSize="large">
-                  <ControlLabel>Password</ControlLabel>
-                  <FormControl
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    type="password"
-                  />
-                  </FormGroup>
-                <Button
-                  block
-                  bsSize="large"
-                  disabled={!this.validateRegisterForm()}
-                  type="submit"
-                >
-                  Register
-                </Button>
-          </form>
+              </FormGroup>
+              <FormGroup controlId="password" bsSize="large">
+                <ControlLabel>Password</ControlLabel>
+                <FormControl
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </FormGroup>
+              <Button
+                block
+                bsSize="large"
+                disabled={!this.validateRegisterForm()}
+                type="submit"
+              >
+                Register
+              </Button>
+            </form>
+          </figure>
         </div>
     );
   }
