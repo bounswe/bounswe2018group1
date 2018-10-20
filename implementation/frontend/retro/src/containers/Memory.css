@@ -1,0 +1,23 @@
+@media all and (min-width: 480px) {
+  .Memory {
+    padding: 190px 0;
+    background: url(./Login-bg02.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .Memory-title {
+    color: #C93745;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 40px;
+    display: inline-block;
+    align-items: center;
+  }
+
+  .Memory-box {
+    width: 17%;
+    position: relative;
+    top: -100px;
+    left: 200px;
+  }
+}
