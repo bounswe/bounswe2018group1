@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,6 +73,45 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.option_user_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menuLogin:
+                Toast.makeText(getApplicationContext(),"Login Clicked",Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.menuRegister:
+                Toast.makeText(getApplicationContext(),"Register Clicked",Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.menuReset:
+                Toast.makeText(getApplicationContext(),"Reset Password Clicked",Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.menuSearch:
+                Toast.makeText(getApplicationContext(),"Memory Search Clicked",Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+
+                super.onOptionsItemSelected(item);
+
+        }
+        return true;
+
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -85,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             postParams.put("password", editTextLPassword.getText().toString());
             // Check if user has entered nick or email
-            if (editTextLName.getText().toString().contains(".")) {
+            if (editTextLName.getText().toString().contains("@")) {
                 postParams.put("nickname", "");
                 postParams.put("email", editTextLName.getText().toString().trim());
             }
@@ -104,17 +145,21 @@ public class LoginActivity extends AppCompatActivity {
             new Response.Listener() {
                 @Override
                 public void onResponse(Object response) {
-
                     Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show(); // TODO remove!
-                    if(response == null) return;
-                    if(response instanceof JSONObject) {
+                    if(response == null) {
+
+                    }
+                    else if(response instanceof JSONObject) {
                         //Success Callback
                         JSONObject r = (JSONObject)response;
                         System.out.println("Response: " + r.toString());
                     } else {
                         System.out.println("Response: " + response.toString());
                     }
-
+                    // Launch member activity
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
                 }
             },
             new Response.ErrorListener() {
