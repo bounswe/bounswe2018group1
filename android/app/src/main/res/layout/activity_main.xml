@@ -2,36 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.TabLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@color/colorPrimary"
-        app:tabIndicatorColor="@android:color/transparent">
+        android:orientation="horizontal"
+        tools:background="@android:color/holo_blue_bright">
 
-        <android.support.design.widget.TabItem
+        <Button
+            android:id="@+id/tabWall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@mipmap/ic_launcher_round" />
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright"
+            android:stateListAnimator="@null"
+            android:text="Wall" />
 
-        <android.support.design.widget.TabItem
+        <Button
+            android:id="@+id/tabMemory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_launcher_background" />
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright"
+            android:stateListAnimator="@null"
+            android:text="Memory" />
 
-        <android.support.design.widget.TabItem
+        <Button
+            android:id="@+id/tabProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_account_circle_black_24dp" />
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright"
+            android:stateListAnimator="@null"
+            android:text="Profile" />
 
-        <android.support.design.widget.TabItem
+        <Button
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_lock_black_24dp" />
-    </android.support.design.widget.TabLayout>
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright"
+            android:stateListAnimator="@null"
+            android:text="Button" />
+    </LinearLayout>
 
 </LinearLayout>
