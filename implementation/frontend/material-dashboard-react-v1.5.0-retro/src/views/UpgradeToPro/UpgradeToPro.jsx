@@ -5,6 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Close from "@material-ui/icons/Close";
 import Check from "@material-ui/icons/Check";
 // core components
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Danger from "components/Typography/Danger.jsx";
@@ -84,119 +85,52 @@ const styles = {
 function UpgradeToPro(props) {
   const { classes } = props;
   return (
+
     <GridContainer justify="center">
-      <GridItem xs={12} sm={12} md={8}>
+      <GridItem xs={12} sm={12} md={10}>
         <Card>
           <CardHeader color="info">
             <h4 className={classes.cardTitleWhite}>
-              Material Dashboard PRO React
+              Add a new memory
             </h4>
             <p className={classes.cardCategoryWhite}>
-              Are you looking for more components? Please check our Premium
-              Version of Material Dashboard Angular.
+              Do you want to share your memory? Please fill the form.
             </p>
           </CardHeader>
           <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th />
-                    <th className={classes.center}>Free</th>
-                    <th className={classes.center}>PRO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Components</td>
-                    <td className={classes.center}>30</td>
-                    <td className={classes.center}>200</td>
-                  </tr>
-                  <tr>
-                    <td>Plugins</td>
-                    <td className={classes.center}>2</td>
-                    <td className={classes.center}>10</td>
-                  </tr>
-                  <tr>
-                    <td>Example Pages</td>
-                    <td className={classes.center}>7</td>
-                    <td className={classes.center}>28</td>
-                  </tr>
-                  <tr>
-                    <td>Login, Register, Pricing, Lock Pages</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      ReactTables, ReactVectorMap, ReactSweetAlert, Wizard,
-                      Validation, ReactBigCalendar etc...
-                    </td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mini Sidebar</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Premium Support</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>Free</td>
-                    <td className={classes.center}>Just $59</td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>
-                      <Button
-                        round
-                        color="danger"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=md-free-react-upgrade-live"
-                      >
-                        Add New Memory
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Title"
+                  id="title"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Description"
+                  id="description"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+            <tr>
+              <td className={classes.center}>
+              <Button
+                round
+                color="info"
+              >Add New Memory
+              </Button>
+              </td>
+            </tr>
+
           </CardBody>
         </Card>
       </GridItem>
