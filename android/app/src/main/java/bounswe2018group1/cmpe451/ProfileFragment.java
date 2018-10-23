@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -14,7 +14,7 @@ import android.widget.EditText;
  */
 public class ProfileFragment extends Fragment {
 
-    EditText a;
+    TextView a;
 
     public ProfileFragment() {
         // Required empty public constructor
