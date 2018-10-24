@@ -24,6 +24,8 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
+import LoginRepository from '../../api_calls/login.js';
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,18 @@ export default class Login extends Component {
   handleSubmitLogin = event => {
     event.preventDefault();
 
-    try {
+    console.log(LoginRepository);
+
+    LoginRepository.login(this.state.name, this.state.email, this.state.password)
+    .then(res => {
+      console.log(res.headers);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    ;
+
+    /*try {
       var xhr = new XMLHttpRequest();
       var url =  Constants.API + "/login";
       xhr.open("POST", url, true);
@@ -72,7 +85,7 @@ export default class Login extends Component {
     }
     catch (e) {
       // Exception handling
-    }
+    }*/
   }
 
   handleSubmitRegister = event => {
@@ -101,7 +114,7 @@ export default class Login extends Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={10} sm={10} md={4}>
+          <GridItem xs={10} sm={10} md={5}>
             <Card>
               <CardHeader color="primary">
                 <h4 className="titleWhite">Login</h4>
@@ -142,14 +155,12 @@ export default class Login extends Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Login</Button>
+                <Button color="primary" onClick={this.handleSubmitLogin}>Login</Button>
               </CardFooter>
             </Card>
           </GridItem>
-        </GridContainer>
 
-        <GridContainer>
-          <GridItem xs={10} sm={10} md={4}>
+          <GridItem xs={10} sm={10} md={5}>
             <Card>
               <CardHeader color="primary">
                 <h4 className="titleWhite">Register</h4>

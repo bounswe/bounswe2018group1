@@ -72,7 +72,6 @@ class App extends React.Component {
         <Sidebar
           routes={dashboardRoutes}
           logoText={"RETRO"}
-          logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}

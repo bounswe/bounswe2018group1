@@ -82,10 +82,9 @@ const styles = {
   }
 };
 
-function UpgradeToPro(props) {
+function AddNewMemory(props) {
   const { classes } = props;
   return (
-
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={10}>
         <Card>
@@ -121,6 +120,19 @@ function UpgradeToPro(props) {
                 />
               </GridItem>
             </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Description"
+                  id="description"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+            
             <tr>
               <td className={classes.center}>
               <Button
@@ -138,4 +150,4 @@ function UpgradeToPro(props) {
   );
 }
 
-export default withStyles(styles)(UpgradeToPro);
+export default withStyles(styles)(AddNewMemory);

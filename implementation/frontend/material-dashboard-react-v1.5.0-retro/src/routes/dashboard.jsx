@@ -15,7 +15,8 @@ import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
+import AddNewMemory from "views/AddNewMemory/AddNewMemory.jsx";
+import Login from "views/Login/Login.jsx";
 
 const dashboardRoutes = [
   // {
@@ -68,11 +69,18 @@ const dashboardRoutes = [
   //   component: NotificationsPage
   // },
   {
-    path: "/upgrade-to-pro",
+    path: "/add-new-memory",
     sidebarName: "Add new Memory",
     navbarName: "Add new Memory",
     icon: Unarchive,
-    component: UpgradeToPro
+    component: AddNewMemory
+  },
+  {
+    path: "/login",
+    sidebarName: "Login",
+    navbarName: "Login",
+    icon: Dashboard,
+    component: Login
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];

@@ -10,6 +10,7 @@
     "@types/googlemaps": "3.30.13",
     "@types/markerclustererplus": "2.1.33",
     "ajv": "^5.0.0",
+    "axios": "^0.18.0",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "npm-run-all": "4.1.3",

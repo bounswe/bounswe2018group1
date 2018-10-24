@@ -192,8 +192,8 @@ material-dashboard-react
         │   └── TableList.jsx
         ├── Typography
         │   └── Typography.jsx
-        ├── UpgradeToPro
-        │   └── UpgradeToPro.jsx
+        ├── AddNewMemory
+        │   └── AddNewMemory.jsx
         └── UserProfile
             └── UserProfile.jsx
 ```
