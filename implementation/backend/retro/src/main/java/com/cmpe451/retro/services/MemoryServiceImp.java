@@ -93,7 +93,7 @@ public class MemoryServiceImp implements MemoryService {
 
     @Override
     public List<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId) {
-        //TODO check how it works
+        //TODO check how removeIf works
         List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll());
         listOfMemories.removeIf(m -> m.getUserId() != userId);
         List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();

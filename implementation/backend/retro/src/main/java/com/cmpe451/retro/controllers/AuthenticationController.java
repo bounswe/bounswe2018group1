@@ -4,6 +4,7 @@ import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
+import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
 import com.cmpe451.retro.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,21 @@ public class AuthenticationController {
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     public List<User> getAllUsers() { return authenticationService.getAllUsers(); }
 
+    @RequestMapping(value = "/user/info", method = RequestMethod.PUT)
+    void updateInfo(@RequestBody UpdateUserInfoRequestBody updateUserInfoBody) {
+        long userId = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        authenticationService.updateUserInfo(userId, updateUserInfoBody);
+    }
+
+//    @RequestMapping(value = "/info", method = RequestMethod.GET)
+//    public UserInfoResponse getInfo(String nickname) {
+//        if (nickname == null) {
+//            long userId = sessionUtil.getUserId(httpServletRequest);
+//            return userService.getInfo(userId);
+//        }
+//
+//        return userService.getInfo(nickname);
+//
+//    }
 
 }

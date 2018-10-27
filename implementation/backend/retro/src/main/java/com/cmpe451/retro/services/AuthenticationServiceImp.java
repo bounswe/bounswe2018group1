@@ -7,6 +7,7 @@ import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.models.RetroException;
+import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,7 +60,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
     }
 
     private User createUser(RegisterRequestBody registerRequestBody) {
-        //check if a user with this email / nickname exists
+        //check if a user with this email / nickname exists //TODO:check
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
         Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
         if(userOptionalEmail.isPresent()){
@@ -111,6 +112,37 @@ public class AuthenticationServiceImp implements AuthenticationService {
         List<User> allUsers = userRepository.findAll();
 
         return allUsers;
+
+    }
+
+    @Override
+    public void updateUserInfo(long userId, UpdateUserInfoRequestBody updateUserInfoBody) { //TODO:check
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            if (updateUserInfoBody.getFirstName() != null && !updateUserInfoBody.getFirstName().equals("")) {
+                user.setFirstName(updateUserInfoBody.getFirstName());
+            }
+
+            if (updateUserInfoBody.getLastName() != null && !updateUserInfoBody.getLastName().equals("")) {
+                user.setLastName(updateUserInfoBody.getLastName());
+            }
+
+            if (updateUserInfoBody.getNewPassword() != null && updateUserInfoBody.getOldPassword() != null &&
+                    !updateUserInfoBody.getNewPassword().equals("") && !updateUserInfoBody.getOldPassword().equals("")) {
+
+                if (user.getPassword().equals(updateUserInfoBody.getOldPassword())) {
+                    user.setPassword(updateUserInfoBody.getNewPassword());
+                } else {
+                    throw new RetroException("Old password is not correct", HttpStatus.BAD_REQUEST);
+                }
+
+            }
+            userRepository.save(user);
+
+        }else{
+            throw new RetroException("Could not find the user", HttpStatus.EXPECTATION_FAILED);
+        }
 
     }
 
