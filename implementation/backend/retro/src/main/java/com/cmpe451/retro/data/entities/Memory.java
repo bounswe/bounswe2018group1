@@ -13,9 +13,12 @@ public class Memory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    /*@NotNull
     @ManyToOne
-    private User user;
+    private User user;*/
+
+    @NotNull
+    private long userId;
 
     @NotNull
     private String headline;
@@ -28,13 +31,14 @@ public class Memory {
 
     private Date dateOfCreation;
 
-    public User getUser() {
-        return user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public String getHeadline() {
         return headline;
@@ -76,4 +80,11 @@ public class Memory {
         this.dateOfCreation = dateOfCreation;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 }

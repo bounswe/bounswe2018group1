@@ -28,14 +28,22 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(@RequestBody RegisterRequestBody registerRequestBody) {
+    public long register(@RequestBody RegisterRequestBody registerRequestBody) {
         long userId = authenticationService.register(registerRequestBody);
         httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
+        return userId;
 
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public User getUser() { return authenticationService.getUser(); }
+    public User getCurrentUser() { return authenticationService.getCurrentUser(); }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public User getUserById(@PathVariable("id") long id) { return authenticationService.getUserById(id); }
+
+    //TODO: decide pathvariable or requestparam
+    //@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    //public User getUserById(@RequestParam("id") long id) { return authenticationService.getUserById(id); }
 
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     public List<User> getAllUsers() { return authenticationService.getAllUsers(); }

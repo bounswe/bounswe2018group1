@@ -28,8 +28,9 @@ public class Story {
     @Temporal(TemporalType.DATE)
     private Date dateOfCreation;
 
-    @ManyToOne
-    private Memory memory;
+    //@ManyToOne
+    //private Memory memory;
+    private long memoryId; //changed
 
     private String country;
 
@@ -57,7 +58,7 @@ public class Story {
         this.description = storyModel.getDescription();
         this.storyDate = new Date(storyModel.getTime());
         this.dateOfCreation = new Date();
-        this.memory = memory;
+        this.memoryId = memory.getId(); //changed
         this.country = storyModel.getCountry();
         this.city = storyModel.getCity();
         this.country = storyModel.getCounty();
@@ -106,13 +107,13 @@ public class Story {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public Memory getMemory() {
-        return memory;
-    }
-
-    public void setMemory(Memory memory) {
-        this.memory = memory;
-    }
+//    public Memory getMemory() {
+//        return memory.;
+//    }
+//
+//    public void setMemory(Memory memory) {
+//        this.memory = memory;
+//    }
 
     public String getCountry() {
         return country;
@@ -155,4 +156,11 @@ public class Story {
     }
 
 
+    public long getMemoryId() {
+        return memoryId;
+    }
+
+    public void setMemoryId(long memoryId) {
+        this.memoryId = memoryId;
+    }
 }

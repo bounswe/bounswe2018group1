@@ -3,6 +3,7 @@ package com.cmpe451.retro.data.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -35,6 +36,10 @@ public class User {
     @Column(length=60)
     @NotNull
     private String password;
+
+    @NotNull
+    @OneToMany
+    private List<Memory> memoryList;
 
     public long getId() {
         return id;
@@ -98,5 +103,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Memory> getMemoryList() {
+        return memoryList;
+    }
+
+    public void setMemoryList(List<Memory> memoryList) {
+        this.memoryList = memoryList;
     }
 }

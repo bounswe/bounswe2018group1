@@ -11,4 +11,6 @@ public interface MemoryRepository extends CrudRepository<Memory,Long> {
     Optional<Memory> findById(Long id);
     List<Memory> findAll();
 
+    List<Memory> findByUserId(Long userId);
+
 }

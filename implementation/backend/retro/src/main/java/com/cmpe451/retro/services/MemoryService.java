@@ -18,4 +18,6 @@ public interface MemoryService {
 
     List<GetMemoryResponseBody> getAllMemories();
 
+    List<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId);
+
 }

@@ -13,7 +13,9 @@ public interface AuthenticationService {
 
     long register(RegisterRequestBody registerRequestBody);
 
-    User getUser();
+    User getCurrentUser();
+
+    User getUserById(long id);
 
     List<User> getAllUsers();
 

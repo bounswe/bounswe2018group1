@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,18 +54,26 @@ public class AuthenticationServiceImp implements AuthenticationService {
     public long register(RegisterRequestBody registerRequestBody) {
 
         User user = createUser(registerRequestBody);
-
         User savedUser = userRepository.save(user);
         return savedUser.getId();
     }
 
     private User createUser(RegisterRequestBody registerRequestBody) {
+        //check if a user with this email / nickname exists
+        Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
+        Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
+        if(userOptionalEmail.isPresent()){
+            throw new RetroException("Account with this email exists", HttpStatus.CONFLICT);
+        }else if(userOptionalNickname.isPresent()){
+            throw new RetroException("Account with this nickname exists", HttpStatus.CONFLICT);
+        }
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequestBody.getPassword()));
         user.setEmail(registerRequestBody.getEmail());
         user.setNickname(registerRequestBody.getNickname());
         user.setFirstName(registerRequestBody.getFirstName());
         user.setLastName(registerRequestBody.getLastName());
+        user.setMemoryList(new ArrayList<>());
 
         Date now = new Date();
         user.setDateOfCreation(now);
@@ -75,10 +84,20 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
 
     @Override
-    public User getUser() {
+    public User getCurrentUser() {
 
         long userID = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
         Optional<User> user = userRepository.findById(userID);
+
+        if(user.isPresent())
+            return user.get();
+
+        throw new RetroException("You have tried to access an authorised page. Please login and try again.",HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    public User getUserById(long id) {
+        Optional<User> user = userRepository.findById(id);
 
         if(user.isPresent())
             return user.get();

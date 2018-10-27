@@ -3,6 +3,7 @@ package com.cmpe451.retro.services;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Story;
+import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.StoryRepository;
 import com.cmpe451.retro.models.*;
@@ -43,7 +44,8 @@ public class MemoryServiceImp implements MemoryService {
         Memory memory = new Memory();
         memory.setDescription(requestBody.getDescription());
         memory.setHeadline(requestBody.getHeadline());
-        memory.setUser(authenticationService.getUser());
+        User ownerUser = authenticationService.getCurrentUser();
+        memory.setUserId(ownerUser.getId());
         memory.setDateOfCreation(new Date());
 
         List<Story> storyList= new ArrayList<>();
@@ -59,6 +61,7 @@ public class MemoryServiceImp implements MemoryService {
         }
 
         memory.setStoryList(storyList);
+        ownerUser.getMemoryList().add(memory); //TODO: check
         entityManager.persist(memory);
         entityManager.flush();
 
@@ -87,4 +90,20 @@ public class MemoryServiceImp implements MemoryService {
         }
         return listOfMemoryResponseBodies;
     }
+
+    @Override
+    public List<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId) {
+        //TODO check how it works
+        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll());
+        listOfMemories.removeIf(m -> m.getUserId() != userId);
+        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
+        for(Memory memory: listOfMemories){
+            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+        }
+        return listOfMemoryResponseBodies;
+    }
+
+
+
+
 }

@@ -29,4 +29,9 @@ public class MemoryController {
     @RequestMapping(value = "/memory/all", method = RequestMethod.GET)
     public List<GetMemoryResponseBody> getAllMemories() { return memoryService.getAllMemories(); }
 
+    @RequestMapping(value = "/memory/user",method = RequestMethod.GET)
+    public List<GetMemoryResponseBody> getAllMemoriesOfUser(Long id){ //TO-DO Required
+        return memoryService.getAllMemoriesOfUser(id);
+    }
+
 }
