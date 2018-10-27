@@ -5,13 +5,11 @@ import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@CrossOrigin
 @RestController
 public class AuthenticationController {
 
