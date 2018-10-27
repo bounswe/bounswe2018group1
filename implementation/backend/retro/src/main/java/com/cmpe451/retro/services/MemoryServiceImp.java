@@ -103,7 +103,29 @@ public class MemoryServiceImp implements MemoryService {
         return listOfMemoryResponseBodies;
     }
 
+    @Override
+    public void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody) {
+        Optional<Memory> memoryOptional = memoryRepository.findById(id);
+        if(memoryOptional.isPresent()){
+            Memory memory = memoryOptional.get();
+            if (updateMemoryRequestBody.getDescription() != null && !updateMemoryRequestBody.getDescription().equals("")) {
+                memory.setDescription(updateMemoryRequestBody.getDescription());
+            }
 
+            if (updateMemoryRequestBody.getHeadline() != null && !updateMemoryRequestBody.getHeadline().equals("")) {
+                memory.setHeadline(updateMemoryRequestBody.getHeadline());
+            }
+
+            if (updateMemoryRequestBody.getStoryList() != null) {
+                memory.setStoryList(updateMemoryRequestBody.getStoryList());
+            }
+
+            memoryRepository.save(memory);
+
+        }else{
+            throw new RetroException("Could not find the memory", HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 
 
 }
