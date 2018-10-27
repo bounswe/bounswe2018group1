@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -84,5 +85,15 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
         throw new RetroException("You have tried to access an authorised page. Please login and try again.",HttpStatus.UNAUTHORIZED);
     }
+
+    @Override
+    public List<User> getAllUsers() {
+
+        List<User> allUsers = userRepository.findAll();
+
+        return allUsers;
+
+    }
+
 
 }

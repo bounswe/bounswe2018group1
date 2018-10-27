@@ -5,6 +5,8 @@ import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 
+import java.util.List;
+
 public interface AuthenticationService {
 
     long login(LoginRequestBody loginRequestBody);
@@ -12,5 +14,7 @@ public interface AuthenticationService {
     long register(RegisterRequestBody registerRequestBody);
 
     User getUser();
+
+    List<User> getAllUsers();
 
 }
