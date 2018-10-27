@@ -27,7 +27,7 @@ import java.util.Optional;
 public class MemoryServiceImp implements MemoryService {
 
     @Autowired
-    AuthenticationService authenticationService;
+    UserService userService;
 
     @Autowired
     MemoryRepository memoryRepository;
@@ -44,7 +44,7 @@ public class MemoryServiceImp implements MemoryService {
         Memory memory = new Memory();
         memory.setDescription(requestBody.getDescription());
         memory.setHeadline(requestBody.getHeadline());
-        User ownerUser = authenticationService.getCurrentUser();
+        User ownerUser = userService.getCurrentUser();
         memory.setUserId(ownerUser.getId());
         memory.setDateOfCreation(new Date());
 
