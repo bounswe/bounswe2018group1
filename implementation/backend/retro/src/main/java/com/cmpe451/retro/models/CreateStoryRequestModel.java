@@ -4,6 +4,7 @@ public class CreateStoryRequestModel {
 
     private String headline;
     private String description;
+    private Long time;
 
     public String getHeadline() {
         return headline;
@@ -19,5 +20,13 @@ public class CreateStoryRequestModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 }

@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,24 +28,30 @@ public class MemoryServiceImp implements MemoryService {
     @Autowired
     StoryRepository storyRepository;
 
+    @Autowired
+    EntityManager entityManager;
+
     @Override
+    @Transactional
     public CreateMemoryResponseBody createMemory(CreateMemoryRequestBody requestBody) {
         Memory memory = new Memory();
         memory.setDescription(requestBody.getDescription());
         memory.setHeadline(requestBody.getHeadline());
         memory.setUser(authenticationService.getUser());
+        memory.setDateOfCreation(new Date());
 
         List<Story> storyList= new ArrayList<>();
 
         for(CreateStoryRequestModel storyRequest: requestBody.getStoryList()){
-            Story story = new Story(storyRequest);
+            Story story = new Story(storyRequest, memory);
             storyList.add(story);
 
-            storyRepository.save(story);
+            entityManager.persist(story);
         }
 
         memory.setStoryList(storyList);
-        memoryRepository.save(memory);
+        entityManager.persist(memory);
+        entityManager.flush();
 
         return new CreateMemoryResponseBody(memory.getId());
     }

@@ -2,6 +2,7 @@ package com.cmpe451.retro.data.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,10 +20,13 @@ public class Memory {
     @NotNull
     private String headline;
 
+    @NotNull
     private String description;
 
     @OneToMany
     private List<Story> storyList;
+
+    private Date dateOfCreation;
 
     public User getUser() {
         return user;
@@ -63,4 +67,13 @@ public class Memory {
     public void setId(long id) {
         this.id = id;
     }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
 }
