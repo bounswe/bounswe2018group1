@@ -6,9 +6,14 @@ import com.cmpe451.retro.data.entities.Story;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.StoryRepository;
 import com.cmpe451.retro.models.*;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -71,5 +76,15 @@ public class MemoryServiceImp implements MemoryService {
             throw new RetroException("Memory not found.", HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @Override
+    public List<GetMemoryResponseBody> getAllMemories() {
+        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll());
+        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
+        for(Memory memory: listOfMemories){
+            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+        }
+        return listOfMemoryResponseBodies;
     }
 }

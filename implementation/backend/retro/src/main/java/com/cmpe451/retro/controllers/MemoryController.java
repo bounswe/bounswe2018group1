@@ -7,6 +7,8 @@ import com.cmpe451.retro.services.MemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class MemoryController {
@@ -23,5 +25,8 @@ public class MemoryController {
     public GetMemoryResponseBody getMemory(Long id){ //TO-DO Required
         return memoryService.getMemory(id);
     }
+
+    @RequestMapping(value = "/memory/all", method = RequestMethod.GET)
+    public List<GetMemoryResponseBody> getAllMemories() { return memoryService.getAllMemories(); }
 
 }
