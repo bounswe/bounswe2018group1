@@ -147,6 +147,7 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Password"
                       id="password"
+                      inputProps={{ type:"password" }}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -193,6 +194,7 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Password"
                       id="password"
+                      inputProps={{ type:"password" }}
                       formControlProps={{
                         fullWidth: true
                       }}

@@ -6,6 +6,7 @@ import Close from "@material-ui/icons/Close";
 import Check from "@material-ui/icons/Check";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
+import DateInput from "components/DateInput/DateInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Danger from "components/Typography/Danger.jsx";
@@ -124,15 +125,50 @@ function AddNewMemory(props) {
             <GridContainer>
               <GridItem xs={10} sm={10} md={8}>
                 <CustomInput
-                  labelText="Description"
-                  id="description"
+                  labelText="Image"
+                  id="image"
                   formControlProps={{
                     fullWidth: true
                   }}
                 />
               </GridItem>
             </GridContainer>
-            
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={4}>
+                <span>Start Time</span>
+                <CustomInput
+                  id="startTime"
+                  inputProps={{type: "date"}}
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+              <GridItem xs={10} sm={10} md={4}>
+                <span>End Time</span>
+                <CustomInput
+                  id="endTime"
+                  inputProps={{type: "date"}}
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Location"
+                  id="location"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
             <tr>
               <td className={classes.center}>
               <Button
