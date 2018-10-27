@@ -1,5 +1,6 @@
 package com.cmpe451.retro.services;
 
+import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Story;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
@@ -44,8 +45,11 @@ public class MemoryServiceImp implements MemoryService {
 
         for(CreateStoryRequestModel storyRequest: requestBody.getStoryList()){
             Story story = new Story(storyRequest, memory);
+            Location location = new Location(storyRequest.getLocationDto());
+            story.setLocation(location);
             storyList.add(story);
 
+            entityManager.persist(location);
             entityManager.persist(story);
         }
 

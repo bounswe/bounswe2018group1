@@ -1,6 +1,8 @@
 package com.cmpe451.retro.data.entities;
 
 
+import com.cmpe451.retro.models.LocationDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -49,6 +51,14 @@ public class Location {
         double nauticalMiles = 60 * Math.toDegrees(angle);
         double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
         return statuteMiles;
+    }
+
+    public Location() {
+    }
+
+    public Location(LocationDto locationDto) {
+        this.latitude = locationDto.getLatitude();
+        this.longitude = locationDto.getLongitude();
     }
 
     public String toString() {

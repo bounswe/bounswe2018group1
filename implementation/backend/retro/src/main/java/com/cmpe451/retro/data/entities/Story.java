@@ -58,6 +58,10 @@ public class Story {
         this.storyDate = new Date(storyModel.getTime());
         this.dateOfCreation = new Date();
         this.memory = memory;
+        this.country = storyModel.getCountry();
+        this.city = storyModel.getCity();
+        this.country = storyModel.getCounty();
+        this.district = storyModel.getDistrict();
     }
 
     //TODO: add image and video and audio
