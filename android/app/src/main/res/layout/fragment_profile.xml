@@ -6,8 +6,6 @@
     android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"

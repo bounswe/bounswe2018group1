@@ -49,7 +49,7 @@ public class MemoryAdapter extends BaseAdapter {
             holder = (MemoryViewHolder) row.getTag();
         }
 
-        // TODO: change all views in each row
+        // TODO: change all views in each memory_row
         JsonObject memory = dataSource.get(position).getAsJsonObject();
         String memoryTitle = memory.get("headline").getAsString();
         String memoryDesc = memory.get("description").getAsString();

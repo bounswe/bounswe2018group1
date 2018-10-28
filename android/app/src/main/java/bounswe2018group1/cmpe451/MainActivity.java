@@ -1,11 +1,14 @@
 package bounswe2018group1.cmpe451;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
@@ -13,89 +16,83 @@ import bounswe2018group1.cmpe451.fragments.ProfileFragment;
 import bounswe2018group1.cmpe451.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
-    // TODO Map tab may not be implemented and removed
-    private Button tabFeed;
-    private Button tabMap;
-    private Button tabProfile;
-    private Button tabSearch;
+
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tabFeed = findViewById(R.id.tabFeed);
-        tabMap = findViewById(R.id.tabMap);
-        tabProfile = findViewById(R.id.tabProfile);
-        tabSearch = findViewById(R.id.tabSearch);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabLayout);
 
-        // Fragments
-        //final WallFragment wallFragment = new WallFragment(); TODO implement
-        final FeedFragment feedFragment = new FeedFragment();
-        final MapFragment mapFragment = new MapFragment();
-        final ProfileFragment profileFragment = new ProfileFragment();
-        final SearchFragment searchFragment = new SearchFragment();
+        setSupportActionBar(toolbar);
+        //create tabs title
+        tabLayout.addTab(tabLayout.newTab().setText("Feed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Map"));
+        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
+        tabLayout.addTab(tabLayout.newTab().setText("Search"));
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.mainLayout, feedFragment, "Feed");
-        fragmentTransaction.commit();
+        replaceFragment(new FeedFragment());
 
-        //ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("Profile");
-        //fragment.a();
-
-        // Tabs
-        tabFeed.setOnClickListener(new View.OnClickListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        replaceFragment(new FeedFragment());
+                        break;
+                    case 1:
+                        replaceFragment(new MapFragment());
+                        break;
+                    case 2:
+                        replaceFragment(new ProfileFragment());
+                        break;
+                    case 3:
+                        replaceFragment(new SearchFragment());
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             @Override
-            public void onClick(View v) {
-
-                FragmentTransaction fragmentTransactionF = getSupportFragmentManager().beginTransaction();
-                fragmentTransactionF.replace(R.id.mainLayout, feedFragment);
-                fragmentTransactionF.addToBackStack(null);
-                fragmentTransactionF.commit();
+            public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-        });
-
-        tabMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-
-                FragmentTransaction fragmentTransactionM = getSupportFragmentManager().beginTransaction();
-                fragmentTransactionM.replace(R.id.mainLayout, mapFragment);
-                fragmentTransactionM.addToBackStack(null);
-                fragmentTransactionM.commit();
-
-            }
-        });
-
-        tabProfile.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                FragmentTransaction fragmentTransactionP = getSupportFragmentManager().beginTransaction();
-                fragmentTransactionP.replace(R.id.mainLayout, profileFragment);
-                fragmentTransactionP.addToBackStack(null);
-                fragmentTransactionP.commit();
-
-            }
-        });
-
-        tabSearch.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                FragmentTransaction fragmentTransactionS = getSupportFragmentManager().beginTransaction();
-                fragmentTransactionS.replace(R.id.mainLayout, searchFragment);
-                fragmentTransactionS.addToBackStack(null);
-                fragmentTransactionS.commit();
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
 
     }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.mainLayout, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuSettings:
+                // TODO: open settings
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

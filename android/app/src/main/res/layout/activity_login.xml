@@ -8,10 +8,14 @@
     <LinearLayout
         android:id="@+id/loginLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
         <TextView
             android:id="@+id/textViewLogin"
@@ -36,7 +40,8 @@
             android:gravity="end|center_vertical"
             android:text="Sign up"
             android:textColor="#B00000"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/textViewLName"
@@ -54,7 +59,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+            android:drawableStart="@drawable/ic_account_circle_black_24dp"
             android:drawablePadding="5dp"
             android:ems="10"
             android:inputType="textEmailAddress"
@@ -76,7 +81,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
             android:drawablePadding="5dp"
             android:ems="10"
             android:inputType="textPassword" />
@@ -91,7 +96,8 @@
             android:gravity="end|center_vertical"
             android:text="Forgot your password?"
             android:textColor="#B00000"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/buttonLogin"

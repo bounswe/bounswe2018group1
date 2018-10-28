@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">CMPE451</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_search_fragment">Hello from search!</string>
     <string name="hello_feed_fragment">Hello from feed!</string>
     <string name="hello_map_fragment">Hello from map!</string>
@@ -11,4 +9,5 @@
     <string name="map_tab">MAP</string>
     <string name="profile_tab">PROFILE</string>
     <string name="search_tab">SEARCH</string>
+    <string name="settings_item">Settings</string>
 </resources>

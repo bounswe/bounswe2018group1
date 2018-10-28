@@ -1,53 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:background="@android:color/holo_blue_bright">
+        android:background="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
 
-        <Button
-            android:id="@+id/tabFeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_bright"
-            android:stateListAnimator="@null"
-            android:text="@string/feed_tab" />
-
-        <Button
-            android:id="@+id/tabMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_bright"
-            android:stateListAnimator="@null"
-            android:text="@string/map_tab" />
-
-        <Button
-            android:id="@+id/tabProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_bright"
-            android:stateListAnimator="@null"
-            android:text="@string/profile_tab" />
-
-        <Button
-            android:id="@+id/tabSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_bright"
-            android:stateListAnimator="@null"
-            android:text="@string/search_tab" />
-    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
 </LinearLayout>

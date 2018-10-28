@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
         textViewSignup = findViewById(R.id.textViewSignup);
         editTextLName = findViewById(R.id.editTextLName);
         editTextLPassword = findViewById(R.id.editTextLPassword);
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         volleySingleton = VolleySingleton.getInstance(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        setSupportActionBar(toolbar);
         textViewSignup.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -85,41 +89,20 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.option_user_menu, menu);
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-            case R.id.menuLogin:
-                Toast.makeText(getApplicationContext(), "Login Clicked", Toast.LENGTH_LONG).show();
+            case R.id.menuSettings:
+                // TODO: open settings
                 return true;
-
-            case R.id.menuRegister:
-                Toast.makeText(getApplicationContext(), "Register Clicked", Toast.LENGTH_LONG).show();
-                return true;
-
-            case R.id.menuReset:
-                Toast.makeText(getApplicationContext(), "Reset Password Clicked", Toast.LENGTH_LONG).show();
-                return true;
-
-            case R.id.menuSearch:
-                Toast.makeText(getApplicationContext(), "Memory Search Clicked", Toast.LENGTH_LONG).show();
-                return true;
-
             default:
-
-                super.onOptionsItemSelected(item);
-
+                return super.onOptionsItemSelected(item);
         }
-        return true;
-
     }
 
     @Override
