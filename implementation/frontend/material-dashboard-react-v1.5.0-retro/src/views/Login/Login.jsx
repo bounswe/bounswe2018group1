@@ -5,7 +5,6 @@ import Constants from "../../constants.js";
 
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
-import Icon from "@material-ui/core/Icon";
 
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
@@ -31,7 +30,7 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      name: "",
+      nickname: "",
       email: "",
       password: ""
     };
@@ -46,7 +45,7 @@ export default class Login extends Component {
   validateRegisterForm() {
     // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return this.state.name.length > 0 && re.test(this.state.email) && this.state.password.length > 7;
+    return this.state.nickname.length > 0 && re.test(this.state.email) && this.state.password.length > 7;
   }
 
   handleChange = event => {
@@ -60,54 +59,27 @@ export default class Login extends Component {
 
     console.log(LoginRepository);
 
-    LoginRepository.login(this.state.name, this.state.email, this.state.password)
+    LoginRepository.login(this.state.nickname, this.state.email, this.state.password)
     .then(res => {
       console.log(res.headers);
     })
     .catch(err => {
       console.log(err);
-    })
-    ;
-
-    /*try {
-      var xhr = new XMLHttpRequest();
-      var url =  Constants.API + "/login";
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          var json = JSON.parse(xhr.responseText);
-          console.log(json.email + ", " + json.password);
-        }
-      };
-      var data = JSON.stringify({"email": this.state.email, "password": this.state.password});
-      xhr.send(data);
-    }
-    catch (e) {
-      // Exception handling
-    }*/
+    });
   }
 
   handleSubmitRegister = event => {
     event.preventDefault();
 
-    try {
-      var xhr = new XMLHttpRequest();
-      var url =  Constants.API + "/register";
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          var json = JSON.parse(xhr.responseText);
-          console.log(json.name + "," + json.email + ", " + json.password);
-        }
-      };
-      var data = JSON.stringify({"name": this.state.name, "email": this.state.email, "password": this.state.password});
-      xhr.send(data);
-    }
-    catch (e) {
-      // Exception handling
-    }
+    console.log(LoginRepository);
+
+    LoginRepository.register(this.state.nickname, this.state.email, this.state.password)
+    .then(res => {
+      console.log(res.headers);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -123,10 +95,14 @@ export default class Login extends Component {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      labelText="Username"
-                      id="name"
+                      labelText="Nickname"
+                      id="nickname"
+                      value={this.state.nickname}
+                      onChange={this.handleChange}
+                      inputProps={{ type:"text" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: false
                       }}
                     />
                   </GridItem>
@@ -136,8 +112,12 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Email address"
                       id="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      inputProps={{ type:"email" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
                   </GridItem>
@@ -147,9 +127,12 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Password"
                       id="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
                       inputProps={{ type:"password" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
                   </GridItem>
@@ -170,10 +153,14 @@ export default class Login extends Component {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      labelText="Username"
-                      id="name"
+                      labelText="Nickname"
+                      id="nickname"
+                      value={this.state.nickname}
+                      onChange={this.handleChange}
+                      inputProps={{ type:"text" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
                   </GridItem>
@@ -183,8 +170,12 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Email address"
                       id="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      inputProps={{ type:"email" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
                   </GridItem>
@@ -194,9 +185,12 @@ export default class Login extends Component {
                     <CustomInput
                       labelText="Password"
                       id="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
                       inputProps={{ type:"password" }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
                   </GridItem>

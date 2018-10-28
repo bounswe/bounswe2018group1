@@ -3,16 +3,20 @@ import axios from "axios";
 import constants from "../constants";
 
 class LoginRepository {
-  static login(username, email, password) {
+  static login(nickname, email, password) {
     return axios.post(`${constants.API}/login`, {
-      email,
-      username,
-      password
+      nickname: nickname,
+      email: email,
+      password: password
     });
   }
 
-  static register(username, email, password) {
-
+  static register(nickname, email, password) {
+    return axios.post(`${constants.API}/register`, {
+      nickname: nickname,
+      email: email,
+      password: password
+    });
   }
 }
 

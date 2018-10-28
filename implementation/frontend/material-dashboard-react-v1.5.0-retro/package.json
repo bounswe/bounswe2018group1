@@ -27,7 +27,8 @@
     "react-password-mask": "^3.3.1",
     "react-router-dom": "4.3.1",
     "react-scripts": "1.1.5",
-    "react-swipeable-views": "0.12.17"
+    "react-swipeable-views": "0.12.17",
+    "reactstrap": "^6.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
