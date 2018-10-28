@@ -6,4 +6,5 @@
     <string name="hello_search_fragment">Hello from search!</string>
     <string name="hello_feed_fragment">Hello from feed!</string>
     <string name="hello_map_fragment">Hello from map!</string>
+    <string name="avatar_description">Avatar Picture</string>
 </resources>
