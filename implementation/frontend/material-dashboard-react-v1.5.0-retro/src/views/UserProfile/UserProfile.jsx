@@ -6,6 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
+import DateInput from "components/DateInput/DateInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -105,7 +106,7 @@ class UserProfile extends React.Component {
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={3}>
+                    <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="City"
                         id="city"
@@ -114,7 +115,7 @@ class UserProfile extends React.Component {
                         }}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
+                    <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="Country"
                         id="country"
@@ -123,16 +124,7 @@ class UserProfile extends React.Component {
                         }}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <CustomInput
-                        labelText="Birthday"
-                        id="birthday"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
+                    <GridItem xs={12} sm={12} md={4}>
                       <CustomInput
                         labelText="Gender"
                         id="gender"
@@ -143,7 +135,17 @@ class UserProfile extends React.Component {
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
+                    <GridItem xs={12} sm={12} md={3}>
+                      <DateInput
+                        id="birthday"
+                        labelText="Birthday"
+                        className={classes.textField}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={9}>
                       <CustomInput
                         labelText="Personel info"
                         id="about-me"

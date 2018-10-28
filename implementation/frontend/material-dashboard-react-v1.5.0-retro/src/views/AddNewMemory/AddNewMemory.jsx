@@ -16,6 +16,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -136,20 +137,20 @@ function AddNewMemory(props) {
 
             <GridContainer>
               <GridItem xs={10} sm={10} md={4}>
-                <span>Start Time</span>
-                <CustomInput
+                <DateInput
                   id="startTime"
-                  inputProps={{type: "date"}}
+                  labelText="Start Time"
+                  className={classes.textField}
                   formControlProps={{
                     fullWidth: true
                   }}
                 />
               </GridItem>
               <GridItem xs={10} sm={10} md={4}>
-                <span>End Time</span>
-                <CustomInput
+                <DateInput
                   id="endTime"
-                  inputProps={{type: "date"}}
+                  labelText="End Time"
+                  className={classes.textField}
                   formControlProps={{
                     fullWidth: true
                   }}

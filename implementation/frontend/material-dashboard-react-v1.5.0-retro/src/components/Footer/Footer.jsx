@@ -41,7 +41,7 @@ function Footer({ ...props }) {
             &copy; {1900 + new Date().getYear()}{" "}
             <a href="" className={classes.a}>
               Retro
-            </a>, made with love for a memory
+            </a>, made with <i class="far fa-heart"></i> for a memory
           </span>
         </p>
       </div>
