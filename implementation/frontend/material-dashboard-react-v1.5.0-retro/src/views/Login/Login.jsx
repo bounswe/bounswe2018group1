@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../../assets/css/material-dashboard-react.css";
-import Constants from "../../constants.js";
 
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -12,9 +11,6 @@ import Dashboard from "@material-ui/icons/Dashboard";
 // core components/views
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
-import Tasks from "components/Tasks/Tasks.jsx";
-import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";

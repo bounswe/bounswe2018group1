@@ -104,7 +104,7 @@ function AddNewMemory(props) {
               <GridItem xs={10} sm={10} md={8}>
                 <CustomInput
                   labelText="Title"
-                  id="title"
+                  id="headline"
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -161,8 +161,56 @@ function AddNewMemory(props) {
             <GridContainer>
               <GridItem xs={10} sm={10} md={8}>
                 <CustomInput
+                  labelText="City"
+                  id="city"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="County"
+                  id="county"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="District"
+                  id="district"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Country"
+                  id="country"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
                   labelText="Location"
-                  id="location"
+                  id="locationDto"
                   formControlProps={{
                     fullWidth: true
                   }}
