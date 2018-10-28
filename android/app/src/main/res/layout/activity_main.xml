@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="FEED" />
+            android:text="@string/feed_tab" />
 
         <Button
             android:id="@+id/tabMap"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="MAP" />
+            android:text="@string/map_tab" />
 
         <Button
             android:id="@+id/tabProfile"
@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="PROFILE" />
+            android:text="@string/profile_tab" />
 
         <Button
             android:id="@+id/tabSearch"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="SEARCH" />
+            android:text="@string/search_tab" />
     </LinearLayout>
 
 </LinearLayout>

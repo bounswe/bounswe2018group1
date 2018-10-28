@@ -7,4 +7,8 @@
     <string name="hello_feed_fragment">Hello from feed!</string>
     <string name="hello_map_fragment">Hello from map!</string>
     <string name="avatar_description">Avatar Picture</string>
+    <string name="feed_tab">FEED</string>
+    <string name="map_tab">MAP</string>
+    <string name="profile_tab">PROFILE</string>
+    <string name="search_tab">SEARCH</string>
 </resources>
