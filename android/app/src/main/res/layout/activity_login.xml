@@ -26,7 +26,7 @@
             android:layout_marginRight="27dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Log in"
+            android:text="@string/log_in_text"
             android:textSize="27sp"
             android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
             android:layout_marginRight="27dp"
             android:clickable="true"
             android:gravity="end|center_vertical"
-            android:text="Sign up"
+            android:text="@string/sign_up_text"
             android:textColor="#B00000"
             android:textSize="15sp"
             android:focusable="true" />
@@ -49,7 +49,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Nickname or Email" />
+            android:text="@string/nickname_or_email_text" />
 
         <EditText
             android:id="@+id/editTextLName"
@@ -71,7 +71,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Password" />
+            android:text="@string/password_text" />
 
         <EditText
             android:id="@+id/editTextLPassword"
@@ -94,7 +94,7 @@
             android:layout_marginRight="27dp"
             android:clickable="true"
             android:gravity="end|center_vertical"
-            android:text="Forgot your password?"
+            android:text="@string/forgot_your_password_text"
             android:textColor="#B00000"
             android:textSize="15sp"
             android:focusable="true" />
@@ -108,7 +108,7 @@
             android:layout_marginRight="81dp"
             android:layout_marginBottom="27dp"
             android:background="#B04038"
-            android:text="Log in"
+            android:text="@string/log_in_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
@@ -119,7 +119,7 @@
             android:layout_height="44dp"
             android:layout_margin="27dp"
             android:background="#2C58A0"
-            android:text="Log in with Facebook"
+            android:text="@string/log_in_with_facebook_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
@@ -132,7 +132,7 @@
             android:layout_marginRight="27dp"
             android:layout_marginBottom="27dp"
             android:background="#D84028"
-            android:text="Log in with Google"
+            android:text="@string/log_in_with_google_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />

@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -40,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
         editText = findViewById(R.id.editText);
         editTextRFirstName = findViewById(R.id.editTextRFirstName);
         editTextRSurname = findViewById(R.id.editTextRSurname);
@@ -51,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         volleySingleton = VolleySingleton.getInstance(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        setSupportActionBar(toolbar);
         textViewAlreadyRegistered.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -86,6 +92,24 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuSettings:
+                // TODO: open settings
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

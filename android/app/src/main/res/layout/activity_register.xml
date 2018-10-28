@@ -8,10 +8,14 @@
     <LinearLayout
         android:id="@+id/registerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
         <TextView
             android:id="@+id/textViewRegister"
@@ -20,7 +24,7 @@
             android:layout_margin="27dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Register"
+            android:text="@string/register_text"
             android:textSize="27sp"
             android:textStyle="bold" />
 
@@ -32,9 +36,10 @@
             android:layout_marginRight="27dp"
             android:clickable="true"
             android:gravity="end|center_vertical"
-            android:text="Already registered?"
+            android:text="@string/already_registered_text"
             android:textColor="#B00000"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/textViewRNickname"
@@ -42,7 +47,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Nickname" />
+            android:text="@string/nickname_text" />
 
         <EditText
             android:id="@+id/editText"
@@ -60,7 +65,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="First Name" />
+            android:text="@string/first_name_text" />
 
         <EditText
             android:id="@+id/editTextRFirstName"
@@ -78,7 +83,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Surname" />
+            android:text="@string/surname_text" />
 
         <EditText
             android:id="@+id/editTextRSurname"
@@ -96,7 +101,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Email" />
+            android:text="@string/email_text" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -114,7 +119,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Password" />
+            android:text="@string/password_text" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -132,7 +137,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
-            android:text="Confirm Password" />
+            android:text="@string/confirm_password_text" />
 
         <EditText
             android:id="@+id/editTextPassword2"
@@ -153,7 +158,7 @@
             android:layout_marginRight="81dp"
             android:layout_marginBottom="27dp"
             android:background="#B04038"
-            android:text="Register"
+            android:text="@string/register_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
@@ -164,7 +169,7 @@
             android:layout_height="44dp"
             android:layout_margin="27dp"
             android:background="#2C58A0"
-            android:text="Sign up with Facebook"
+            android:text="@string/sign_up_with_facebook_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
@@ -177,7 +182,7 @@
             android:layout_marginRight="27dp"
             android:layout_marginBottom="27dp"
             android:background="#D84028"
-            android:text="Sign up with Google"
+            android:text="@string/sign_up_with_google_text"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
