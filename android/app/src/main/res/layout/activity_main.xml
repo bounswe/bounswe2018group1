@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
@@ -15,22 +14,22 @@
         tools:background="@android:color/holo_blue_bright">
 
         <Button
-            android:id="@+id/tabWall"
+            android:id="@+id/tabFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="Wall" />
+            android:text="FEED" />
 
         <Button
-            android:id="@+id/tabMemory"
+            android:id="@+id/tabMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="Memory" />
+            android:text="MAP" />
 
         <Button
             android:id="@+id/tabProfile"
@@ -39,16 +38,16 @@
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="Profile" />
+            android:text="PROFILE" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/tabSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_bright"
             android:stateListAnimator="@null"
-            android:text="Button" />
+            android:text="SEARCH" />
     </LinearLayout>
 
 </LinearLayout>

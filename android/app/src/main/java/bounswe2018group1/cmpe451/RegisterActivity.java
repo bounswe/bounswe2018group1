@@ -62,12 +62,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        buttonRegister.setOnClickListener(new View.OnClickListener(){
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if(!editTextPassword.getText().toString().equals(editTextPassword2.getText().toString())){
+                if (!editTextPassword.getText().toString().equals(editTextPassword2.getText().toString())) {
                     editTextPassword.setText("");
                     editTextPassword2.setText("");
                     Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 try {
                     // Remove keyboard
-                    if(getCurrentFocus() != null)
+                    if (getCurrentFocus() != null)
                         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                     sendRegisterRequest();
@@ -92,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if(volleySingleton != null) {
+        if (volleySingleton != null) {
             volleySingleton.getRequestQueue().cancelAll(VolleySingleton.Tags.REGISTER_REQ_TAG);
         }
     }
@@ -112,10 +112,10 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Object response) {
 
                         Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                        if(response == null) return;
-                        if(response instanceof JSONObject) {
+                        if (response == null) return;
+                        if (response instanceof JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject)response;
+                            JSONObject r = (JSONObject) response;
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.out.println("Response: " + response.toString());

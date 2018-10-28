@@ -1,72 +1,77 @@
 package bounswe2018group1.cmpe451;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import bounswe2018group1.cmpe451.fragments.FeedFragment;
+import bounswe2018group1.cmpe451.fragments.MapFragment;
+import bounswe2018group1.cmpe451.fragments.ProfileFragment;
+import bounswe2018group1.cmpe451.fragments.SearchFragment;
+
 public class MainActivity extends AppCompatActivity {
     // TODO Map tab may not be implemented and removed
-    private Button tabWall;
-    private Button tabMemory;
+    private Button tabFeed;
+    private Button tabMap;
     private Button tabProfile;
+    private Button tabSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tabWall = findViewById(R.id.tabWall);
-        tabMemory = findViewById(R.id.tabMemory);
+        tabFeed = findViewById(R.id.tabFeed);
+        tabMap = findViewById(R.id.tabMap);
         tabProfile = findViewById(R.id.tabProfile);
+        tabSearch = findViewById(R.id.tabSearch);
 
         // Fragments
         //final WallFragment wallFragment = new WallFragment(); TODO implement
-        final MemoryFragment memoryFragment = new MemoryFragment();
+        final FeedFragment feedFragment = new FeedFragment();
+        final MapFragment mapFragment = new MapFragment();
         final ProfileFragment profileFragment = new ProfileFragment();
+        final SearchFragment searchFragment = new SearchFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.mainLayout, memoryFragment, "Memory");
-        fragmentTransaction.add(R.id.mainLayout, profileFragment, "Profile");
+        fragmentTransaction.add(R.id.mainLayout, feedFragment, "Feed");
         fragmentTransaction.commit();
 
-        /*fragmentTransaction = fragmentManager.beginTransaction();
-        ProfileFragment profileFragment2 = new ProfileFragment();
-        fragmentTransaction.replace(R.id.mainLayout, profileFragment2, "a");
-        fragmentTransaction.addToBackStack("c");
-        fragmentTransaction.commit();*/
-        //profileFragment.a();
+        //ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("Profile");
+        //fragment.a();
 
         // Tabs
-        tabWall.setOnClickListener(new View.OnClickListener(){
+        tabFeed.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("Profile");
-
-                fragment.a();
+                FragmentTransaction fragmentTransactionF = getSupportFragmentManager().beginTransaction();
+                fragmentTransactionF.replace(R.id.mainLayout, feedFragment);
+                fragmentTransactionF.addToBackStack(null);
+                fragmentTransactionF.commit();
 
             }
         });
 
-        tabMemory.setOnClickListener(new View.OnClickListener(){
+        tabMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 FragmentTransaction fragmentTransactionM = getSupportFragmentManager().beginTransaction();
-                fragmentTransactionM.replace(R.id.mainLayout, memoryFragment);
+                fragmentTransactionM.replace(R.id.mainLayout, mapFragment);
                 fragmentTransactionM.addToBackStack(null);
                 fragmentTransactionM.commit();
 
             }
         });
 
-        tabProfile.setOnClickListener(new View.OnClickListener(){
+        tabProfile.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -79,11 +84,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tabSearch.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
 
+                FragmentTransaction fragmentTransactionS = getSupportFragmentManager().beginTransaction();
+                fragmentTransactionS.replace(R.id.mainLayout, searchFragment);
+                fragmentTransactionS.addToBackStack(null);
+                fragmentTransactionS.commit();
 
-
-
+            }
+        });
 
     }
 }

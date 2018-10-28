@@ -1,0 +1,80 @@
+[
+  {
+    "description": "string",
+    "headline": "string",
+    "storyList": [
+      {
+        "city": "string",
+        "country": "string",
+        "county": "string",
+        "dateOfCreation": "2018-10-27T11:48:33.807Z",
+        "description": "string",
+        "district": "string",
+        "headline": "string",
+        "id": 0,
+        "location": {
+          "latitude": 1,
+          "longitude": 2
+        },
+        "storyDate": "2018-10-27T11:48:33.807Z"
+      }
+    ]
+  },
+  {
+    "description": "string2",
+    "headline": "string2",
+    "storyList": [
+      {
+        "city": "string2",
+        "country": "string2",
+        "county": "string2",
+        "dateOfCreation": "2018-10-27T11:48:33.807Z",
+        "description": "string2",
+        "district": "string2",
+        "headline": "string2",
+        "id": 1,
+        "location": {
+          "latitude": 3,
+          "longitude": 4
+        },
+        "storyDate": "2018-10-27T11:48:33.807Z"
+      }
+    ]
+  },
+  {
+    "description": "string3",
+    "headline": "string3",
+    "storyList": [
+      {
+        "city": "string3",
+        "country": "string3",
+        "county": "string3",
+        "dateOfCreation": "2018-10-27T11:48:33.807Z",
+        "description": "string3",
+        "district": "string3",
+        "headline": "string3",
+        "id": 2,
+        "location": {
+          "latitude": 5,
+          "longitude": 6
+        },
+        "storyDate": "2018-10-27T11:48:33.807Z"
+      },
+      {
+        "city": "string4",
+        "country": "string4",
+        "county": "string4",
+        "dateOfCreation": "2018-10-27T11:48:33.807Z",
+        "description": "string4",
+        "district": "string4",
+        "headline": "string4",
+        "id": 3,
+        "location": {
+          "latitude": 7,
+          "longitude": 8
+        },
+        "storyDate": "2018-10-27T11:48:33.807Z"
+      }
+    ]
+  }
+]

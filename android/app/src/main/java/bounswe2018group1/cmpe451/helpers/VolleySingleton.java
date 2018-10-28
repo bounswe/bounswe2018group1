@@ -13,6 +13,7 @@ public class VolleySingleton {
     private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;
     private static Context mCtx;
+
     public static class Tags {
         public static final String LOGIN_REQ_TAG = "login_tag";
         public static final String REGISTER_REQ_TAG = "register_tag";

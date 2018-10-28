@@ -1,4 +1,4 @@
-package bounswe2018group1.cmpe451;
+package bounswe2018group1.cmpe451.fragments;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import bounswe2018group1.cmpe451.R;
 
 
 /**
@@ -29,7 +31,7 @@ public class ProfileFragment extends Fragment {
         return v;
     }
 
-    public void a () {
+    public void a() {
         a.setText(a.getText() + "eee");
     }
 
