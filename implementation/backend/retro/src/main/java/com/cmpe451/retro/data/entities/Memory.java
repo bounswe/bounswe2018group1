@@ -29,6 +29,7 @@ public class Memory {
     @OneToMany
     private List<Story> storyList;
 
+    @NotNull
     private Date dateOfCreation;
 
 //    public User getUser() {

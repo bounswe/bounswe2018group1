@@ -48,6 +48,10 @@ public class AuthenticationServiceImp implements AuthenticationService {
             throw new RetroException("Incorrect login information.", HttpStatus.UNAUTHORIZED);
         }
 
+        if(!user.getActivated()) {
+            throw new RetroException("Please activate your account to log in.", HttpStatus.UNAUTHORIZED);
+        }
+
         return user.getId();
     }
 
@@ -59,7 +63,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
         return savedUser.getId();
     }
 
-    private User createUser(RegisterRequestBody registerRequestBody) {
+    public String createUser(RegisterRequestBody registerRequestBody) {
         //check if a user with this email / nickname exists //TODO:check
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
         Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
@@ -75,15 +79,26 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.setFirstName(registerRequestBody.getFirstName());
         user.setLastName(registerRequestBody.getLastName());
         user.setMemoryList(new ArrayList<>());
+        user.setActivated(false); //initially it is not activated
+        user.setRandomCode(getRandomCode(15));
 
         Date now = new Date();
         user.setDateOfCreation(now);
         user.setDateOfUpdate(now);
 
-        return user;
+        return "Please activate your account with your email, your id is: "+ user.getId() +" your random code: "+ user.getRandomCode();
     }
 
+    public long activate(String email, String randomCode){
+        Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
+        if(userOptionalEmail.isPresent()){
+            User user = userOptionalEmail.get();
+            if(user.getRandomCode().equals(randomCode))
+                user.setActivated(true);
+            userRepository.save(user); //update the user
 
-
+            return user.id;
+        }
+    }
 
 }

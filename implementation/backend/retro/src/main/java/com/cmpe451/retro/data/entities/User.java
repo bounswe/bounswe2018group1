@@ -41,6 +41,12 @@ public class User {
     @OneToMany
     private List<Memory> memoryList;
 
+    @NotNull
+    private boolean activated;
+
+    @NotNull
+    private String randomCode;
+
     public long getId() {
         return id;
     }
@@ -111,5 +117,17 @@ public class User {
 
     public void setMemoryList(List<Memory> memoryList) {
         this.memoryList = memoryList;
+    }
+
+    public void setActivated(boolean activated){ this.activated = activated; }
+
+    public boolean getActivated(){ return activated; }
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
     }
 }
