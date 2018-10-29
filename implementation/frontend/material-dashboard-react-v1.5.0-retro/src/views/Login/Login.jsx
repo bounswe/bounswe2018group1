@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 import "../../assets/css/material-dashboard-react.css";
 
 // @material-ui/core
@@ -18,6 +17,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
 import LoginRepository from '../../api_calls/login.js';
 
@@ -30,6 +30,8 @@ export default class Login extends Component {
       email: "",
       password: ""
     };
+
+    //this.handleChange = this.handleChange.bind(this);
   }
 
   validateLoginForm() {
@@ -52,30 +54,38 @@ export default class Login extends Component {
 
   handleSubmitLogin = event => {
     event.preventDefault();
+    LoginRepository.login(this.state.loginNickname, this.state.loginEmail, this.state.loginPassword)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
-    console.log(LoginRepository);
+  handleSubmitForget = event => {
+    event.preventDefault();
 
-    LoginRepository.login(this.state.nickname, this.state.email, this.state.password)
-    .then(res => {
-      console.log(res.headers);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    LoginRepository.forget(this.state.nickname, this.state.email, this.state.password)
+      .then(res => {
+        console.log(res);
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleSubmitRegister = event => {
     event.preventDefault();
 
-    console.log(LoginRepository);
-
     LoginRepository.register(this.state.nickname, this.state.email, this.state.password)
-    .then(res => {
-      console.log(res.headers);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(res => {
+        console.log(res.headers);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -92,10 +102,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Nickname"
-                      id="nickname"
+                      id="loginNickname"
                       value={this.state.nickname}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"text" }}
+                      inputProps={{
+                        type:"text",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: false
@@ -107,10 +119,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Email address"
-                      id="email"
+                      id="loginEmail"
                       value={this.state.email}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"email" }}
+                      inputProps={{
+                        type:"email",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: true
@@ -122,10 +136,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Password"
-                      id="password"
+                      id="loginPassword"
                       value={this.state.password}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"password" }}
+                      inputProps={{
+                        type:"password",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: true
@@ -136,6 +152,7 @@ export default class Login extends Component {
               </CardBody>
               <CardFooter>
                 <Button color="primary" onClick={this.handleSubmitLogin}>Login</Button>
+                <Button color="transparent" onClick={this.handleSubmitForget}>Forget password</Button>
               </CardFooter>
             </Card>
           </GridItem>
@@ -150,10 +167,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Nickname"
-                      id="nickname"
+                      id="registerNickname"
                       value={this.state.nickname}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"text" }}
+                      inputProps={{
+                        type:"text",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: true
@@ -165,10 +184,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Email address"
-                      id="email"
+                      id="registerEmail"
                       value={this.state.email}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"email" }}
+                      inputProps={{
+                        type:"email",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: true
@@ -180,10 +201,12 @@ export default class Login extends Component {
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
                       labelText="Password"
-                      id="password"
+                      id="registerPassword"
                       value={this.state.password}
-                      onChange={this.handleChange}
-                      inputProps={{ type:"password" }}
+                      inputProps={{
+                        type:"password",
+                        onChange: this.handleChange
+                      }}
                       formControlProps={{
                         fullWidth: true,
                         required: true
@@ -193,7 +216,7 @@ export default class Login extends Component {
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Register</Button>
+                <Button color="primary" onClick={this.handleSubmitRegister}>Register</Button>
               </CardFooter>
             </Card>
           </GridItem>

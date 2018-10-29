@@ -28,7 +28,7 @@ const Sidebar = ({ ...props }) => {
         if (prop.redirect) return null;
         var activePro = " ";
         var listItemClasses;
-        if (prop.path === "/upgrade-to-pro") {
+        if (prop.path === "/add-new-memory") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
             [" " + classes[color]]: true
@@ -69,9 +69,9 @@ const Sidebar = ({ ...props }) => {
   );
   var brand = (
     <div className={classes.logo}>
-      <a href="https://www.creative-tim.com" className={classes.logoLink}>
+      <a href="../../route/dashboard.jsx" className={classes.logoLink}>
         <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+          <i class="fas fa-camera-retro"></i>
         </div>
         {logoText}
       </a>

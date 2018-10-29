@@ -85,7 +85,7 @@ const styles = {
 };
 
 function AddNewMemory(props) {
-  const { classes } = props;
+  const { classes, onAddMemory } = props;
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={10}>
@@ -99,14 +99,14 @@ function AddNewMemory(props) {
             </p>
           </CardHeader>
           <CardBody>
-
             <GridContainer>
               <GridItem xs={10} sm={10} md={8}>
                 <CustomInput
                   labelText="Title"
                   id="headline"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    required: true
                   }}
                 />
               </GridItem>
@@ -117,7 +117,8 @@ function AddNewMemory(props) {
                   labelText="Description"
                   id="description"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    required: true
                   }}
                 />
               </GridItem>
@@ -212,7 +213,8 @@ function AddNewMemory(props) {
                   labelText="Location"
                   id="locationDto"
                   formControlProps={{
-                    fullWidth: true
+                    fullWidth: true,
+                    required: true
                   }}
                 />
               </GridItem>
@@ -221,6 +223,7 @@ function AddNewMemory(props) {
             <tr>
               <td className={classes.center}>
               <Button
+                href="/show-memory"
                 round
                 color="info"
               >Add New Memory
