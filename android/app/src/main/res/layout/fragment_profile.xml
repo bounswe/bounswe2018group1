@@ -7,13 +7,11 @@
     tools:context=".fragments.ProfileFragment">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="162dp"
         android:src="@drawable/ic_account_circle_black_24dp" />
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="N A M E"
@@ -21,7 +19,6 @@
         android:textSize="40sp" />
 
     <TextView
-        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="S U R N A M E"
@@ -37,7 +34,6 @@
         android:textSize="40sp" />
 
     <ImageView
-        android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="162dp"
         android:src="@mipmap/ic_launcher_round" />

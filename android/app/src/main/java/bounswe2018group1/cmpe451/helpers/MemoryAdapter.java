@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 
 import com.google.gson.JsonArray;
@@ -39,23 +40,71 @@ public class MemoryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        MemoryViewHolder holder;
+        MemoryRowHolder holder;
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResource, parent, false);
-            holder = new MemoryViewHolder(row);
+            holder = new MemoryRowHolder(row);
             row.setTag(holder);
         } else {
-            holder = (MemoryViewHolder) row.getTag();
+            holder = (MemoryRowHolder) row.getTag();
         }
 
         // TODO: change all views in each memory_row
-        JsonObject memory = getItem(position).getAsJsonObject();
+        JsonObject memory = getItem(position);
         String memoryTitle = memory.get("headline").getAsString();
         String memoryDesc = memory.get("description").getAsString();
         holder.memoryTitle.setText(memoryTitle);
         holder.memoryDesc.setText(memoryDesc);
+        holder.memoryDesc.getViewTreeObserver().addOnGlobalLayoutListener(
+                new MyOnGlobalLayoutListener(holder)
+        );
+        holder.btnSeeMore.setOnClickListener(
+                new MyOnClickListener(holder)
+        );
 
         return row;
     }
+
+    class MyOnGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        MemoryRowHolder holder;
+
+        public MyOnGlobalLayoutListener(MemoryRowHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public void onGlobalLayout() {
+            if (holder.expanded) {
+                if (holder.memoryDesc.getLineCount() > 3) {
+                    holder.expanded = false;
+                    holder.btnSeeMore.setVisibility(View.VISIBLE);
+                    holder.memoryDesc.setMaxLines(3);
+                }
+            }
+            holder.memoryDesc.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        }
+    }
+
+    class MyOnClickListener implements View.OnClickListener {
+        MemoryRowHolder holder;
+
+        public MyOnClickListener(MemoryRowHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (!holder.expanded) {
+                holder.expanded = true;
+                holder.memoryDesc.setMaxLines(10);
+                holder.btnSeeMore.setText("View less");
+            } else {
+                holder.expanded = false;
+                holder.memoryDesc.setMaxLines(3);
+                holder.btnSeeMore.setText("View more");
+            }
+        }
+    }
+
 }

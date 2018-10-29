@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-import bounswe2018group1.cmpe451.MemoryView;
+import bounswe2018group1.cmpe451.MemoryViewActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.MemoryAdapter;
 
@@ -60,7 +60,7 @@ public class FeedFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), MemoryView.class);
+                Intent i = new Intent(getActivity(), MemoryViewActivity.class);
                 i.putExtra("memory", adapter.getItem(position).toString());
                 startActivity(i);
             }

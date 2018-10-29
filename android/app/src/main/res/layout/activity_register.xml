@@ -6,7 +6,6 @@
     tools:context=".RegisterActivity">
 
     <LinearLayout
-        android:id="@+id/registerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -18,7 +17,6 @@
             layout="@layout/toolbar" />
 
         <TextView
-            android:id="@+id/textViewRegister"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_margin="27dp"
@@ -42,7 +40,6 @@
             android:focusable="true" />
 
         <TextView
-            android:id="@+id/textViewRNickname"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -60,7 +57,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textViewRFirstName"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -78,7 +74,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textViewRSurname"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -96,7 +91,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textViewREmail"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -114,7 +108,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textViewRPassword"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -132,7 +125,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textViewRConfirm"
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_marginLeft="27dp"
@@ -164,7 +156,6 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/buttonFacebook"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_margin="27dp"
@@ -175,7 +166,6 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/buttonSGoogle"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginLeft="27dp"
