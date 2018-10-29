@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import "../../assets/css/material-dashboard-react.css";
 
-// @material-ui/core
-import withStyles from "@material-ui/core/styles/withStyles";
-
-// @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-
 // core components/views
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -127,8 +119,7 @@ export default class Login extends Component {
                         onChange: this.handleChange
                       }}
                       formControlProps={{
-                        fullWidth: true,
-                        required: true
+                        fullWidth: true
                       }}
                     />
                   </GridItem>
@@ -157,6 +148,7 @@ export default class Login extends Component {
               </CardFooter>
             </Card>
           </GridItem>
+
 
           <GridItem xs={10} sm={10} md={5}>
             <Card>

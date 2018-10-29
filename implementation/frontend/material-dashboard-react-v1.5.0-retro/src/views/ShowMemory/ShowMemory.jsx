@@ -45,7 +45,7 @@ class ShowMemory extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Your Personalized Memory Feed</h4>
+                <h4 className={classes.cardTitleWhite}>Your memories will be shown here</h4>
                 <p className={classes.cardCategoryWhite}>
                   Coming soon!
                 </p>

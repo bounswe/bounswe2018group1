@@ -1,21 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-// @material-ui/icons
-import Close from "@material-ui/icons/Close";
-import Check from "@material-ui/icons/Check";
+
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import DateInput from "components/DateInput/DateInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Danger from "components/Typography/Danger.jsx";
-import Success from "components/Typography/Success.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import MemoryRepository from '../../api_calls/memory.js';
 
 const styles = {
   cardCategoryWhite: {
@@ -84,17 +81,40 @@ const styles = {
   }
 };
 
-function AddNewMemory(props) {
-  const { classes, onAddMemory } = props;
+export default class AddNewMemory extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      description: "",
+      headline: "",
+      storyList: [{city: "", country: "", county: "", district: "", headline: "", description: "", locationDto:{latitude: 0, longitude: 0}, time: 0}]
+    };
+
+    //this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleAddNewMemory = event => {
+    event.preventDefault();
+    MemoryRepository.createMemory(this.state.description, this.state.headline, this.state.storyList)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+ render() {
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={10}>
         <Card>
           <CardHeader color="info">
-            <h4 className={classes.cardTitleWhite}>
+            <h4 className="cardTitleWhite">
               Add a new memory
             </h4>
-            <p className={classes.cardCategoryWhite}>
+            <p className="cardCategoryWhite">
               Do you want to share your memory? Please fill the form.
             </p>
           </CardHeader>
@@ -104,6 +124,11 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="Title"
                   id="headline"
+                  value={this.state.headline}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true,
                     required: true
@@ -116,21 +141,14 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="Description"
                   id="description"
+                  value={this.state.description}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true,
-                    required: true
-                  }}
-                />
-              </GridItem>
-            </GridContainer>
-
-            <GridContainer>
-              <GridItem xs={10} sm={10} md={8}>
-                <CustomInput
-                  labelText="Image"
-                  id="image"
-                  formControlProps={{
-                    fullWidth: true
+                    required: false
                   }}
                 />
               </GridItem>
@@ -141,7 +159,7 @@ function AddNewMemory(props) {
                 <DateInput
                   id="startTime"
                   labelText="Start Time"
-                  className={classes.textField}
+                  className="textField"
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -151,7 +169,7 @@ function AddNewMemory(props) {
                 <DateInput
                   id="endTime"
                   labelText="End Time"
-                  className={classes.textField}
+                  className="textField"
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -164,6 +182,11 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="City"
                   id="city"
+                  value={this.state.storyList.city}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -176,6 +199,11 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="County"
                   id="county"
+                  value={this.state.storyList.county}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -188,6 +216,11 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="District"
                   id="district"
+                  value={this.state.storyList.district}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -200,6 +233,11 @@ function AddNewMemory(props) {
                 <CustomInput
                   labelText="Country"
                   id="country"
+                  value={this.state.storyList.country}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
                   formControlProps={{
                     fullWidth: true
                   }}
@@ -213,17 +251,51 @@ function AddNewMemory(props) {
                   labelText="Location"
                   id="locationDto"
                   formControlProps={{
-                    fullWidth: true,
-                    required: true
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Story Headline"
+                  id="storyHeadline"
+                  value={this.state.storyList.headline}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  labelText="Story Description"
+                  id="stroyDescription"
+                  value={this.state.storyList.description}
+                  inputProps={{
+                    type:"text",
+                    onChange: this.handleChange
+                  }}
+                  formControlProps={{
+                    fullWidth: true
                   }}
                 />
               </GridItem>
             </GridContainer>
 
             <tr>
-              <td className={classes.center}>
+              <td className="center">
               <Button
                 href="/show-memory"
+                onClick={this.handleAddNewMemory}
                 round
                 color="info"
               >Add New Memory
@@ -237,5 +309,4 @@ function AddNewMemory(props) {
     </GridContainer>
   );
 }
-
-export default withStyles(styles)(AddNewMemory);
+}
