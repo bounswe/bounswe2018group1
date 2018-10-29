@@ -1,7 +1,11 @@
+import Cookies from "js-cookie";
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
+import Dashboard from "@material-ui/icons/Home";
 import Person from "@material-ui/icons/Person";
 // import ContentPaste from "@material-ui/icons/ContentPaste";
+import AddCircle from "@material-ui/icons/AddCircle";
+import Memory from "@material-ui/icons/Memory";
+import HowToReg from "@material-ui/icons/HowToReg";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -17,7 +21,10 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import AddNewMemory from "views/AddNewMemory/AddNewMemory.jsx";
 import ShowMemory from "views/ShowMemory/ShowMemory.jsx";
+import Story from "views/ShowStory/Story.jsx";
 import Login from "views/Login/Login.jsx";
+
+const userToken = Cookies.get("retroToken");
 
 const dashboardRoutes = [
   {
@@ -69,28 +76,35 @@ const dashboardRoutes = [
   //   icon: Notifications,
   //   component: NotificationsPage
   // },
-  {
+  userToken ? {
     path: "/add-new-memory",
     sidebarName: "Add new Memory",
     navbarName: "Add new Memory",
-    icon: Unarchive,
+    icon: AddCircle,
     component: AddNewMemory
-  },
+  } : null,
   {
     path: "/show-memory",
     sidebarName: "Show Memory",
     navbarName: "Show Memory",
-    icon: Dashboard,
+    icon: Memory,
     component: ShowMemory
+  },
+  {
+    path: "/show-story",
+    sidebarName: "Show Story",
+    navbarName: "Show Story",
+    icon: Memory,
+    component: Story
   },
   {
     path: "/login",
     sidebarName: "Login",
     navbarName: "Login",
-    icon: Dashboard,
+    icon: HowToReg,
     component: Login
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
-export default dashboardRoutes;
+export default dashboardRoutes.filter(Boolean);

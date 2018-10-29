@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 import constants from "../constants";
 
@@ -8,6 +9,9 @@ class LoginRepository {
       nickname: loginNickname,
       email: loginEmail,
       password: loginPassword
+    }).then((response) => {
+      const token = response.token;
+      Cookies.set("retroToken", token);
     });
   }
 
