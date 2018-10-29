@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.lang.*;
+
 @Component
 public class SessionInterceptor implements HandlerInterceptor {
 
@@ -17,9 +19,11 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
         HttpSession session = httpServletRequest.getSession();
-
-        if (session.isNew() || session.getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE) == null) {
-            throw new RetroException("Your session has timed out. Please login again.", HttpStatus.FORBIDDEN);
+        boolean isActivate = (httpServletRequest.getRequestURI()).contains("activate");
+        if(!isActivate){
+            if (session.isNew() || session.getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE) == null || !isActivate ) {
+                throw new RetroException("Your session has timed out. Please login again.", HttpStatus.FORBIDDEN);
+            }
         }
 
         return true;

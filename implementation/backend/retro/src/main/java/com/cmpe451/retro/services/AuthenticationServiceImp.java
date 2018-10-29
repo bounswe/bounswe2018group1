@@ -2,6 +2,7 @@ package com.cmpe451.retro.services;
 
 
 import com.cmpe451.retro.core.Constants;
+import com.cmpe451.retro.core.SessionUtil;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.LoginRequestBody;
@@ -56,14 +57,13 @@ public class AuthenticationServiceImp implements AuthenticationService {
     }
 
     @Override
-    public long register(RegisterRequestBody registerRequestBody) {
-
+    public User register(RegisterRequestBody registerRequestBody) {
         User user = createUser(registerRequestBody);
         User savedUser = userRepository.save(user);
-        return savedUser.getId();
+        return savedUser;
     }
 
-    public String createUser(RegisterRequestBody registerRequestBody) {
+    public User createUser(RegisterRequestBody registerRequestBody) {
         //check if a user with this email / nickname exists //TODO:check
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
         Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
@@ -80,25 +80,28 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.setLastName(registerRequestBody.getLastName());
         user.setMemoryList(new ArrayList<>());
         user.setActivated(false); //initially it is not activated
-        user.setRandomCode(getRandomCode(15));
+        user.setRandomCode(SessionUtil.getRandomCode(15));
 
         Date now = new Date();
         user.setDateOfCreation(now);
         user.setDateOfUpdate(now);
 
-        return "Please activate your account with your email, your id is: "+ user.getId() +" your random code: "+ user.getRandomCode();
+        return user;
     }
 
     public long activate(String email, String randomCode){
-        Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
+        Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(email));
         if(userOptionalEmail.isPresent()){
             User user = userOptionalEmail.get();
-            if(user.getRandomCode().equals(randomCode))
+            if(user.getRandomCode().equals(randomCode)){
                 user.setActivated(true);
+            }
             userRepository.save(user); //update the user
 
-            return user.id;
+            return user.getId();
         }
+
+        throw new RetroException("Could not find the user with email: "+email, HttpStatus.EXPECTATION_FAILED);
     }
 
 }

@@ -12,7 +12,7 @@ public interface AuthenticationService {
 
     long login(LoginRequestBody loginRequestBody);
 
-    long register(RegisterRequestBody registerRequestBody);
+    User register(RegisterRequestBody registerRequestBody);
 
     long activate(String email, String randomCode);
 

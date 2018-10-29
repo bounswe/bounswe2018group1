@@ -30,11 +30,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public long register(@RequestBody RegisterRequestBody registerRequestBody) {
-        long userId = authenticationService.register(registerRequestBody);
+    public User register(@RequestBody RegisterRequestBody registerRequestBody) {
+        User user = authenticationService.register(registerRequestBody);
         //httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
-
-        return userId;
+        return user;
 
     }
 
