@@ -6,13 +6,13 @@ import constants from "../constants";
 class LoginRepository {
   static login(loginNickname, loginEmail, loginPassword) {
     return axios.post(`${constants.API}/login`, {
-      nickname: loginNickname,
       email: loginEmail,
+      nickname: loginNickname,
       password: loginPassword
     }).then((response) => {
       const token = response.token;
       Cookies.set("retroToken", token);
-    });
+    }).catch(console.log);
   }
 
   static forget(nickname, email, password) {
@@ -23,12 +23,17 @@ class LoginRepository {
     });
   }
 
-  static register(registerNickname, registerEmail, registerPassword) {
-    return axios.post(`${constants.API}/register`, {
-      nickname: registerNickname,
-      email: registerEmail,
-      password: registerPassword
-    });
+  static register(registerNickname, registerFirstName, registerLastName, registerEmail, registerPassword) {
+      return axios.post(`${constants.API}/register`, {
+        email: registerEmail,
+        firstName: registerFirstName,
+        lastName: registerLastName,
+        nickname: registerNickname,
+        password: registerPassword
+      }).then((response) => {
+        const token = response.token;
+        Cookies.set("retroToken", token);
+      }).catch(console.log);
   }
 }
 

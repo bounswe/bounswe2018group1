@@ -28,6 +28,8 @@ export default class Login extends Component {
     this.state = {
       nickname: "",
       email: "",
+      firstName: "",
+      lastName: "",
       password: ""
     };
 
@@ -79,7 +81,7 @@ export default class Login extends Component {
   handleSubmitRegister = event => {
     event.preventDefault();
 
-    LoginRepository.register(this.state.nickname, this.state.email, this.state.password)
+    LoginRepository.register(this.state.nickname, this.state.firstName, this.state.lastName, this.state.email, this.state.password)
       .then(res => {
         console.log(res.headers);
       })
@@ -169,6 +171,40 @@ export default class Login extends Component {
                       labelText="Nickname"
                       id="registerNickname"
                       value={this.state.nickname}
+                      inputProps={{
+                        type:"text",
+                        onChange: this.handleChange
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={10} sm={10} md={8}>
+                    <CustomInput
+                      labelText="First Name"
+                      id="registerFirstName"
+                      value={this.state.firstName}
+                      inputProps={{
+                        type:"text",
+                        onChange: this.handleChange
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={10} sm={10} md={8}>
+                    <CustomInput
+                      labelText="Last Name"
+                      id="registerLastName"
+                      value={this.state.lastName}
                       inputProps={{
                         type:"text",
                         onChange: this.handleChange
