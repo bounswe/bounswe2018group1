@@ -32,7 +32,6 @@ export default class Login extends Component {
       lastName: "",
       password: ""
     };
-
     //this.handleChange = this.handleChange.bind(this);
   }
 
@@ -81,7 +80,7 @@ export default class Login extends Component {
   handleSubmitRegister = event => {
     event.preventDefault();
 
-    LoginRepository.register(this.state.nickname, this.state.firstName, this.state.lastName, this.state.email, this.state.password)
+    LoginRepository.register(this.state.registerNickname, this.state.registerFirstName, this.state.registerLastName, this.state.registerEmail, this.state.registerPassword)
       .then(res => {
         console.log(res.headers);
       })
