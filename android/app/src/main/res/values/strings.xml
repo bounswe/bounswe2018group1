@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">CMPE451</string>
+
+    <string name="hello_search_fragment">Hello from search!</string>
+    <string name="hello_feed_fragment">Hello from feed!</string>
+    <string name="hello_map_fragment">Hello from map!</string>
+    <string name="avatar_description">Avatar Picture</string>
+    <string name="feed_tab">FEED</string>
+    <string name="map_tab">MAP</string>
+    <string name="profile_tab">PROFILE</string>
+    <string name="search_tab">SEARCH</string>
+    <string name="settings_item">Settings</string>
+    <string name="register_text">Register</string>
+    <string name="already_registered_text">Already registered?</string>
+    <string name="nickname_text">Nickname</string>
+    <string name="first_name_text">First Name</string>
+    <string name="surname_text">Surname</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="confirm_password_text">Confirm Password</string>
+    <string name="sign_up_with_facebook_text">Sign up with Facebook</string>
+    <string name="sign_up_with_google_text">Sign up with Google</string>
+    <string name="log_in_text">Log in</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="nickname_or_email_text">Nickname or Email</string>
+    <string name="forgot_your_password_text">Forgot your password?</string>
+    <string name="log_in_with_facebook_text">Log in with Facebook</string>
+    <string name="log_in_with_google_text">Log in with Google</string>
+</resources>
