@@ -12,8 +12,8 @@ import com.google.gson.JsonObject;
 public class MemoryAdapter extends BaseAdapter {
 
     protected Context context;
-    protected int layoutResource;
-    protected JsonArray dataSource;
+    private int layoutResource;
+    private JsonArray dataSource;
 
     public MemoryAdapter(Context context, int resource, JsonArray dataSource) {
         this.context = context;
@@ -27,8 +27,8 @@ public class MemoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return dataSource.get(position);
+    public JsonObject getItem(int position) {
+        return dataSource.get(position).getAsJsonObject();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MemoryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        MemoryViewHolder holder = null;
+        MemoryViewHolder holder;
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResource, parent, false);
@@ -50,7 +50,7 @@ public class MemoryAdapter extends BaseAdapter {
         }
 
         // TODO: change all views in each memory_row
-        JsonObject memory = dataSource.get(position).getAsJsonObject();
+        JsonObject memory = getItem(position).getAsJsonObject();
         String memoryTitle = memory.get("headline").getAsString();
         String memoryDesc = memory.get("description").getAsString();
         holder.memoryTitle.setText(memoryTitle);

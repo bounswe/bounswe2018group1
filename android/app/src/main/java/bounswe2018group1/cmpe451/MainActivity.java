@@ -17,7 +17,7 @@ import bounswe2018group1.cmpe451.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
+    private TabLayout tabLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        tabLayout = findViewById(R.id.tabLayout);
+        if (tabLayout == null) tabLayout = findViewById(R.id.tabLayout);
 
         setSupportActionBar(toolbar);
         //create tabs title

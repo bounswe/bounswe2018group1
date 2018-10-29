@@ -43,12 +43,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        textViewSignup = findViewById(R.id.textViewSignup);
-        editTextLName = findViewById(R.id.editTextLName);
-        editTextLPassword = findViewById(R.id.editTextLPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
-        volleySingleton = VolleySingleton.getInstance(this);
-        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (textViewSignup == null) textViewSignup = findViewById(R.id.textViewSignup);
+        if (editTextLName == null) editTextLName = findViewById(R.id.editTextLName);
+        if (editTextLPassword == null) editTextLPassword = findViewById(R.id.editTextLPassword);
+        if (buttonLogin == null) buttonLogin = findViewById(R.id.buttonLogin);
+        if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
+        if (inputManager == null)
+            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         setSupportActionBar(toolbar);
         textViewSignup.setOnClickListener(new View.OnClickListener() {

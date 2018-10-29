@@ -7,8 +7,8 @@ import android.widget.TextView;
 import bounswe2018group1.cmpe451.R;
 
 public class MemoryViewHolder {
-    ImageView avatar;
-    TextView authorName, postDate, memoryTitle, memoryDesc;
+    public ImageView avatar;
+    public TextView authorName, postDate, memoryTitle, memoryDesc;
 
     public MemoryViewHolder(View v) {
         avatar = v.findViewById(R.id.avatar);

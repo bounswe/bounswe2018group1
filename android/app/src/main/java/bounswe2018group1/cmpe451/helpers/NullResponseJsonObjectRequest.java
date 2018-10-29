@@ -38,15 +38,13 @@ public class NullResponseJsonObjectRequest extends JsonObjectRequest {
 
             JSONObject result = null;
 
-            if (jsonString != null && jsonString.length() > 0)
+            if (jsonString.length() > 0)
                 result = new JSONObject(jsonString);
 
             return Response.success(result,
                     HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 }

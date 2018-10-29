@@ -45,16 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        editText = findViewById(R.id.editText);
-        editTextRFirstName = findViewById(R.id.editTextRFirstName);
-        editTextRSurname = findViewById(R.id.editTextRSurname);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        editTextPassword2 = findViewById(R.id.editTextPassword2);
-        textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
-        buttonRegister = findViewById(R.id.buttonRegister);
-        volleySingleton = VolleySingleton.getInstance(this);
-        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (editText == null) editText = findViewById(R.id.editText);
+        if (editTextRFirstName == null) editTextRFirstName = findViewById(R.id.editTextRFirstName);
+        if (editTextRSurname == null) editTextRSurname = findViewById(R.id.editTextRSurname);
+        if (editTextEmail == null) editTextEmail = findViewById(R.id.editTextEmail);
+        if (editTextPassword == null) editTextPassword = findViewById(R.id.editTextPassword);
+        if (editTextPassword2 == null) editTextPassword2 = findViewById(R.id.editTextPassword2);
+        if (textViewAlreadyRegistered == null)
+            textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
+        if (buttonRegister == null) buttonRegister = findViewById(R.id.buttonRegister);
+        if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
+        if (inputManager == null)
+            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         setSupportActionBar(toolbar);
         textViewAlreadyRegistered.setOnClickListener(new View.OnClickListener() {
