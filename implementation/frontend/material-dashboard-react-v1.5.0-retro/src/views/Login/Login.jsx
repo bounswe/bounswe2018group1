@@ -50,6 +50,7 @@ export default class Login extends Component {
     LoginRepository.login(this.state.loginNickname, this.state.loginEmail, this.state.loginPassword)
       .then(res => {
         console.log(res);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);

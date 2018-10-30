@@ -45,9 +45,9 @@ class ShowMemory extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Your memories will be shown here</h4>
+                <h4 className={classes.cardTitleWhite}>Denizli tour</h4>
                 <p className={classes.cardCategoryWhite}>
-                  Coming soon!
+                  The best places of Denizli :)
                 </p>
               </CardHeader>
               <CardBody>
@@ -55,10 +55,8 @@ class ShowMemory extends React.Component {
                   tableHeaderColor="warning"
                   tableHead={["Story Name", "Start Date", "End Date", "Location", "Description"]}
                   tableData={[
-                    ["Story 01", "2018.01.20", "2018.01.21", "Location 01", "blabla"],
-                    ["Story 02", "2018.01.20", "2018.01.21", "Location 02", "blabla"],
-                    ["Story 03", "2018.01.20", "2018.01.21", "Location 03", "blabla"],
-                    ["Story 04", "2018.01.20", "2018.01.21", "Location 04", "blabla"]
+                    ["Çamlık Parkı", "2018.10.28", "2018.10.28", "Denizli, Turkey", "Denizli is a town with tree-lined..."],
+                    ["Pamukkale", "2018.10.29", "2018.10.29", "Denizli, Turkey", "Pamukkale, meaning cotton castle..."]
                   ]}
                 />
               </CardBody>

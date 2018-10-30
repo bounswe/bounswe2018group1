@@ -147,7 +147,6 @@ class Dashboard extends React.Component {
                 <h4 className={classes.cardTitle}>Daily Sales</h4>
                 <p className={classes.cardCategory}>
                   <span className={classes.successText}>
-                    <ArrowUpward className={classes.upArrowCardCategory} /> 55%
                   </span>{" "}
                   increase in today sales.
                 </p>

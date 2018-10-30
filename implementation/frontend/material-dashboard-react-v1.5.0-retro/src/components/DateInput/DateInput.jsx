@@ -35,7 +35,6 @@ function DatePickers(props) {
   return (
     <FormControl {...formControlProps}>
       <TextField
-
         id="date"
         label={ labelText }
         type="date"

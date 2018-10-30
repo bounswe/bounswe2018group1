@@ -90,7 +90,6 @@ export default class AddNewMemory extends Component {
       headline: "",
       storyList: [{city: "", country: "", county: "", district: "", headline: "", description: "", locationDto:{latitude: 0, longitude: 0}, time: 0}]
     };
-
     //this.handleChange = this.handleChange.bind(this);
   }
 
@@ -103,6 +102,20 @@ export default class AddNewMemory extends Component {
       .catch(err => {
         console.log(err);
       });
+      // TODO: Bunu res in icine tasi.
+      const { history } = this.props;
+      history.push("/show-memory");
+  }
+
+  handleAddStory = event => {
+    event.preventDefault();
+    // MemoryRepository.createStory(this.state.description, this.state.headline, this.state.storyList)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
  render() {
@@ -294,11 +307,18 @@ export default class AddNewMemory extends Component {
             <tr>
               <td className="center">
               <Button
-                href="/show-memory"
                 onClick={this.handleAddNewMemory}
                 round
                 color="info"
               >Add New Memory
+              </Button>
+              </td>
+              <td className="center">
+              <Button
+                onClick={this.handleAddStory}
+                round
+                color="transparent"
+              >Add More Story
               </Button>
               </td>
             </tr>
