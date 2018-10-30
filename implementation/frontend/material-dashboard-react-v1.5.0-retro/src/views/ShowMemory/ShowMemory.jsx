@@ -67,9 +67,9 @@ class ShowMemory extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Cmpe 443 Midterm</h4>
+                <h4 className={classes.cardTitleWhite}>Edirne Tour</h4>
                 <p className={classes.cardCategoryWhite}>
-                  The hardest exam ever!
+                  The most beautiful places!
                 </p>
               </CardHeader>
               <CardBody>
@@ -77,7 +77,7 @@ class ShowMemory extends React.Component {
                   tableHeaderColor="warning"
                   tableHead={["Story Name", "Start Date", "End Date", "Location", "Description"]}
                   tableData={[
-                    ["Midterm 1", "2018.10.18", "2018.10.18", "İstanbul, Turkey", "Midterm topics are..."]
+                    ["Selimiye Mosque", "2018.07.18", "2018.07.18", "Edirne, Turkey", "Edirne has many historic places like..."]
                   ]}
                 />
               </CardBody>
