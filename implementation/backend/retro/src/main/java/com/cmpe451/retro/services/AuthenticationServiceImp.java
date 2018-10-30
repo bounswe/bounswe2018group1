@@ -56,6 +56,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
         return user.getId();
     }
 
+
     @Override
     public User register(RegisterRequestBody registerRequestBody) {
         User user = createUser(registerRequestBody);

@@ -21,7 +21,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         HttpSession session = httpServletRequest.getSession();
         boolean isActivate = (httpServletRequest.getRequestURI()).contains("activate");
         if(!isActivate){
-            if (session.isNew() || session.getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE) == null || !isActivate ) {
+            if (session.isNew() || session.getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE) == null ) {
                 throw new RetroException("Your session has timed out. Please login again.", HttpStatus.FORBIDDEN);
             }
         }

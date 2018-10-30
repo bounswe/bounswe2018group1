@@ -29,6 +29,12 @@ public class AuthenticationController {
         return userId;
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public void logout() {
+        httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, null);
+    }
+
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public User register(@RequestBody RegisterRequestBody registerRequestBody) {
         User user = authenticationService.register(registerRequestBody);
