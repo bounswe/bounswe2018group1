@@ -55,8 +55,29 @@ class ShowMemory extends React.Component {
                   tableHeaderColor="warning"
                   tableHead={["Story Name", "Start Date", "End Date", "Location", "Description"]}
                   tableData={[
-                    ["Çamlık Parkı", "2018.10.28", "2018.10.28", "Denizli, Turkey", "Denizli is a town with tree-lined..."],
-                    ["Pamukkale", "2018.10.29", "2018.10.29", "Denizli, Turkey", "Pamukkale, meaning cotton castle..."]
+                    ["Çamlık Parkı", "2018.10.19", "2018.10.19", "Denizli, Turkey", "Denizli is a town with tree-lined..."],
+                    ["Pamukkale", "2018.10.23", "2018.10.23", "Denizli, Turkey", "Pamukkale, meaning cotton castle..."]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="warning">
+                <h4 className={classes.cardTitleWhite}>Cmpe 443 Midterm</h4>
+                <p className={classes.cardCategoryWhite}>
+                  The hardest exam ever!
+                </p>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="warning"
+                  tableHead={["Story Name", "Start Date", "End Date", "Location", "Description"]}
+                  tableData={[
+                    ["Midterm 1", "2018.10.18", "2018.10.18", "İstanbul, Turkey", "Midterm topics are..."]
                   ]}
                 />
               </CardBody>

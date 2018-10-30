@@ -74,12 +74,12 @@ class Story extends React.Component {
                 <p className={classes.cardCategory}>
                   <span className={classes.successText}>
                   </span>{" "}
-                  Denizli is a town with tree-lined main avenues and views of the surrounding mountains from many locations. As the city grew in the 1990s, new compounds of villas have sprung up on the city's outskirts in areas like Çamlık.
+                    We had a wonderful time together with our Cmpe451 group. Ece cooked this delicious chocolate cake. After watching the sunset, we started working on the first version of this project.
                 </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime /> added 2 minutes ago
+                  <AccessTime /> added 11 days ago
                 </div>
               </CardFooter>
             </Card>
@@ -96,12 +96,12 @@ class Story extends React.Component {
               <CardBody>
                 <h4 className={classes.cardTitle}>Pamukkale Travertine</h4>
                 <p className={classes.cardCategory}>
-                  Pamukkale, meaning cotton castle in Turkish, is a natural site in Denizli in southwestern Turkey. The area is famous for a carbonate mineral left by the flowing water.[1] It is located in Turkey's Inner Aegean region, in the River Menderes valley, which has a temperate climate for most of the year.
+                    This was our group gathering for working on the second version. Ece cooked an amazing tiramisu. It was a little hard keeping the computers from getting wet but it was definately worth it. Who would have thought implementing the second version could be so much fun!
                 </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
-                  <AccessTime /> added 4 minutes ago
+                  <AccessTime /> added 7 days ago
                 </div>
               </CardFooter>
             </Card>

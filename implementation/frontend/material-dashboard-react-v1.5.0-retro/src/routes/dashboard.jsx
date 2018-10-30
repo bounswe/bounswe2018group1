@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Home";
+import Home from "@material-ui/icons/Home";
 import Person from "@material-ui/icons/Person";
 // import ContentPaste from "@material-ui/icons/ContentPaste";
 import AddCircle from "@material-ui/icons/AddCircle";
@@ -27,13 +27,13 @@ import Login from "views/Login/Login.jsx";
 const userToken = Cookies.get("retroToken");
 
 const dashboardRoutes = [
-  // {
-  //   path: "/dashboard",
-  //   sidebarName: "Dashboard",
-  //   navbarName: "Memories",
-  //   icon: Dashboard,
-  //   component: DashboardPage
-  // },
+  {
+    path: "/home",
+    sidebarName: "Home",
+    navbarName: "Home",
+    icon: Home,
+    component: ShowMemory
+  },
   // {
   //   path: "/user",
   //   sidebarName: "User Profile",
@@ -83,13 +83,13 @@ const dashboardRoutes = [
     icon: AddCircle,
     component: AddNewMemory
   } : null,
-  {
-    path: "/show-memory",
-    sidebarName: "Show Memory",
-    navbarName: "Show Memory",
-    icon: Memory,
-    component: ShowMemory
-  },
+  // {
+  //   path: "/home-page",
+  //   sidebarName: "Home",
+  //   navbarName: "Home",
+  //   icon: Home,
+  //   component: ShowMemory
+  // },
   {
     path: "/show-story",
     sidebarName: "Show Story",
@@ -104,7 +104,7 @@ const dashboardRoutes = [
     icon: HowToReg,
     component: Login
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/home", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes.filter(Boolean);
