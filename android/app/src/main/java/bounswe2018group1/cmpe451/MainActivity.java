@@ -1,5 +1,6 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
+import bounswe2018group1.cmpe451.fragments.MemoryFragment;
 import bounswe2018group1.cmpe451.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         //create tabs title
         tabLayout.addTab(tabLayout.newTab().setText("Feed"));
         tabLayout.addTab(tabLayout.newTab().setText("Map"));
-        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
-        tabLayout.addTab(tabLayout.newTab().setText("Search"));
+        tabLayout.addTab(tabLayout.newTab().setText("Profıle"));
+        tabLayout.addTab(tabLayout.newTab().setText("Create"));
 
         replaceFragment(new FeedFragment());
 
@@ -50,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(new ProfileFragment());
                         break;
                     case 3:
-                        replaceFragment(new SearchFragment());
+                        //replaceFragment(new SearchFragment());
+                        Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                         break;
                     default:
                         break;

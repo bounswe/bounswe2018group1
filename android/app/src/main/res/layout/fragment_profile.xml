@@ -14,14 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="N A M E"
-        android:textAlignment="center"
-        android:textSize="40sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="S U R N A M E"
+        android:text="Veli Yıldırım"
         android:textAlignment="center"
         android:textSize="40sp" />
 
@@ -29,13 +22,8 @@
         android:id="@+id/text33"
         android:layout_width="match_parent"
         android:layout_height="139dp"
-        android:text="B I O"
+        android:text="Hello, I am a student in 9 Eylül Secondary School. I came here to learn and write some history."
         android:textAlignment="center"
-        android:textSize="40sp" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="162dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:textSize="27sp" />
 
 </LinearLayout>

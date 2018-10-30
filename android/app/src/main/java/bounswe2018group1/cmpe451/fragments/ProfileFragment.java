@@ -17,7 +17,7 @@ import bounswe2018group1.cmpe451.R;
  */
 public class ProfileFragment extends Fragment {
 
-    TextView a;
+    //TextView a;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -26,14 +26,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        a = v.findViewById(R.id.text33);
+        /*a = v.findViewById(R.id.text33);
         a.setText("aaa");
-        a();
+        a();*/
         return v;
     }
-
+/*
     public void a() {
         a.setText(a.getText() + "eee");
     }
-
+*/
 }

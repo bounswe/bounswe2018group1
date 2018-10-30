@@ -20,7 +20,11 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".MemoryViewActivity"></activity>
+        <activity android:name=".MemoryViewActivity" />
+        <activity
+            android:name=".MemoryCreateActivity"
+            android:label="@string/title_activity_memory_create"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

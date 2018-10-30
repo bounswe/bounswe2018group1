@@ -59,7 +59,7 @@ public class StoryAdapter extends BaseAdapter {
         String storyTitle = memory.get("headline").getAsString();
         String storyDesc = memory.get("description").getAsString();
         holder.storyDate.setText(storyDate);
-        holder.storyLocation.setText(StoryAdapter.join(" ", new String[]{
+        holder.storyLocation.setText(StoryAdapter.join(", ", new String[]{
                 district, county, city, country
         }));
         holder.storyTitle.setText(storyTitle);
@@ -73,10 +73,12 @@ public class StoryAdapter extends BaseAdapter {
             return "";
         }
         String ret = "";
-        if (argStrings.length > 0) {
-            ret = argStrings[0];
+        int i;
+        for(i = 0; i < argStrings.length && (argStrings[i] == null || argStrings[i].isEmpty()); ++i);
+        if (i < argStrings.length) {
+            ret = argStrings[i];
         } // if
-        for (int i = 1; i < argStrings.length; i++) {
+        for (i = i + 1; i < argStrings.length; i++) {
             ret += (argStrings[i] == null)
                     ? ""
                     : (argStrings[i].isEmpty()
