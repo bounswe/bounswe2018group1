@@ -49,19 +49,21 @@ public class AuthenticationServiceImp implements AuthenticationService {
             throw new RetroException("Incorrect login information.", HttpStatus.UNAUTHORIZED);
         }
 
+        /*
         if(!user.getActivated()) {
             throw new RetroException("Please activate your account to log in.", HttpStatus.UNAUTHORIZED);
         }
+        */
 
         return user.getId();
     }
 
 
     @Override
-    public User register(RegisterRequestBody registerRequestBody) {
+    public long register(RegisterRequestBody registerRequestBody) {
         User user = createUser(registerRequestBody);
         User savedUser = userRepository.save(user);
-        return savedUser;
+        return savedUser.getId();
     }
 
     public User createUser(RegisterRequestBody registerRequestBody) {

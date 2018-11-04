@@ -2,6 +2,7 @@ package com.cmpe451.retro.controllers;
 
 import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.data.entities.User;
+import com.cmpe451.retro.models.AuthenticationResponseModel;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
@@ -23,10 +24,11 @@ public class AuthenticationController {
     private HttpServletRequest httpServletRequest;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public long loginAttempt(@RequestBody LoginRequestBody loginRequest) {
+    public AuthenticationResponseModel loginAttempt(@RequestBody LoginRequestBody loginRequest) {
         long userId = authenticationService.login(loginRequest);
         httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
-        return userId;
+        String sessionID = httpServletRequest.getSession().getId();
+        return new AuthenticationResponseModel(sessionID);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -36,10 +38,11 @@ public class AuthenticationController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public User register(@RequestBody RegisterRequestBody registerRequestBody) {
-        User user = authenticationService.register(registerRequestBody);
-        //httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
-        return user;
+    public AuthenticationResponseModel register(@RequestBody RegisterRequestBody registerRequestBody) {
+        long userId = authenticationService.register(registerRequestBody);
+        httpServletRequest.getSession().setAttribute(Constants.USER_ID_SESSION_ATTRIBUTE, userId);
+        String sessionID = httpServletRequest.getSession().getId();
+        return new AuthenticationResponseModel(sessionID);
 
     }
 
