@@ -90,23 +90,23 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void sendLoginRequest() {
+        private void sendLoginRequest() {
 
-        JSONObject postParams = new JSONObject();
-        try {
-            postParams.put("password", editTextLPassword.getText().toString());
-            // Check if user has entered nick or email
-            if (editTextLName.getText().toString().contains(".")) {
-                postParams.put("nickname", "");
-                postParams.put("email", editTextLName.getText().toString().trim());
-            } else {
-                postParams.put("nickname", editTextLName.getText().toString().trim());
-                postParams.put("email", "");
+            JSONObject postParams = new JSONObject();
+            try {
+                postParams.put("password", editTextLPassword.getText().toString());
+                // Check if user has entered nick or email
+                if (editTextLName.getText().toString().contains(".")) {
+                    postParams.put("nickname", "");
+                    postParams.put("email", editTextLName.getText().toString().trim());
+                } else {
+                    postParams.put("nickname", editTextLName.getText().toString().trim());
+                    postParams.put("email", "");
+                }
+
+            } catch (org.json.JSONException e) {
+                e.printStackTrace();
             }
-
-        } catch (org.json.JSONException e) {
-            e.printStackTrace();
-        }
 
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
                 Request.Method.POST,

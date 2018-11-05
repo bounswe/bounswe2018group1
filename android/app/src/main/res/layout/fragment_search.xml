@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_search_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:ems="10"
+            android:hint="Title"
+            android:inputType="textMultiLine|textCapSentences"
+            android:scrollHorizontally="false"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="9dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/dateStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Start Date"
+                android:inputType="date"
+                android:textAlignment="viewEnd" />
+
+            <EditText
+                android:id="@+id/dateEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="End Date (Optional)"
+                android:inputType="date" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:ems="10"
+            android:hint="Story"
+            android:inputType="textMultiLine|textCapSentences"
+            android:scrollHorizontally="false" />
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Locations (Use newline for new locations)"
+            android:inputType="textMultiLine|textCapSentences"
+            android:scrollHorizontally="false" />
+
+        <Button
+            android:id="@+id/buttonLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            android:text="Map Location"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tags (Use newline for new tags)"
+            android:inputType="textMultiLine|textCapSentences"
+            android:scrollHorizontally="false" />
+
+    </LinearLayout>
+</ScrollView>

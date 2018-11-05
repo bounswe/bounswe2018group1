@@ -86,25 +86,25 @@ public class MemoryAdapter extends BaseAdapter {
         }
     }
 
-    class MyOnClickListener implements View.OnClickListener {
-        MemoryRowHolder holder;
+class MyOnClickListener implements View.OnClickListener {
+    MemoryRowHolder holder;
 
-        public MyOnClickListener(MemoryRowHolder holder) {
-            this.holder = holder;
-        }
+    public MyOnClickListener(MemoryRowHolder holder) {
+        this.holder = holder;
+    }
 
-        @Override
-        public void onClick(View v) {
-            if (!holder.expanded) {
-                holder.expanded = true;
-                holder.memoryDesc.setMaxLines(10);
-                holder.btnSeeMore.setText("View less");
-            } else {
-                holder.expanded = false;
-                holder.memoryDesc.setMaxLines(3);
-                holder.btnSeeMore.setText("View more");
-            }
+    @Override
+    public void onClick(View v) {
+        if (!holder.expanded) {
+            holder.expanded = true;
+            holder.memoryDesc.setMaxLines(10);
+            holder.btnSeeMore.setText("View less");
+        } else {
+            holder.expanded = false;
+            holder.memoryDesc.setMaxLines(3);
+            holder.btnSeeMore.setText("View more");
         }
     }
+}
 
 }

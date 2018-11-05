@@ -1,14 +1,14 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
@@ -20,36 +20,73 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout = null;
 
+    private FeedFragment fragmentFeed;
+    private MapFragment fragmentMap;
+    private ProfileFragment fragmentProfile;
+    private SearchFragment fragmentSearch;
+    private InputMethodManager inputManager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Keyboard
+        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // Tabs
         if (tabLayout == null) tabLayout = findViewById(R.id.tabLayout);
 
-        //create tabs title
         tabLayout.addTab(tabLayout.newTab().setText("Feed"));
         tabLayout.addTab(tabLayout.newTab().setText("Map"));
         tabLayout.addTab(tabLayout.newTab().setText("Profıle"));
         tabLayout.addTab(tabLayout.newTab().setText("Create"));
+        tabLayout.addTab(tabLayout.newTab().setText("Settings"));
 
-        replaceFragment(new FeedFragment());
+        // Create fragments
+        fragmentFeed = new FeedFragment();
+        fragmentMap = new MapFragment();
+        fragmentProfile = new ProfileFragment();
+        fragmentSearch = new SearchFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.mainLayout, fragmentFeed, "Feed");
+        transaction.add(R.id.mainLayout, fragmentMap, "Map");
+        transaction.add(R.id.mainLayout, fragmentProfile, "Profile");
+        transaction.add(R.id.mainLayout, fragmentSearch, "Search");
+        transaction.hide(fragmentMap);
+        transaction.hide(fragmentProfile);
+        transaction.hide(fragmentSearch);
+        transaction.commit();
+
+        //replaceFragment(new FeedFragment());
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
+                // Remove keyboard while switching tabs
+                if (getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                 switch (tab.getPosition()) {
                     case 0:
-                        replaceFragment(new FeedFragment());
+                        replaceFragment(fragmentFeed);
                         break;
                     case 1:
-                        replaceFragment(new MapFragment());
+                        replaceFragment(fragmentMap);
                         break;
                     case 2:
-                        replaceFragment(new ProfileFragment());
+                        replaceFragment(fragmentProfile);
                         break;
                     case 3:
-                        //replaceFragment(new SearchFragment());
+                        replaceFragment(fragmentSearch);
+                        /*Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);*/
+                        break;
+                    case 4:
                         Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
@@ -73,28 +110,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.mainLayout, fragment);
+        transaction.commit();*/
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.hide(fragmentFeed);
+        transaction.hide(fragmentMap);
+        transaction.hide(fragmentProfile);
+        transaction.hide(fragmentSearch);
+        transaction.show(fragment);
         transaction.commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuSettings:
-                // TODO: open settings
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 }
