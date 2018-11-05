@@ -48,9 +48,7 @@ public class FeedFragment extends Fragment {
         if (dataSource == null) {
             InputStream is = getResources().openRawResource(R.raw.memory_json_file);
             try {
-                dataSource = new JsonParser().parse(
-                        new BufferedReader(new InputStreamReader(is, "UTF-8"))
-                ).getAsJsonArray();
+                dataSource = new JsonParser().parse(new BufferedReader(new InputStreamReader(is, "UTF-8"))).getAsJsonArray();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

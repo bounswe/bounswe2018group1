@@ -4,11 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -42,16 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         if (textViewSignup == null) textViewSignup = findViewById(R.id.textViewSignup);
         if (editTextLName == null) editTextLName = findViewById(R.id.editTextLName);
         if (editTextLPassword == null) editTextLPassword = findViewById(R.id.editTextLPassword);
         if (buttonLogin == null) buttonLogin = findViewById(R.id.buttonLogin);
         if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
-        if (inputManager == null)
-            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager == null) inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        setSupportActionBar(toolbar);
         textViewSignup.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -89,24 +82,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuSettings:
-                // TODO: open settings
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
 
@@ -121,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             postParams.put("password", editTextLPassword.getText().toString());
             // Check if user has entered nick or email
-            if (editTextLName.getText().toString().contains("@")) {
+            if (editTextLName.getText().toString().contains(".")) {
                 postParams.put("nickname", "");
                 postParams.put("email", editTextLName.getText().toString().trim());
             } else {

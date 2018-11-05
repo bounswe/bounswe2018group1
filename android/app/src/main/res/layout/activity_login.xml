@@ -12,10 +12,6 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="54dp"

@@ -31,7 +31,6 @@ public class MemoryViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory_view);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         if (avatar == null) avatar = findViewById(R.id.avatar);
         if (authorName == null) authorName = findViewById(R.id.authorName);
         if (postDate == null) postDate = findViewById(R.id.postDate);
@@ -39,7 +38,6 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (memoryDesc == null) memoryDesc = findViewById(R.id.memoryDesc);
         if (storyListView == null) storyListView = findViewById(R.id.storyListView);
 
-        setSupportActionBar(toolbar);
         if (memory == null) {
             memory = new JsonParser().parse(
                     getIntent().getStringExtra("memory")
