@@ -29,11 +29,11 @@
             android:layout_marginLeft="27dp"
             android:layout_marginRight="27dp"
             android:clickable="true"
-            android:gravity="end|center_vertical"
+            android:focusable="true"
             android:text="@string/already_registered_text"
+            android:textAlignment="textEnd"
             android:textColor="#B00000"
-            android:textSize="15sp"
-            android:focusable="true" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"

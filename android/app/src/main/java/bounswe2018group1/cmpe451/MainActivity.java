@@ -12,21 +12,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
 import bounswe2018group1.cmpe451.fragments.SearchFragment;
+import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
+import bounswe2018group1.cmpe451.helpers.URLs;
+import bounswe2018group1.cmpe451.helpers.VolleySingleton;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TabLayout tabLayout = null;
 
     private FeedFragment fragmentFeed;
     private MapFragment fragmentMap;
     private ProfileFragment fragmentProfile;
     private SearchFragment fragmentSearch;
     private InputMethodManager inputManager = null;
+    private TabLayout tabLayout = null;
+    private VolleySingleton volleySingleton = null;
+
     private boolean doubleBackToExitPressedOnce = false;
+    private String sessionID = "TODO";
 
     @Override
     public void onBackPressed() {
@@ -81,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentSearch);
         transaction.commit();
 
+        // HTTP Requests
+        volleySingleton = VolleySingleton.getInstance(this);
+
         //replaceFragment(new FeedFragment());
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -99,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragmentMap);
                         break;
                     case 2:
+                        if (!fragmentProfile.getProfileLoaded()) {
+                            loadProfile();
+                        }
                         replaceFragment(fragmentProfile);
                         break;
                     case 3:
@@ -145,6 +164,57 @@ public class MainActivity extends AppCompatActivity {
         if (fragment != null)
             transaction.show(fragment);
         transaction.commit();
+    }
+
+    private void loadProfile() {
+
+        JSONObject postParams = new JSONObject();
+        try {
+            postParams.put("sessionID", sessionID);
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST, URLs.URL_PROFILE, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+
+                        } else if (response instanceof JSONObject) {
+                            //Success Callback
+                            JSONObject r = (JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                            try {
+                                // Set fields
+                                fragmentProfile.setFields(
+                                        r.getString("Nickname"),
+                                        r.getString("Firstname"),
+                                        r.getString("Lastname"),
+                                        r.getString("Bio"),
+                                        r.getString("Birth"),
+                                        r.getString("Gender"));
+                                fragmentProfile.setProfileLoaded(true);
+                            } catch(JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            System.out.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        Toast.makeText(getApplicationContext(), "Profile load fail!", Toast.LENGTH_LONG).show();
+                        System.err.println("Error in profile!");
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_REQ_TAG);
+
     }
 
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         if (editText == null) editText = findViewById(R.id.editText);
         if (editTextRFirstName == null) editTextRFirstName = findViewById(R.id.editTextRFirstName);
         if (editTextRSurname == null) editTextRSurname = findViewById(R.id.editTextRSurname);
@@ -61,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (inputManager == null)
             inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        setSupportActionBar(toolbar);
         textViewAlreadyRegistered.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
