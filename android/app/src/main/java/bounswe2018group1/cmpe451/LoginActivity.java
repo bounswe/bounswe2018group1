@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
@@ -114,20 +115,24 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {
-                        Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show(); // TODO remove!
                         if (response == null) {
 
                         } else if (response instanceof JSONObject) {
                             //Success Callback
                             JSONObject r = (JSONObject) response;
                             System.out.println("Response: " + r.toString());
+                            // Launch member activity
+                            try {
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                i.putExtra("SessionID", r.getString("jsessionID"));
+                                startActivity(i);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             System.out.println("Response: " + response.toString());
                         }
-                        // Launch member activity
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
                     }
                 },
                 new Response.ErrorListener() {

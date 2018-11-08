@@ -22,4 +22,7 @@
     <string name="log_in_with_google_text">Log in with Google</string>
     <string name="view_more_text">View more</string>
     <string name="title_activity_memory_create">MemoryCreateActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
