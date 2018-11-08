@@ -1,14 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_name"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_gravity="center" android:orientation="vertical"  >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/lbl_your_name"
         android:text="Time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/dateStart"
         android:layout_width="wrap_content"
@@ -36,32 +39,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateStart"
-        android:text="Location"
-        />
+        android:text="Location" />
 
     <EditText
         android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/loc"
-        android:hint="City"
-        />
+        android:hint="City" />
+
     <EditText
         android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/city"
         android:layout_below="@+id/loc"
-        android:hint="Country"
-        />
+        android:hint="Country" />
+
     <EditText
         android:id="@+id/county"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/country"
         android:layout_below="@+id/loc"
-        android:hint="County"
-        />
+        android:hint="County" />
 
     <EditText
         android:id="@+id/district"
@@ -69,8 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/county"
         android:layout_below="@+id/loc"
-        android:hint="District"
-        />
+        android:hint="District" />
 
     <EditText
         android:id="@+id/story"
@@ -83,18 +83,14 @@
         android:layout_width="match_parent"
         android:layout_below="@id/city"
         android:scrollbars="vertical"
-        android:hint="Story"
-        />
+        android:hint="Story" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/story"
         android:text="Done"
-        android:id="@+id/button"
-        />
-
-
+        android:id="@+id/button" />
 
 
 </RelativeLayout>

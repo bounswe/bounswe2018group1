@@ -74,7 +74,8 @@ public class StoryAdapter extends BaseAdapter {
         }
         String ret = "";
         int i;
-        for(i = 0; i < argStrings.length && (argStrings[i] == null || argStrings[i].isEmpty()); ++i);
+        for (i = 0; i < argStrings.length && (argStrings[i] == null || argStrings[i].isEmpty()); ++i)
+            ;
         if (i < argStrings.length) {
             ret = argStrings[i];
         } // if

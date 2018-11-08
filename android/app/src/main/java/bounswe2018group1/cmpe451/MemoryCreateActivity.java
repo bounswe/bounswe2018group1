@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +23,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import bounswe2018group1.cmpe451.fragments.MemoryFragment;
 import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
-import bounswe2018group1.cmpe451.helpers.URLs;
 import bounswe2018group1.cmpe451.helpers.VolleySingleton;
 
 public class MemoryCreateActivity extends AppCompatActivity {
@@ -42,38 +37,37 @@ public class MemoryCreateActivity extends AppCompatActivity {
     private String headline;
     private ContactsAdapter adapter;
     private VolleySingleton volleySingleton = null;
-    private void sendReq(){
+
+    private void sendReq() {
         JSONObject postParams = new JSONObject();
         try {
             postParams.put("description", des);
             postParams.put("headline", headline);
             JSONArray stlist = new JSONArray();
-            System.out.println(stories.size()  + "------*********************************************--------------------");
-            for(Story s : stories){
+            System.out.println(stories.size() + "------*********************************************--------------------");
+            for (Story s : stories) {
                 JSONObject js = new JSONObject();
-                try{
-                    js.put("city" , "" );
-                    js.put("country" ,"" );
-                    js.put("county" , "" );
-                    js.put("description" , s.text );
-                    js.put("district" , "" );
-                    js.put("headline" ,"" );
+                try {
+                    js.put("city", "");
+                    js.put("country", "");
+                    js.put("county", "");
+                    js.put("description", s.text);
+                    js.put("district", "");
+                    js.put("headline", "");
                     JSONObject jss = new JSONObject();
                     try {
-                        jss.put("latitude" , 0);
-                        jss.put("longitude" , 0);
+                        jss.put("latitude", 0);
+                        jss.put("longitude", 0);
+                    } catch (org.json.JSONException e) {
                     }
-
-                    catch (org.json.JSONException e){}
-                    js.put("locationDto" , jss);
-                    js.put("time" , 0);
+                    js.put("locationDto", jss);
+                    js.put("time", 0);
+                } catch (org.json.JSONException e) {
                 }
-                catch (org.json.JSONException e){}
                 stlist.put(js);
             }
-            postParams.put("storyList",stlist );
-        }
-        catch (org.json.JSONException e){
+            postParams.put("storyList", stlist);
+        } catch (org.json.JSONException e) {
 
         }
         System.out.println(postParams + "****************************************************$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
@@ -173,6 +167,7 @@ public class MemoryCreateActivity extends AppCompatActivity {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public TextView nameTextView;
             public Button deleteButton;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
                 nameTextView = itemView.findViewById(R.id.story_text);
@@ -195,9 +190,11 @@ public class MemoryCreateActivity extends AppCompatActivity {
         }
 
         private List<Story> storyList;
+
         public ContactsAdapter(List<Story> contacts) {
             storyList = contacts;
         }
+
         @Override
         public ContactsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
@@ -213,6 +210,7 @@ public class MemoryCreateActivity extends AppCompatActivity {
             TextView textView = viewHolder.nameTextView;
             textView.setText(contact.getText());
         }
+
         // Returns the total count of items in the list
         @Override
         public int getItemCount() {

@@ -17,10 +17,13 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
 import bounswe2018group1.cmpe451.helpers.URLs;
@@ -51,10 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (editTextEmail == null) editTextEmail = findViewById(R.id.editTextEmail);
         if (editTextPassword == null) editTextPassword = findViewById(R.id.editTextPassword);
         if (editTextPassword2 == null) editTextPassword2 = findViewById(R.id.editTextPassword2);
-        if (textViewAlreadyRegistered == null) textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
+        if (textViewAlreadyRegistered == null)
+            textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
         if (buttonRegister == null) buttonRegister = findViewById(R.id.buttonRegister);
         if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
-        if (inputManager == null) inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager == null)
+            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         setSupportActionBar(toolbar);
         textViewAlreadyRegistered.setOnClickListener(new View.OnClickListener() {
@@ -73,10 +78,37 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // Email validity check
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(editTextEmail.getText().toString()).matches()) {
+                    editTextEmail.setError("Not a valid email!");
+                    editTextEmail.requestFocus();
+                    return;
+                }
+                {   // Password validity check
+                    boolean longerThan8Character = (editTextPassword.getText().toString().length() >= 8);
+                    boolean hasUpperCase = false, hasLowerCase = false, hasDigit = false;
+                    for (char ch : editTextPassword.getText().toString().toCharArray()) {
+                        if (Character.isUpperCase(ch)) {
+                            hasUpperCase = true;
+                        } else if (Character.isLowerCase(ch)) {
+                            hasLowerCase = true;
+                        } else if (Character.isDigit(ch)) {
+                            hasDigit = true;
+                        }
+                    }
+                    if (!(longerThan8Character && hasUpperCase && hasLowerCase && hasDigit)) {
+                        editTextPassword.setText("");
+                        editTextPassword2.setText("");
+                        editTextPassword.setError("Password has to be longer than 8 characters, contain uppercase letter, lowercase letter and digit!");
+                        editTextPassword.requestFocus();
+                        return;
+                    }
+                }
+                // Confirm password validity check
                 if (!editTextPassword.getText().toString().equals(editTextPassword2.getText().toString())) {
-                    editTextPassword.setText("");
                     editTextPassword2.setText("");
-                    Toast.makeText(getApplicationContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
+                    editTextPassword2.setError("Passwords do not match!");
+                    editTextPassword2.requestFocus();
                     return;
                 }
 
@@ -152,7 +184,15 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         Toast.makeText(getApplicationContext(), "Registration fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error!!!!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 });

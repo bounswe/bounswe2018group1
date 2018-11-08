@@ -1,10 +1,8 @@
 package bounswe2018group1.cmpe451.fragments;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +10,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
-import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MemoryCreateActivity;
 import bounswe2018group1.cmpe451.R;
 
@@ -45,12 +40,11 @@ public class MemoryFragment extends DialogFragment {
     }
 
 
-
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        mEditText =  view.findViewById(R.id.dateStart);
+        mEditText = view.findViewById(R.id.dateStart);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title", "Enter Name");
         getDialog().setTitle(title);
@@ -67,9 +61,9 @@ public class MemoryFragment extends DialogFragment {
                 EditText ds = view.findViewById(R.id.dateStart);
                 EditText df = view.findViewById(R.id.dateFinish);
                 EditText st = view.findViewById(R.id.story);
-                MemoryCreateActivity mca = (MemoryCreateActivity)getActivity();
+                MemoryCreateActivity mca = (MemoryCreateActivity) getActivity();
                 //TODO
-                mca.addStory(new MemoryCreateActivity.Story(st.getText().toString() , ds.getText().toString() , df.getText().toString()));
+                mca.addStory(new MemoryCreateActivity.Story(st.getText().toString(), ds.getText().toString(), df.getText().toString()));
                 MemoryFragment.this.dismiss();
             }
         });

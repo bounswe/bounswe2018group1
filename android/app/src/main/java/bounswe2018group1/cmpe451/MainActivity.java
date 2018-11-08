@@ -3,17 +3,18 @@ package bounswe2018group1.cmpe451;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
-import bounswe2018group1.cmpe451.fragments.MemoryFragment;
 import bounswe2018group1.cmpe451.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,26 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment fragmentProfile;
     private SearchFragment fragmentSearch;
     private InputMethodManager inputManager = null;
+    private boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(i);*/
                         break;
                     case 4:
+                        replaceFragment(null);
                         Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         break;
                     default:
@@ -120,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
         transaction.hide(fragmentSearch);
-        transaction.show(fragment);
+        if (fragment != null)
+            transaction.show(fragment);
         transaction.commit();
     }
 

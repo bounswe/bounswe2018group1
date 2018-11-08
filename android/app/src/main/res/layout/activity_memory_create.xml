@@ -8,7 +8,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Headline"/>
+        android:hint="Headline" />
 
 
     <EditText
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@+id/desc"
-        tools:listitem="@layout/story_view_holder"/>
+        tools:listitem="@layout/story_view_holder" />
 
     <Button
         android:id="@+id/story_button"
