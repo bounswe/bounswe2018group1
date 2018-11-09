@@ -11,6 +11,7 @@ public class CreateStoryRequestModel {
     private String district;
     private LocationDto locationDto;
 
+
     public String getHeadline() {
         return headline;
     }

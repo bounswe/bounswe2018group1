@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -48,7 +45,15 @@ public class MemoryServiceImp implements MemoryService {
         memory.setUserId(ownerUser.getId());
         memory.setDateOfCreation(new Date());
 
-        List<Story> storyList= new ArrayList<>();
+        memory.setCountry(requestBody.getCountry());
+        memory.setCity(requestBody.getCity());
+        memory.setCounty(requestBody.getCounty());
+        memory.setDistrict(requestBody.getDistrict());
+        memory.setLocation(requestBody.getLocationDto());
+        memory.setStartDate(requestBody.getStartDate());
+        memory.setEndDate(requestBody.getEndDate());
+
+        /*List<Story> storyList= new ArrayList<>();
 
         for(CreateStoryRequestModel storyRequest: requestBody.getStoryList()){
             Story story = new Story(storyRequest, memory);
@@ -60,7 +65,7 @@ public class MemoryServiceImp implements MemoryService {
             entityManager.persist(story);
         }
 
-        memory.setStoryList(storyList);
+        memory.setStoryList(storyList);*/
         ownerUser.getMemoryList().add(memory); //TODO: check
         entityManager.persist(memory);
         entityManager.flush();
@@ -116,9 +121,9 @@ public class MemoryServiceImp implements MemoryService {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
             }
 
-            if (updateMemoryRequestBody.getStoryList() != null) {
-                memory.setStoryList(updateMemoryRequestBody.getStoryList());
-            }
+            //if (updateMemoryRequestBody.getStoryList() != null) {
+            //    memory.setStoryList(updateMemoryRequestBody.getStoryList());
+            //}
 
             memoryRepository.save(memory);
 
