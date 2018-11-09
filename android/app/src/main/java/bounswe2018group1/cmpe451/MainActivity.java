@@ -106,12 +106,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         replaceFragment(fragmentSearch);
-                        /*Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);*/
                         break;
                     case 4:
-                        replaceFragment(null);
+                        //replaceFragment(null);
                         Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -146,40 +143,30 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+            }}, 2000);
     }
 
     private void replaceFragment(Fragment fragment) {
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.mainLayout, fragment);
-        transaction.commit();*/
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.hide(fragmentFeed);
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
         transaction.hide(fragmentSearch);
-        if (fragment != null)
+        if (fragment != null) {
             transaction.show(fragment);
+        }
         transaction.commit();
     }
 
     private void loadProfile() {
 
         JSONObject postParams = new JSONObject();
-        try {
-            postParams.put("sessionID", sessionID);
-        } catch (org.json.JSONException e) {
-            e.printStackTrace();
-        }
 
-        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST, URLs.URL_PROFILE, postParams,
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
                 new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {
@@ -191,13 +178,7 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Response: " + r.toString());
                             try {
                                 // Set fields
-                                fragmentProfile.setFields(
-                                        r.getString("Nickname"),
-                                        r.getString("Firstname"),
-                                        r.getString("Lastname"),
-                                        r.getString("Bio"),
-                                        r.getString("Birth"),
-                                        r.getString("Gender"));
+                                fragmentProfile.setFields(r.getString("firstName"), r.getString("lastName"));
                                 fragmentProfile.setProfileLoaded(true);
                             } catch(JSONException e) {
                                 e.printStackTrace();

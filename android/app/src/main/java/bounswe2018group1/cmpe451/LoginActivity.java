@@ -44,17 +44,13 @@ public class LoginActivity extends AppCompatActivity {
         if (editTextLPassword == null) editTextLPassword = findViewById(R.id.editTextLPassword);
         if (buttonLogin == null) buttonLogin = findViewById(R.id.buttonLogin);
         if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
-        if (inputManager == null)
-            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager == null) inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         textViewSignup.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-
                 Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-
             }
         });
 
@@ -71,13 +67,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
                 // Remove keyboard
                 if (getCurrentFocus() != null) {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
                 sendLoginRequest();
-
             }
         });
     }
@@ -85,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         if (volleySingleton != null) {
             volleySingleton.getRequestQueue().cancelAll(VolleySingleton.Tags.LOGIN_REQ_TAG);
         }

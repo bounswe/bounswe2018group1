@@ -20,16 +20,6 @@
             android:src="@drawable/old_man_avatar" />
 
         <TextView
-            android:id="@+id/profileNick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"
-            android:layout_marginBottom="18dp"
-            android:text="Nick"
-            android:textAlignment="center" />
-
-        <TextView
             android:id="@+id/profileName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

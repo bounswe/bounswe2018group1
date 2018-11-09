@@ -1,6 +1,5 @@
 package bounswe2018group1.cmpe451.fragments;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,10 +22,6 @@ import bounswe2018group1.cmpe451.MemoryViewActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.MemoryAdapter;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FeedFragment extends Fragment {
 
     private JsonArray dataSource = null;

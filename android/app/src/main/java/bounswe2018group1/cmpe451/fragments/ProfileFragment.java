@@ -12,7 +12,6 @@ import bounswe2018group1.cmpe451.R;
 
 public class ProfileFragment extends Fragment {
 
-    TextView nick;
     TextView name;
     TextView bio;
     TextView birth;
@@ -26,7 +25,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        nick = v.findViewById(R.id.profileNick);
         name = v.findViewById(R.id.profileName);
         bio = v.findViewById(R.id.profileBio);
         birth = v.findViewById(R.id.profileBirth);
@@ -42,12 +40,8 @@ public class ProfileFragment extends Fragment {
         isProfileLoaded = profileLoaded;
     }
 
-    public void setFields(String $nick, String $first, String $last, String $bio, String $birth, String $gender) {
-        nick.setText($nick);
+    public void setFields(String $first, String $last) {
         name.setText($first + " " + $last);
-        bio.setText($bio);
-        birth.setText($birth);
-        gender.setText($gender);
     }
 
 }

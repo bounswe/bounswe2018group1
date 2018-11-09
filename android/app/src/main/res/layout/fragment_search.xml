@@ -23,6 +23,13 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:textAlignment="center" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,61 +37,104 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/dateStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Start Date"
-                android:inputType="date"
-                android:textAlignment="viewEnd" />
+                android:hint="Year"
+                android:inputType="numberSigned" />
 
             <EditText
-                android:id="@+id/dateEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="End Date (Optional)"
-                android:inputType="date" />
+                android:hint="Month"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Day"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Hour"
+                android:inputType="number" />
+
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/story"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:ems="10"
-            android:hint="Story"
-            android:inputType="textMultiLine|textCapSentences"
-            android:scrollHorizontally="false" />
+            android:text="End Day (Optional)"
+            android:textAlignment="center" />
 
-        <EditText
-            android:id="@+id/location"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Locations (Use newline for new locations)"
-            android:inputType="textMultiLine|textCapSentences"
-            android:scrollHorizontally="false" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="9dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Year"
+                android:inputType="numberSigned" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Month"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Day"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Hour"
+                android:inputType="number" />
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/buttonLocation"
+            android:id="@+id/addLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="9dp"
-            android:text="Map Location"
-            android:textAllCaps="false"
-            android:textSize="18sp" />
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="48dp"
+            android:text="Add Location"
+            android:textAllCaps="false" />
 
-        <EditText
-            android:id="@+id/tag"
+        <LinearLayout
+            android:id="@+id/locationList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Tags (Use newline for new tags)"
-            android:inputType="textMultiLine|textCapSentences"
-            android:scrollHorizontally="false" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 </ScrollView>
