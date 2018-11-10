@@ -1,5 +1,6 @@
 package com.cmpe451.retro.models;
 
+import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Story;
 
@@ -9,25 +10,25 @@ import java.util.List;
 
 public class GetMemoryResponseBody {
 
+    private long userId;
+
     private String headline;
 
-    private String description;
+    private String text;
 
-    //Location related fields
-    private String country;
+    private Date dateOfCreation;
 
-    private String city;
+    private List<Location> listOfLocations;
 
-    private String county;
-
-    private String district;
-
-    private LocationDto locationDto;
-
-    //Time related fields
     private Date startDate;
 
     private Date endDate;
+
+    //List<Tag> listOfTags;
+
+    //List<MediaItem> listOfMediaItems;
+
+    private Date updatedTime;
 
 
     public GetMemoryResponseBody() {
@@ -35,16 +36,15 @@ public class GetMemoryResponseBody {
 
 
     public GetMemoryResponseBody(Memory memory) {
+        this.userId = memory.getUserId();
         this.headline = memory.getHeadline();
-        this.description = memory.getDescription();
-        this.country = memory.getCountry();
-        this.city = memory.getCity();
-        this.county = memory.getCounty();
-        this.district = memory.getDistrict();
-        this.locationDto = memory.getLocation();
+        this.text = memory.getText();
+        this.dateOfCreation = memory.getDateOfCreation();
+        this.listOfLocations = memory.getListOfLocations();
         this.startDate = memory.getStartDate();
         this.endDate = memory.getEndDate();
-
+        //this.listOfTags = memory.getListOfTags();
+        //this.listOfMediaItems = memory.getListOfMediaItems();
 
     }
 
@@ -56,52 +56,44 @@ public class GetMemoryResponseBody {
         this.headline = headline;
     }
 
-    public String getDescription() {
-        return description;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public String getCountry() {
-        return country;
+    public String getText() {
+        return text;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getCity() {
-        return city;
+    public Date getDateOfCreation() {
+        return dateOfCreation;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
-    public String getCounty() {
-        return county;
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
     }
 
-    public void setCounty(String county) {
-        this.county = county;
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
     }
 
-    public String getDistrict() {
-        return district;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public LocationDto getLocationDto() {
-        return locationDto;
-    }
-
-    public void setLocationDto(LocationDto locationDto) {
-        this.locationDto = locationDto;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public Date getStartDate() {

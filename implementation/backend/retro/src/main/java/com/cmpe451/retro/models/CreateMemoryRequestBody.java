@@ -1,19 +1,29 @@
 package com.cmpe451.retro.models;
 
+import com.cmpe451.retro.data.entities.Location;
+
 import java.util.Date;
 import java.util.List;
 
 public class CreateMemoryRequestBody {
 
     private String headline;
-    private String description;
+
+    private String text;
+
+    private Date dateOfCreation;
+
+    private List<Location> listOfLocations;
+
     private Date startDate;
+
     private Date endDate;
-    private String country;
-    private String city;
-    private String county;
-    private String district;
-    private LocationDto locationDto;
+
+    //List<Tag> listOfTags;
+
+    //List<MediaItem> listOfMediaItems;
+
+    private Date updatedTime;
 
     public String getHeadline() {
         return headline;
@@ -23,12 +33,28 @@ public class CreateMemoryRequestBody {
         this.headline = headline;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
+    }
+
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
     }
 
     public Date getStartDate() {
@@ -47,44 +73,11 @@ public class CreateMemoryRequestBody {
         this.endDate = endDate;
     }
 
-    public String getCountry() {
-        return country;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public LocationDto getLocationDto() {
-        return locationDto;
-    }
-
-    public void setLocationDto(LocationDto locationDto) {
-        this.locationDto = locationDto;
-    }
-
 }

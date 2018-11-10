@@ -1,11 +1,8 @@
 package com.cmpe451.retro.services;
 
-import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.data.entities.Story;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
-import com.cmpe451.retro.data.repositories.StoryRepository;
 import com.cmpe451.retro.models.*;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,42 +27,22 @@ public class MemoryServiceImp implements MemoryService {
     MemoryRepository memoryRepository;
 
     @Autowired
-    StoryRepository storyRepository;
-
-    @Autowired
     EntityManager entityManager;
 
     @Override
     @Transactional
     public CreateMemoryResponseBody createMemory(CreateMemoryRequestBody requestBody) {
         Memory memory = new Memory();
-        memory.setDescription(requestBody.getDescription());
-        memory.setHeadline(requestBody.getHeadline());
         User ownerUser = userService.getCurrentUser();
         memory.setUserId(ownerUser.getId());
+        memory.setHeadline(requestBody.getHeadline());
+        memory.setText(requestBody.getText());
         memory.setDateOfCreation(new Date());
-
-        memory.setCountry(requestBody.getCountry());
-        memory.setCity(requestBody.getCity());
-        memory.setCounty(requestBody.getCounty());
-        memory.setDistrict(requestBody.getDistrict());
-        memory.setLocation(requestBody.getLocationDto());
         memory.setStartDate(requestBody.getStartDate());
         memory.setEndDate(requestBody.getEndDate());
+        memory.setUpdatedTime(requestBody.getUpdatedTime());
+        memory.setListOfLocations(requestBody.getListOfLocations());
 
-        /*List<Story> storyList= new ArrayList<>();
-
-        for(CreateStoryRequestModel storyRequest: requestBody.getStoryList()){
-            Story story = new Story(storyRequest, memory);
-            Location location = new Location(storyRequest.getLocationDto());
-            story.setLocation(location);
-            storyList.add(story);
-
-            entityManager.persist(location);
-            entityManager.persist(story);
-        }
-
-        memory.setStoryList(storyList);*/
         ownerUser.getMemoryList().add(memory); //TODO: check
         entityManager.persist(memory);
         entityManager.flush();

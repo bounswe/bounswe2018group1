@@ -6,6 +6,7 @@ import com.cmpe451.retro.models.LocationDto;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -15,7 +16,6 @@ public class Memory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-
     @NotNull
     private long userId;
 
@@ -23,53 +23,53 @@ public class Memory {
     private String headline;
 
     @NotNull
-    private String description;
-
-    @NotNull
     private Date dateOfCreation;
 
-    //Location related fields
-    private String country;
+//    @NotNull
+//    @Temporal(TemporalType.DATE)
+//    private Date startDate;
+//
+//    @NotNull
+//    @Temporal(TemporalType.DATE)
+//    private Date endDate;
 
-    private String city;
+    private String startDateHH;
 
-    private String county;
+    private String startDateDD;
 
-    private String district;
-
-    @OneToOne
-    private LocationDto locationDto;
-
-    //Time related fields
-    @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private String startDateMM;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private String startDateYYYY;
 
-    //List<Tag> listOfTags;
-    //private Date updatedTime;
+
+    private String endDateHH;
+
+    private String endDateDD;
+
+    private String endDateMM;
+
+    private String endDateYYYY;
+
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date updatedTime;
+
+    @NotNull
+    @OneToMany(targetEntity=Location.class)
+    private List<Location> listOfLocations;
+
+    @OneToMany(targetEntity=Tag.class)
+    private List<Tag> listOfTags;
+
+    @NotNull
+    @OneToMany(targetEntity=Item.class)
+    private List<Item> listOfItems;
+
 
     public Memory(){
 
-    }
-
-    public String getHeadline() {
-        return headline;
-    }
-
-    public void setHeadline(String headline) {
-        this.headline = headline;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public long getId() {
@@ -80,14 +80,6 @@ public class Memory {
         this.id = id;
     }
 
-    public Date getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
-
     public long getUserId() {
         return userId;
     }
@@ -96,59 +88,116 @@ public class Memory {
         this.userId = userId;
     }
 
-    public String getCountry() {
-        return country;
+    public String getHeadline() {
+        return headline;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 
-    public String getCity() {
-        return city;
+    public Date getDateOfCreation() {
+        return dateOfCreation;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
-    public String getCounty() {
-        return county;
+    public String getStartDateHH() {
+        return startDateHH;
     }
 
-    public void setCounty(String county) {
-        this.county = county;
+    public void setStartDateHH(String startDateHH) {
+        this.startDateHH = startDateHH;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getStartDateDD() {
+        return startDateDD;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setStartDateDD(String startDateDD) {
+        this.startDateDD = startDateDD;
     }
 
-    public LocationDto getLocation() {
-        return locationDto;
+    public String getStartDateMM() {
+        return startDateMM;
     }
 
-    public void setLocation(LocationDto location) {
-        this.locationDto = location;
+    public void setStartDateMM(String startDateMM) {
+        this.startDateMM = startDateMM;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getStartDateYYYY() {
+        return startDateYYYY;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDateYYYY(String startDateYYYY) {
+        this.startDateYYYY = startDateYYYY;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getEndDateHH() {
+        return endDateHH;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndDateHH(String endDateHH) {
+        this.endDateHH = endDateHH;
     }
+
+    public String getEndDateDD() {
+        return endDateDD;
+    }
+
+    public void setEndDateDD(String endDateDD) {
+        this.endDateDD = endDateDD;
+    }
+
+    public String getEndDateMM() {
+        return endDateMM;
+    }
+
+    public void setEndDateMM(String endDateMM) {
+        this.endDateMM = endDateMM;
+    }
+
+    public String getEndDateYYYY() {
+        return endDateYYYY;
+    }
+
+    public void setEndDateYYYY(String endDateYYYY) {
+        this.endDateYYYY = endDateYYYY;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
+    }
+
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
+    }
+
+    public List<Tag> getListOfTags() {
+        return listOfTags;
+    }
+
+    public void setListOfTags(List<Tag> listOfTags) {
+        this.listOfTags = listOfTags;
+    }
+
+    public List<Item> getListOfItems() {
+        return listOfItems;
+    }
+
+    public void setListOfItems(List<Item> listOfItems) {
+        this.listOfItems = listOfItems;
+    }
+
 }
