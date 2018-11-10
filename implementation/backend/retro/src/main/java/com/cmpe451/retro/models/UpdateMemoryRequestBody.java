@@ -3,7 +3,6 @@ package com.cmpe451.retro.models;
 
 import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
-import com.cmpe451.retro.data.entities.Story;
 import com.cmpe451.retro.data.entities.Tag;
 
 import java.util.Date;

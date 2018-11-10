@@ -1,10 +1,10 @@
 package com.cmpe451.retro.models;
 
+import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.data.entities.Story;
+import com.cmpe451.retro.data.entities.Tag;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,13 +20,25 @@ public class GetMemoryResponseBody {
 
     private List<Location> listOfLocations;
 
-    private Date startDate;
+    private String startDateHH;
 
-    private Date endDate;
+    private String startDateDD;
 
-    //List<Tag> listOfTags;
+    private String startDateMM;
 
-    //List<MediaItem> listOfMediaItems;
+    private String startDateYYYY;
+
+    private String endDateHH;
+
+    private String endDateDD;
+
+    private String endDateMM;
+
+    private String endDateYYYY;
+
+    private List<Tag> listOfTags;
+
+    private List<Item> listOfItems;
 
     private Date updatedTime;
 
@@ -38,22 +50,20 @@ public class GetMemoryResponseBody {
     public GetMemoryResponseBody(Memory memory) {
         this.userId = memory.getUserId();
         this.headline = memory.getHeadline();
-        this.text = memory.getText();
         this.dateOfCreation = memory.getDateOfCreation();
+        this.startDateHH = memory.getStartDateHH();
+        this.startDateDD = memory.getStartDateDD();
+        this.startDateMM = memory.getStartDateMM();
+        this.startDateYYYY = memory.getStartDateYYYY();
+        this.endDateHH = memory.getEndDateHH();
+        this.endDateDD = memory.getEndDateDD();
+        this.endDateMM = memory.getEndDateMM();
+        this.endDateYYYY = memory.getEndDateYYYY();
+        this.updatedTime = memory.getUpdatedTime();
         this.listOfLocations = memory.getListOfLocations();
-        this.startDate = memory.getStartDate();
-        this.endDate = memory.getEndDate();
-        //this.listOfTags = memory.getListOfTags();
-        //this.listOfMediaItems = memory.getListOfMediaItems();
+        this.listOfTags = memory.getListOfTags();
+        this.listOfItems = memory.getListOfItems();
 
-    }
-
-    public String getHeadline() {
-        return headline;
-    }
-
-    public void setHeadline(String headline) {
-        this.headline = headline;
     }
 
     public long getUserId() {
@@ -62,6 +72,14 @@ public class GetMemoryResponseBody {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 
     public String getText() {
@@ -88,6 +106,86 @@ public class GetMemoryResponseBody {
         this.listOfLocations = listOfLocations;
     }
 
+    public String getStartDateHH() {
+        return startDateHH;
+    }
+
+    public void setStartDateHH(String startDateHH) {
+        this.startDateHH = startDateHH;
+    }
+
+    public String getStartDateDD() {
+        return startDateDD;
+    }
+
+    public void setStartDateDD(String startDateDD) {
+        this.startDateDD = startDateDD;
+    }
+
+    public String getStartDateMM() {
+        return startDateMM;
+    }
+
+    public void setStartDateMM(String startDateMM) {
+        this.startDateMM = startDateMM;
+    }
+
+    public String getStartDateYYYY() {
+        return startDateYYYY;
+    }
+
+    public void setStartDateYYYY(String startDateYYYY) {
+        this.startDateYYYY = startDateYYYY;
+    }
+
+    public String getEndDateHH() {
+        return endDateHH;
+    }
+
+    public void setEndDateHH(String endDateHH) {
+        this.endDateHH = endDateHH;
+    }
+
+    public String getEndDateDD() {
+        return endDateDD;
+    }
+
+    public void setEndDateDD(String endDateDD) {
+        this.endDateDD = endDateDD;
+    }
+
+    public String getEndDateMM() {
+        return endDateMM;
+    }
+
+    public void setEndDateMM(String endDateMM) {
+        this.endDateMM = endDateMM;
+    }
+
+    public String getEndDateYYYY() {
+        return endDateYYYY;
+    }
+
+    public void setEndDateYYYY(String endDateYYYY) {
+        this.endDateYYYY = endDateYYYY;
+    }
+
+    public List<Tag> getListOfTags() {
+        return listOfTags;
+    }
+
+    public void setListOfTags(List<Tag> listOfTags) {
+        this.listOfTags = listOfTags;
+    }
+
+    public List<Item> getListOfItems() {
+        return listOfItems;
+    }
+
+    public void setListOfItems(List<Item> listOfItems) {
+        this.listOfItems = listOfItems;
+    }
+
     public Date getUpdatedTime() {
         return updatedTime;
     }
@@ -95,22 +193,4 @@ public class GetMemoryResponseBody {
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-
 }
