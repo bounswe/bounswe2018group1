@@ -33,23 +33,23 @@ public class Memory {
 //    @Temporal(TemporalType.DATE)
 //    private Date endDate;
 
-    private String startDateHH;
+    private int startDateHH;
 
-    private String startDateDD;
+    private int startDateDD;
 
-    private String startDateMM;
+    private int startDateMM;
 
     @NotNull
-    private String startDateYYYY;
+    private int startDateYYYY;
 
 
-    private String endDateHH;
+    private int endDateHH;
 
-    private String endDateDD;
+    private int endDateDD;
 
-    private String endDateMM;
+    private int endDateMM;
 
-    private String endDateYYYY;
+    private int endDateYYYY;
 
 
     @NotNull
@@ -104,67 +104,67 @@ public class Memory {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public String getStartDateHH() {
+    public int getStartDateHH() {
         return startDateHH;
     }
 
-    public void setStartDateHH(String startDateHH) {
+    public void setStartDateHH(int startDateHH) {
         this.startDateHH = startDateHH;
     }
 
-    public String getStartDateDD() {
+    public int getStartDateDD() {
         return startDateDD;
     }
 
-    public void setStartDateDD(String startDateDD) {
+    public void setStartDateDD(int startDateDD) {
         this.startDateDD = startDateDD;
     }
 
-    public String getStartDateMM() {
+    public int getStartDateMM() {
         return startDateMM;
     }
 
-    public void setStartDateMM(String startDateMM) {
+    public void setStartDateMM(int startDateMM) {
         this.startDateMM = startDateMM;
     }
 
-    public String getStartDateYYYY() {
+    public int getStartDateYYYY() {
         return startDateYYYY;
     }
 
-    public void setStartDateYYYY(String startDateYYYY) {
+    public void setStartDateYYYY(int startDateYYYY) {
         this.startDateYYYY = startDateYYYY;
     }
 
-    public String getEndDateHH() {
+    public int getEndDateHH() {
         return endDateHH;
     }
 
-    public void setEndDateHH(String endDateHH) {
+    public void setEndDateHH(int endDateHH) {
         this.endDateHH = endDateHH;
     }
 
-    public String getEndDateDD() {
+    public int getEndDateDD() {
         return endDateDD;
     }
 
-    public void setEndDateDD(String endDateDD) {
+    public void setEndDateDD(int endDateDD) {
         this.endDateDD = endDateDD;
     }
 
-    public String getEndDateMM() {
+    public int getEndDateMM() {
         return endDateMM;
     }
 
-    public void setEndDateMM(String endDateMM) {
+    public void setEndDateMM(int endDateMM) {
         this.endDateMM = endDateMM;
     }
 
-    public String getEndDateYYYY() {
+    public int getEndDateYYYY() {
         return endDateYYYY;
     }
 
-    public void setEndDateYYYY(String endDateYYYY) {
+    public void setEndDateYYYY(int endDateYYYY) {
         this.endDateYYYY = endDateYYYY;
     }
 

@@ -104,6 +104,52 @@ public class MemoryServiceImp implements MemoryService {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
             }
 
+            if(!isZero(updateMemoryRequestBody.getStartDateHH()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateHH(updateMemoryRequestBody.getStartDateHH());
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if(!isZero(updateMemoryRequestBody.getStartDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if( !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else{
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+
+            }
+
+            if(!isZero(updateMemoryRequestBody.getEndDateHH()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateHH(updateMemoryRequestBody.getEndDateHH());
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if(!isZero(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if( !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else{
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+
+            }
+            /*
             if(!isNullOrEmpty(updateMemoryRequestBody.getStartDateHH()) &&
                 !isNullOrEmpty(updateMemoryRequestBody.getStartDateDD()) &&
                 !isNullOrEmpty(updateMemoryRequestBody.getStartDateMM()) &&
@@ -148,7 +194,7 @@ public class MemoryServiceImp implements MemoryService {
             }else{
                 memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
 
-            }
+            }*/
 
             memory.setUpdatedTime(new Date());
             if(updateMemoryRequestBody.getListOfLocations() != null){
@@ -161,6 +207,9 @@ public class MemoryServiceImp implements MemoryService {
                 memory.setListOfItems(updateMemoryRequestBody.getListOfItems());
             }
 
+            //if (updateMemoryRequestBody.getStoryList() != null) {
+            //    memory.setStoryList(updateMemoryRequestBody.getStoryList());
+            //}
 
             memoryRepository.save(memory);
 
@@ -173,5 +222,8 @@ public class MemoryServiceImp implements MemoryService {
         return (s==null || s.isEmpty());
     }
 
+    public boolean isZero(int i){
+        return i==0;
+    }
 
 }
