@@ -36,12 +36,21 @@ public class MemoryServiceImp implements MemoryService {
         User ownerUser = userService.getCurrentUser();
         memory.setUserId(ownerUser.getId());
         memory.setHeadline(requestBody.getHeadline());
-        memory.setText(requestBody.getText());
         memory.setDateOfCreation(new Date());
-        memory.setStartDate(requestBody.getStartDate());
-        memory.setEndDate(requestBody.getEndDate());
+        memory.setStartDateHH(requestBody.getStartDateHH());
+        memory.setStartDateDD(requestBody.getStartDateDD());
+        memory.setStartDateMM(requestBody.getStartDateMM());
+        memory.setStartDateYYYY(requestBody.getStartDateYYYY());
+
+        memory.setEndDateHH(requestBody.getEndDateHH());
+        memory.setEndDateDD(requestBody.getEndDateDD());
+        memory.setEndDateMM(requestBody.getEndDateMM());
+        memory.setEndDateYYYY(requestBody.getEndDateYYYY());
+
         memory.setUpdatedTime(requestBody.getUpdatedTime());
         memory.setListOfLocations(requestBody.getListOfLocations());
+        memory.setListOfTags(requestBody.getListOfTags()); //TODO: requestTagBody?
+        memory.setListOfItems(requestBody.getListOfItems()); //TODO: requestItemBody?
 
         ownerUser.getMemoryList().add(memory); //TODO: check
         entityManager.persist(memory);
@@ -90,23 +99,78 @@ public class MemoryServiceImp implements MemoryService {
         Optional<Memory> memoryOptional = memoryRepository.findById(id);
         if(memoryOptional.isPresent()){
             Memory memory = memoryOptional.get();
-            if (updateMemoryRequestBody.getDescription() != null && !updateMemoryRequestBody.getDescription().equals("")) {
-                memory.setDescription(updateMemoryRequestBody.getDescription());
-            }
 
-            if (updateMemoryRequestBody.getHeadline() != null && !updateMemoryRequestBody.getHeadline().equals("")) {
+            if (!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
             }
 
-            //if (updateMemoryRequestBody.getStoryList() != null) {
-            //    memory.setStoryList(updateMemoryRequestBody.getStoryList());
-            //}
+            if(!isNullOrEmpty(updateMemoryRequestBody.getStartDateHH()) &&
+                !isNullOrEmpty(updateMemoryRequestBody.getStartDateDD()) &&
+                !isNullOrEmpty(updateMemoryRequestBody.getStartDateMM()) &&
+                !isNullOrEmpty(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateHH(updateMemoryRequestBody.getStartDateHH());
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if(!isNullOrEmpty(updateMemoryRequestBody.getStartDateDD()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if( !isNullOrEmpty(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else{
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+
+            }
+
+            if(!isNullOrEmpty(updateMemoryRequestBody.getEndDateHH()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateHH(updateMemoryRequestBody.getEndDateHH());
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if(!isNullOrEmpty(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if( !isNullOrEmpty(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isNullOrEmpty(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else{
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+
+            }
+
+            memory.setUpdatedTime(new Date());
+            if(updateMemoryRequestBody.getListOfLocations() != null){
+                memory.setListOfLocations(updateMemoryRequestBody.getListOfLocations());
+            }
+            if(updateMemoryRequestBody.getListOfTags() != null){
+                memory.setListOfTags(updateMemoryRequestBody.getListOfTags());
+            }
+            if(updateMemoryRequestBody.getListOfItems() != null){
+                memory.setListOfItems(updateMemoryRequestBody.getListOfItems());
+            }
+
 
             memoryRepository.save(memory);
 
         }else{
             throw new RetroException("Could not find the memory", HttpStatus.EXPECTATION_FAILED);
         }
+    }
+
+    public boolean isNullOrEmpty(String s){
+        return (s==null || s.isEmpty());
     }
 
 
