@@ -37,7 +37,7 @@ public class Memory {
 
     private String district;
 
-    //@OneToOne
+    @OneToOne
     private LocationDto locationDto;
 
     //Time related fields
