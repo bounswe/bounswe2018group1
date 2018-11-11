@@ -1,7 +1,5 @@
 <resources>
 
-    <string name="hello_search_fragment">Hello from search!</string>
-    <string name="hello_map_fragment">Hello from map!</string>
     <string name="avatar_description">Avatar Picture</string>
     <string name="settings_item">Settings</string>
     <string name="register_text">Register</string>
@@ -23,6 +21,4 @@
     <string name="view_more_text">View more</string>
     <string name="title_activity_memory_create">MemoryCreateActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

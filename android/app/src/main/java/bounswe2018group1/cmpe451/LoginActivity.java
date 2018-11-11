@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendLoginRequest() {
-
         JSONObject postParams = new JSONObject();
         try {
             postParams.put("password", editTextLPassword.getText().toString());
@@ -97,11 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                 postParams.put("nickname", editTextLName.getText().toString().trim());
                 postParams.put("email", "");
             }
-
         } catch (org.json.JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
                 Request.Method.POST,
                 URLs.URL_LOGIN, postParams,
@@ -140,4 +137,5 @@ public class LoginActivity extends AppCompatActivity {
         );
         volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGIN_REQ_TAG);
     }
+
 }

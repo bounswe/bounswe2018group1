@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private VolleySingleton volleySingleton = null;
 
     private boolean doubleBackToExitPressedOnce = false;
+    private boolean isProfileLoaded = false;
     private String sessionID;
 
     @Override
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         // HTTP Requests
         volleySingleton = VolleySingleton.getInstance(this);
 
-        //replaceFragment(new FeedFragment());
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragmentMap);
                         break;
                     case 2:
-                        if (!fragmentProfile.getProfileLoaded()) {
+                        if (!isProfileLoaded) {
                             loadProfile();
                         }
                         replaceFragment(fragmentProfile);
@@ -162,10 +161,43 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void loadProfile() {
-
+    public void logout() {
         JSONObject postParams = new JSONObject();
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
+                Request.Method.POST,
+                URLs.URL_LOGOUT, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            // Clear and return to login
+                            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i);
+                        } else if (response instanceof JSONObject) {
+                            //Success Callback
+                            JSONObject r = (JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.out.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        Toast.makeText(getApplicationContext(), "Logout fail!", Toast.LENGTH_LONG).show();
+                        System.err.println("Error in logout!");
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGOUT_REQ_TAG);
+    }
 
+    private void loadProfile() {
+        JSONObject postParams = new JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
                 new Response.Listener() {
                     @Override
@@ -178,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Response: " + r.toString());
                             try {
                                 // Set fields
-                                fragmentProfile.setFields(r.getString("firstName"), r.getString("lastName"));
-                                fragmentProfile.setProfileLoaded(true);
+                                fragmentProfile.setFields(r.getString("firstName"), r.getString("lastName"), r.getString("nickname"), r.getString("email"));
+                                isProfileLoaded = true;
                             } catch(JSONException e) {
                                 e.printStackTrace();
                             }
@@ -200,6 +232,50 @@ public class MainActivity extends AppCompatActivity {
         );
         volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_REQ_TAG);
 
+    }
+
+    public void updateProfile(String $firstName, String $lastName, String $nickname, String $email, String $oldPassword, String $newPassword) {
+        // Remove keyboard
+        if (getCurrentFocus() != null)
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+        JSONObject postParams = new JSONObject();
+        try {
+            postParams.put("firstName", $firstName);
+            postParams.put("lastName", $lastName);
+            postParams.put("nickname", $nickname);
+            postParams.put("email", $email);
+            postParams.put("oldPassword", $oldPassword);
+            postParams.put("newPassword", $newPassword);
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+
+                        } else if (response instanceof JSONObject) {
+                            //Success Callback
+                            JSONObject r = (JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.out.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        Toast.makeText(getApplicationContext(), "Profile update fail!", Toast.LENGTH_LONG).show();
+                        System.err.println("Error in update profile!");
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_UPD_TAG);
     }
 
 }

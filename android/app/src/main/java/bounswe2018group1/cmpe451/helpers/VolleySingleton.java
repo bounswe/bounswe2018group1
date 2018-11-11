@@ -17,7 +17,9 @@ public class VolleySingleton {
     public static class Tags {
         public static final String LOGIN_REQ_TAG = "login_tag";
         public static final String REGISTER_REQ_TAG = "register_tag";
+        public static final String LOGOUT_REQ_TAG = "logout_tag";
         public static final String PROFILE_REQ_TAG = "profile_tag";
+        public static final String PROFILE_UPD_TAG = "profile_update_tag";
     }
 
     private VolleySingleton(Context context) {
