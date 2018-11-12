@@ -13,6 +13,8 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String locationName;
+
     private double longitude;
 
     private double latitude;
@@ -20,6 +22,18 @@ public class Location {
     public Location(double latitude, double longitude) {
         this.latitude  = latitude;
         this.longitude = longitude;
+    }
+
+    public Location(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public double getLongitude() {
