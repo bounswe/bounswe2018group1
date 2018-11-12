@@ -1,16 +1,19 @@
 package com.cmpe451.retro.data.repositories;
 
 import com.cmpe451.retro.data.entities.Memory;
+import com.cmpe451.retro.models.GetMemoryResponseBody;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface MemoryRepository extends CrudRepository<Memory,Long> {
+public interface MemoryRepository extends CrudRepository<Memory,Long>, PagingAndSortingRepository<Memory, Long> {
 
     Optional<Memory> findById(Long id);
-    List<Memory> findAll();
+    Page<Memory> findAll(Pageable pageable);
 
-    List<Memory> findByUserId(Long userId);
+    Page<GetMemoryResponseBody> findByUserId(Long userId, Pageable pageable);
 
 }

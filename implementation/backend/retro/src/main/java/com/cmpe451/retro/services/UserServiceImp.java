@@ -5,15 +5,19 @@ import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.RetroException;
 import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
+import com.cmpe451.retro.models.UserResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImp implements UserService {
 
     @Autowired
@@ -23,34 +27,33 @@ public class UserServiceImp implements UserService {
     private HttpServletRequest httpServletRequest;
 
     @Override
-    public User getCurrentUser() {
+    public UserResponseModel getCurrentUser() {
 
         long userID = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
         Optional<User> user = userRepository.findById(userID);
 
         if(user.isPresent())
-            return user.get();
+            return new UserResponseModel(user.get());
 
         throw new RetroException("You have tried to access an authorised page. Please login and try again.", HttpStatus.UNAUTHORIZED);
     }
 
     @Override
-    public User getUserById(long id) {
+    public UserResponseModel getUserById(long id) {
         Optional<User> user = userRepository.findById(id);
 
         if(user.isPresent())
-            return user.get();
+            return new UserResponseModel(user.get());
 
-        throw new RetroException("You have tried to access an authorised page. Please login and try again.",HttpStatus.UNAUTHORIZED);
+        throw new RetroException("User not found.",HttpStatus.NOT_FOUND);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserResponseModel> getAllUsers() {
 
         List<User> allUsers = userRepository.findAll();
 
-        return allUsers;
-
+        return allUsers.stream().map(UserResponseModel::new).collect(Collectors.toList());
     }
 
     @Override
