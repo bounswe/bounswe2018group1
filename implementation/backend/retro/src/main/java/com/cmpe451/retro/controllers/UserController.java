@@ -26,7 +26,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public UserResponseModel getUserById(@PathVariable("id") long id) { return userService.getUserById(id); }
-git
+
     //TODO: decide pathvariable or requestparam
     //@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     //public User getUserById(@RequestParam("id") long id) { return authenticationService.getUserById(id); }
