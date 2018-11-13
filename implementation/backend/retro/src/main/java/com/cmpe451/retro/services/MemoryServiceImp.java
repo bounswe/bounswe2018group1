@@ -6,15 +6,15 @@ import com.cmpe451.retro.data.entities.Story;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.StoryRepository;
+import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.*;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -38,14 +38,16 @@ public class MemoryServiceImp implements MemoryService {
     @Autowired
     EntityManager entityManager;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     @Transactional
-    public CreateMemoryResponseBody createMemory(CreateMemoryRequestBody requestBody) {
+    public CreateMemoryResponseBody createMemory(CreateMemoryRequestBody requestBody, Long userId) {
         Memory memory = new Memory();
         memory.setDescription(requestBody.getDescription());
         memory.setHeadline(requestBody.getHeadline());
-        User ownerUser = userService.getCurrentUser();
-        memory.setUserId(ownerUser.getId());
+        memory.setUserId(userId);
         memory.setDateOfCreation(new Date());
 
         List<Story> storyList= new ArrayList<>();
@@ -60,8 +62,10 @@ public class MemoryServiceImp implements MemoryService {
             entityManager.persist(story);
         }
 
+        Optional<User> user = userRepository.findById(userId);
+
         memory.setStoryList(storyList);
-        ownerUser.getMemoryList().add(memory); //TODO: check
+        user.get().getMemoryList().add(memory);
         entityManager.persist(memory);
         entityManager.flush();
 
@@ -82,32 +86,30 @@ public class MemoryServiceImp implements MemoryService {
     }
 
     @Override
-    public List<GetMemoryResponseBody> getAllMemories() {
-        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll());
+    public Page<GetMemoryResponseBody> getAllMemories(Pageable pageable) {
+        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll(pageable));
         List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
         for(Memory memory: listOfMemories){
             listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
         }
-        return listOfMemoryResponseBodies;
+        return new PageImpl<>(listOfMemoryResponseBodies);
     }
 
     @Override
-    public List<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId) {
-        //TODO check how removeIf works
-        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll());
-        listOfMemories.removeIf(m -> m.getUserId() != userId);
-        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
-        for(Memory memory: listOfMemories){
-            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
-        }
-        return listOfMemoryResponseBodies;
+    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId,Pageable pageable) {
+        return memoryRepository.findByUserId(userId,pageable);
     }
 
     @Override
-    public void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody) {
+    @Transactional
+    public void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody,Long userId) {
         Optional<Memory> memoryOptional = memoryRepository.findById(id);
         if(memoryOptional.isPresent()){
             Memory memory = memoryOptional.get();
+            if(memory.getUserId() != userId){
+                throw new RetroException("You can not update a memory that you have not created.",HttpStatus.UNAUTHORIZED);
+            }
+
             if (updateMemoryRequestBody.getDescription() != null && !updateMemoryRequestBody.getDescription().equals("")) {
                 memory.setDescription(updateMemoryRequestBody.getDescription());
             }
@@ -119,9 +121,11 @@ public class MemoryServiceImp implements MemoryService {
             if (updateMemoryRequestBody.getStoryList() != null) {
                 memory.setStoryList(updateMemoryRequestBody.getStoryList());
             }
+            memory.getStoryList().forEach(entityManager::persist);
+            memory.getStoryList().stream().map(Story::getLocation).forEach(entityManager::persist);
 
-            memoryRepository.save(memory);
-
+            entityManager.persist(memory);
+            entityManager.flush();
         }else{
             throw new RetroException("Could not find the memory", HttpStatus.EXPECTATION_FAILED);
         }

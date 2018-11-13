@@ -1,18 +1,18 @@
 package com.cmpe451.retro.services;
 
 
-import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
+import com.cmpe451.retro.models.UserResponseModel;
 
 import java.util.List;
 
 public interface UserService {
 
-    User getCurrentUser();
+    UserResponseModel getCurrentUser();
 
-    User getUserById(long id);
+    UserResponseModel getUserById(long id);
 
-    List<User> getAllUsers();
+    List<UserResponseModel> getAllUsers();
 
     void updateUserInfo(long userId, UpdateUserInfoRequestBody updateUserInfoBody);
 

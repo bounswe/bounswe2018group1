@@ -1,28 +1,29 @@
 package com.cmpe451.retro.services;
 
 
-import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.core.SessionUtil;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.models.RetroException;
-import com.cmpe451.retro.models.UpdateUserInfoRequestBody;
+import com.cmpe451.retro.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 
 @Service
+@Transactional
 public class AuthenticationServiceImp implements AuthenticationService {
 
     @Autowired
@@ -31,7 +32,12 @@ public class AuthenticationServiceImp implements AuthenticationService {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
     private HttpServletRequest httpServletRequest;
+
+    private StringUtil stringUtil = new StringUtil();
 
     @Override
     public long login(LoginRequestBody loginRequestBody) {
@@ -62,8 +68,9 @@ public class AuthenticationServiceImp implements AuthenticationService {
     @Override
     public long register(RegisterRequestBody registerRequestBody) {
         User user = createUser(registerRequestBody);
-        User savedUser = userRepository.save(user);
-        return savedUser.getId();
+        entityManager.persist(user);
+        entityManager.flush();
+        return user.getId();
     }
 
     public User createUser(RegisterRequestBody registerRequestBody) {
@@ -75,6 +82,10 @@ public class AuthenticationServiceImp implements AuthenticationService {
         }else if(userOptionalNickname.isPresent()){
             throw new RetroException("Account with this nickname exists", HttpStatus.CONFLICT);
         }
+
+        if(!stringUtil.isValidPassword(registerRequestBody.getPassword()))
+            throw new RetroException("Invalid password",HttpStatus.BAD_REQUEST);
+
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequestBody.getPassword()));
         user.setEmail(registerRequestBody.getEmail());
