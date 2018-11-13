@@ -74,7 +74,6 @@ public class AuthenticationServiceImp implements AuthenticationService {
     }
 
     public User createUser(RegisterRequestBody registerRequestBody) {
-        //check if a user with this email / nickname exists //TODO:check
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
         Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
         if(userOptionalEmail.isPresent()){
@@ -95,7 +94,10 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.setMemoryList(new ArrayList<>());
         user.setActivated(false); //initially it is not activated
         user.setRandomCode(SessionUtil.getRandomCode(15));
-
+        user.setListOfLocations(new ArrayList<>());
+        user.setGender(User.Gender.NOT_TO_DISCLOSE);
+        user.setBirthday(null);
+        user.setBio("");
         Date now = new Date();
         user.setDateOfCreation(now);
         user.setDateOfUpdate(now);

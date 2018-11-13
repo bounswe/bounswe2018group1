@@ -1,8 +1,11 @@
 package com.cmpe451.retro.models;
 
+import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class UserResponseModel {
 
@@ -20,6 +23,14 @@ public class UserResponseModel {
 
     private String email;
 
+    private String birthday;
+
+    private List<Location> listOfLocations;
+
+    private User.Gender gender;
+
+    private String bio;
+
     public UserResponseModel() {
     }
 
@@ -31,6 +42,10 @@ public class UserResponseModel {
         this.lastName = user.getLastName();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
+        setBirthday(user.getBirthday()); // TODO: 2018-11-13 yerine 2018-00-13 dönüyor
+        this.listOfLocations = user.getListOfLocations();
+        this.gender = user.getGender();
+        this.bio = user.getBio();
     }
 
     public long getId() {
@@ -87,5 +102,42 @@ public class UserResponseModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        if(birthday != null)
+            this.birthday = new SimpleDateFormat("yyyy-MM-dd").format(birthday);
+    }
+
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
+    }
+
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
+    }
+
+    public User.Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(User.Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

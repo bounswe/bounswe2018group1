@@ -11,6 +11,10 @@ import java.util.List;
 @Entity
 public class User {
 
+    public enum Gender {
+        FEMALE, MALE, OTHER, NOT_TO_DISCLOSE;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -20,6 +24,11 @@ public class User {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfUpdate;
+
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+
+    private Gender gender;
 
     @NotNull
     private String firstName;
@@ -40,15 +49,21 @@ public class User {
     @NotNull
     private String password;
 
-    @NotNull
     @OneToMany
     private List<Memory> memoryList;
+
+    @OneToMany
+    private List<Location> listOfLocations;
 
     @NotNull
     private boolean activated;
 
     @NotNull
     private String randomCode;
+
+    private String bio;
+
+
 
     public long getId() {
         return id;
@@ -98,6 +113,26 @@ public class User {
         this.nickname = nickname;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -126,11 +161,27 @@ public class User {
 
     public boolean getActivated(){ return activated; }
 
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
+    }
+
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
+    }
+
     public String getRandomCode() {
         return randomCode;
     }
 
     public void setRandomCode(String randomCode) {
         this.randomCode = randomCode;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
