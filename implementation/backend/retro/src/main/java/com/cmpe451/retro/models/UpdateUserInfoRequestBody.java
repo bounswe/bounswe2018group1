@@ -1,14 +1,24 @@
 package com.cmpe451.retro.models;
 
 
+import com.cmpe451.retro.data.entities.Location;
+import com.cmpe451.retro.data.entities.User;
+
+import java.util.Date;
+import java.util.List;
+
 public class UpdateUserInfoRequestBody {
+
     private String firstName;
     private String lastName;
     private String email;
     private String nickname;
     private String oldPassword;
     private String newPassword;
-
+    private User.Gender gender;
+    private Date birthday;
+    private List<Location> listOfLocations;
+    private String bio;
 
     public String getFirstName() {
         return firstName;
@@ -57,5 +67,37 @@ public class UpdateUserInfoRequestBody {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public List<Location> getListOfLocations() {
+        return listOfLocations;
+    }
+
+    public void setListOfLocations(List<Location> listOfLocations) {
+        this.listOfLocations = listOfLocations;
+    }
+
+    public User.Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(User.Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
