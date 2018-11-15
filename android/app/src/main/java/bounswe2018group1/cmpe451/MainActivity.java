@@ -55,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Tabs
         if (tabLayout == null) tabLayout = findViewById(R.id.tabLayout);
+        if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
 
         tabLayout.addTab(tabLayout.newTab().setText("Feed"));
         tabLayout.addTab(tabLayout.newTab().setText("Map"));
         tabLayout.addTab(tabLayout.newTab().setText("Profıle"));
+        tabLayout.addTab(tabLayout.newTab().setText("Search"));
         tabLayout.addTab(tabLayout.newTab().setText("Create"));
-        tabLayout.addTab(tabLayout.newTab().setText("Settings"));
 
         // Create fragments
         fragmentFeed = new FeedFragment();

@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (getCurrentFocus() != null) {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
+
                 sendLoginRequest();
             }
         });
