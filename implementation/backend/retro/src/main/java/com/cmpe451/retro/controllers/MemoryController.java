@@ -41,7 +41,10 @@ public class MemoryController {
     public Page<GetMemoryResponseBody> getAllMemories(Pageable pageable) { return memoryService.getAllMemories(pageable); }
 
     @RequestMapping(value = "/memory/user",method = RequestMethod.GET)
-    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long id, Pageable pageable){ //TO-DO Required
+    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long id, Pageable pageable){
+        if(id==null){
+            id = authenticationController.getUserId();
+        }
         return memoryService.getAllMemoriesOfUser(id,pageable);
     }
 
