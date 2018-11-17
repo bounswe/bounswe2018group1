@@ -13,7 +13,7 @@ public class CreateMemoryRequestBody {
 
     private Date dateOfCreation;
 
-    private List<Location> listOfLocations;
+    private List<LocationDto> listOfLocations;
 
     private int startDateHH;
 
@@ -23,7 +23,6 @@ public class CreateMemoryRequestBody {
 
     private int startDateYYYY;
 
-
     private int endDateHH;
 
     private int endDateDD;
@@ -32,9 +31,9 @@ public class CreateMemoryRequestBody {
 
     private int endDateYYYY;
 
-    private List<Tag> listOfTags;
+    private List<TagDto> listOfTags;
 
-    private List<Item> listOfItems;
+    private List<ItemDto> listOfItems;
 
     private Date updatedTime;
 
@@ -52,14 +51,6 @@ public class CreateMemoryRequestBody {
 
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
-    }
-
-    public List<Location> getListOfLocations() {
-        return listOfLocations;
-    }
-
-    public void setListOfLocations(List<Location> listOfLocations) {
-        this.listOfLocations = listOfLocations;
     }
 
     public int getStartDateHH() {
@@ -134,19 +125,27 @@ public class CreateMemoryRequestBody {
         this.updatedTime = updatedTime;
     }
 
-    public List<Tag> getListOfTags() {
+    public void setListOfLocations(List<LocationDto> listOfLocations) {
+        this.listOfLocations = listOfLocations;
+    }
+
+    public List<TagDto> getListOfTags() {
         return listOfTags;
     }
 
-    public void setListOfTags(List<Tag> listOfTags) {
+    public void setListOfTags(List<TagDto> listOfTags) {
         this.listOfTags = listOfTags;
     }
 
-    public List<Item> getListOfItems() {
+    public List<ItemDto> getListOfItems() {
         return listOfItems;
     }
 
-    public void setListOfItems(List<Item> listOfItems) {
+    public void setListOfItems(List<ItemDto> listOfItems) {
         this.listOfItems = listOfItems;
+    }
+
+    public List<LocationDto> getListOfLocations() {
+        return listOfLocations;
     }
 }

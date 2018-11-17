@@ -1,5 +1,7 @@
 package com.cmpe451.retro.data.entities;
 
+import com.cmpe451.retro.models.TagDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +16,13 @@ public class Tag {
     @NotNull
     private String text;
 
+    public Tag() {
+    }
+
+    public Tag(TagDto tagDto) {
+        this.text = tagDto.getText();
+    }
+
     public String getText() {
         return text;
     }
@@ -21,4 +30,6 @@ public class Tag {
     public void setText(String text) {
         this.text = text;
     }
+
+
 }

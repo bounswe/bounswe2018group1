@@ -28,6 +28,15 @@ public class Location {
         this.locationName = locationName;
     }
 
+    public Location() {
+    }
+
+    public Location(LocationDto locationDto) {
+        this.latitude = locationDto.getLatitude();
+        this.longitude = locationDto.getLongitude();
+        this.locationName = locationDto.getLocationName();
+    }
+
     public String getLocationName() {
         return locationName;
     }
@@ -65,14 +74,6 @@ public class Location {
         double nauticalMiles = 60 * Math.toDegrees(angle);
         double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
         return statuteMiles;
-    }
-
-    public Location() {
-    }
-
-    public Location(LocationDto locationDto) {
-        this.latitude = locationDto.getLatitude();
-        this.longitude = locationDto.getLongitude();
     }
 
     public String toString() {
