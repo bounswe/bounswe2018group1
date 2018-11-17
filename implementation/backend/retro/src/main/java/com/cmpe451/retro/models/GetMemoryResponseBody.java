@@ -14,8 +14,6 @@ public class GetMemoryResponseBody {
 
     private String headline;
 
-    private String text;
-
     private Date dateOfCreation;
 
     private List<Location> listOfLocations;
@@ -81,14 +79,6 @@ public class GetMemoryResponseBody {
 
     public void setHeadline(String headline) {
         this.headline = headline;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public Date getDateOfCreation() {
