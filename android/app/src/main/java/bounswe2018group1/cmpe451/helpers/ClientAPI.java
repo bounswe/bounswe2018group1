@@ -12,8 +12,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -32,6 +30,7 @@ public class ClientAPI {
         public static final String LOGOUT_REQ_TAG = "logout_tag";
         public static final String PROFILE_REQ_TAG = "profile_tag";
         public static final String PROFILE_UPD_TAG = "profile_update_tag";
+        public static final String MEMORY_UPD_TAG = "memory_update_tag";
     }
 
     private ClientAPI(Context context) {
@@ -54,6 +53,15 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         System.err.println("writeAuthor returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 }
@@ -80,7 +88,7 @@ public class ClientAPI {
                 try {
                     String[] fullName = new String[]{r.getString("firstName"), r.getString("lastName")};
                     view.setText(StringUtility.join(" ", fullName));
-                } catch (JSONException e) {
+                } catch (org.json.JSONException e) {
                     view.setText("(user not found)");
                     e.printStackTrace();
                 }
@@ -96,7 +104,7 @@ public class ClientAPI {
     }
 
     public void sendLoginRequest(String loginName, String password, final Context context) {
-        JSONObject postParams = new JSONObject();
+        org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("password", password);
             // Check if user has entered nick or email
@@ -118,9 +126,9 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("sendLoginRequest failed!");
-                        } else if (response instanceof JSONObject) {
+                        } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject) response;
+                            org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                             // Launch member activity
                             try {
@@ -128,7 +136,7 @@ public class ClientAPI {
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 i.putExtra("SessionID", r.getString("jsessionID"));
                                 context.startActivity(i);
-                            } catch (JSONException e) {
+                            } catch (org.json.JSONException e) {
                                 e.printStackTrace();
                             }
                         } else {
@@ -142,6 +150,15 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         System.err.println("sendLoginRequest returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 }
@@ -151,8 +168,8 @@ public class ClientAPI {
 
     public void sendRegisterRequest(String email, String firstName, String lastName,
                                      String nickname, String password, final Context context)
-            throws JSONException {
-        JSONObject postParams = new JSONObject();
+            throws org.json.JSONException {
+        org.json.JSONObject postParams = new org.json.JSONObject();
         postParams.put("email", email.trim());
         postParams.put("firstName", firstName.trim());
         postParams.put("lastName", lastName.trim());
@@ -166,13 +183,15 @@ public class ClientAPI {
                     public void onResponse(Object response) {
 
                         Toast.makeText(context, "Registration successful!", Toast.LENGTH_LONG).show();
-                        if (response == null) return;
-                        if (response instanceof JSONObject) {
+                        if (response == null) {
+                            System.err.println("sendRegisterRequest failed!");
+                        } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject) response;
+                            org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                         } else {
-                            System.out.println("Response: " + response.toString());
+                            System.err.println("sendRegisterRequest unexpected response!");
+                            System.err.println("Response: " + response.toString());
                         }
 
                     }
@@ -182,6 +201,7 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         Toast.makeText(context, "Registration fail!", Toast.LENGTH_LONG).show();
+                        System.err.println("sendRegisterRequest returned error response!");
                         if (error.networkResponse.data != null) {
                             try {
                                 String jsonString = new String(error.networkResponse.data,
@@ -198,7 +218,7 @@ public class ClientAPI {
     }
 
     public void logout(final Context context) {
-        JSONObject postParams = new JSONObject();
+        org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
                 Request.Method.POST,
                 URLs.URL_LOGOUT, postParams,
@@ -210,12 +230,13 @@ public class ClientAPI {
                             Intent i = new Intent(context, LoginActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(i);
-                        } else if (response instanceof JSONObject) {
+                        } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject) response;
+                            org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                         } else {
-                            System.out.println("Response: " + response.toString());
+                            System.err.println("logout unexpected response!");
+                            System.err.println("Response: " + response.toString());
                         }
                     }
                 },
@@ -224,7 +245,16 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         Toast.makeText(context, "Logout fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error in logout!");
+                        System.err.println("logout returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 }
@@ -233,25 +263,26 @@ public class ClientAPI {
     }
 
     public void loadProfile(final ProfileFragment profileFragment) {
-        JSONObject postParams = new JSONObject();
+        org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
                 new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {
                         if (response == null) {
-
-                        } else if (response instanceof JSONObject) {
+                            System.err.println("loadProfile failed!");
+                        } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject) response;
+                            org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                             try {
                                 // Set fields
                                 profileFragment.setFields(r.getString("firstName"), r.getString("lastName"), r.getString("nickname"), r.getString("email"));
-                            } catch (JSONException e) {
+                            } catch (org.json.JSONException e) {
                                 e.printStackTrace();
                             }
                         } else {
-                            System.out.println("Response: " + response.toString());
+                            System.err.println("loadProfile unexpected response!");
+                            System.err.println("Response: " + response.toString());
                         }
                     }
                 },
@@ -260,7 +291,16 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         Toast.makeText(profileFragment.getContext(), "Profile load fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error in profile!");
+                        System.err.println("loadProfile returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 }
@@ -272,7 +312,7 @@ public class ClientAPI {
     public void updateProfile(String $firstName, String $lastName, String $nickname, String $email,
                               String $oldPassword, String $newPassword, final Context context) {
 
-        JSONObject postParams = new JSONObject();
+        org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
             postParams.put("lastName", $lastName);
@@ -288,13 +328,14 @@ public class ClientAPI {
                     @Override
                     public void onResponse(Object response) {
                         if (response == null) {
-
-                        } else if (response instanceof JSONObject) {
+                            System.out.println("updateProfile success!");
+                        } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
-                            JSONObject r = (JSONObject) response;
+                            org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                         } else {
-                            System.out.println("Response: " + response.toString());
+                            System.err.println("updateProfile unexpected response!");
+                            System.err.println("Response: " + response.toString());
                         }
                     }
                 },
@@ -303,12 +344,66 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         Toast.makeText(context, "Profile update fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error in update profile!");
+                        System.err.println("updateProfile returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         error.printStackTrace();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.PROFILE_UPD_TAG, context);
+    }
+
+    public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,
+                                  final Context context) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET,
+                URLs.URL_MEMORY_ALL + "?page=" + pageNum + "&size=" + pageSize, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.err.println("getMemoryAll failed!");
+                            serverCallBack.onError();
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            serverCallBack.onSuccess(r);
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("getMemoryAll unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                            serverCallBack.onError();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("getMemoryAll returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                        serverCallBack.onError();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_UPD_TAG, context);
     }
 
 }
