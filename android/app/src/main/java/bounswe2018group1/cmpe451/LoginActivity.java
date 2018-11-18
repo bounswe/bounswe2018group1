@@ -10,19 +10,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
-import bounswe2018group1.cmpe451.helpers.URLs;
-import bounswe2018group1.cmpe451.helpers.VolleySingleton;
+import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView editTextLName = null;
     private TextView editTextLPassword = null;
     private Button buttonLogin = null;
-    private VolleySingleton volleySingleton = null;
+    private ClientAPI clientAPI = null;
     private InputMethodManager inputManager = null;
 
     @Override
@@ -43,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         if (editTextLName == null) editTextLName = findViewById(R.id.editTextLName);
         if (editTextLPassword == null) editTextLPassword = findViewById(R.id.editTextLPassword);
         if (buttonLogin == null) buttonLogin = findViewById(R.id.buttonLogin);
-        if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
+        if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
         if (inputManager == null)
             inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -73,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
 
-                sendLoginRequest();
+                clientAPI.sendLoginRequest(editTextLName.getText().toString(), editTextLPassword.getText().toString(), v.getContext());
             }
         });
     }
@@ -81,63 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (volleySingleton != null) {
-            volleySingleton.getRequestQueue(this).cancelAll(VolleySingleton.Tags.LOGIN_REQ_TAG);
-        }
-    }
-
-    private void sendLoginRequest() {
-        JSONObject postParams = new JSONObject();
-        try {
-            postParams.put("password", editTextLPassword.getText().toString());
-            // Check if user has entered nick or email
-            if (editTextLName.getText().toString().contains(".")) {
-                postParams.put("nickname", "");
-                postParams.put("email", editTextLName.getText().toString().trim());
-            } else {
-                postParams.put("nickname", editTextLName.getText().toString().trim());
-                postParams.put("email", "");
-            }
-        } catch (org.json.JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(
-                Request.Method.POST,
-                URLs.URL_LOGIN, postParams,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        if (response == null) {
-
-                        } else if (response instanceof JSONObject) {
-                            //Success Callback
-                            JSONObject r = (JSONObject) response;
-                            System.out.println("Response: " + r.toString());
-                            // Launch member activity
-                            try {
-                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                i.putExtra("SessionID", r.getString("jsessionID"));
-                                startActivity(i);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("Response: " + response.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Failure Callback
-                        Toast.makeText(getApplicationContext(), "Login fail!", Toast.LENGTH_LONG).show();
-                        System.err.println("Error in login!");
-                        error.printStackTrace();
-                    }
-                }
-        );
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGIN_REQ_TAG, this);
+        clientAPI.cancelAll(ClientAPI.Tags.LOGIN_REQ_TAG, this);
     }
 
 }

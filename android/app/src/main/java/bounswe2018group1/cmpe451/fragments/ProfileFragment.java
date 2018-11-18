@@ -1,18 +1,20 @@
 package bounswe2018group1.cmpe451.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.R;
+import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,6 +33,8 @@ public class ProfileFragment extends Fragment {
     private EditText editOldPassword = null;
     private EditText editNewPassword = null;
     private Button editProfileSend = null;
+    private ClientAPI clientAPI = null;
+    private InputMethodManager inputManager = null;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -39,6 +43,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Keyboard
+        if(inputManager == null)
+            inputManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         // Connect fields
         if (name == null) name = v.findViewById(R.id.profileName);
@@ -56,14 +64,16 @@ public class ProfileFragment extends Fragment {
         if (editNewPassword == null) editNewPassword = v.findViewById(R.id.editNewPassword);
         if (editOldPassword == null) editOldPassword = v.findViewById(R.id.editOldPassword);
         if (editProfileSend == null) editProfileSend = v.findViewById(R.id.editProfileSend);
+        if(clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
 
         // Hide edits
         editProfileLayout.setVisibility(View.GONE);
+        clientAPI.loadProfile(this);
 
         // Set Buttons
         logOut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ((MainActivity) getActivity()).logout();
+                clientAPI.logout(v.getContext());
             }
         });
 
@@ -79,7 +89,17 @@ public class ProfileFragment extends Fragment {
 
         editProfileSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ((MainActivity) getActivity()).updateProfile(editFirstName.getText().toString().trim(), editLastName.getText().toString().trim(), editNickname.getText().toString().trim(), editEmail.getText().toString().trim(), editOldPassword.getText().toString().trim(), editNewPassword.getText().toString().trim());
+                // Remove keyboard
+                if (getActivity().getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                clientAPI.updateProfile(
+                        editFirstName.getText().toString().trim(),
+                        editLastName.getText().toString().trim(),
+                        editNickname.getText().toString().trim(),
+                        editEmail.getText().toString().trim(),
+                        editOldPassword.getText().toString().trim(),
+                        editNewPassword.getText().toString().trim(),
+                        v.getContext());
             }
         });
 

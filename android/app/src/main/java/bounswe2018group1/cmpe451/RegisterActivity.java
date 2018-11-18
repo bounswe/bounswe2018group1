@@ -11,22 +11,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
-import bounswe2018group1.cmpe451.helpers.NullResponseJsonObjectRequest;
-import bounswe2018group1.cmpe451.helpers.URLs;
-import bounswe2018group1.cmpe451.helpers.VolleySingleton;
+import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView editTextPassword2 = null;
     private TextView textViewAlreadyRegistered = null;
     private Button buttonRegister = null;
-    private VolleySingleton volleySingleton = null;
+    private ClientAPI clientAPI = null;
     private InputMethodManager inputManager = null;
 
     @Override
@@ -55,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (textViewAlreadyRegistered == null)
             textViewAlreadyRegistered = findViewById(R.id.textViewAlreadyRegistered);
         if (buttonRegister == null) buttonRegister = findViewById(R.id.buttonRegister);
-        if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
+        if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
         if (inputManager == null)
             inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -114,7 +102,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if (getCurrentFocus() != null)
                         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                    sendRegisterRequest();
+                    clientAPI.sendRegisterRequest(
+                            editTextEmail.getText().toString(),
+                            editTextRFirstName.getText().toString(),
+                            editTextRSurname.getText().toString(),
+                            editText.getText().toString(),
+                            editTextPassword.getText().toString(),
+                            v.getContext()
+                    );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -145,54 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if (volleySingleton != null) {
-            volleySingleton.getRequestQueue(this).cancelAll(VolleySingleton.Tags.REGISTER_REQ_TAG);
-        }
+        clientAPI.cancelAll(ClientAPI.Tags.REGISTER_REQ_TAG, this);
     }
 
-    private void sendRegisterRequest() throws JSONException {
-        JSONObject postParams = new JSONObject();
-        postParams.put("email", editTextEmail.getText().toString().trim());
-        postParams.put("firstName", editTextRFirstName.getText().toString().trim());
-        postParams.put("lastName", editTextRSurname.getText().toString().trim());
-        postParams.put("nickname", editText.getText().toString().trim());
-        postParams.put("password", editTextPassword.getText().toString());
-
-        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST,
-                URLs.URL_REGISTER, postParams,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-
-                        Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                        if (response == null) return;
-                        if (response instanceof JSONObject) {
-                            //Success Callback
-                            JSONObject r = (JSONObject) response;
-                            System.out.println("Response: " + r.toString());
-                        } else {
-                            System.out.println("Response: " + response.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Failure Callback
-                        Toast.makeText(getApplicationContext(), "Registration fail!", Toast.LENGTH_LONG).show();
-                        if (error.networkResponse.data != null) {
-                            try {
-                                String jsonString = new String(error.networkResponse.data,
-                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
-                                System.err.println(jsonString);
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        error.printStackTrace();
-                    }
-                });
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.REGISTER_REQ_TAG, this);
-    }
 }
