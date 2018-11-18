@@ -1,95 +1,106 @@
 [
   {
-    "description": "Festival time and a shortcut visit",
-    "headline": "A Family Visit",
-    "storyList": [
+    "dateOfCreation": "2018-11-17T17:28:34.220Z",
+    "endDateDD": 0,
+    "endDateHH": 0,
+    "endDateMM": 0,
+    "endDateYYYY": 1970,
+    "headline": "string",
+    "listOfItems": [
       {
-        "city": "İzmir",
-        "country": "Türkiye",
-        "county": "Torbalı",
-        "dateOfCreation": "2018-10-27T11:48:33.807Z",
-        "description": "Cows are going to grown and olive trees need water...",
-        "district": "Ertuğrul",
-        "headline": "Torbalı Farmland",
-        "id": 0,
-        "location": {
-          "latitude": 1,
-          "longitude": 2
-        },
-        "storyDate": "2018-10-27T11:48:33.807Z"
-      }
-    ]
-  },
-  {
-    "description": "Winter time in Muğla seaside with our group",
-    "headline": "Cold Beach Visit",
-    "storyList": [
-      {
-        "city": "Muğla",
-        "country": "Türkiye",
-        "county": "Fethiye",
-        "dateOfCreation": "2018-10-27T11:48:33.807Z",
-        "description": "We jumped on our car and moved to Ölüdeniz...",
-        "district": "Ölüdeniz",
-        "headline": "Ölüdeniz Feel",
-        "id": 1,
-        "location": {
-          "latitude": 3,
-          "longitude": 4
-        },
-        "storyDate": "2018-10-27T11:48:33.807Z"
-      }
-    ]
-  },
-  {
-    "description": "Moving on west side cities",
-    "headline": "A Long West Anatolia Tour",
-    "storyList": [
-      {
-        "city": "Aydın",
-        "country": "Türkiye",
-        "county": "",
-        "dateOfCreation": "2018-10-27T11:48:33.807Z",
-        "description": "Our first step was Aydın...",
-        "district": "",
-        "headline": "Aydın",
-        "id": 2,
-        "location": {
-          "latitude": 5,
-          "longitude": 6
-        },
-        "storyDate": "2018-10-27T11:48:33.807Z"
+        "body": "string",
+        "id": 0
       },
       {
-        "city": "Denizli",
-        "country": "Türkiye",
-        "county": "",
-        "dateOfCreation": "2018-10-27T11:48:33.807Z",
-        "description": "Next station was Pamukkale...",
-        "district": "",
-        "headline": "Denizli",
-        "id": 3,
-        "location": {
-          "latitude": 7,
-          "longitude": 8
-        },
-        "storyDate": "2018-10-27T11:48:33.807Z"
+        "body": "string2",
+        "id": 0
       },
       {
-        "city": "Isparta",
-        "country": "Türkiye",
-        "county": "",
-        "dateOfCreation": "2018-10-27T11:48:33.807Z",
-        "description": "We moved on with Isparta.",
-        "district": "",
-        "headline": "Isparta",
-        "id": 3,
-        "location": {
-          "latitude": 7,
-          "longitude": 8
-        },
-        "storyDate": "2018-10-27T11:48:33.807Z"
+        "body": "string3",
+        "id": 0
       }
-    ]
+    ],
+    "listOfLocations": [
+      {
+        "latitude": 0,
+        "locationName": "string",
+        "longitude": 0
+      }
+    ],
+    "listOfTags": [
+      {
+        "text": "string"
+      }
+    ],
+    "startDateDD": 0,
+    "startDateHH": 0,
+    "startDateMM": 0,
+    "startDateYYYY": 1960,
+    "updatedTime": "2018-11-17T17:28:34.220Z",
+    "userId": 1
+  },
+  {
+    "dateOfCreation": "2018-11-17T17:28:34.220Z",
+    "endDateDD": 31,
+    "endDateHH": 0,
+    "endDateMM": 11,
+    "endDateYYYY": 2010,
+    "headline": "string2",
+    "listOfItems": [
+      {
+        "body": "string",
+        "id": 0
+      }
+    ],
+    "listOfLocations": [
+      {
+        "latitude": 0,
+        "locationName": "string",
+        "longitude": 0
+      }
+    ],
+    "listOfTags": [
+      {
+        "text": "string"
+      }
+    ],
+    "startDateDD": 1,
+    "startDateHH": 0,
+    "startDateMM": 2,
+    "startDateYYYY": 2009,
+    "updatedTime": "2018-11-17T17:28:34.220Z",
+    "userId": 1
+  },
+  {
+    "dateOfCreation": "2018-11-17T17:28:34.220Z",
+    "endDateDD": 0,
+    "endDateHH": 0,
+    "endDateMM": 0,
+    "endDateYYYY": 0,
+    "headline": "string3",
+    "listOfItems": [
+      {
+        "body": "string",
+        "id": 0
+      }
+    ],
+    "listOfLocations": [
+      {
+        "latitude": 0,
+        "locationName": "string",
+        "longitude": 0
+      }
+    ],
+    "listOfTags": [
+      {
+        "text": "string"
+      }
+    ],
+    "startDateDD": 0,
+    "startDateHH": 0,
+    "startDateMM": 0,
+    "startDateYYYY": 1995,
+    "updatedTime": "2018-11-17T17:28:34.220Z",
+    "userId": 1
   }
 ]

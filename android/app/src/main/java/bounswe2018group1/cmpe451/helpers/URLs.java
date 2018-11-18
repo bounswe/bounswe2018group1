@@ -17,8 +17,8 @@ public class URLs {
 
     public static final String URL_PROFILE = "https://cmpe451group1.eu-gb.mybluemix.net/profile";
 
-    public static String URL_USER_withID(long id) {
-        return URL_USER + '/' + String.valueOf(id);
+    public static String URL_USER_withID(String id) {
+        return URL_USER + '/' + id;
     }
 
 }

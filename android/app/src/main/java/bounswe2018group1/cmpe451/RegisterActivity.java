@@ -146,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStop();
 
         if (volleySingleton != null) {
-            volleySingleton.getRequestQueue().cancelAll(VolleySingleton.Tags.REGISTER_REQ_TAG);
+            volleySingleton.getRequestQueue(this).cancelAll(VolleySingleton.Tags.REGISTER_REQ_TAG);
         }
     }
 
@@ -193,6 +193,6 @@ public class RegisterActivity extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 });
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.REGISTER_REQ_TAG);
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.REGISTER_REQ_TAG, this);
     }
 }

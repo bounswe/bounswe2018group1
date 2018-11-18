@@ -99,7 +99,7 @@ public class MemoryCreateActivity extends AppCompatActivity {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq);
+        volleySingleton.addToRequestQueue(jsonObjReq, this);
     }
 
     public void addStory(Story s) {

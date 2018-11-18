@@ -38,7 +38,6 @@ public class MemoryFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
 
-        
         return rootView;
     }
 

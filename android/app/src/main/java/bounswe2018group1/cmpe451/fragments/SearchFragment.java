@@ -26,7 +26,9 @@ public class SearchFragment extends Fragment {
     public SearchFragment() {
         // Required empty public constructor
     }
+
     int a = 13;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -67,7 +69,7 @@ public class SearchFragment extends Fragment {
                     public void onClick(View view) {
                         // Find and remove pressed button and location
                         System.out.println("Bura: " + view.getTag()); // TODO Remove
-                        for (int i = 0; i < locationLayoutList.size(); i ++) {
+                        for (int i = 0; i < locationLayoutList.size(); i++) {
                             System.out.println("Bu: " + locationLayoutList.get(i).getTag()); // TODO Remove
                             if (view.getTag().equals(locationLayoutList.get(i).getTag() + "B")) {
                                 locationList.removeView(locationList.findViewWithTag(locationLayoutList.get(i).getTag()));

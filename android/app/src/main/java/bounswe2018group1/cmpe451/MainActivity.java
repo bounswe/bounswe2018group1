@@ -80,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentSearch);
         transaction.commit();
 
-        // HTTP Requests
-        volleySingleton = VolleySingleton.getInstance(this);
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragmentSearch);
                         break;
                     case 4:
-                        //replaceFragment(null);
+                        replaceFragment(null);
                         Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -146,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 doubleBackToExitPressedOnce = false;
-            }}, 2000);
+            }
+        }, 2000);
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGOUT_REQ_TAG);
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGOUT_REQ_TAG, this);
     }
 
     private void loadProfile() {
@@ -213,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Set fields
                                 fragmentProfile.setFields(r.getString("firstName"), r.getString("lastName"), r.getString("nickname"), r.getString("email"));
                                 isProfileLoaded = true;
-                            } catch(JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         } else {
@@ -231,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_REQ_TAG);
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_REQ_TAG, this);
 
     }
 
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_UPD_TAG);
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.PROFILE_UPD_TAG, this);
     }
 
 }

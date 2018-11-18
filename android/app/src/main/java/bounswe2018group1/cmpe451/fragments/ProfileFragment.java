@@ -16,21 +16,21 @@ import bounswe2018group1.cmpe451.R;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView name;
-    private TextView bio;
-    private TextView birth;
-    private TextView gender;
-    private TextView locations;
-    private Button editProfile;
-    private Button logOut;
-    private LinearLayout editProfileLayout;
-    private EditText editFirstName;
-    private EditText editLastName;
-    private EditText editNickname;
-    private EditText editEmail;
-    private EditText editOldPassword;
-    private EditText editNewPassword;
-    private Button editProfileSend;
+    private TextView name = null;
+    private TextView bio = null;
+    private TextView birth = null;
+    private TextView gender = null;
+    private TextView locations = null;
+    private Button editProfile = null;
+    private Button logOut = null;
+    private LinearLayout editProfileLayout = null;
+    private EditText editFirstName = null;
+    private EditText editLastName = null;
+    private EditText editNickname = null;
+    private EditText editEmail = null;
+    private EditText editOldPassword = null;
+    private EditText editNewPassword = null;
+    private Button editProfileSend = null;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -41,21 +41,21 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Connect fields
-        name = v.findViewById(R.id.profileName);
-        bio = v.findViewById(R.id.profileBio);
-        birth = v.findViewById(R.id.profileBirth);
-        gender = v.findViewById(R.id.profileGender);
-        locations = v.findViewById(R.id.profileLocations);
-        editProfile = v.findViewById(R.id.editProfile);
-        logOut = v.findViewById(R.id.logOut);
-        editProfileLayout = v.findViewById(R.id.editProfileLayout);
-        editFirstName = v.findViewById(R.id.editFirstName);
-        editLastName = v.findViewById(R.id.editLastName);
-        editNickname = v.findViewById(R.id.editNickName);
-        editEmail = v.findViewById(R.id.editEmail);
-        editNewPassword = v.findViewById(R.id.editNewPassword);
-        editOldPassword = v.findViewById(R.id.editOldPassword);
-        editProfileSend = v.findViewById(R.id.editProfileSend);
+        if (name == null) name = v.findViewById(R.id.profileName);
+        if (bio == null) bio = v.findViewById(R.id.profileBio);
+        if (birth == null) birth = v.findViewById(R.id.profileBirth);
+        if (gender == null) gender = v.findViewById(R.id.profileGender);
+        if (locations == null) locations = v.findViewById(R.id.profileLocations);
+        if (editProfile == null) editProfile = v.findViewById(R.id.editProfile);
+        if (logOut == null) logOut = v.findViewById(R.id.logOut);
+        if (editProfileLayout == null) editProfileLayout = v.findViewById(R.id.editProfileLayout);
+        if (editFirstName == null) editFirstName = v.findViewById(R.id.editFirstName);
+        if (editLastName == null) editLastName = v.findViewById(R.id.editLastName);
+        if (editNickname == null) editNickname = v.findViewById(R.id.editNickName);
+        if (editEmail == null) editEmail = v.findViewById(R.id.editEmail);
+        if (editNewPassword == null) editNewPassword = v.findViewById(R.id.editNewPassword);
+        if (editOldPassword == null) editOldPassword = v.findViewById(R.id.editOldPassword);
+        if (editProfileSend == null) editProfileSend = v.findViewById(R.id.editProfileSend);
 
         // Hide edits
         editProfileLayout.setVisibility(View.GONE);
@@ -71,8 +71,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (editProfileLayout.getVisibility() == View.GONE) {
                     editProfileLayout.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     editProfileLayout.setVisibility(View.GONE);
                 }
             }

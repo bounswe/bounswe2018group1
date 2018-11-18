@@ -15,15 +15,23 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import bounswe2018group1.cmpe451.helpers.StoryAdapter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import bounswe2018group1.cmpe451.helpers.ClientAPI;
+import bounswe2018group1.cmpe451.helpers.ItemAdapter;
+import bounswe2018group1.cmpe451.helpers.StringUtility;
 
 public class MemoryViewActivity extends AppCompatActivity {
 
-    private JsonArray storyDataSource = null;
+    private JsonArray itemDataSource = null;
     private JsonObject memory = null;
     private ImageView avatar = null;
-    private TextView authorName = null, postDate = null, memoryTitle = null, memoryDesc = null;
-    private ListView storyListView = null;
+    private TextView authorName = null, postDate = null, memoryDate = null, memoryTitle = null;
+    private ListView itemListView = null;
+    private ClientAPI clientAPI = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,26 +41,41 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (avatar == null) avatar = findViewById(R.id.avatar);
         if (authorName == null) authorName = findViewById(R.id.authorName);
         if (postDate == null) postDate = findViewById(R.id.postDate);
+        if (memoryDate == null) memoryDate = findViewById(R.id.memoryDate);
         if (memoryTitle == null) memoryTitle = findViewById(R.id.memoryTitle);
-        if (memoryDesc == null) memoryDesc = findViewById(R.id.memoryDesc);
-        if (storyListView == null) storyListView = findViewById(R.id.storyListView);
+        if (itemListView == null) itemListView = findViewById(R.id.itemListView);
+        if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
 
         if (memory == null) {
             memory = new JsonParser().parse(
                     getIntent().getStringExtra("memory")
             ).getAsJsonObject();
         }
-        String memoryTitleText = memory.get("headline").getAsString();
-        String memoryDescText = memory.get("description").getAsString();
-        memoryTitle.setText(memoryTitleText);
-        memoryDesc.setText(memoryDescText);
-        if (storyDataSource == null) storyDataSource = memory.getAsJsonArray("storyList");
-        final StoryAdapter adapter = new StoryAdapter(this, R.layout.story_row, storyDataSource);
-        storyListView.setAdapter(adapter);
-        storyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Prepare memory
+        String postDate = memory.get("dateOfCreation").getAsString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String formattedTime;
+        try {
+            Date d = sdf.parse(postDate);
+            formattedTime = output.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            formattedTime = "(invalid date)";
+        }
+        String memoryTitle = memory.get("headline").getAsString();
+        this.postDate.setText("Posted " + formattedTime);
+        this.memoryDate.setText(StringUtility.memoryDate(memory));
+        this.memoryTitle.setText(memoryTitle);
+        clientAPI.writeAuthor(this.authorName, memory.get("userId").getAsString(), this);
+        //Prepare items
+        if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
+        final ItemAdapter adapter = new ItemAdapter(this, R.layout.item_row, itemDataSource);
+        itemListView.setAdapter(adapter);
+        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: action for when a story is clicked
+                // TODO: action for when an item is clicked
             }
         });
 

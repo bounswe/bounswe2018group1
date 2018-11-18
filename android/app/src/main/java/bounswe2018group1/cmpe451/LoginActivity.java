@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         if (editTextLPassword == null) editTextLPassword = findViewById(R.id.editTextLPassword);
         if (buttonLogin == null) buttonLogin = findViewById(R.id.buttonLogin);
         if (volleySingleton == null) volleySingleton = VolleySingleton.getInstance(this);
-        if (inputManager == null) inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager == null)
+            inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         textViewSignup.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (volleySingleton != null) {
-            volleySingleton.getRequestQueue().cancelAll(VolleySingleton.Tags.LOGIN_REQ_TAG);
+            volleySingleton.getRequestQueue(this).cancelAll(VolleySingleton.Tags.LOGIN_REQ_TAG);
         }
     }
 
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGIN_REQ_TAG);
+        volleySingleton.addToRequestQueue(jsonObjReq, VolleySingleton.Tags.LOGIN_REQ_TAG, this);
     }
 
 }

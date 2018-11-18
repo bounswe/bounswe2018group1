@@ -12,7 +12,6 @@ import java.net.CookieManager;
 public class VolleySingleton {
     private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;
-    private static Context mCtx;
 
     public static class Tags {
         public static final String LOGIN_REQ_TAG = "login_tag";
@@ -23,8 +22,7 @@ public class VolleySingleton {
     }
 
     private VolleySingleton(Context context) {
-        mCtx = context;
-        mRequestQueue = getRequestQueue();
+        mRequestQueue = getRequestQueue(context);
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
@@ -34,22 +32,22 @@ public class VolleySingleton {
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    public RequestQueue getRequestQueue(Context context) {
         if (mRequestQueue == null) {
             CookieHandler.setDefault(new CookieManager());
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+            mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
+    public <T> void addToRequestQueue(Request<T> req, String tag, Context context) {
         req.setTag(tag);
-        getRequestQueue().add(req);
+        getRequestQueue(context).add(req);
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
+    public <T> void addToRequestQueue(Request<T> req, Context context) {
+        getRequestQueue(context).add(req);
     }
 }
