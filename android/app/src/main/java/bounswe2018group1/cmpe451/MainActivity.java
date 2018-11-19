@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import bounswe2018group1.cmpe451.fragments.CreateFragment;
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private MapFragment fragmentMap;
     private ProfileFragment fragmentProfile;
     private SearchFragment fragmentSearch;
+    private CreateFragment fragmentCreate;
     private InputMethodManager inputManager = null;
     private TabLayout tabLayout = null;
     private ClientAPI clientAPI = null;
@@ -31,10 +33,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce = false;
     private String sessionID;
 
+    public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        contextOfApplication = getApplicationContext();
 
         // Messages from old activity (Login)
         sessionID = getIntent().getExtras().getString("SessionID");
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentMap = new MapFragment();
         fragmentProfile = new ProfileFragment();
         fragmentSearch = new SearchFragment();
+        fragmentCreate = new CreateFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -64,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.mainLayout, fragmentMap, "Map");
         transaction.add(R.id.mainLayout, fragmentProfile, "Profile");
         transaction.add(R.id.mainLayout, fragmentSearch, "Search");
+        transaction.add(R.id.mainLayout, fragmentCreate ,"Create");
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
         transaction.hide(fragmentSearch);
+        transaction.hide(fragmentCreate);
         transaction.commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -91,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragmentSearch);
                         break;
                     case 4:
-                        replaceFragment(null);
-                        Intent i = new Intent(MainActivity.this, MemoryCreateActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+                        replaceFragment(fragmentCreate);
                         break;
                     default:
                         break;
