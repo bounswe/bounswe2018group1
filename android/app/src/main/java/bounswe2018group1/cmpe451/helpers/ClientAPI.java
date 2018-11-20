@@ -28,8 +28,8 @@ public class ClientAPI {
         public static final String LOGIN_REQ_TAG = "login_tag";
         public static final String REGISTER_REQ_TAG = "register_tag";
         public static final String LOGOUT_REQ_TAG = "logout_tag";
-        public static final String PROFILE_REQ_TAG = "profile_tag";
-        public static final String PROFILE_UPD_TAG = "profile_update_tag";
+        public static final String USER_REQ_TAG = "user_tag";
+        public static final String USER_INFO_TAG = "user_info_tag";
         public static final String MEMORY_UPD_TAG = "memory_update_tag";
     }
 
@@ -66,7 +66,7 @@ public class ClientAPI {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, Tags.PROFILE_REQ_TAG, context);
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, context);
 
     }
 
@@ -276,7 +276,15 @@ public class ClientAPI {
                             System.out.println("Response: " + r.toString());
                             try {
                                 // Set fields
-                                profileFragment.setFields(r.getString("firstName"), r.getString("lastName"), r.getString("nickname"), r.getString("email"));
+                                profileFragment.setFields(
+                                        r.getString("firstName"),
+                                        r.getString("lastName"),
+                                        r.getString("nickname"),
+                                        r.getString("email"),
+                                        r.getString("bio"),
+                                        r.getString("birthday"),
+                                        r.getString("gender"),
+                                        r.getJSONArray("listOfLocations"));
                             } catch (org.json.JSONException e) {
                                 e.printStackTrace();
                             }
@@ -305,18 +313,19 @@ public class ClientAPI {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, Tags.PROFILE_REQ_TAG, profileFragment.getContext());
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, profileFragment.getContext());
 
     }
 
-    public void updateProfile(String $firstName, String $lastName, String $nickname, String $email,
-                              String $oldPassword, String $newPassword, final Context context) {
+    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $gender, String $email, String $oldPassword, String $newPassword, final Context context) {
 
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
             postParams.put("lastName", $lastName);
             postParams.put("nickname", $nickname);
+            postParams.put("bio", $bio);
+            postParams.put("gender", $gender);
             postParams.put("email", $email);
             postParams.put("oldPassword", $oldPassword);
             postParams.put("newPassword", $newPassword);
@@ -358,7 +367,7 @@ public class ClientAPI {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, Tags.PROFILE_UPD_TAG, context);
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, context);
     }
 
     public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,

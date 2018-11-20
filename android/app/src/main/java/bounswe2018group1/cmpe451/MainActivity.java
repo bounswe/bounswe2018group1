@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
         transaction.hide(fragmentSearch);
+        transaction.hide(fragmentCreate);
         if (fragment != null) {
             transaction.show(fragment);
         }

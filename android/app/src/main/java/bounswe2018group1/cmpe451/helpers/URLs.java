@@ -15,8 +15,6 @@ public class URLs {
     public static final String URL_USER_ALL = "http://52.7.87.173:5000/user/all";
     public static final String URL_USER_INFO = "http://52.7.87.173:5000/user/info";
 
-    public static final String URL_PROFILE = "https://cmpe451group1.eu-gb.mybluemix.net/profile";
-
     public static String URL_USER_withID(String id) {
         return URL_USER + '/' + id;
     }

@@ -137,22 +137,25 @@
             android:orientation="vertical"></LinearLayout>
 
         <EditText
+            android:id="@+id/story"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/story"
+            android:layout_marginBottom="18dp"
             android:layout_weight="1"
-            android:hint="Write Your Story Here"
-            android:inputType="textCapSentences|textMultiLine"
             android:gravity="center_horizontal"
+            android:hint="Write Your Story Here"
 
-            />
+            android:inputType="textCapSentences|textMultiLine" />
 
         <Button
+            android:id="@+id/addImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/addImage"
-            android:text="Add Image"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginBottom="18dp"
             android:bufferType="spannable"
-            />
+            android:text="Add Image"
+            android:textAllCaps="false" />
     </LinearLayout>
 </ScrollView>

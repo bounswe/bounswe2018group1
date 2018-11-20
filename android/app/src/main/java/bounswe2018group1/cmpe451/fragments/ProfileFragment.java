@@ -11,7 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
@@ -29,6 +34,12 @@ public class ProfileFragment extends Fragment {
     private EditText editFirstName = null;
     private EditText editLastName = null;
     private EditText editNickname = null;
+    private EditText editBio;
+    private RadioGroup genderGroup;
+    private RadioButton genderFemale;
+    private RadioButton genderMale;
+    private RadioButton genderOther;
+    private RadioButton genderNo;
     private EditText editEmail = null;
     private EditText editOldPassword = null;
     private EditText editNewPassword = null;
@@ -43,6 +54,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Server calls
+        if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
 
         // Keyboard
         if(inputManager == null)
@@ -60,14 +74,21 @@ public class ProfileFragment extends Fragment {
         if (editFirstName == null) editFirstName = v.findViewById(R.id.editFirstName);
         if (editLastName == null) editLastName = v.findViewById(R.id.editLastName);
         if (editNickname == null) editNickname = v.findViewById(R.id.editNickName);
+        editBio = v.findViewById(R.id.editBio);
+        genderGroup = v.findViewById(R.id.genderGroup);
+        genderFemale = v.findViewById(R.id.genderFemale);
+        genderMale = v.findViewById(R.id.genderMale);
+        genderOther = v.findViewById(R.id.genderOther);
+        genderNo = v.findViewById(R.id.genderNo);
         if (editEmail == null) editEmail = v.findViewById(R.id.editEmail);
         if (editNewPassword == null) editNewPassword = v.findViewById(R.id.editNewPassword);
         if (editOldPassword == null) editOldPassword = v.findViewById(R.id.editOldPassword);
         if (editProfileSend == null) editProfileSend = v.findViewById(R.id.editProfileSend);
-        if(clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
 
         // Hide edits
         editProfileLayout.setVisibility(View.GONE);
+
+        // Load user information
         clientAPI.loadProfile(this);
 
         // Set Buttons
@@ -92,10 +113,25 @@ public class ProfileFragment extends Fragment {
                 // Remove keyboard
                 if (getActivity().getCurrentFocus() != null)
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                String gender;
+                if (genderFemale.isSelected()) {
+                    gender = "FEMALE";
+                }
+                else if (genderMale.isSelected()) {
+                    gender = "MALE";
+                }
+                else if (genderOther.isSelected()) {
+                    gender = "OTHER";
+                }
+                else {
+                    gender = "NOT_TO_DISCLOSE";
+                }
                 clientAPI.updateProfile(
                         editFirstName.getText().toString().trim(),
                         editLastName.getText().toString().trim(),
                         editNickname.getText().toString().trim(),
+                        editBio.getText().toString().trim(),
+                        gender,
                         editEmail.getText().toString().trim(),
                         editOldPassword.getText().toString().trim(),
                         editNewPassword.getText().toString().trim(),
@@ -106,12 +142,47 @@ public class ProfileFragment extends Fragment {
         return v;
     }
 
-    public void setFields(String $first, String $last, String $nick, String $email) {
+    public void setFields(String $first, String $last, String $nick, String $email, String $bio, String $birth, String $gender, JSONArray $locations) {
         name.setText($first + " " + $last + " | " + $nick);
+        bio.setText($bio);
+        birth.setText($birth);
         editFirstName.setText($first);
         editLastName.setText($last);
         editNickname.setText($nick);
+        editBio.setText($bio);
         editEmail.setText($email);
+        // Set gender
+        if ($gender.equals("FEMALE")) {
+            genderFemale.setChecked(true);
+        }
+        else if ($gender.equals("MALE")) {
+            genderMale.setChecked(true);
+        }
+        else if ($gender.equals("OTHER")) {
+            genderOther.setChecked(true);
+        }
+        else {
+            genderNo.setChecked(true);
+        }
+        gender.setText($gender);
+        // Set locations, ignore map points
+        String locationList = "";
+        for (int i = 0; i < $locations.length(); i ++) {
+            String location = "";
+            try {
+                location = $locations.optJSONObject(i).getString("locationName");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                System.err.println("Profile load fail in location name parse");
+            }
+            if (!location.isEmpty()) {
+                locationList = locationList + location + "\n";
+            }
+        }
+        if (locationList.length() > 2 && locationList.charAt(locationList.length() - 1) == 'n' && locationList.charAt(locationList.length() - 2) == '\\') {
+            locationList = locationList.substring(0, locationList.charAt(locationList.length() - 3));
+        }
+        locations.setText(locationList);
     }
 
 }
