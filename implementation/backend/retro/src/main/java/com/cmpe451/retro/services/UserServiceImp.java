@@ -109,7 +109,7 @@ public class UserServiceImp implements UserService {
             }
 
             //update bio
-            if(updateUserInfoBody.getBio() != null && updateUserInfoBody.getBio().equals("")){
+            if(updateUserInfoBody.getBio() != null && !updateUserInfoBody.getBio().equals("")){
                 user.setBio(updateUserInfoBody.getBio());
             }
 
