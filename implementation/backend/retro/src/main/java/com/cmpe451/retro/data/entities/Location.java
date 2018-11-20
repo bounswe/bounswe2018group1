@@ -13,6 +13,8 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String locationName;
+
     private double longitude;
 
     private double latitude;
@@ -20,6 +22,27 @@ public class Location {
     public Location(double latitude, double longitude) {
         this.latitude  = latitude;
         this.longitude = longitude;
+    }
+
+    public Location(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public Location() {
+    }
+
+    public Location(LocationDto locationDto) {
+        this.latitude = locationDto.getLatitude();
+        this.longitude = locationDto.getLongitude();
+        this.locationName = locationDto.getLocationName();
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public double getLongitude() {
@@ -51,14 +74,6 @@ public class Location {
         double nauticalMiles = 60 * Math.toDegrees(angle);
         double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
         return statuteMiles;
-    }
-
-    public Location() {
-    }
-
-    public Location(LocationDto locationDto) {
-        this.latitude = locationDto.getLatitude();
-        this.longitude = locationDto.getLongitude();
     }
 
     public String toString() {

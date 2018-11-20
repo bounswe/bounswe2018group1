@@ -31,18 +31,22 @@ public class MemoryController {
         return memoryService.getMemory(id);
     }
 
+    @RequestMapping(value = "/memory", method = RequestMethod.PUT)
+    public void updateMemory(@RequestParam Long id, @RequestBody UpdateMemoryRequestBody updateMemoryRequestBody) {
+        long userId  = authenticationController.getUserId();
+        memoryService.updateMemory(id, updateMemoryRequestBody, userId);
+    }
+
     @RequestMapping(value = "/memory/all", method = RequestMethod.GET)
     public Page<GetMemoryResponseBody> getAllMemories(Pageable pageable) { return memoryService.getAllMemories(pageable); }
 
     @RequestMapping(value = "/memory/user",method = RequestMethod.GET)
-    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long id, Pageable pageable){ //TO-DO Required
+    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long id, Pageable pageable){
+        if(id==null){
+            id = authenticationController.getUserId();
+        }
         return memoryService.getAllMemoriesOfUser(id,pageable);
     }
 
-    @RequestMapping(value = "/memory", method = RequestMethod.PUT)
-    void updateMemory(@RequestParam Long id, @RequestBody UpdateMemoryRequestBody updateMemoryRequestBody) {
-        long userId  = authenticationController.getUserId();
-        memoryService.updateMemory(id, updateMemoryRequestBody, userId);
-    }
 
 }

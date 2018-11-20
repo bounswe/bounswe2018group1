@@ -1,20 +1,21 @@
 package com.cmpe451.retro.services;
 
+import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.data.entities.Story;
+import com.cmpe451.retro.data.entities.Tag;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
-import com.cmpe451.retro.data.repositories.StoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.*;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemoryServiceImp implements MemoryService {
@@ -33,9 +35,6 @@ public class MemoryServiceImp implements MemoryService {
     MemoryRepository memoryRepository;
 
     @Autowired
-    StoryRepository storyRepository;
-
-    @Autowired
     EntityManager entityManager;
 
     @Autowired
@@ -44,33 +43,48 @@ public class MemoryServiceImp implements MemoryService {
     @Override
     @Transactional
     public CreateMemoryResponseBody createMemory(CreateMemoryRequestBody requestBody, Long userId) {
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = null;
+
+        if(!userOptional.isPresent())
+            throw new RetroException("User not found.",HttpStatus.UNAUTHORIZED);
+        else
+            user = userOptional.get();
+
         Memory memory = new Memory();
-        memory.setDescription(requestBody.getDescription());
         memory.setHeadline(requestBody.getHeadline());
         memory.setUserId(userId);
         memory.setDateOfCreation(new Date());
+        memory.setStartDateHH(requestBody.getStartDateHH());
+        memory.setStartDateDD(requestBody.getStartDateDD());
+        memory.setStartDateMM(requestBody.getStartDateMM());
+        memory.setStartDateYYYY(requestBody.getStartDateYYYY());
 
-        List<Story> storyList= new ArrayList<>();
+        memory.setEndDateHH(requestBody.getEndDateHH());
+        memory.setEndDateDD(requestBody.getEndDateDD());
+        memory.setEndDateMM(requestBody.getEndDateMM());
+        memory.setEndDateYYYY(requestBody.getEndDateYYYY());
 
-        for(CreateStoryRequestModel storyRequest: requestBody.getStoryList()){
-            Story story = new Story(storyRequest, memory);
-            Location location = new Location(storyRequest.getLocationDto());
-            story.setLocation(location);
-            storyList.add(story);
+        memory.setUpdatedTime(requestBody.getUpdatedTime());
+        memory.setListOfLocations(requestBody.getListOfLocations().stream().map(Location::new).collect(Collectors.toList()));
+        memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
+        memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
-            entityManager.persist(location);
-            entityManager.persist(story);
-        }
+        user.getMemoryList().add(memory);//TODO: check
 
-        Optional<User> user = userRepository.findById(userId);
-
-        memory.setStoryList(storyList);
-        user.get().getMemoryList().add(memory);
+        memory.getListOfTags().forEach(entityManager::persist);
+        memory.getListOfItems().forEach(entityManager::persist);
+        memory.getListOfLocations().forEach(entityManager::persist);
+        entityManager.persist(user);
         entityManager.persist(memory);
+
         entityManager.flush();
 
         return new CreateMemoryResponseBody(memory.getId());
-    }
+        }
+
+
 
     @Override
     public GetMemoryResponseBody getMemory(Long id){
@@ -92,12 +106,17 @@ public class MemoryServiceImp implements MemoryService {
         for(Memory memory: listOfMemories){
             listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
         }
-        return new PageImpl<>(listOfMemoryResponseBodies);
+        return new PageImpl<>(listOfMemoryResponseBodies,pageable,listOfMemories.size());
     }
 
     @Override
     public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId,Pageable pageable) {
-        return memoryRepository.findByUserId(userId,pageable);
+        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findByUserId(userId,pageable));
+        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
+        for(Memory memory: listOfMemories){
+            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+        }
+        return new PageImpl<>(listOfMemoryResponseBodies,pageable,listOfMemories.size());
     }
 
     @Override
@@ -110,19 +129,69 @@ public class MemoryServiceImp implements MemoryService {
                 throw new RetroException("You can not update a memory that you have not created.",HttpStatus.UNAUTHORIZED);
             }
 
-            if (updateMemoryRequestBody.getDescription() != null && !updateMemoryRequestBody.getDescription().equals("")) {
-                memory.setDescription(updateMemoryRequestBody.getDescription());
+            if(updateMemoryRequestBody.getListOfLocations() != null && !updateMemoryRequestBody.getListOfLocations().isEmpty()){
+                memory.setListOfLocations(updateMemoryRequestBody.getListOfLocations().stream().map(Location::new).collect(Collectors.toList()));
+                memory.getListOfLocations().forEach(entityManager::persist);
+
             }
 
-            if (updateMemoryRequestBody.getHeadline() != null && !updateMemoryRequestBody.getHeadline().equals("")) {
+            if(updateMemoryRequestBody.getListOfTags() != null && !updateMemoryRequestBody.getListOfTags().isEmpty()){
+                memory.setListOfTags(updateMemoryRequestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
+                memory.getListOfTags().forEach(entityManager::persist);
+            }
+
+            if(!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
             }
 
-            if (updateMemoryRequestBody.getStoryList() != null) {
-                memory.setStoryList(updateMemoryRequestBody.getStoryList());
+            if(updateMemoryRequestBody.getListOfItems() != null && !updateMemoryRequestBody.getListOfItems().isEmpty()){
+                memory.setListOfItems(updateMemoryRequestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
+                memory.getListOfItems().forEach(entityManager::persist);
             }
-            memory.getStoryList().forEach(entityManager::persist);
-            memory.getStoryList().stream().map(Story::getLocation).forEach(entityManager::persist);
+
+            if(!isZero(updateMemoryRequestBody.getStartDateHH()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateHH(updateMemoryRequestBody.getStartDateHH());
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if(!isZero(updateMemoryRequestBody.getStartDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else if( !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
+                memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }else{
+                memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
+            }
+
+            if(!isZero(updateMemoryRequestBody.getEndDateHH()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateHH(updateMemoryRequestBody.getEndDateHH());
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if(!isZero(updateMemoryRequestBody.getEndDateDD()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else if( !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
+                memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }else{
+                memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
+            }
 
             entityManager.persist(memory);
             entityManager.flush();
@@ -131,5 +200,12 @@ public class MemoryServiceImp implements MemoryService {
         }
     }
 
+    public boolean isNullOrEmpty(String s){
+        return (s==null || s.isEmpty());
+    }
+
+    public boolean isZero(int i){
+        return i==0;
+    }
 
 }

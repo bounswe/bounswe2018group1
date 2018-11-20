@@ -14,6 +14,6 @@ public interface MemoryRepository extends CrudRepository<Memory,Long>, PagingAnd
     Optional<Memory> findById(Long id);
     Page<Memory> findAll(Pageable pageable);
 
-    Page<GetMemoryResponseBody> findByUserId(Long userId, Pageable pageable);
+    Page<Memory> findByUserId(Long userId, Pageable pageable);
 
 }

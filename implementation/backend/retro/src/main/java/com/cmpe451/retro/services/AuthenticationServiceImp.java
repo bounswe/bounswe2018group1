@@ -83,7 +83,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
         }
 
         if(!stringUtil.isValidPassword(registerRequestBody.getPassword()))
-            throw new RetroException("Invalid password",HttpStatus.BAD_REQUEST);
+            throw new RetroException("Password is not valid.",HttpStatus.BAD_REQUEST);
 
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequestBody.getPassword()));
