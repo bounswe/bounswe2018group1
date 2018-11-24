@@ -55,6 +55,9 @@ public class MemoryServiceImp implements MemoryService {
         Memory memory = new Memory();
         memory.setHeadline(requestBody.getHeadline());
         memory.setUserId(userId);
+        memory.setUserFirstName(user.getFirstName());
+        memory.setUserLastName(user.getLastName());
+        memory.setUserNickname(user.getNickname());
         memory.setDateOfCreation(new Date());
         memory.setStartDateHH(requestBody.getStartDateHH());
         memory.setStartDateDD(requestBody.getStartDateDD());
