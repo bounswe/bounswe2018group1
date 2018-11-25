@@ -12,6 +12,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -269,7 +270,7 @@ public class ClientAPI {
                     @Override
                     public void onResponse(Object response) {
                         if (response == null) {
-                            System.err.println("loadProfile failed!");
+                            System.err.println("Empty response from URL_USER");
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
@@ -317,8 +318,7 @@ public class ClientAPI {
 
     }
 
-    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $gender, String $email, String $oldPassword, String $newPassword, final Context context) {
-
+    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $gender, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
@@ -327,17 +327,19 @@ public class ClientAPI {
             postParams.put("bio", $bio);
             postParams.put("gender", $gender);
             postParams.put("email", $email);
-            postParams.put("oldPassword", $oldPassword);
-            postParams.put("newPassword", $newPassword);
+            if (!$oldPassword.isEmpty() && !$newPassword.isEmpty() && !$oldPassword.equals($newPassword)) {
+                postParams.put("oldPassword", $oldPassword);
+                postParams.put("newPassword", $newPassword);
+            }
         } catch (org.json.JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.PUT, URLs.URL_USER_INFO, postParams,
                 new Response.Listener() {
                     @Override
                     public void onResponse(Object response) {
                         if (response == null) {
-                            System.out.println("updateProfile success!");
+                            profileFragment.loadProfile();
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
@@ -352,7 +354,6 @@ public class ClientAPI {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
-                        Toast.makeText(context, "Profile update fail!", Toast.LENGTH_LONG).show();
                         System.err.println("updateProfile returned error response!");
                         if (error.networkResponse.data != null) {
                             try {
@@ -367,7 +368,7 @@ public class ClientAPI {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, context);
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
     }
 
     public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,

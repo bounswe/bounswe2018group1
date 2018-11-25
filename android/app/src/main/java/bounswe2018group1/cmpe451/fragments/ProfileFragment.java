@@ -46,6 +46,7 @@ public class ProfileFragment extends Fragment {
     private Button editProfileSend = null;
     private ClientAPI clientAPI = null;
     private InputMethodManager inputManager = null;
+    private ProfileFragment here;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -89,7 +90,7 @@ public class ProfileFragment extends Fragment {
         editProfileLayout.setVisibility(View.GONE);
 
         // Load user information
-        clientAPI.loadProfile(this);
+        loadProfile();
 
         // Set Buttons
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +98,9 @@ public class ProfileFragment extends Fragment {
                 clientAPI.logout(v.getContext());
             }
         });
+
+        // Save current fragment
+        here = this;
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -114,13 +118,14 @@ public class ProfileFragment extends Fragment {
                 if (getActivity().getCurrentFocus() != null)
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 String gender;
-                if (genderFemale.isSelected()) {
+                int id = genderGroup.getCheckedRadioButtonId();
+                if (genderFemale.getId() == id) {
                     gender = "FEMALE";
                 }
-                else if (genderMale.isSelected()) {
+                else if (genderMale.getId() == id) {
                     gender = "MALE";
                 }
-                else if (genderOther.isSelected()) {
+                else if (genderOther.getId() == id) {
                     gender = "OTHER";
                 }
                 else {
@@ -135,11 +140,15 @@ public class ProfileFragment extends Fragment {
                         editEmail.getText().toString().trim(),
                         editOldPassword.getText().toString().trim(),
                         editNewPassword.getText().toString().trim(),
-                        v.getContext());
+                        here);
             }
         });
 
         return v;
+    }
+
+    public void loadProfile() {
+        clientAPI.loadProfile(this);
     }
 
     public void setFields(String $first, String $last, String $nick, String $email, String $bio, String $birth, String $gender, JSONArray $locations) {
