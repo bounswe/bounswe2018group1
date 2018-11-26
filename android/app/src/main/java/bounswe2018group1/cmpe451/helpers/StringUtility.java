@@ -1,5 +1,6 @@
 package bounswe2018group1.cmpe451.helpers;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class StringUtility {
@@ -73,6 +74,18 @@ public class StringUtility {
                     }
                 }
             }
+        }
+
+        return result.toString();
+    }
+
+    public static String memoryLocation(JsonArray listOfLocations) {
+        StringBuilder result = new StringBuilder();
+        result.append("List Of Locations:" + System.getProperty("line.separator"));
+        for(int i = 0, size = listOfLocations.size(); i < size; ++i) {
+            result.append(String.valueOf(i+1) + ") " +
+                    listOfLocations.get(i).getAsJsonObject().get("locationName").getAsString() +
+                    System.getProperty("line.separator"));
         }
 
         return result.toString();

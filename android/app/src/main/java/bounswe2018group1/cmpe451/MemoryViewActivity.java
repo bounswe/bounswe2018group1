@@ -29,7 +29,8 @@ public class MemoryViewActivity extends AppCompatActivity {
     private JsonArray itemDataSource = null;
     private JsonObject memory = null;
     private ImageView avatar = null;
-    private TextView authorName = null, postDate = null, memoryDate = null, memoryTitle = null;
+    private TextView authorName = null, postDate = null,
+            memoryDate = null, memoryLocation = null, memoryTitle = null;
     private ListView itemListView = null;
     private ClientAPI clientAPI = null;
 
@@ -42,6 +43,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (authorName == null) authorName = findViewById(R.id.authorName);
         if (postDate == null) postDate = findViewById(R.id.postDate);
         if (memoryDate == null) memoryDate = findViewById(R.id.memoryDate);
+        if (memoryLocation == null) memoryLocation = findViewById(R.id.memoryLocation);
         if (memoryTitle == null) memoryTitle = findViewById(R.id.memoryTitle);
         if (itemListView == null) itemListView = findViewById(R.id.itemListView);
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
@@ -66,6 +68,8 @@ public class MemoryViewActivity extends AppCompatActivity {
         String memoryTitle = memory.get("headline").getAsString();
         this.postDate.setText("Posted " + formattedTime);
         this.memoryDate.setText(StringUtility.memoryDate(memory));
+        this.memoryLocation.setText(
+                StringUtility.memoryLocation(memory.get("listOfLocations").getAsJsonArray()));
         this.memoryTitle.setText(memoryTitle);
         clientAPI.writeAuthor(this.authorName, memory.get("userId").getAsString(), this);
         //Prepare items

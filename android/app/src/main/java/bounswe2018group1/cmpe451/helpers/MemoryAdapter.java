@@ -70,9 +70,12 @@ public class MemoryAdapter extends BaseAdapter {
             e.printStackTrace();
             formattedTime = "(invalid date)";
         }
+        String firstLocation = memory.get("listOfLocations").getAsJsonArray().get(0).
+                getAsJsonObject().get("locationName").getAsString();
         String memoryTitle = memory.get("headline").getAsString();
         holder.postDate.setText("Posted " + formattedTime);
         holder.memoryDate.setText(StringUtility.memoryDate(memory));
+        holder.memoryLocation.setText("First Located at: " + firstLocation);
         holder.memoryTitle.setText(memoryTitle);
         holder.memoryTitle.getViewTreeObserver().addOnGlobalLayoutListener(
                 new MyOnGlobalLayoutListener(holder)
