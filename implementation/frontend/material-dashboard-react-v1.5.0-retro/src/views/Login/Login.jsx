@@ -18,16 +18,6 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      nickname: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      password_confirmation: "",
-      validation: this.validator.valid(),
-    }
-
     this.submitted = false;
 
     //this.handleChange = this.handleChange.bind(this);
@@ -89,6 +79,16 @@ export default class Login extends Component {
       }
     ]);
 
+    this.state = {
+      nickname: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      password_confirmation: "",
+      validation: this.validator.valid(),
+    }
+
   }
 
   // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
@@ -99,15 +99,14 @@ export default class Login extends Component {
 
   //regex from https://stackoverflow.com/questions/14850553/javascript-regex-for-password-containing-at-least-8-characters-1-number-1-uppe
   //var passwordRegexWithNoSpecialCharacters = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,50}$/
-
 validatePasswordFormat() {
   // regex does not allow special characters for now, look above for details.
   // Note: Regex needs to have / at the beginning and end.
   var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,50}$/
   return re.test(this.state.password);
 }
-
-  passwordFormat = this.validatePasswordFormat()
+  //this.handleClick.bind(this)
+  passwordFormat = this.validatePasswordFormat.bind(this)
   passwordLength = (password, state) => (state.password.length) >= 7
   passwordMatch = (confirmation, state) => (state.password === confirmation)
 
