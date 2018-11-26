@@ -68,9 +68,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         // Find and remove pressed button and location
-                        System.out.println("Bura: " + view.getTag()); // TODO Remove
                         for (int i = 0; i < locationLayoutList.size(); i++) {
-                            System.out.println("Bu: " + locationLayoutList.get(i).getTag()); // TODO Remove
                             if (view.getTag().equals(locationLayoutList.get(i).getTag() + "B")) {
                                 locationList.removeView(locationList.findViewWithTag(locationLayoutList.get(i).getTag()));
                                 locationLayoutList.remove(i);

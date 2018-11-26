@@ -104,6 +104,10 @@ public class ProfileFragment extends Fragment {
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Remove keyboard
+                if (getActivity().getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                // Toggle visibility of edit layout
                 if (editProfileLayout.getVisibility() == View.GONE) {
                     editProfileLayout.setVisibility(View.VISIBLE);
                 } else {

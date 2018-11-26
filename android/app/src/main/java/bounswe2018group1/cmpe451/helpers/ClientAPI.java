@@ -370,7 +370,60 @@ public class ClientAPI {
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
     }
-
+/*
+    public void createMemory(String Context context) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        try {
+            postParams.put("firstName", $firstName);
+            postParams.put("lastName", $lastName);
+            postParams.put("nickname", $nickname);
+            postParams.put("bio", $bio);
+            postParams.put("gender", $gender);
+            postParams.put("email", $email);
+            if (!$oldPassword.isEmpty() && !$newPassword.isEmpty() && !$oldPassword.equals($newPassword)) {
+                postParams.put("oldPassword", $oldPassword);
+                postParams.put("newPassword", $newPassword);
+            }
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST, URLs.URL_MEMORY, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            profileFragment.loadProfile();
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("updateProfile unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("updateProfile returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
+    }
+*/
     public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,
                                   final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();

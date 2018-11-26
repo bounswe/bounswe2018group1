@@ -157,5 +157,16 @@
             android:bufferType="spannable"
             android:text="Add Image"
             android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginBottom="18dp"
+            android:bufferType="spannable"
+            android:text="Share"
+            android:textAllCaps="false" />
     </LinearLayout>
 </ScrollView>
