@@ -150,7 +150,7 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         System.err.println("sendLoginRequest returned error response!");
-                        if (error.networkResponse.data != null) {
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
                             try {
                                 String jsonString = new String(error.networkResponse.data,
                                         HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
