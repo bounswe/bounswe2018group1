@@ -1,8 +1,5 @@
 package com.cmpe451.retro.data.entities;
 
-import com.cmpe451.retro.models.CreateMemoryRequestBody;
-import com.cmpe451.retro.models.LocationDto;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -18,6 +15,12 @@ public class Memory {
 
     @NotNull
     private long userId;
+
+    private String userNickname;
+
+    private String userFirstName;
+
+    private String userLastName;
 
     @NotNull
     private String headline;
@@ -50,7 +53,6 @@ public class Memory {
     private int endDateMM;
 
     private int endDateYYYY;
-
 
     @NotNull
     @Temporal(TemporalType.DATE)
@@ -200,4 +202,27 @@ public class Memory {
         this.listOfItems = listOfItems;
     }
 
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
 }

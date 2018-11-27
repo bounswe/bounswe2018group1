@@ -12,6 +12,12 @@ public class GetMemoryResponseBody {
 
     private long userId;
 
+    private String userNickname;
+
+    private String userFirstName;
+
+    private String userLastName;
+
     private String headline;
 
     private Date dateOfCreation;
@@ -25,7 +31,6 @@ public class GetMemoryResponseBody {
     private int startDateMM;
 
     private int startDateYYYY;
-
 
     private int endDateHH;
 
@@ -48,6 +53,9 @@ public class GetMemoryResponseBody {
 
     public GetMemoryResponseBody(Memory memory) {
         this.userId = memory.getUserId();
+        this.userNickname = memory.getUserNickname();
+        this.userFirstName = memory.getUserFirstName();
+        this.userLastName = memory.getUserLastName();
         this.headline = memory.getHeadline();
         this.dateOfCreation = memory.getDateOfCreation();
         this.startDateHH = memory.getStartDateHH();
@@ -62,7 +70,6 @@ public class GetMemoryResponseBody {
         this.listOfLocations = memory.getListOfLocations();
         this.listOfTags = memory.getListOfTags();
         this.listOfItems = memory.getListOfItems();
-
     }
 
     public long getUserId() {
@@ -183,5 +190,29 @@ public class GetMemoryResponseBody {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 }
