@@ -13,6 +13,7 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import LoginRepository from '../../api_calls/login.js';
 import FormValidator from 'components/FormValidator/FormValidator.js';
+import { HelpBlock } from 'react-bootstrap';
 
 export default class Login extends Component {
   constructor(props) {
@@ -24,6 +25,12 @@ export default class Login extends Component {
 
     this.validator = new FormValidator([
       {
+        field: 'loginNickname',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'A nickname is required.'
+      },
+/*      {
         field: 'firstName',
         method: 'isEmpty',
         validWhen: false,
@@ -34,38 +41,38 @@ export default class Login extends Component {
         method: 'isEmpty',
         validWhen: false,
         message: 'Last name is required.'
-      },
+      }, */
       {
-        field: 'email',
+        field: 'loginEmail',
         method: 'isEmpty',
         validWhen: false,
         message: 'Email is required.'
       },
       {
-        field: 'email',
+        field: 'loginEmail',
         method: 'isEmail',
         validWhen: true,
         message: 'Please provide a valid email.'
       },
       {
-        field: 'password',
+        field: 'loginPassword',
         method: 'isEmpty',
         validWhen: false,
         message: 'Password is required.'
       },
       {
-        field: 'password',
+        field: 'loginPassword',
         method: this.passwordLength,
         validWhen: true,
         message: 'Password must be at least 8 characters long, this is for your safety.'
       },
       {
-        field: 'password',
+        field: 'loginPassword',
         method: this.passwordFormat,
         validWhen: true,
         message: 'Password needs to have at least one of: a small-case letter, an upper-case letter and a number. Please do not try to use characters that are too weird.'
       },
-      {
+  /*    {
         field: 'password_confirmation',
         method: 'isEmpty',
         validWhen: false,
@@ -76,15 +83,15 @@ export default class Login extends Component {
         method: this.passwordMatch,   // notice that we are passing a custom function here
         validWhen: true,
         message: 'Password and password confirmation do not match. Please check again.'
-      }
+      }   */
     ]);
 
     this.state = {
-      nickname: "",
-      email: "",
+      loginNickname: "",
+      loginEmail: "",
       firstName: "",
       lastName: "",
-      password: "",
+      loginPassword: "",
       password_confirmation: "",
       validation: this.validator.valid(),
     }
@@ -105,16 +112,16 @@ validatePasswordFormat() {
   var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,50}$/
   return re.test(this.state.password);
 }
-  //this.handleClick.bind(this)
+
   passwordFormat = this.validatePasswordFormat.bind(this)
-  passwordLength = (password, state) => (state.password.length) >= 7
+  passwordLength = (password, state) => (state.loginPassword.length) >= 7
   passwordMatch = (confirmation, state) => (state.password === confirmation)
 
   handleChange = event => {
     event.preventDefault();
 
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.id]: event.target.value,
     });
   }
 
@@ -202,7 +209,7 @@ validatePasswordFormat() {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      className={validation.email.isInvalid && 'has-error'}
+                      className={validation.loginEmail.isInvalid && 'has-error'}
                       labelText="Email address"
                       id="loginEmail"
                       value={this.state.email}
@@ -211,14 +218,17 @@ validatePasswordFormat() {
                         onChange: this.handleChange
                       }}
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
+                        required: true
                       }}
                     />
+                    <HelpBlock>{validation.loginEmail.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      className={validation.loginPassword.isInvalid && 'has-error'}
                       labelText="Password"
                       id="loginPassword"
                       value={this.state.password}
@@ -231,6 +241,7 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+                    <HelpBlock>{validation.loginPassword.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -251,6 +262,7 @@ validatePasswordFormat() {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      //className={validation.nickname.isInvalid && 'has-error'}
                       labelText="Nickname"
                       id="registerNickname"
                       value={this.state.nickname}
@@ -263,11 +275,13 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      //className={validation.firstName.isInvalid && 'has-error'}
                       labelText="First Name"
                       id="registerFirstName"
                       value={this.state.firstName}
@@ -280,11 +294,13 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      //className={validation.lastName.isInvalid && 'has-error'}
                       labelText="Last Name"
                       id="registerLastName"
                       value={this.state.lastName}
@@ -297,11 +313,13 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      //className={validation.email.isInvalid && 'has-error'}
                       labelText="Email address"
                       id="registerEmail"
                       value={this.state.email}
@@ -314,11 +332,13 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      //className={validation.password.isInvalid && 'has-error'}
                       labelText="Password"
                       id="registerPassword"
                       value={this.state.password}
@@ -331,6 +351,26 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
+
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={10} sm={10} md={8}>
+                    <CustomInput
+                      //className={validation.password_confirmation.isInvalid && 'has-error'}
+                      labelText="Password Confirmation"
+                      id="registerPasswordConfirmation"
+                      value={this.state.password_confirmation}
+                      inputProps={{
+                        type:"password",
+                        onChange: this.handleChange
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                    />
+
                   </GridItem>
                 </GridContainer>
               </CardBody>
