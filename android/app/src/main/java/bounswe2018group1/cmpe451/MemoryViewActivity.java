@@ -66,12 +66,15 @@ public class MemoryViewActivity extends AppCompatActivity {
             formattedTime = "(invalid date)";
         }
         String memoryTitle = memory.get("headline").getAsString();
+        String[] fullName = new String[]{
+                memory.get("userFirstName").getAsString(),
+                memory.get("userLastName").getAsString()};
+        this.authorName.setText(StringUtility.join(" ", fullName));
         this.postDate.setText("Posted " + formattedTime);
         this.memoryDate.setText(StringUtility.memoryDate(memory));
         this.memoryLocation.setText(
                 StringUtility.memoryLocation(memory.get("listOfLocations").getAsJsonArray()));
         this.memoryTitle.setText(memoryTitle);
-        clientAPI.writeAuthor(this.authorName, memory.get("userId").getAsString(), this);
         //Prepare items
         if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
         final ItemAdapter adapter = new ItemAdapter(this, R.layout.item_row, itemDataSource);

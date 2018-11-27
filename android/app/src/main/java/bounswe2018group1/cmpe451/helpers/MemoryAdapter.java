@@ -20,13 +20,11 @@ public class MemoryAdapter extends BaseAdapter {
     protected Context context;
     private int layoutResource;
     private JsonArray dataSource;
-    private ClientAPI clientAPI;
 
     public MemoryAdapter(Context context, int resource, JsonArray dataSource) {
         this.context = context;
         this.layoutResource = resource;
         this.dataSource = dataSource;
-        this.clientAPI = ClientAPI.getInstance(context);
     }
 
     @Override
@@ -73,6 +71,10 @@ public class MemoryAdapter extends BaseAdapter {
         String firstLocation = memory.get("listOfLocations").getAsJsonArray().get(0).
                 getAsJsonObject().get("locationName").getAsString();
         String memoryTitle = memory.get("headline").getAsString();
+        String[] fullName = new String[]{
+                memory.get("userFirstName").getAsString(),
+                memory.get("userLastName").getAsString()};
+        holder.authorName.setText(StringUtility.join(" ", fullName));
         holder.postDate.setText("Posted " + formattedTime);
         holder.memoryDate.setText(StringUtility.memoryDate(memory));
         holder.memoryLocation.setText("First Located at: " + firstLocation);
@@ -83,7 +85,6 @@ public class MemoryAdapter extends BaseAdapter {
         holder.btnSeeMore.setOnClickListener(
                 new MyOnClickListener(holder)
         );
-        clientAPI.writeAuthor(holder.authorName, memory.get("userId").getAsString(), context);
 
         return row;
     }
