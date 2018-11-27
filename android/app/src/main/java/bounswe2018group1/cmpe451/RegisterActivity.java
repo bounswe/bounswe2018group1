@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                             editTextRSurname.getText().toString(),
                             editText.getText().toString(),
                             editTextPassword.getText().toString(),
-                            v.getContext()
+                            getApplicationContext()
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
 
-                clientAPI.sendLoginRequest(editTextLName.getText().toString(), editTextLPassword.getText().toString(), v.getContext());
+                clientAPI.sendLoginRequest(editTextLName.getText().toString(), editTextLPassword.getText().toString(), getApplicationContext());
             }
         });
     }
