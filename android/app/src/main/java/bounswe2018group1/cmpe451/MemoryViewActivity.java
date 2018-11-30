@@ -1,13 +1,17 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +36,7 @@ public class MemoryViewActivity extends AppCompatActivity {
     private TextView authorName = null, postDate = null,
             memoryDate = null, memoryLocation = null, memoryTitle = null;
     private ListView itemListView = null;
+    private LinearLayout memoryTagLayout = null;
     private ClientAPI clientAPI = null;
 
     @Override
@@ -46,6 +51,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (memoryLocation == null) memoryLocation = findViewById(R.id.memoryLocation);
         if (memoryTitle == null) memoryTitle = findViewById(R.id.memoryTitle);
         if (itemListView == null) itemListView = findViewById(R.id.itemListView);
+        if (memoryTagLayout == null) memoryTagLayout = findViewById(R.id.memoryTagLayout);
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
 
         if (memory == null) {
@@ -78,13 +84,36 @@ public class MemoryViewActivity extends AppCompatActivity {
         //Prepare items
         if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
         final ItemAdapter adapter = new ItemAdapter(this, R.layout.item_row, itemDataSource);
-        itemListView.setAdapter(adapter);
-        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.itemListView.setAdapter(adapter);
+        this.itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO: action for when an item is clicked
             }
         });
+        if(memory.get("listOfTags").getAsJsonArray().size() == 0) {
+            this.memoryTagLayout.setVisibility(View.INVISIBLE);
+        } else {
+            for(int i = 0, tag_size = memory.get("listOfTags").getAsJsonArray().size(); i < tag_size; ++i) {
+                TextView tag_text = new TextView(this);
+                tag_text.setText(memory.get("listOfTags").getAsJsonArray().get(i).
+                        getAsJsonObject().get("text").getAsString());
+                tag_text.setTypeface(null, Typeface.BOLD);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                Resources r = this.getResources();
+                int px = (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        8,  // 8dp
+                        r.getDisplayMetrics()
+                );
+                params.setMarginEnd(px);
+                tag_text.setLayoutParams(params);
+                tag_text.setBackgroundResource(R.drawable.rounded_red_border);
+                this.memoryTagLayout.addView(tag_text);
+            }
+        }
 
     }
 
