@@ -37,9 +37,15 @@ public class StringUtility {
                 endDateDD = memory.get("endDateDD").getAsInt();
         StringBuilder result = new StringBuilder();
         result.append("Happened ");
-        if (endDateYYYY == 0) {
+        if (endDateYYYY == 0 && startDateMM == 0 && startDateDD == 0 && startDateHH == 0) {
             //Single point in time
             result.append("On ");
+            if(startDateYYYY < 0) {
+                startDateYYYY = -startDateYYYY;
+                result.append("B.C. ");
+            } else if(startDateYYYY < 1000) {
+                result.append("A.D. ");
+            }
             result.append(startDateYYYY);
             if (startDateMM > 0) {   // Resolution >= MONTH
                 result.append("-" + startDateMM);
@@ -53,6 +59,12 @@ public class StringUtility {
         } else {
             //Interval of time
             result.append("From ");
+            if(startDateYYYY < 0) {
+                startDateYYYY = -startDateYYYY;
+                result.append("B.C. ");
+            } else if(startDateYYYY < 1000) {
+                result.append("A.D. ");
+            }
             result.append(startDateYYYY);
             if (startDateMM > 0) {   // Resolution >= MONTH
                 result.append("-" + startDateMM);
@@ -64,6 +76,12 @@ public class StringUtility {
                 }
             }
             result.append(" To ");
+            if(endDateYYYY < 0) {
+                endDateYYYY = -endDateYYYY;
+                result.append("BC ");
+            } else if(endDateYYYY < 1000) {
+                result.append("AD ");
+            }
             result.append(endDateYYYY);
             if (endDateMM > 0) {   // Resolution >= MONTH
                 result.append("-" + endDateMM);
