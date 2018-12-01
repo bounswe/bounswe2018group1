@@ -19,84 +19,100 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.submitted = false;
+    this.loginSubmitted = false;
+    this.registerSubmitted = false;
 
     //this.handleChange = this.handleChange.bind(this);
 
-    this.validator = new FormValidator([
-      {
-        field: 'loginNickname',
-        method: 'isEmpty',
-        validWhen: false,
-        message: 'A nickname is required.'
-      },
-/*      {
-        field: 'firstName',
-        method: 'isEmpty',
-        validWhen: false,
-        message: 'First name is required.'
-      },
-      {
-        field: 'lastName',
-        method: 'isEmpty',
-        validWhen: false,
-        message: 'Last name is required.'
-      }, */
-      {
-        field: 'loginEmail',
-        method: 'isEmpty',
-        validWhen: false,
-        message: 'Email is required.'
-      },
-      {
-        field: 'loginEmail',
-        method: 'isEmail',
-        validWhen: true,
-        message: 'Please provide a valid email.'
-      },
+    this.loginValidator = new FormValidator([
       {
         field: 'loginPassword',
         method: 'isEmpty',
         validWhen: false,
         message: 'Password is required.'
+      }
+    ]);
+
+    this.registerValidator = new FormValidator([
+      {
+        field: 'registerNickname',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'A nickname is required.'
       },
       {
-        field: 'loginPassword',
+        field: 'registerFirstName',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'First name is required.'
+      },
+      {
+        field: 'registerLastName',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'Last name is required.'
+      },
+      {
+        field: 'registerEmail',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'Email is required.'
+      },
+      {
+        field: 'registerEmail',
+        method: 'isEmail',
+        validWhen: true,
+        message: 'Please provide a valid email.'
+      },
+      {
+        field: 'registerPassword',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'Password is required.'
+      },
+      {
+        field: 'registerPassword',
         method: this.passwordLength,
         validWhen: true,
         message: 'Password must be at least 8 characters long, this is for your safety.'
       },
       {
-        field: 'loginPassword',
+        field: 'registerPassword',
         method: this.passwordFormat,
         validWhen: true,
         message: 'Password needs to have at least one of: a small-case letter, an upper-case letter and a number. Please do not try to use characters that are too weird.'
       },
-  /*    {
-        field: 'password_confirmation',
+      {
+        field: 'registerPasswordConfirmation',
         method: 'isEmpty',
         validWhen: false,
         message: 'Password confirmation is required.'
       },
       {
-        field: 'password_confirmation',
+        field: 'registerPasswordConfirmation',
         method: this.passwordMatch,   // notice that we are passing a custom function here
         validWhen: true,
         message: 'Password and password confirmation do not match. Please check again.'
-      }   */
+      }
     ]);
 
     this.state = {
       loginNickname: "",
       loginEmail: "",
-      firstName: "",
-      lastName: "",
       loginPassword: "",
-      password_confirmation: "",
-      validation: this.validator.valid(),
+      registerNickname: "",
+      registerEmail: "",
+      registerFirstName: "",
+      registerLastName: "",
+      registerPassword: "",
+      registerPasswordConfirmation: "",
+      loginValidation: this.loginValidator.valid(),
+      registerValidation: this.registerValidator.valid(),
     }
 
   }
+
+  // It makes the most sense to perform the password checks below only during register period.
 
   // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
   //var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -110,12 +126,15 @@ validatePasswordFormat() {
   // regex does not allow special characters for now, look above for details.
   // Note: Regex needs to have / at the beginning and end.
   var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,50}$/
-  return re.test(this.state.password);
+  return re.test(this.state.registerPassword);
 }
-
   passwordFormat = this.validatePasswordFormat.bind(this)
-  passwordLength = (password, state) => (state.loginPassword.length) >= 7
-  passwordMatch = (confirmation, state) => (state.password === confirmation)
+  passwordLength = (password, state) => (state.registerPassword.length) >= 7
+  passwordMatch = (confirmation, state) => (state.registerPassword === confirmation)
+
+
+// Functions are below.
+
 
   handleChange = event => {
     event.preventDefault();
@@ -128,9 +147,9 @@ validatePasswordFormat() {
   handleSubmitLogin = event => {
     event.preventDefault();
 
-    const validation = this.validator.validate(this.state);
+    const validation = this.loginValidator.validate(this.state);
     this.setState({ validation });
-    this.submitted = true;
+    this.loginSubmitted = true;
 
     if (validation.isValid) {
       LoginRepository.login(this.state.loginNickname, this.state.loginEmail, this.state.loginPassword)
@@ -144,10 +163,11 @@ validatePasswordFormat() {
     }
   }
 
+// TODO implement once backend is ready.
   handleSubmitForget = event => {
     event.preventDefault();
 
-    LoginRepository.forget(this.state.nickname, this.state.email, this.state.password)
+    LoginRepository.forget(this.state.loginNickname, this.state.loginEmail, this.state.loginPassword)
       .then(res => {
         console.log(res);
 
@@ -160,9 +180,9 @@ validatePasswordFormat() {
   handleSubmitRegister = event => {
     event.preventDefault();
 
-    const validation = this.validator.validate(this.state);
+    const validation = this.registerValidator.validate(this.state);
     this.setState({ validation });
-    this.submitted = true;
+    this.registerSubmitted = true;
 
     if (validation.isValid) {
       LoginRepository.register(this.state.registerNickname, this.state.registerFirstName, this.state.registerLastName, this.state.registerEmail, this.state.registerPassword)
@@ -176,9 +196,13 @@ validatePasswordFormat() {
   }
 
   render() {
-    let validation = this.submitted ?                         // if the form has been submitted at least once
-                      this.validator.validate(this.state) :   // then check validity every time we render
-                      this.state.validation                   // otherwise just use what's in state
+    let loginValidation = this.loginSubmitted ?                         // if the form has been submitted at least once
+                      this.loginValidator.validate(this.state) :   // then check validity every time we render
+                      this.state.loginValidation                   // otherwise just use what's in state
+
+    let registerValidation = this.registerSubmitted ?
+                      this.registerValidator.validate(this.state) :
+                      this.state.registerValidation
 
     return (
       <div>
@@ -194,7 +218,7 @@ validatePasswordFormat() {
                     <CustomInput
                       labelText="Nickname"
                       id="loginNickname"
-                      value={this.state.nickname}
+                      value={this.state.loginNickname}
                       inputProps={{
                         type:"text",
                         onChange: this.handleChange
@@ -209,10 +233,9 @@ validatePasswordFormat() {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      className={validation.loginEmail.isInvalid && 'has-error'}
                       labelText="Email address"
                       id="loginEmail"
-                      value={this.state.email}
+                      value={this.state.loginEmail}
                       inputProps={{
                         type:"email",
                         onChange: this.handleChange
@@ -222,16 +245,15 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-                    <HelpBlock>{validation.loginEmail.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      className={validation.loginPassword.isInvalid && 'has-error'}
+                      className={loginValidation.loginPassword.isInvalid && 'has-error'}
                       labelText="Password"
                       id="loginPassword"
-                      value={this.state.password}
+                      value={this.state.loginPassword}
                       inputProps={{
                         type:"password",
                         onChange: this.handleChange
@@ -241,7 +263,7 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-                    <HelpBlock>{validation.loginPassword.message}</HelpBlock>
+                    <HelpBlock>{loginValidation.loginPassword.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -262,10 +284,10 @@ validatePasswordFormat() {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.nickname.isInvalid && 'has-error'}
+                      className={registerValidation.registerNickname.isInvalid && 'has-error'}
                       labelText="Nickname"
                       id="registerNickname"
-                      value={this.state.nickname}
+                      value={this.state.registerNickname}
                       inputProps={{
                         type:"text",
                         onChange: this.handleChange
@@ -275,16 +297,16 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerNickname.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.firstName.isInvalid && 'has-error'}
+                      className={registerValidation.registerFirstName.isInvalid && 'has-error'}
                       labelText="First Name"
                       id="registerFirstName"
-                      value={this.state.firstName}
+                      value={this.state.registerFirstName}
                       inputProps={{
                         type:"text",
                         onChange: this.handleChange
@@ -294,16 +316,16 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerFirstName.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.lastName.isInvalid && 'has-error'}
+                      className={registerValidation.registerLastName.isInvalid && 'has-error'}
                       labelText="Last Name"
                       id="registerLastName"
-                      value={this.state.lastName}
+                      value={this.state.registerLastName}
                       inputProps={{
                         type:"text",
                         onChange: this.handleChange
@@ -313,16 +335,16 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerLastName.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.email.isInvalid && 'has-error'}
+                      className={registerValidation.registerEmail.isInvalid && 'has-error'}
                       labelText="Email address"
                       id="registerEmail"
-                      value={this.state.email}
+                      value={this.state.registerEmail}
                       inputProps={{
                         type:"email",
                         onChange: this.handleChange
@@ -332,16 +354,16 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerEmail.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.password.isInvalid && 'has-error'}
+                      className={registerValidation.registerPassword.isInvalid && 'has-error'}
                       labelText="Password"
                       id="registerPassword"
-                      value={this.state.password}
+                      value={this.state.registerPassword}
                       inputProps={{
                         type:"password",
                         onChange: this.handleChange
@@ -351,16 +373,16 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerPassword.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
-                      //className={validation.password_confirmation.isInvalid && 'has-error'}
+                      className={registerValidation.registerPasswordConfirmation.isInvalid && 'has-error'}
                       labelText="Password Confirmation"
                       id="registerPasswordConfirmation"
-                      value={this.state.password_confirmation}
+                      value={this.state.registerPasswordConfirmation}
                       inputProps={{
                         type:"password",
                         onChange: this.handleChange
@@ -370,7 +392,7 @@ validatePasswordFormat() {
                         required: true
                       }}
                     />
-
+                    <HelpBlock>{registerValidation.registerPasswordConfirmation.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
               </CardBody>

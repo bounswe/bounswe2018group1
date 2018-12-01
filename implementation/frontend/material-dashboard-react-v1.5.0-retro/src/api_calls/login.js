@@ -14,7 +14,8 @@ class LoginRepository {
       Cookies.set("retroToken", token);
     }).catch(console.log);
   }
-
+  
+// TODO implement once backend is ready.
   static forget(nickname, email, password) {
     return axios.post(`${constants.API}/forget`, {
       nickname: nickname,
