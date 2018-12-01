@@ -2,7 +2,11 @@ package com.cmpe451.retro.data.entities;
 
 import com.cmpe451.retro.models.TagDto;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity

@@ -5,8 +5,14 @@ import com.cmpe451.retro.models.AuthenticationResponseModel;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
 import com.cmpe451.retro.services.AuthenticationService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +26,8 @@ public class AuthenticationController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
+    @ApiOperation(notes = "Either nickname or email is required.",
+            value = "")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AuthenticationResponseModel loginAttempt(@RequestBody LoginRequestBody loginRequest) {
         long userId = authenticationService.login(loginRequest);

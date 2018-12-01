@@ -6,11 +6,14 @@ public class ItemDto {
 
     private String body;
 
+    private String url;
+
     public ItemDto() {
     }
 
     public ItemDto(Item item) {
         this.body = item.getBody();
+        this.url = item.getUrl();
     }
 
     public String getBody() {
@@ -21,5 +24,11 @@ public class ItemDto {
         this.body = body;
     }
 
+    public String getUrl() {
+        return url;
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

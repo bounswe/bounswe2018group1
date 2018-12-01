@@ -7,15 +7,18 @@ import com.cmpe451.retro.data.entities.Tag;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
-import com.cmpe451.retro.models.*;
+import com.cmpe451.retro.models.CreateMemoryRequestBody;
+import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.GetMemoryResponseBody;
+import com.cmpe451.retro.models.RetroException;
+import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
