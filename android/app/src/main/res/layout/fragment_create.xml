@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="9dp"
@@ -37,6 +37,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/startDateYYYY"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,6 +46,7 @@
                 android:inputType="numberSigned" />
 
             <EditText
+                android:id="@+id/startDateMM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -53,6 +55,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/startDateDD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -61,6 +64,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/startDateHH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,6 +89,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/endDateYYYY"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -93,6 +98,7 @@
                 android:inputType="numberSigned" />
 
             <EditText
+                android:id="@+id/endDateMM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,6 +107,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/endDateDD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -109,6 +116,7 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/endDateHH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

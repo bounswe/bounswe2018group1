@@ -46,7 +46,6 @@ public class ProfileFragment extends Fragment {
     private Button editProfileSend = null;
     private ClientAPI clientAPI = null;
     private InputMethodManager inputManager = null;
-    private ProfileFragment here;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -99,9 +98,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // Save current fragment
-        here = this;
-
         editProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Remove keyboard
@@ -144,7 +140,7 @@ public class ProfileFragment extends Fragment {
                         editEmail.getText().toString().trim(),
                         editOldPassword.getText().toString().trim(),
                         editNewPassword.getText().toString().trim(),
-                        here);
+                        getThis());
             }
         });
 
@@ -153,6 +149,10 @@ public class ProfileFragment extends Fragment {
 
     public void loadProfile() {
         clientAPI.loadProfile(this);
+    }
+
+    public ProfileFragment getThis() {
+        return this;
     }
 
     public void setFields(String $first, String $last, String $nick, String $email, String $bio, String $birth, String $gender, JSONArray $locations) {

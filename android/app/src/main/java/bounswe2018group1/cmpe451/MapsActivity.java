@@ -10,7 +10,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,9 +43,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
+            public void onMapLongClick(LatLng latLng) {
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("PickedPoint", latLng);
                 returnIntent.putExtra("TagOfMap", tagOfMapButton);
@@ -55,9 +54,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        // Add a marker in TGNA and move the camera
+        // (Add a marker on TGNA) and move the camera
         LatLng home = new LatLng(39.9116, 32.8509);
-        mMap.addMarker(new MarkerOptions().position(home).title("Marker in TGNA"));
+        //mMap.addMarker(new MarkerOptions().position(home).title("Marker in TGNA"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
     }
 }

@@ -26,23 +26,35 @@ import java.util.ArrayList;
 import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsActivity;
 import bounswe2018group1.cmpe451.R;
+import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
 import static android.app.Activity.RESULT_OK;
 
 public class CreateFragment extends Fragment {
 
-    private Button addLocation;
-    private LinearLayout locationList;
-    private Button addImage;
-    private EditText story;
     private static final int PICK_IMAGE = 1;
     private static final int PICK_MAP_POINT = 999;
+
+    private LinearLayout locationList;
     private ArrayList<LinearLayout> locationLayoutList;
     private ArrayList<EditText> locationTextList;
     private ArrayList<Button> locationButtonList;
     private ArrayList<Button> locationMapList;
     private int locationTag = 0;
+    private Button addLocation;
+    private EditText headline;
+    private EditText startDateYYYY;
+    private EditText startDateMM;
+    private EditText startDateDD;
+    private EditText startDateHH;
+    private EditText endDateYYYY;
+    private EditText endDateMM;
+    private EditText endDateDD;
+    private EditText endDateHH;
+    private EditText story;
+    private Button addImage;
     private Button share;
+    private ClientAPI clientAPI;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -55,7 +67,7 @@ public class CreateFragment extends Fragment {
         if(PICK_IMAGE == requestCode && resultCode == RESULT_OK && data != null && data.getData() != null){
             SpannableStringBuilder ssb = new SpannableStringBuilder();
             ssb.append(story.getText());
-            //ssb.append("\n");
+            ssb.append("\n");
             String imgId = "[img]";
             int selStart = story.getSelectionStart();
             ssb.replace(story.getSelectionStart() +1 , story.getSelectionEnd()+1 , imgId);
@@ -76,7 +88,7 @@ public class CreateFragment extends Fragment {
 
 
             ssb.setSpan(new ImageSpan(getContext(), image) , selStart+1 , selStart+1+imgId.length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            //ssb.append("\n");
+            ssb.append("\n");
             story.setText(ssb);
         }
         // Pick point from map
@@ -99,7 +111,19 @@ public class CreateFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_create, container, false);
 
+        // Server calls
+        if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
+
         // Connect fields
+        headline = rootView.findViewById(R.id.headline);
+        startDateYYYY = rootView.findViewById(R.id.startDateYYYY);
+        startDateMM = rootView.findViewById(R.id.startDateMM);
+        startDateDD = rootView.findViewById(R.id.startDateDD);
+        startDateHH = rootView.findViewById(R.id.startDateHH);
+        endDateYYYY = rootView.findViewById(R.id.endDateYYYY);
+        endDateMM = rootView.findViewById(R.id.endDateMM);
+        endDateDD = rootView.findViewById(R.id.endDateDD);
+        endDateHH = rootView.findViewById(R.id.endDateHH);
         addLocation = rootView.findViewById(R.id.addLocation);
         locationList = rootView.findViewById(R.id.locationList);
         addImage = rootView.findViewById(R.id.addImage);
@@ -183,7 +207,71 @@ public class CreateFragment extends Fragment {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(story.getText());    // TODO DO İT!
+                int startDateYYYYInt;
+                int startDateMMInt;
+                int startDateDDInt;
+                int startDateHHInt;
+                int endDateYYYYInt;
+                int endDateMMInt;
+                int endDateDDInt;
+                int endDateHHInt;
+                try {
+                    startDateYYYYInt = Integer.parseInt(startDateYYYY.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    startDateYYYYInt = 0;
+                }
+                try {
+                    startDateMMInt = Integer.parseInt(startDateMM.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    startDateMMInt = 0;
+                }
+                try {
+                    startDateDDInt = Integer.parseInt(startDateDD.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    startDateDDInt = 0;
+                }
+                try {
+                    startDateHHInt = Integer.parseInt(startDateHH.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    startDateHHInt = 0;
+                }
+                try {
+                    endDateYYYYInt = Integer.parseInt(endDateYYYY.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    endDateYYYYInt = 0;
+                }
+                try {
+                    endDateMMInt = Integer.parseInt(endDateMM.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    endDateMMInt = 0;
+                }
+                try {
+                    endDateDDInt = Integer.parseInt(endDateDD.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    endDateDDInt = 0;
+                }
+                try {
+                    endDateHHInt = Integer.parseInt(endDateHH.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    endDateHHInt = 0;
+                }
+                String[] items = new String[1];
+                items[0] = story.getText().toString(); // TODO
+                String[] locations = new String[locationTextList.size()];
+                for (int i = 0; i < locationTextList.size(); i ++) {
+                    locations[i] = locationTextList.get(i).getText().toString();
+                }
+                clientAPI.createMemory(startDateYYYYInt, startDateMMInt, startDateDDInt, startDateHHInt,
+                        endDateYYYYInt, endDateMMInt, endDateDDInt, endDateHHInt,
+                        headline.getText().toString(), items, locations, getContext());
             }
         });
 

@@ -12,11 +12,17 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import bounswe2018group1.cmpe451.LoginActivity;
 import bounswe2018group1.cmpe451.MainActivity;
+import bounswe2018group1.cmpe451.fragments.CreateFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
 
 public class ClientAPI {
@@ -31,6 +37,7 @@ public class ClientAPI {
         public static final String USER_REQ_TAG = "user_tag";
         public static final String USER_INFO_TAG = "user_info_tag";
         public static final String MEMORY_UPD_TAG = "memory_update_tag";
+        public static final String MEMORY_CREATE_TAG = "memory_create_tag";
     }
 
     private ClientAPI(Context context) {
@@ -369,20 +376,48 @@ public class ClientAPI {
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
     }
-/*
-    public void createMemory(String Context context) {
+
+    public void createMemory(int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
+                             int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,
+                             String headline, String[] listOfItems, String[] listOfLocations, final Context context) {
+        // Get current date and time
+        DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        String createDate = createTime.format(Calendar.getInstance().getTime());
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
-            postParams.put("firstName", $firstName);
-            postParams.put("lastName", $lastName);
-            postParams.put("nickname", $nickname);
-            postParams.put("bio", $bio);
-            postParams.put("gender", $gender);
-            postParams.put("email", $email);
-            if (!$oldPassword.isEmpty() && !$newPassword.isEmpty() && !$oldPassword.equals($newPassword)) {
-                postParams.put("oldPassword", $oldPassword);
-                postParams.put("newPassword", $newPassword);
+            postParams.put("dateOfCreation", createDate);
+            postParams.put("startDateYYYY", startDateYYYY);
+            postParams.put("startDateMM", startDateMM);
+            postParams.put("startDateDD", startDateDD);
+            postParams.put("startDateHH", startDateHH);
+            postParams.put("endDateYYYY", endDateYYYY);
+            postParams.put("endDateMM", endDateMM);
+            postParams.put("endDateDD", endDateDD);
+            postParams.put("endDateHH", endDateHH);
+            postParams.put("headline", headline);
+            postParams.put("updatedTime", createDate);
+            // TODO Do or remove from backend, Tags
+            JSONArray tagArray = new JSONArray();
+            JSONObject tag = new JSONObject();
+            tag.put("text", "Tag");
+            tagArray.put(tag);
+            postParams.put("listOfTags", tagArray);
+            // Convert item strings to JSON Array
+            JSONArray itemArray = new JSONArray();
+            for (String item : listOfItems) {
+                JSONObject items = new JSONObject();
+                items.put("body", item);
+                itemArray.put(items);
             }
+            postParams.put("listOfItems", itemArray);
+            // Convert location strings to JSON Array
+            JSONArray locationArray = new JSONArray();
+            for (String location : listOfLocations) {
+                JSONObject locations = new JSONObject();
+                locations.put("locationName", location);
+                locationArray.put(locations);
+            }
+            postParams.put("listOfLocations", locationArray);
         } catch (org.json.JSONException e) {
             e.printStackTrace();
         }
@@ -391,13 +426,13 @@ public class ClientAPI {
                     @Override
                     public void onResponse(Object response) {
                         if (response == null) {
-                            profileFragment.loadProfile();
+                            System.err.println("ID did not return");
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
                             System.out.println("Response: " + r.toString());
                         } else {
-                            System.err.println("updateProfile unexpected response!");
+                            System.err.println("createMemory unexpected response!");
                             System.err.println("Response: " + response.toString());
                         }
                     }
@@ -406,7 +441,7 @@ public class ClientAPI {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
-                        System.err.println("updateProfile returned error response!");
+                        System.err.println("createMemory returned error response!");
                         if (error.networkResponse.data != null) {
                             try {
                                 String jsonString = new String(error.networkResponse.data,
@@ -420,9 +455,9 @@ public class ClientAPI {
                     }
                 }
         );
-        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_CREATE_TAG, context);
     }
-*/
+
     public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,
                                   final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
