@@ -89,12 +89,16 @@ public class UserServiceImp implements UserService {
                 } else {
                     throw new RetroException("Old password is not correct", HttpStatus.BAD_REQUEST);
                 }
-
             }
 
             //update birthday
             if(updateUserInfoBody.getBirthday() != null){
                 user.setBirthday(updateUserInfoBody.getBirthday());
+            }
+
+            //update profile picture
+            if(updateUserInfoBody.getProfilePictureUrl() != null){
+                user.setProfilePictureUrl(updateUserInfoBody.getProfilePictureUrl());
             }
 
             //update set of locations
