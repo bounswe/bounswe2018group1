@@ -1,7 +1,6 @@
 package com.cmpe451.retro.services;
 
 import com.cmpe451.retro.core.Constants;
-import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.User;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.RetroException;

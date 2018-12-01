@@ -1,7 +1,6 @@
 package com.cmpe451.retro.data.repositories;
 
 import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.models.GetMemoryResponseBody;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

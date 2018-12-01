@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 
 /**
  * Text, Image, Audio and Video classes will extend Item class
@@ -20,9 +19,16 @@ public class Item {
 
     private String body;
 
+    private String url;
+
     public Item(long id, String body) {
         this.id = id;
         this.body = body;
+    }
+
+    public Item(String body, String url) {
+        this.body = body;
+        this.url = url;
     }
 
     public Item() {
@@ -46,5 +52,13 @@ public class Item {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
