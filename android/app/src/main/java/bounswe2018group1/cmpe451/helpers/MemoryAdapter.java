@@ -68,8 +68,14 @@ public class MemoryAdapter extends BaseAdapter {
             e.printStackTrace();
             formattedTime = "(invalid date)";
         }
-        String firstLocation = memory.get("listOfLocations").getAsJsonArray().get(0).
-                getAsJsonObject().get("locationName").getAsString();
+        JsonArray listOfLocations = memory.get("listOfLocations").getAsJsonArray();
+        String firstLocation;
+        if(listOfLocations.size() == 0) {
+            firstLocation = "(no location)";
+        } else {
+            firstLocation = listOfLocations.get(0).getAsJsonObject().
+                    get("locationName").getAsString();
+        }
         String memoryTitle = memory.get("headline").getAsString();
         String[] fullName = new String[]{
                 memory.get("userFirstName").getAsString(),
