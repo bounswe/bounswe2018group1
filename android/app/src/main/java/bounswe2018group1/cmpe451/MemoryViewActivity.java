@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -85,12 +87,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
         final ItemAdapter adapter = new ItemAdapter(this, R.layout.item_row, itemDataSource);
         this.itemListView.setAdapter(adapter);
-        this.itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: action for when an item is clicked
-            }
-        });
+
         if(memory.get("listOfTags").getAsJsonArray().size() == 0) {
             this.memoryTagLayout.setVisibility(View.INVISIBLE);
         } else {
@@ -114,6 +111,15 @@ public class MemoryViewActivity extends AppCompatActivity {
                 this.memoryTagLayout.addView(tag_text);
             }
         }
+        // TODO: ListView inside ScrollView does not expand, FIX IT!!!
+        //setListViewHeightBasedOnChildren(this.itemListView);
+
+        this.itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: action for when an item is clicked
+            }
+        });
 
     }
 
@@ -133,6 +139,32 @@ public class MemoryViewActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
+        if (listAdapter == null) return;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
+                View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0) view.setLayoutParams(new
+                    ViewGroup.LayoutParams(desiredWidth,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight + (listView.getDividerHeight() *
+                (listAdapter.getCount() - 1));
+
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
 }

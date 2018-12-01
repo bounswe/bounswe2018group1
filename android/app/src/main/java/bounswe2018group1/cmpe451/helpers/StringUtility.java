@@ -37,7 +37,7 @@ public class StringUtility {
                 endDateDD = memory.get("endDateDD").getAsInt();
         StringBuilder result = new StringBuilder();
         result.append("Happened ");
-        if (endDateYYYY == 0 && startDateMM == 0 && startDateDD == 0 && startDateHH == 0) {
+        if (endDateYYYY == 0 && endDateMM == 0 && endDateDD == 0 && endDateHH == 0) {
             //Single point in time
             result.append("On ");
             if(startDateYYYY < 0) {
@@ -107,6 +107,27 @@ public class StringUtility {
         }
 
         return result.toString();
+    }
+
+    public static String getFileExtensionFromUrl(String url) {
+        if (url != null && url.length() > 0) {
+            int query = url.lastIndexOf('?');
+            if (query > 0) {
+                url = url.substring(0, query);
+            }
+            int filenamePos = url.lastIndexOf('/');
+            String filename =
+                    0 <= filenamePos ? url.substring(filenamePos + 1) : url;
+
+            if (filename.length() > 0) {
+                int dotPos = filename.lastIndexOf('.');
+                if (0 <= dotPos) {
+                    return filename.substring(dotPos + 1);
+                }
+            }
+        }
+
+        return "";
     }
 
 }

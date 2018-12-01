@@ -22,7 +22,6 @@ import java.util.Calendar;
 
 import bounswe2018group1.cmpe451.LoginActivity;
 import bounswe2018group1.cmpe451.MainActivity;
-import bounswe2018group1.cmpe451.fragments.CreateFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
 
 public class ClientAPI {
