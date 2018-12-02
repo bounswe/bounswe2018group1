@@ -89,10 +89,10 @@ public class ItemAdapter extends BaseAdapter {
                 holder.itemVideo.setVideoURI(itemUri);
                 holder.itemVideo.requestFocus();
                 holder.itemVideo.seekTo(1);
-                holder.itemVideo.setOnTouchListener(
-                        new ItemVideoOnTouchListener(holder.mediaController));
                 holder.itemVideo.setOnCompletionListener(
                         new ItemVideoOnCompletionListener(holder.itemVideo));
+                holder.itemVideo.setOnPreparedListener(
+                        new ItemVideoOnPreparedListener(holder.itemVideo, holder.mediaController));
             } else {
                 // TODO: HANDLE UNKNOWN FILE TYPE IN ITEM URL!!!
                 htmlBody = "(unknown content type)";
@@ -159,6 +159,23 @@ public class ItemAdapter extends BaseAdapter {
         @Override
         public void onCompletion(MediaPlayer mp) {
             itemVideo.start();
+        }
+    }
+
+    class ItemVideoOnPreparedListener implements MediaPlayer.OnPreparedListener {
+
+        private VideoView itemVideo;
+        private MediaController mediaController;
+
+        ItemVideoOnPreparedListener(VideoView itemVideo, MediaController mediaContoller) {
+            this.itemVideo = itemVideo;
+            this.mediaController = mediaContoller;
+        }
+
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            itemVideo.setOnTouchListener(
+                    new ItemVideoOnTouchListener(mediaController));
         }
     }
 
