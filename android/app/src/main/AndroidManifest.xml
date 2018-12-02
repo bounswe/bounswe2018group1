@@ -30,10 +30,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MemoryViewActivity" />
-        <activity
-            android:name=".MemoryCreateActivity"
-            android:label="@string/title_activity_memory_create"
-            android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,8 +43,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:label=".MapsActivity"></activity>
+            android:name=".MapsCreateActivity"
+            android:label=".MapsCreateActivity"></activity>
+        <activity
+            android:name=".MapsSearchActivity"
+            android:label=".MapsSearchActivity"></activity>
     </application>
 
 </manifest>

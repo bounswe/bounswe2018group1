@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bounswe2018group1.cmpe451.MainActivity;
-import bounswe2018group1.cmpe451.MapsActivity;
+import bounswe2018group1.cmpe451.MapsCreateActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
@@ -186,7 +186,7 @@ public class CreateFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         // Open map and send tag to map activity
-                        Intent pickPointIntent = new Intent(getActivity(), MapsActivity.class);
+                        Intent pickPointIntent = new Intent(getActivity(), MapsCreateActivity.class);
                         pickPointIntent.putExtra("TagOfMap", view.getTag().toString().trim());
                         startActivityForResult(pickPointIntent, PICK_MAP_POINT);
                     }

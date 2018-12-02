@@ -11,7 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsCreateActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private String tagOfMapButton;

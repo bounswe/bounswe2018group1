@@ -159,6 +159,9 @@ public class ProfileFragment extends Fragment {
         name.setText($first + " " + $last + " | " + $nick);
         bio.setText($bio);
         birth.setText($birth);
+        if ($birth.equals("null")) {
+            birth.setText("Birthday");
+        }
         editFirstName.setText($first);
         editLastName.setText($last);
         editNickname.setText($nick);
