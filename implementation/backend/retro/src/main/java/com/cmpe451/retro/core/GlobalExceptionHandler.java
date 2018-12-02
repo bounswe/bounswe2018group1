@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.ConstraintViolationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

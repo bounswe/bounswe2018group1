@@ -2,6 +2,7 @@ package com.cmpe451.retro.services;
 
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.FilterBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,5 @@ public interface MemoryService {
 
     void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody,Long userId);
 
+    public Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody,Pageable pageable);
 }

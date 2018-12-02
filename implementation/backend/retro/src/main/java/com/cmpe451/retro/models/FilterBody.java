@@ -2,11 +2,7 @@ package com.cmpe451.retro.models;
 
 import java.util.List;
 
-public class CreateMemoryRequestBody {
-
-    private String headline;
-
-    private List<LocationDto> listOfLocations;
+public class FilterBody {
 
     private int startDateHH;
 
@@ -24,17 +20,7 @@ public class CreateMemoryRequestBody {
 
     private int endDateYYYY;
 
-    private List<TagDto> listOfTags;
-
-    private List<ItemDto> listOfItems;
-
-    public String getHeadline() {
-        return headline;
-    }
-
-    public void setHeadline(String headline) {
-        this.headline = headline;
-    }
+    private String userNickname;
 
     public int getStartDateHH() {
         return startDateHH;
@@ -100,27 +86,11 @@ public class CreateMemoryRequestBody {
         this.endDateYYYY = endDateYYYY;
     }
 
-    public void setListOfLocations(List<LocationDto> listOfLocations) {
-        this.listOfLocations = listOfLocations;
+    public String getUserNickname() {
+        return userNickname;
     }
 
-    public List<TagDto> getListOfTags() {
-        return listOfTags;
-    }
-
-    public void setListOfTags(List<TagDto> listOfTags) {
-        this.listOfTags = listOfTags;
-    }
-
-    public List<ItemDto> getListOfItems() {
-        return listOfItems;
-    }
-
-    public void setListOfItems(List<ItemDto> listOfItems) {
-        this.listOfItems = listOfItems;
-    }
-
-    public List<LocationDto> getListOfLocations() {
-        return listOfLocations;
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
     }
 }

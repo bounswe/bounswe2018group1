@@ -66,6 +66,13 @@ public class Memory {
     private Date updatedTime;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+
+    @NotNull
     @OneToMany(targetEntity=Location.class)
     private List<Location> listOfLocations;
 
@@ -231,5 +238,21 @@ public class Memory {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

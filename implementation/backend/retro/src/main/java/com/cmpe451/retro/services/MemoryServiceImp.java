@@ -9,6 +9,7 @@ import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.FilterBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.RetroException;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
@@ -16,12 +17,15 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,16 +70,20 @@ public class MemoryServiceImp implements MemoryService {
         memory.setStartDateDD(requestBody.getStartDateDD());
         memory.setStartDateMM(requestBody.getStartDateMM());
         memory.setStartDateYYYY(requestBody.getStartDateYYYY());
-
         memory.setEndDateHH(requestBody.getEndDateHH());
         memory.setEndDateDD(requestBody.getEndDateDD());
         memory.setEndDateMM(requestBody.getEndDateMM());
         memory.setEndDateYYYY(requestBody.getEndDateYYYY());
-
-        memory.setUpdatedTime(requestBody.getUpdatedTime());
+        memory.setUpdatedTime(new Date());
         memory.setListOfLocations(requestBody.getListOfLocations().stream().map(Location::new).collect(Collectors.toList()));
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
+
+        memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
+
+        if(requestBody.getEndDateYYYY()!=0){
+            memory.setEndDate(convertToDate(requestBody.getEndDateDD(),requestBody.getEndDateMM(),requestBody.getEndDateYYYY()));
+        }
 
         user.getMemoryList().add(memory);//TODO: check
 
@@ -206,12 +214,57 @@ public class MemoryServiceImp implements MemoryService {
         }
     }
 
-    public boolean isNullOrEmpty(String s){
+    public Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody, Pageable pageable){
+
+        Date startDate = convertToDate(filterbody.getStartDateDD(),filterbody.getStartDateMM(),filterbody.getStartDateYYYY());
+        Date endDate = null;
+        if(filterbody.getEndDateYYYY()!=0){
+            endDate = convertToDate(filterbody.getEndDateDD(),filterbody.getEndDateMM(),filterbody.getEndDateYYYY());
+        }
+
+        Page<GetMemoryResponseBody> page1 = memoryRepository.findByStartDateGreaterThanEqualAndStartDateLessThanEqual(startDate,endDate,pageable);
+        Page<GetMemoryResponseBody> page2 = memoryRepository.findByEndDateGreaterThanEqualAndEndDateLessThanEqual(startDate,endDate,pageable);
+        Page<GetMemoryResponseBody> page3 = memoryRepository.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate,endDate,pageable);
+
+        List<GetMemoryResponseBody> retList = new ArrayList<>(page1.getContent());
+        if(page2.getSize()>0)
+            retList.addAll(page2.getContent());
+        if(page3.getSize()>0)
+        retList.addAll(page3.getContent());
+
+        int total = page1.getTotalPages() + page2.getTotalPages() + page3.getTotalPages();
+
+        return new PageImpl<>(retList, pageable, total);
+    }
+
+    private boolean isNullOrEmpty(String s){
         return (s==null || s.isEmpty());
     }
 
-    public boolean isZero(int i){
+    private boolean isZero(int i){
         return i==0;
+    }
+
+    private Date convertToDate(int d,int m, int y) {
+        if(y==0){
+            return null;
+        }
+        String day = d<10 ? "0" + d : "" + d;
+        String month = m<10 ? "0" + m : "" + m;
+        String year = "" + y;
+        String someDate = day + "." + month + "." + year;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy");
+
+
+        try {
+            return sdf.parse(someDate);
+        } catch (ParseException e) {
+            try {
+                return sdf.parse("00.00."+year);
+            } catch (ParseException e1) {
+                throw new RetroException("Create year is required",HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 
 }

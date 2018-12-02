@@ -2,6 +2,7 @@ package com.cmpe451.retro.controllers;
 
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.FilterBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import com.cmpe451.retro.services.MemoryService;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RestController
 public class MemoryController {
 
@@ -51,6 +52,11 @@ public class MemoryController {
             id = authenticationController.getUserId();
         }
         return memoryService.getAllMemoriesOfUser(id,pageable);
+    }
+
+    @RequestMapping(value = "/memory/filter",method = RequestMethod.GET)
+    public Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody,Pageable pageable){
+        return memoryService.getMemoriesWithFilter(filterbody,pageable);
     }
 
 
