@@ -36,6 +36,7 @@ public class Item {
 
     public Item(ItemDto itemDto) {
         this.body = itemDto.getBody();
+        this.url = itemDto.getUrl();
     }
 
     public String getBody() {
