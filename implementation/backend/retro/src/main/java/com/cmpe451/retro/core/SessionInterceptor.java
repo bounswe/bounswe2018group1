@@ -16,6 +16,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
+        if(httpServletRequest.getMethod().equals("OPTIONS")) {
+            return true;
+        }
         HttpSession session = httpServletRequest.getSession();
         session.setMaxInactiveInterval(60*60*24*360);
         boolean isActivate = (httpServletRequest.getRequestURI()).contains("activate");
