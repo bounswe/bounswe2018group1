@@ -16,8 +16,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import java.util.Arrays;
-
 public class MapsSearchActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -52,11 +50,11 @@ public class MapsSearchActivity extends FragmentActivity implements OnMapReadyCa
         marker1 = new MarkerOptions();
         marker1.zIndex(1.0f);
         marker1.draggable(true);
-        marker1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+        marker1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         marker2 = new MarkerOptions();
         marker2.zIndex(2.0f);
         marker2.draggable(true);
-        marker2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        marker2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -78,6 +76,9 @@ public class MapsSearchActivity extends FragmentActivity implements OnMapReadyCa
             @Override
             public void onMapLongClick(LatLng latLng) {
                 if (marker1On && marker2On) {
+                    mMap.clear();
+                    mMap.addMarker(marker1);
+                    mMap.addMarker(marker2);
                     PolygonOptions rectangle = new PolygonOptions();
                     rectangle.add(new LatLng(marker1.getPosition().latitude, marker1.getPosition().longitude));
                     rectangle.add(new LatLng(marker1.getPosition().latitude, marker2.getPosition().longitude));
@@ -85,15 +86,10 @@ public class MapsSearchActivity extends FragmentActivity implements OnMapReadyCa
                     rectangle.add(new LatLng(marker2.getPosition().latitude, marker1.getPosition().longitude));
                     rectangle.clickable(true);
                     rectangle.visible(true);
+                    rectangle.fillColor(0x40FF0000);
+                    rectangle.strokeWidth(0.0f);
                     mMap.addPolygon(rectangle);
                 }
-            }
-        });
-
-        mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
-            @Override
-            public void onPolygonClick(Polygon polygon) {
-                System.out.println(Arrays.toString(polygon.getPoints().toArray()));
             }
         });
 
@@ -137,6 +133,17 @@ public class MapsSearchActivity extends FragmentActivity implements OnMapReadyCa
                 mMap.clear();
                 mMap.addMarker(marker1);
                 mMap.addMarker(marker2);
+            }
+        });
+
+        mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon polygon) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("PickedPoint1", marker1.getPosition());
+                returnIntent.putExtra("PickedPoint2", marker2.getPosition());
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
 

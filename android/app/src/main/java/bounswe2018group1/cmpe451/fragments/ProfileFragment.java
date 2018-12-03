@@ -166,6 +166,9 @@ public class ProfileFragment extends Fragment {
         editLastName.setText($last);
         editNickname.setText($nick);
         editBio.setText($bio);
+        if ($bio.isEmpty()) {
+            editBio.setText("Your Bio");
+        }
         editEmail.setText($email);
         // Set gender
         if ($gender.equals("FEMALE")) {

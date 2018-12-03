@@ -15,7 +15,6 @@ import bounswe2018group1.cmpe451.fragments.CreateFragment;
 import bounswe2018group1.cmpe451.fragments.FeedFragment;
 import bounswe2018group1.cmpe451.fragments.MapFragment;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
-import bounswe2018group1.cmpe451.fragments.SearchFragment;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private FeedFragment fragmentFeed;
     private MapFragment fragmentMap;
     private ProfileFragment fragmentProfile;
-    private SearchFragment fragmentSearch;
     private CreateFragment fragmentCreate;
     private InputMethodManager inputManager = null;
     private TabLayout tabLayout = null;
@@ -56,28 +54,24 @@ public class MainActivity extends AppCompatActivity {
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
 
         tabLayout.addTab(tabLayout.newTab().setText("Feed"));
-        tabLayout.addTab(tabLayout.newTab().setText("Map"));
-        tabLayout.addTab(tabLayout.newTab().setText("Profıle"));
         tabLayout.addTab(tabLayout.newTab().setText("Search"));
+        tabLayout.addTab(tabLayout.newTab().setText("Profıle"));
         tabLayout.addTab(tabLayout.newTab().setText("Create"));
 
         // Create fragments
         fragmentFeed = new FeedFragment();
         fragmentMap = new MapFragment();
         fragmentProfile = new ProfileFragment();
-        fragmentSearch = new SearchFragment();
         fragmentCreate = new CreateFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.mainLayout, fragmentFeed, "Feed");
-        transaction.add(R.id.mainLayout, fragmentMap, "Map");
+        transaction.add(R.id.mainLayout, fragmentMap, "Search");
         transaction.add(R.id.mainLayout, fragmentProfile, "Profile");
-        transaction.add(R.id.mainLayout, fragmentSearch, "Search");
         transaction.add(R.id.mainLayout, fragmentCreate ,"Create");
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
-        transaction.hide(fragmentSearch);
         transaction.hide(fragmentCreate);
         transaction.commit();
 
@@ -100,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(fragmentProfile);
                         break;
                     case 3:
-                        replaceFragment(fragmentSearch);
-                        break;
-                    case 4:
                         replaceFragment(fragmentCreate);
                         break;
                     default:
@@ -147,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentFeed);
         transaction.hide(fragmentMap);
         transaction.hide(fragmentProfile);
-        transaction.hide(fragmentSearch);
         transaction.hide(fragmentCreate);
         if (fragment != null) {
             transaction.show(fragment);
