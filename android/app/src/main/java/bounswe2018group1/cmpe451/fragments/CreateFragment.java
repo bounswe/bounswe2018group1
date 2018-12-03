@@ -16,10 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,14 +37,21 @@ import static android.app.Activity.RESULT_OK;
 public class CreateFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
+    private static final int PICK_VIDEO = 2;
+    private static final int PICK_AUDIO = 3;
     private static final int PICK_MAP_POINT = 999;
 
+    private LinearLayout itemList;
+    private ArrayList<LinearLayout> itemLayoutList;
+    private ArrayList<View> itemViewList;
+    private ArrayList<Button> itemButtonList;
     private LinearLayout locationList;
     private ArrayList<LinearLayout> locationLayoutList;
     private ArrayList<EditText> locationTextList;
     private ArrayList<Button> locationButtonList;
     private ArrayList<Button> locationMapList;
     private int locationTag = 0;
+    private int itemTag = 0;
     private Button addLocation;
     private EditText headline;
     private EditText startDateYYYY;
@@ -51,10 +62,17 @@ public class CreateFragment extends Fragment {
     private EditText endDateMM;
     private EditText endDateDD;
     private EditText endDateHH;
-    private EditText story;
-    private Button addImage;
     private Button share;
+    private Button addImage;
+    private Button addVideo;
+    private Button addAudio;
+    private Button addText;
     private ClientAPI clientAPI;
+
+    private Uri imageUri;
+    private Uri videoUri;
+    private Uri audioUri;
+    private ArrayList<String> items = new ArrayList<String>();
 
     public CreateFragment() {
         // Required empty public constructor
@@ -65,31 +83,125 @@ public class CreateFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         // Pick image from gallery
         if(PICK_IMAGE == requestCode && resultCode == RESULT_OK && data != null && data.getData() != null){
-            SpannableStringBuilder ssb = new SpannableStringBuilder();
-            ssb.append(story.getText());
-            ssb.append("\n");
-            String imgId = "[img]";
-            int selStart = story.getSelectionStart();
-            ssb.replace(story.getSelectionStart() +1 , story.getSelectionEnd()+1 , imgId);
-            //Bitmap image = BitmapFactory.decodeResource(getResources() , R.drawable.group_icon);
+            imageUri = data.getData();
+            items.add(imageUri.toString());
+            itemLayoutList.add(new LinearLayout(getContext()));
+            itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
+            itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
+            itemLayoutList.get(itemLayoutList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            // Image view for image
+            itemViewList.add(new ImageView(getContext()));
+            itemViewList.get(itemViewList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(4 * itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            ((ImageView)itemViewList.get(itemViewList.size()-1)).setImageURI(imageUri);
+            // Button for deletion
+            itemButtonList.add(new Button(getContext()));
+            itemButtonList.get(itemButtonList.size() - 1).setTag("L" + itemTag + "B");
+            itemButtonList.get(itemButtonList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            itemButtonList.get(itemButtonList.size() - 1).setText("X");
+            // Add them all
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemViewList.get(itemViewList.size() - 1));
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemButtonList.get(itemButtonList.size() - 1));
+            itemList.addView(itemLayoutList.get(itemLayoutList.size() - 1));
+            // Increment item counter
+            itemTag = itemTag + 1;
+            // Deletion function at button
+            itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Find and remove pressed button and item
+                    for (int i = 0; i < itemLayoutList.size(); i++) {
+                        if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
+                            itemList.removeView(itemList.findViewWithTag(itemLayoutList.get(i).getTag()));
+                            itemLayoutList.remove(i);
+                            itemViewList.remove(i);
+                            itemButtonList.remove(i);
+                            items.remove(i);
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+        else if(PICK_VIDEO == requestCode &&resultCode == RESULT_OK && data != null && data.getData() != null){
+            videoUri = data.getData();
+            items.add(videoUri.toString());
+            itemLayoutList.add(new LinearLayout(getContext()));
+            itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
+            itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
+            itemLayoutList.get(itemLayoutList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            // Video view for image
+            itemViewList.add(new VideoView(getContext()));
+            itemViewList.get(itemViewList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(4 * itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            ((VideoView)itemViewList.get(itemViewList.size()-1)).setVideoURI(videoUri);
+            // Button for deletion
+            itemButtonList.add(new Button(getContext()));
+            itemButtonList.get(itemButtonList.size() - 1).setTag("L" + itemTag + "B");
+            itemButtonList.get(itemButtonList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            itemButtonList.get(itemButtonList.size() - 1).setText("X");
+            // Add them all
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemViewList.get(itemViewList.size() - 1));
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemButtonList.get(itemButtonList.size() - 1));
+            itemList.addView(itemLayoutList.get(itemLayoutList.size() - 1));
+            // Increment item counter
+            itemTag = itemTag + 1;
+            // Deletion function at button
+            itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Find and remove pressed button and item
+                    for (int i = 0; i < itemLayoutList.size(); i++) {
+                        if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
+                            itemList.removeView(itemList.findViewWithTag(itemLayoutList.get(i).getTag()));
+                            itemLayoutList.remove(i);
+                            itemViewList.remove(i);
+                            itemButtonList.remove(i);
+                            items.remove(i);
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+        else if(PICK_AUDIO == requestCode &&resultCode == RESULT_OK && data != null && data.getData() != null) {
+            audioUri = data.getData();
+            items.add(audioUri.toString());
+            itemLayoutList.add(new LinearLayout(getContext()));
+            itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
+            itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
+            itemLayoutList.get(itemLayoutList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            // Text view for audio file's name
+            itemViewList.add(new TextView(getContext()));
+            itemViewList.get(itemViewList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(4 * itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            ((TextView)itemViewList.get(itemViewList.size()-1)).setText((new File(audioUri.toString())).getName());
+            // Button for deletion
+            itemButtonList.add(new Button(getContext()));
+            itemButtonList.get(itemButtonList.size() - 1).setTag("L" + itemTag + "B");
+            itemButtonList.get(itemButtonList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+            itemButtonList.get(itemButtonList.size() - 1).setText("X");
+            // Add them all
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemViewList.get(itemViewList.size() - 1));
+            itemLayoutList.get(itemLayoutList.size() - 1).addView(itemButtonList.get(itemButtonList.size() - 1));
+            itemList.addView(itemLayoutList.get(itemLayoutList.size() - 1));
+            // Increment item counter
+            itemTag = itemTag + 1;
+            // Deletion function at button
+            itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Find and remove pressed button and item
+                    for (int i = 0; i < itemLayoutList.size(); i++) {
+                        if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
+                            itemList.removeView(itemList.findViewWithTag(itemLayoutList.get(i).getTag()));
+                            itemLayoutList.remove(i);
+                            itemViewList.remove(i);
+                            itemButtonList.remove(i);
+                            items.remove(i);
+                            break;
+                        }
+                    }
+                }
+            });
 
-
-            Uri contentURI = data.getData();
-            Context applicationContext = MainActivity.getContextOfApplication();
-            Bitmap image = null;
-            try {
-                image = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), contentURI);
-            }
-            catch (IOException e){
-                return;
-            }
-            //Drawable image = ContextCompat.getDrawable(getActivity() , R.drawable.group_icon);
-            //image.setBounds(0,0 ,300, 300);
-
-
-            ssb.setSpan(new ImageSpan(getContext(), image) , selStart+1 , selStart+1+imgId.length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ssb.append("\n");
-            story.setText(ssb);
         }
         // Pick point from map
         else if (PICK_MAP_POINT == requestCode && resultCode == RESULT_OK) {
@@ -113,6 +225,7 @@ public class CreateFragment extends Fragment {
 
         // Server calls
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
+        rootView.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         // Connect fields
         headline = rootView.findViewById(R.id.headline);
@@ -126,10 +239,12 @@ public class CreateFragment extends Fragment {
         endDateHH = rootView.findViewById(R.id.endDateHH);
         addLocation = rootView.findViewById(R.id.addLocation);
         locationList = rootView.findViewById(R.id.locationList);
-        addImage = rootView.findViewById(R.id.addImage);
-        story = rootView.findViewById(R.id.story);
+        itemList = rootView.findViewById(R.id.itemList);
         share = rootView.findViewById(R.id.share);
-
+        addImage = rootView.findViewById(R.id.addImage);
+        addAudio = rootView.findViewById(R.id.addAudio);
+        addText = rootView.findViewById(R.id.addText);
+        addVideo = rootView.findViewById(R.id.addVideo);
         // List of location fields
         locationLayoutList = new ArrayList<LinearLayout>();
         locationTextList = new ArrayList<EditText>();
@@ -194,6 +309,51 @@ public class CreateFragment extends Fragment {
             }
         });
 
+        itemLayoutList = new ArrayList<LinearLayout>();
+        itemButtonList = new ArrayList<Button>();
+        itemViewList = new ArrayList<View>();
+        addText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                items.add("*");
+                itemLayoutList.add(new LinearLayout(getContext()));
+                itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
+                itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
+                itemLayoutList.get(itemLayoutList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                // EditText for story
+                itemViewList.add(new EditText(getContext()));
+                itemViewList.get(itemViewList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(4 * itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+                // Button for deletion
+                itemButtonList.add(new Button(getContext()));
+                itemButtonList.get(itemButtonList.size() - 1).setTag("L" + itemTag + "B");
+                itemButtonList.get(itemButtonList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(itemList.getWidth() / 6, ViewGroup.LayoutParams.MATCH_PARENT));
+                itemButtonList.get(itemButtonList.size() - 1).setText("X");
+                // Add them all
+                itemLayoutList.get(itemLayoutList.size() - 1).addView(itemViewList.get(itemViewList.size() - 1));
+                itemLayoutList.get(itemLayoutList.size() - 1).addView(itemButtonList.get(itemButtonList.size() - 1));
+                itemList.addView(itemLayoutList.get(itemLayoutList.size() - 1));
+                // Increment item counter
+                itemTag = itemTag + 1;
+                // Deletion function at button
+                itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Find and remove pressed button and item
+                        for (int i = 0; i < itemLayoutList.size(); i++) {
+                            if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
+                                itemList.removeView(itemList.findViewWithTag(itemLayoutList.get(i).getTag()));
+                                itemLayoutList.remove(i);
+                                itemViewList.remove(i);
+                                itemButtonList.remove(i);
+                                items.remove(i);
+                                break;
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,6 +361,24 @@ public class CreateFragment extends Fragment {
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+        addVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("video/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Video") , PICK_VIDEO);
+            }
+        });
+
+        addAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("audio/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Audio") , PICK_AUDIO);
+
             }
         });
 
@@ -263,11 +441,20 @@ public class CreateFragment extends Fragment {
                     e.printStackTrace();
                     endDateHHInt = 0;
                 }
-                String[] items = new String[1];
-                items[0] = story.getText().toString(); // TODO
+                
                 String[] locations = new String[locationTextList.size()];
                 for (int i = 0; i < locationTextList.size(); i ++) {
                     locations[i] = locationTextList.get(i).getText().toString();
+                }
+
+                for (int i = 0; i < items.size() ; i++){
+                    if( items.get(i).equals("*")){
+                        items.set(i, ((EditText)itemViewList.get(i)).getText().toString());
+                    }
+                    else{
+
+                         //TODO upload files
+                    }
                 }
                 clientAPI.createMemory(startDateYYYYInt, startDateMMInt, startDateDDInt, startDateHHInt,
                         endDateYYYYInt, endDateMMInt, endDateDDInt, endDateHHInt,

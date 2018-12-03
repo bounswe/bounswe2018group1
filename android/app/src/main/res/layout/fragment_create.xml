@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreateFragment">
+    tools:context=".fragments.SearchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -144,37 +144,67 @@
             android:layout_marginBottom="18dp"
             android:orientation="vertical"></LinearLayout>
 
-        <EditText
-            android:id="@+id/story"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:hint="Write Your Story Here"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/addImage"
+                android:text="Add Image"
+                android:textAllCaps="false"
+            />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/addVideo"
+                android:text="Add Video"
+                android:textAllCaps="false"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/addAudio"
+                android:text="Add Audio"
+                android:textAllCaps="false"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/addText"
+                android:text="Add Text"
+                android:textAllCaps="false"/>
 
-            android:inputType="textCapSentences|textMultiLine" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/addImage"
+        <LinearLayout
+            android:id="@+id/itemList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginTop="18dp"
             android:layout_marginBottom="18dp"
-            android:bufferType="spannable"
-            android:text="Add Image"
-            android:textAllCaps="false" />
+            android:orientation="vertical"></LinearLayout>
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/share"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
-            android:layout_marginBottom="18dp"
-            android:bufferType="spannable"
             android:text="Share"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"/>
+
+
+        <RelativeLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </RelativeLayout>
     </LinearLayout>
+
+
+
 </ScrollView>

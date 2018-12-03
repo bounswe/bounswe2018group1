@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import bounswe2018group1.cmpe451.LoginActivity;
@@ -378,7 +379,7 @@ public class ClientAPI {
 
     public void createMemory(int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
                              int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,
-                             String headline, String[] listOfItems, String[] listOfLocations, final Context context) {
+                             String headline, ArrayList<String> listOfItems, String[] listOfLocations, final Context context) {
         // Get current date and time
         DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         String createDate = createTime.format(Calendar.getInstance().getTime());
