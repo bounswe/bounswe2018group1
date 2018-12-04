@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private EditText editLastName = null;
     private EditText editNickname = null;
     private EditText editBio;
+    private DatePicker editBirth;
     private RadioGroup genderGroup;
     private RadioButton genderFemale;
     private RadioButton genderMale;
@@ -75,6 +77,7 @@ public class ProfileFragment extends Fragment {
         if (editLastName == null) editLastName = v.findViewById(R.id.editLastName);
         if (editNickname == null) editNickname = v.findViewById(R.id.editNickName);
         editBio = v.findViewById(R.id.editBio);
+        editBirth = v.findViewById(R.id.editBirth);
         genderGroup = v.findViewById(R.id.genderGroup);
         genderFemale = v.findViewById(R.id.genderFemale);
         genderMale = v.findViewById(R.id.genderMale);
@@ -131,11 +134,21 @@ public class ProfileFragment extends Fragment {
                 else {
                     gender = "NOT_TO_DISCLOSE";
                 }
+                String birth = "" + editBirth.getYear() + "-";
+                if (editBirth.getMonth() + 1 < 10) {
+                    birth = birth + "0";
+                }
+                birth = birth + (editBirth.getMonth() + 1) + "-";
+                if (editBirth.getDayOfMonth() < 10) {
+                    birth = birth + "0";
+                }
+                birth = birth + editBirth.getDayOfMonth();
                 clientAPI.updateProfile(
                         editFirstName.getText().toString().trim(),
                         editLastName.getText().toString().trim(),
                         editNickname.getText().toString().trim(),
                         editBio.getText().toString().trim(),
+                        birth,
                         gender,
                         editEmail.getText().toString().trim(),
                         editOldPassword.getText().toString().trim(),
@@ -162,28 +175,60 @@ public class ProfileFragment extends Fragment {
         if ($birth.equals("null")) {
             birth.setText("Birthday");
         }
+        else {
+            int year;
+            int month;
+            int day;
+            try {
+                year = Integer.parseInt($birth.substring(0, $birth.indexOf('-')));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.err.println("Year parsing has failed.");
+                year = 1900;
+            }
+            try {
+                month = Integer.parseInt($birth.substring($birth.indexOf('-') + 1, $birth.lastIndexOf('-'))) - 1;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.err.println("Month parsing has failed.");
+                month = 0;
+            }
+            try {
+                day = Integer.parseInt($birth.substring($birth.lastIndexOf('-') + 1));
+                System.out.println();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.err.println("Day parsing has failed.");
+                day = 1;
+            }
+            editBirth.updateDate(year, month, day);
+        }
         editFirstName.setText($first);
         editLastName.setText($last);
         editNickname.setText($nick);
         editBio.setText($bio);
-        if ($bio.isEmpty()) {
+        if ($bio.equals("")) {
+            bio.setText("Your Bio");
             editBio.setText("Your Bio");
         }
         editEmail.setText($email);
         // Set gender
         if ($gender.equals("FEMALE")) {
+            gender.setText("Female");
             genderFemale.setChecked(true);
         }
         else if ($gender.equals("MALE")) {
+            gender.setText("Male");
             genderMale.setChecked(true);
         }
         else if ($gender.equals("OTHER")) {
+            gender.setText("Other");
             genderOther.setChecked(true);
         }
         else {
+            gender.setText("Not to disclose");
             genderNo.setChecked(true);
         }
-        gender.setText($gender);
         // Set locations, ignore map points
         String locationList = "";
         for (int i = 0; i < $locations.length(); i ++) {

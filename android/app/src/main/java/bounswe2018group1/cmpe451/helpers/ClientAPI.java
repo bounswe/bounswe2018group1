@@ -324,13 +324,14 @@ public class ClientAPI {
 
     }
 
-    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $gender, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
+    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $birth, String $gender, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
             postParams.put("lastName", $lastName);
             postParams.put("nickname", $nickname);
             postParams.put("bio", $bio);
+            postParams.put("birthday", $birth);
             postParams.put("gender", $gender);
             postParams.put("email", $email);
             if (!$oldPassword.isEmpty() && !$newPassword.isEmpty() && !$oldPassword.equals($newPassword)) {
