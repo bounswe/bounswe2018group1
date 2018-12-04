@@ -1,19 +1,18 @@
-import React from 'react';
+import React from "react";
 import classNames from "classnames";
+import PropTypes from "prop-types";
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
+import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import FormControl from "@material-ui/core/FormControl";
 // @material-ui/icons
 import Clear from "@material-ui/icons/Clear";
 import Check from "@material-ui/icons/Check";
-
+// core components
 import customInputStyle from "assets/jss/material-dashboard-react/components/customInputStyle.jsx";
 
-function DateInput(props) {
+function TagInput({ ...props }) {
   const {
     classes,
     formControlProps,
@@ -29,7 +28,6 @@ function DateInput(props) {
     [" " + classes.labelRootError]: error,
     [" " + classes.labelRootSuccess]: success && !error
   });
-
   const underlineClasses = classNames({
     [classes.underlineError]: error,
     [classes.underlineSuccess]: success && !error,
@@ -38,14 +36,6 @@ function DateInput(props) {
   const marginTop = classNames({
     [classes.marginTop]: labelText === undefined
   });
-
-  const textFieldClasses = classNames({
-    root: marginTop,
-    disabled: classes.disabled,
-    underline: underlineClasses,
-    [classes.textField]: true
-  });
-
   return (
     <FormControl
       {...formControlProps}
@@ -66,12 +56,8 @@ function DateInput(props) {
           disabled: classes.disabled,
           underline: underlineClasses
         }}
-        id="date"
+        id={id}
         {...inputProps}
-        label={ labelText }
-        type="date"
-        defaultValue="2018-10-30"
-        className={textFieldClasses}
       />
       {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />
@@ -82,7 +68,7 @@ function DateInput(props) {
   );
 }
 
-DateInput.propTypes = {
+TagInput.propTypes = {
   classes: PropTypes.object.isRequired,
   labelText: PropTypes.node,
   labelProps: PropTypes.object,
@@ -93,4 +79,4 @@ DateInput.propTypes = {
   success: PropTypes.bool
 };
 
-export default withStyles(customInputStyle)(DateInput);
+export default withStyles(customInputStyle)(TagInput);

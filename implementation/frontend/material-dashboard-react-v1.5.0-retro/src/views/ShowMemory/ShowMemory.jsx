@@ -12,7 +12,6 @@ import Danger from "components/Typography/Danger.jsx";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 

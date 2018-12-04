@@ -1,32 +1,46 @@
 import axios from "axios";
-
+import Cookies from "js-cookie";
 import constants from "../constants";
+
+const token = Cookies.get("JSESSIONID");
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["JSESSIONID"] = token;
 
 class MemoryRepository {
 
-    static createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
+    static async createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
           //Time format: "2018-11-10T21:17:30.548Z"
           //Processing is done here.
         var currentdate = new Date();
-        var dateTime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1)  + "-" + currentdate.getDate() + "T"
-          + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 
-        return axios.post(`${constants.API}/memory`, {
-          listOfItems: JSON.stringify(listOfItems),
-          listOfLocations: JSON.stringify(listOfLocations),
-          listOfTags: JSON.stringify(listOfTags),
-          headline: headline,
-          dateOfCreation: dateTime,
-          endDateDD: endDateDD,
-          endDateHH: endDateHH,
-          endDateMM: endDateMM,
-          endDateYYYY: endDateYYYY,
-          startDateDD: startDateDD,
-          startDateHH: startDateHH,
-          startDateMM: startDateMM,
-          startDateYYYY: startDateYYYY,
-          updatedTime: dateTime
-        });
+        const response = await axios(
+          {
+            method: 'POST',
+            url: `${constants.API}/memory`,
+            withCredentials: true,
+            crossdomain : true,
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            data: {
+              listOfItems: listOfItems,
+              listOfLocations: listOfLocations,
+              listOfTags: listOfTags,
+              headline: headline,
+              dateOfCreation: currentdate,
+              endDateDD: endDateDD,
+              endDateHH: endDateHH,
+              endDateMM: endDateMM,
+              endDateYYYY: endDateYYYY,
+              startDateDD: startDateDD,
+              startDateHH: startDateHH,
+              startDateMM: startDateMM,
+              startDateYYYY: startDateYYYY,
+              updatedTime: currentdate
+            }
+          }
+        )
     }
 
     static updateMemory(id, listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
@@ -43,7 +57,7 @@ class MemoryRepository {
       memoryData.listOfItems = startDateHH;
       memoryData.listOfItems = startDateMM;
       memoryData.listOfItems = startDateYYYY;
-      
+
       return axios.put(`${constants.API}/memory`, {
         id: id,
         updateMemoryRequestBody: memoryData
@@ -54,6 +68,7 @@ class MemoryRepository {
         //TODO add once implemented on backend.
     }
 
+    // TODO: bunu ayır. Log in olmayan user da görsün
     static getMemory(id) {
       return axios.get(`${constants.API}/memory`, {
         id: id
@@ -66,6 +81,7 @@ class MemoryRepository {
       });
     }
 
+    // TODO: bunu ayır. Log in olmayan user da görsün
     static getAllMemories() {
       return axios.get(`${constants.API}/memory/all`);
     }

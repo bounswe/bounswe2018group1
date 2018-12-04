@@ -21,7 +21,7 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -71,7 +71,7 @@ const Sidebar = ({ ...props }) => {
     <div className={classes.logo}>
       <a href="../../route/dashboard.jsx" className={classes.logoLink}>
         <div className={classes.logoImage}>
-          <i class="fas fa-camera-retro"></i>
+          <i className="fas fa-camera-retro"></i>
         </div>
         {logoText}
       </a>

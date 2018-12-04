@@ -1,51 +1,61 @@
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputLabel from "@material-ui/core/InputLabel";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import DateInput from "components/DateInput/DateInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import UserProfileEditForm from "views/UserProfileEditForm/UserProfileEditForm.jsx";
+import UserProfileAccountSettings from "views/UserProfileAccountSettings/UserProfileAccountSettings.jsx";
+
+import LoginRepository from '../../api_calls/login.js';
+import UserRepository from '../../api_calls/user.js';
 
 import avatar from "assets/img/faces/girl.jpg";
 
+import Cookies from "js-cookie";
+
 const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
 };
 
 class UserProfile extends React.Component {
   constructor(props) {
       super(props);
-      this.state = {value: ''};
+      this.state = {
+        value: '',
+        country: '',
+        region: '',
+        user: {
+          id: 0,
+          firstName: '',
+          lastName: '',
+          nickname: '',
+          email: '',
+          birthday: null,
+          listOfLocations: [],
+          gender: '',
+          bio: ''
+        }
+     };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSubmitLogOut = this.handleSubmitLogOut.bind(this);
     }
 
     handleChange(event) {
-      this.setState({value: event.target.value});
+      this.setState({
+        value: event.target.value
+      });
     }
 
     handleSubmit(event) {
@@ -53,119 +63,46 @@ class UserProfile extends React.Component {
       event.preventDefault();
     }
 
+    handleSubmitLogOut = event => {
+      event.preventDefault();
+      LoginRepository.logout()
+        .then(res => {
+          console.log(res);
+          // window.location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+    handleChangeField = (key, value) => {
+      this.setState({
+        user: {
+          ...this.state.user,
+          [key]: value
+        }
+      });
+    }
+
+    handleUpdatePressed = () => {
+      UserRepository.updateProfile(this.state.user).then(_ => {}).catch(err => {
+        console.error(err);
+      });
+    }
+
+    componentDidMount() {
+      UserRepository.user().then(user => {
+        this.setState({user: user});
+      });
+    }
+
     render() {
-      const { classes } = this.props;
+      const { classes, country, region } = this.props;
+
       return (
         <div>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={8}>
-              <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-                  <p className={classes.cardCategoryWhite}>Complete your profile</p>
-                </CardHeader>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="Username"
-                        id="username"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="Email address"
-                        id="email-address"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="First Name"
-                        id="first-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="Last Name"
-                        id="last-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="City"
-                        id="city"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Country"
-                        id="country"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Gender"
-                        id="gender"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <DateInput
-                        id="birthday"
-                        labelText="Birthday"
-                        className={classes.textField}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={9}>
-                      <CustomInput
-                        labelText="Personel info"
-                        id="about-me"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          multiline: true,
-                          rows: 5
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <CardFooter>
-                  <Button color="primary">Update Profile</Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={12}>
               <Card profile>
                 <CardAvatar profile>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -173,11 +110,60 @@ class UserProfile extends React.Component {
                   </a>
                 </CardAvatar>
                 <CardBody profile>
-                  <h6 className={classes.cardCategory}>Student / Bogazici University</h6>
-                  <h4 className={classes.cardTitle}>Ece Ecevit</h4>
-                  <p className={classes.description}>
-                     I am 21 years old. I enjoy living in Istanbul because I find it to be such an amazing city.
+                  <h6> { this.state.user.firstName + " " + this.state.user.lastName } | { this.state.user.nickname } </h6>
+                  <p>
+                    { this.state.user.bio }
                   </p>
+                  <h5>
+                    { this.state.user.birthday }
+                    {this.state.user.birthday !== null && this.state.user.gender !== 'NOT_TO_DISCLOSE' &&
+                      <span>|</span>
+                    }
+                    { this.state.user.gender === 'NOT_TO_DISCLOSE' ? '' : this.state.user.gender }
+                  </h5>
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>Edit Profile</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <UserProfileEditForm onChangeField={this.handleChangeField}
+                    user={ this.state.user } country="asdf" region="asdf"
+                    onUpdatePressed={ this.handleUpdatePressed }/>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>Account Settings</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <UserProfileAccountSettings user={ this.state.user } country="asdf" region="asdf" />
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>Log Out</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Button color="primary" onClick={this.handleSubmitLogOut}>Log out</Button>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </GridItem>
+          </GridContainer>
+
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card profile>
+                <CardBody profile>
+                  <h6> memory </h6>
                 </CardBody>
               </Card>
             </GridItem>

@@ -1,4 +1,6 @@
 import Cookies from "js-cookie";
+import React from "react";
+import PropTypes from "prop-types";
 // @material-ui/icons
 import Home from "@material-ui/icons/Home";
 import Person from "@material-ui/icons/Person";
@@ -23,7 +25,8 @@ import AddNewMemory from "views/AddNewMemory/AddNewMemory.jsx";
 import ShowMemory from "views/ShowMemory/ShowMemory.jsx";
 import Login from "views/Login/Login.jsx";
 
-const userToken = Cookies.get("retroToken");
+const userToken = Cookies.get("JSESSIONID");
+console.log(userToken);
 
 const dashboardRoutes = [
   {
@@ -33,13 +36,13 @@ const dashboardRoutes = [
     icon: Home,
     component: ShowMemory
   },
-   {
-     path: "/user",
-     sidebarName: "User Profile",
-     navbarName: "Profile",
-     icon: Person,
-     component: UserProfile
-   },
+  {
+   path: "/user",
+   sidebarName: "User Profile",
+   navbarName: "Profile",
+   icon: Person,
+   component: UserProfile
+  },
   // {
   //   path: "/table",
   //   sidebarName: "Table List",
@@ -61,13 +64,13 @@ const dashboardRoutes = [
   //   icon: BubbleChart,
   //   component: Icons
   // },
-  // {
-  //   path: "/maps",
-  //   sidebarName: "Maps",
-  //   navbarName: "Map",
-  //   icon: LocationOn,
-  //   component: Maps
-  // },
+  {
+    path: "/maps",
+    sidebarName: "Maps",
+    navbarName: "Map",
+    icon: LocationOn,
+    component: Maps
+  },
   // {
   //   path: "/notifications",
   //   sidebarName: "Notifications",

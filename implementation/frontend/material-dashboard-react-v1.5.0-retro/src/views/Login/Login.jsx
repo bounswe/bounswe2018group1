@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "../../assets/css/material-dashboard-react.css";
+import axios from "axios";
+import Cookies from "js-cookie";
 
+import { HelpBlock } from 'react-bootstrap';
 // core components/views
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -13,7 +16,6 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import LoginRepository from '../../api_calls/login.js';
 import FormValidator from 'components/FormValidator/FormValidator.js';
-import { HelpBlock } from 'react-bootstrap';
 
 export default class Login extends Component {
   constructor(props) {
@@ -22,7 +24,7 @@ export default class Login extends Component {
     this.loginSubmitted = false;
     this.registerSubmitted = false;
 
-    //this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.loginValidator = new FormValidator([
       {
@@ -62,7 +64,7 @@ export default class Login extends Component {
         field: 'registerEmail',
         method: 'isEmail',
         validWhen: true,
-        message: 'Please provide a valid email.'
+        message: 'Please provide a valid loginEmail.'
       },
       {
         field: 'registerPassword',
@@ -97,7 +99,7 @@ export default class Login extends Component {
     ]);
 
     this.state = {
-      loginNickname: "",
+      nickname: "",
       loginEmail: "",
       loginPassword: "",
       registerNickname: "",
@@ -132,15 +134,13 @@ validatePasswordFormat() {
   passwordLength = (password, state) => (state.registerPassword.length) >= 7
   passwordMatch = (confirmation, state) => (state.registerPassword === confirmation)
 
-
 // Functions are below.
-
 
   handleChange = event => {
     event.preventDefault();
 
     this.setState({
-      [event.target.id]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -188,6 +188,7 @@ validatePasswordFormat() {
       LoginRepository.register(this.state.registerNickname, this.state.registerFirstName, this.state.registerLastName, this.state.registerEmail, this.state.registerPassword)
         .then(res => {
           console.log(res);
+          window.location.reload();
         })
         .catch(err => {
           console.log(err);
@@ -220,6 +221,7 @@ validatePasswordFormat() {
                       id="loginNickname"
                       value={this.state.loginNickname}
                       inputProps={{
+                        name:"loginNickname",
                         type:"text",
                         onChange: this.handleChange
                       }}
@@ -237,12 +239,12 @@ validatePasswordFormat() {
                       id="loginEmail"
                       value={this.state.loginEmail}
                       inputProps={{
+                        name:"loginEmail",
                         type:"email",
                         onChange: this.handleChange
                       }}
                       formControlProps={{
-                        fullWidth: true,
-                        required: true
+                        fullWidth: true
                       }}
                     />
                   </GridItem>
@@ -255,6 +257,7 @@ validatePasswordFormat() {
                       id="loginPassword"
                       value={this.state.loginPassword}
                       inputProps={{
+                        name:"loginPassword",
                         type:"password",
                         onChange: this.handleChange
                       }}
@@ -289,6 +292,7 @@ validatePasswordFormat() {
                       id="registerNickname"
                       value={this.state.registerNickname}
                       inputProps={{
+                        name:"registerNickname",
                         type:"text",
                         onChange: this.handleChange
                       }}
@@ -308,6 +312,7 @@ validatePasswordFormat() {
                       id="registerFirstName"
                       value={this.state.registerFirstName}
                       inputProps={{
+                        name:"registerFirstName",
                         type:"text",
                         onChange: this.handleChange
                       }}
@@ -327,6 +332,7 @@ validatePasswordFormat() {
                       id="registerLastName"
                       value={this.state.registerLastName}
                       inputProps={{
+                        name:"registerLastName",
                         type:"text",
                         onChange: this.handleChange
                       }}
@@ -346,6 +352,7 @@ validatePasswordFormat() {
                       id="registerEmail"
                       value={this.state.registerEmail}
                       inputProps={{
+                        name:"registerEmail",
                         type:"email",
                         onChange: this.handleChange
                       }}
@@ -365,6 +372,7 @@ validatePasswordFormat() {
                       id="registerPassword"
                       value={this.state.registerPassword}
                       inputProps={{
+                        name:"registerPassword",
                         type:"password",
                         onChange: this.handleChange
                       }}
@@ -384,6 +392,7 @@ validatePasswordFormat() {
                       id="registerPasswordConfirmation"
                       value={this.state.registerPasswordConfirmation}
                       inputProps={{
+                        name:"registerPasswordConfirmation",
                         type:"password",
                         onChange: this.handleChange
                       }}
