@@ -107,8 +107,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:text="First Name" />
 
                 <EditText
@@ -122,30 +121,26 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:text="Surname" />
 
                 <EditText
                     android:id="@+id/editLastName"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:text="Nickname" />
 
                 <EditText
                     android:id="@+id/editNickName"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:textSize="18sp" />
@@ -217,15 +212,26 @@
 
                 <TextView
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Locations" />
+
+                <EditText
+                    android:id="@+id/editLocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:textAllCaps="false" />
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
                     android:text="Email" />
 
                 <EditText
                     android:id="@+id/editEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textEmailAddress"
                     android:textSize="18sp" />
@@ -233,22 +239,19 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
                     android:text="Old Password" />
 
                 <EditText
                     android:id="@+id/editOldPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPassword"
                     android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_height="wrap_content"
                     android:text="New Password" />
 
                 <EditText

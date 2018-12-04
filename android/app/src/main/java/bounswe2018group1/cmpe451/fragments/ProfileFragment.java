@@ -42,6 +42,7 @@ public class ProfileFragment extends Fragment {
     private RadioButton genderMale;
     private RadioButton genderOther;
     private RadioButton genderNo;
+    private EditText editLocations;
     private EditText editEmail = null;
     private EditText editOldPassword = null;
     private EditText editNewPassword = null;
@@ -83,6 +84,7 @@ public class ProfileFragment extends Fragment {
         genderMale = v.findViewById(R.id.genderMale);
         genderOther = v.findViewById(R.id.genderOther);
         genderNo = v.findViewById(R.id.genderNo);
+        editLocations = v.findViewById(R.id.editLocations);
         if (editEmail == null) editEmail = v.findViewById(R.id.editEmail);
         if (editNewPassword == null) editNewPassword = v.findViewById(R.id.editNewPassword);
         if (editOldPassword == null) editOldPassword = v.findViewById(R.id.editOldPassword);
@@ -150,6 +152,7 @@ public class ProfileFragment extends Fragment {
                         editBio.getText().toString().trim(),
                         birth,
                         gender,
+                        editLocations.getText().toString().trim(),
                         editEmail.getText().toString().trim(),
                         editOldPassword.getText().toString().trim(),
                         editNewPassword.getText().toString().trim(),
@@ -195,7 +198,6 @@ public class ProfileFragment extends Fragment {
             }
             try {
                 day = Integer.parseInt($birth.substring($birth.lastIndexOf('-') + 1));
-                System.out.println();
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 System.err.println("Day parsing has failed.");
@@ -243,10 +245,14 @@ public class ProfileFragment extends Fragment {
                 locationList = locationList + location + "\n";
             }
         }
-        if (locationList.length() > 2 && locationList.charAt(locationList.length() - 1) == 'n' && locationList.charAt(locationList.length() - 2) == '\\') {
-            locationList = locationList.substring(0, locationList.charAt(locationList.length() - 3));
+        if (locationList.length() > 1 && locationList.charAt(locationList.length() - 1) == '\n') {
+            locationList = locationList.substring(0, (locationList.length() - 1));
         }
         locations.setText(locationList);
+        if (locationList.equals("")) {
+            locations.setText("Locations");
+        }
+        editLocations.setText(locationList);
     }
 
 }

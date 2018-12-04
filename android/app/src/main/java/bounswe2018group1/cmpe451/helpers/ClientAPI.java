@@ -324,13 +324,18 @@ public class ClientAPI {
 
     }
 
-    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $birth, String $gender, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
+    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $birth, String $gender, String $locations, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
             postParams.put("lastName", $lastName);
             postParams.put("nickname", $nickname);
             postParams.put("bio", $bio);
+            JSONArray locationArray = new JSONArray();
+            JSONObject location = new JSONObject();
+            location.put("locationName", $locations);
+            locationArray.put(location);
+            postParams.put("listOfLocations", locationArray);
             postParams.put("birthday", $birth);
             postParams.put("gender", $gender);
             postParams.put("email", $email);
