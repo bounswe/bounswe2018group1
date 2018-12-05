@@ -66,18 +66,18 @@ public class Memory {
     private Date updatedTime;
 
     @NotNull
-    @OneToMany(targetEntity=Location.class)
+    @OneToMany(targetEntity = Location.class)
     private List<Location> listOfLocations;
 
-    @OneToMany(targetEntity=Tag.class)
+    @OneToMany(targetEntity = Tag.class)
     private List<Tag> listOfTags;
 
     @NotNull
-    @OneToMany(targetEntity=Item.class)
+    @OneToMany(targetEntity = Item.class)
     private List<Item> listOfItems;
 
 
-    public Memory(){
+    public Memory() {
 
     }
 

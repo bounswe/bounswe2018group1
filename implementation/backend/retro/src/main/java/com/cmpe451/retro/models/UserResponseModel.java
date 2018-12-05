@@ -112,7 +112,7 @@ public class UserResponseModel {
     }
 
     public void setBirthday(Date birthday) {
-        if(birthday != null)
+        if (birthday != null)
             this.birthday = new SimpleDateFormat("yyyy-MM-dd").format(birthday);
     }
 

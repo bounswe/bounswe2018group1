@@ -8,9 +8,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface MemoryRepository extends CrudRepository<Memory,Long>, PagingAndSortingRepository<Memory, Long> {
+public interface MemoryRepository extends CrudRepository<Memory, Long>, PagingAndSortingRepository<Memory, Long> {
 
     Optional<Memory> findById(Long id);
+
     Page<Memory> findAll(Pageable pageable);
 
     Page<Memory> findByUserId(Long userId, Pageable pageable);

@@ -38,10 +38,10 @@ public class UserServiceImp implements UserService {
     @Override
     public UserResponseModel getCurrentUser() {
 
-        long userID = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        long userID = (long) httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
         Optional<User> user = userRepository.findById(userID);
 
-        if(user.isPresent())
+        if (user.isPresent())
             return new UserResponseModel(user.get());
 
         throw new RetroException("You have tried to access an authorised page. Please login and try again.", HttpStatus.UNAUTHORIZED);
@@ -51,10 +51,10 @@ public class UserServiceImp implements UserService {
     public UserResponseModel getUserById(long id) {
         Optional<User> user = userRepository.findById(id);
 
-        if(user.isPresent())
+        if (user.isPresent())
             return new UserResponseModel(user.get());
 
-        throw new RetroException("User not found.",HttpStatus.NOT_FOUND);
+        throw new RetroException("User not found.", HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void updateUserInfo(long userId, UpdateUserInfoRequestBody updateUserInfoBody) { //TODO:check
         Optional<User> userOptional = userRepository.findById(userId);
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
 
             //update first name
@@ -82,7 +82,7 @@ public class UserServiceImp implements UserService {
             }
 
             //update nickname
-            if(updateUserInfoBody.getNickname() != null && !updateUserInfoBody.getNickname().equals("")){
+            if (updateUserInfoBody.getNickname() != null && !updateUserInfoBody.getNickname().equals("")) {
                 user.setNickname(updateUserInfoBody.getNickname());
             }
 
@@ -97,27 +97,27 @@ public class UserServiceImp implements UserService {
             }
 
             //update birthday
-            if(updateUserInfoBody.getBirthday() != null){
+            if (updateUserInfoBody.getBirthday() != null) {
                 user.setBirthday(updateUserInfoBody.getBirthday());
             }
 
             //update profile picture
-            if(updateUserInfoBody.getProfilePictureUrl() != null){
+            if (updateUserInfoBody.getProfilePictureUrl() != null) {
                 user.setProfilePictureUrl(updateUserInfoBody.getProfilePictureUrl());
             }
 
             //update set of locations
-            if( updateUserInfoBody.getListOfLocations() != null && !updateUserInfoBody.getListOfLocations().isEmpty()){
+            if (updateUserInfoBody.getListOfLocations() != null && !updateUserInfoBody.getListOfLocations().isEmpty()) {
                 user.setListOfLocations(updateUserInfoBody.getListOfLocations());
             }
 
             //update gender
-            if(updateUserInfoBody.getGender() != null){
+            if (updateUserInfoBody.getGender() != null) {
                 user.setGender(updateUserInfoBody.getGender());
             }
 
             //update bio
-            if(updateUserInfoBody.getBio() != null && !updateUserInfoBody.getBio().equals("")){
+            if (updateUserInfoBody.getBio() != null && !updateUserInfoBody.getBio().equals("")) {
                 user.setBio(updateUserInfoBody.getBio());
             }
 
@@ -126,7 +126,7 @@ public class UserServiceImp implements UserService {
             user.getListOfLocations().forEach(entityManager::persist);
             entityManager.flush();
 
-        }else{
+        } else {
             throw new RetroException("Could not find the user", HttpStatus.EXPECTATION_FAILED);
         }
 

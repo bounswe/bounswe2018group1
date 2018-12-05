@@ -2,6 +2,7 @@ package com.cmpe451.retro.data.entities;
 
 import com.cmpe451.retro.models.ItemDto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(length = 1024)
     private String body;
 
     private String url;

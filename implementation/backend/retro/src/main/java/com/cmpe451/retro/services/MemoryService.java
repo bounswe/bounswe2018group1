@@ -16,8 +16,9 @@ public interface MemoryService {
 
     Page<GetMemoryResponseBody> getAllMemories(Pageable pageable);
 
-    Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId,Pageable pageable);
+    Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId, Pageable pageable);
 
-    void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody,Long userId);
+    void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody, Long userId);
 
+    void deleteMemory(Long id);
 }

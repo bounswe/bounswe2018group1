@@ -7,8 +7,6 @@ public class CreateMemoryRequestBody {
 
     private String headline;
 
-    private Date dateOfCreation;
-
     private List<LocationDto> listOfLocations;
 
     private int startDateHH;
@@ -39,14 +37,6 @@ public class CreateMemoryRequestBody {
 
     public void setHeadline(String headline) {
         this.headline = headline;
-    }
-
-    public Date getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
     }
 
     public int getStartDateHH() {

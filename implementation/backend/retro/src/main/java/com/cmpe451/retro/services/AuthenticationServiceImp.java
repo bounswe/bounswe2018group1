@@ -51,7 +51,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
             throw new RetroException("You can not leave both email and nickname empty.", HttpStatus.BAD_REQUEST);
         }
 
-        if (user == null || !passwordEncoder.matches(loginRequestBody.getPassword(),user.getPassword())) {
+        if (user == null || !passwordEncoder.matches(loginRequestBody.getPassword(), user.getPassword())) {
             throw new RetroException("Incorrect login information.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -76,14 +76,14 @@ public class AuthenticationServiceImp implements AuthenticationService {
     public User createUser(RegisterRequestBody registerRequestBody) {
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(registerRequestBody.getEmail()));
         Optional<User> userOptionalNickname = Optional.ofNullable(userRepository.findByNickname(registerRequestBody.getNickname()));
-        if(userOptionalEmail.isPresent()){
+        if (userOptionalEmail.isPresent()) {
             throw new RetroException("Account with this email exists", HttpStatus.CONFLICT);
-        }else if(userOptionalNickname.isPresent()){
+        } else if (userOptionalNickname.isPresent()) {
             throw new RetroException("Account with this nickname exists", HttpStatus.CONFLICT);
         }
 
-        if(!stringUtil.isValidPassword(registerRequestBody.getPassword()))
-            throw new RetroException("Password is not valid.",HttpStatus.BAD_REQUEST);
+        if (!stringUtil.isValidPassword(registerRequestBody.getPassword()))
+            throw new RetroException("Password is not valid.", HttpStatus.BAD_REQUEST);
 
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequestBody.getPassword()));
@@ -105,11 +105,11 @@ public class AuthenticationServiceImp implements AuthenticationService {
         return user;
     }
 
-    public long activate(String email, String randomCode){
+    public long activate(String email, String randomCode) {
         Optional<User> userOptionalEmail = Optional.ofNullable(userRepository.findByEmail(email));
-        if(userOptionalEmail.isPresent()){
+        if (userOptionalEmail.isPresent()) {
             User user = userOptionalEmail.get();
-            if(user.getRandomCode().equals(randomCode)){
+            if (user.getRandomCode().equals(randomCode)) {
                 user.setActivated(true);
             }
             userRepository.save(user); //update the user
@@ -117,7 +117,7 @@ public class AuthenticationServiceImp implements AuthenticationService {
             return user.getId();
         }
 
-        throw new RetroException("Could not find the user with email: "+email, HttpStatus.EXPECTATION_FAILED);
+        throw new RetroException("Could not find the user with email: " + email, HttpStatus.EXPECTATION_FAILED);
     }
 
 }

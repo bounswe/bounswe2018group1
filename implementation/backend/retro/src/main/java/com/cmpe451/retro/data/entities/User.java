@@ -51,7 +51,7 @@ public class User {
     @Email
     private String email;
 
-    @Column(length=60)
+    @Column(length = 60)
     @NotNull
     private String password;
 
@@ -163,9 +163,13 @@ public class User {
         this.memoryList = memoryList;
     }
 
-    public void setActivated(boolean activated){ this.activated = activated; }
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
-    public boolean getActivated(){ return activated; }
+    public boolean getActivated() {
+        return activated;
+    }
 
     public List<Location> getListOfLocations() {
         return listOfLocations;
