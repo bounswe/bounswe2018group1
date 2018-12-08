@@ -7,6 +7,8 @@ public class URLs {
     public static final String URL_LOGOUT = "http://52.7.87.173:8080/logout";
     public static final String URL_REGISTER = "http://52.7.87.173:8080/register";
 
+    public static final String URL_MEDIA = "http://52.7.87.173:8080/media";
+
     public static final String URL_MEMORY = "http://52.7.87.173:8080/memory";
     public static final String URL_MEMORY_ALL = "http://52.7.87.173:8080/memory/all";
     public static final String URL_MEMORY_USER = "http://52.7.87.173:8080/memory/user";
