@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -10,11 +9,14 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
 import CountrySelect from "components/CountrySelect/CountrySelect.jsx";
 import Icon from '@material-ui/core/Icon';
 import { WithContext as ReactTags } from 'react-tag-input';
+import { ProgressBar } from 'react-bootstrap';
 
 import MemoryRepository from '../../api_calls/memory.js';
+import MediaRepository from '../../api_calls/media.js';
 
 const styles = {
   cardCategoryWhite: {
@@ -95,8 +97,9 @@ export default class AddNewMemory extends Component {
       startDateYYYY: 0,
       listOfItems: [],
       listOfLocations: [],
-      listOfTags: [],
-      tags: []
+      tags: [],
+      selectedFile: null,
+      progress: 0
     };
     this.handleAddNewLocation = this.handleAddNewLocation.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -106,7 +109,7 @@ export default class AddNewMemory extends Component {
 
   handleAddNewMemory = event => {
     event.preventDefault();
-    console.log(this.state);
+    console.log(this.state); //Remove after development is complete.
     var listOfTags = this.state.tags.map((prop, key) => { return {text: prop.text}});
     //MemoryRepository.createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY)
     MemoryRepository.createMemory(this.state.listOfItems, this.state.listOfLocations, listOfTags, this.state.headline, this.state.endDateDD, this.state.endDateHH, this.state.endDateMM,
@@ -133,6 +136,34 @@ export default class AddNewMemory extends Component {
         }
       ]
     });
+  }
+
+  handleAddNewMedia() {
+    this.setState({
+      listOfItems: [
+        ...this.state.listOfItems,
+        {
+          "body": "",
+          "id": 0,
+          "url": ""
+        }
+      ]
+    });
+  }
+
+  handleFileSelect = event => {this.setState({selectedFile: event.target.files[0]}) }
+
+  handleFileUpload = () => {
+    if(this.state.selectedFile != null) {
+      const fd = new FormData();
+      fd.append('media', this.state.selectedFile, this.state.selectedFile.name)
+      MediaRepository.upload(fd, {
+        onUploadProgress: progressEvent => {
+          this.setState({ progress: Math.round((progressEvent.loaded / progressEvent.total)*100) })
+        }
+      })
+        .then(res => {});
+    }
   }
 
   handleDelete(i) {
@@ -177,7 +208,6 @@ export default class AddNewMemory extends Component {
             </p>
           </CardHeader>
           <CardBody>
-
             <GridContainer>
               <GridItem xs={10} sm={10} md={8}>
                 <CustomInput
@@ -199,22 +229,52 @@ export default class AddNewMemory extends Component {
 
             <GridContainer>
               <GridItem xs={10} sm={10} md={8}>
-                {/*<CustomInput
+                <CustomInput
                   labelText="Add the details of your memory"
-                  id="items"
-                  value={this.state.listOfItems}
+                  id="details"
                   inputProps={{
-                    name:"listOfItems",
-                    type:"text",
-                    onChange: event => this.setState({ listOfItems: event.target.value }),
+                    name:"details",
+                    type:"text"
                   }}
                   formControlProps={{
                     fullWidth: true,
-                    required: false
+                    required: true
                   }}
-                />*/}
+                />
               </GridItem>
+
+              <GridItem xs={10} sm={10} md={8}>
+                <CustomInput
+                  id="media"
+                  inputProps={{
+                    name:"media",
+                    type:"file",
+                    onChange: this.handleFileSelect
+                  }}
+                  formControlProps={{
+                    fullWidth: true,
+                    required: false,
+                  }}
+                  />
+              <Button onClick={this.handleFileUpload}> Upload </Button>
+              <ProgressBar now={this.progress} />
+              </GridItem>
+
+              {/*<GridItem xs={10} sm={10} md={10}>
+              Add more...
+                <Button
+                  onClick={this.handleAddNewMedia}
+                  justIcon
+                  color="transparent"
+                >
+                  <Icon style={{ fontSize: 30 }}>
+                    add_circle
+                  </Icon>
+                </Button>
+              </GridItem>*/}
             </GridContainer>
+
+
 
             <GridContainer>
               <GridItem xs={10} sm={10} md={4}>
@@ -225,7 +285,7 @@ export default class AddNewMemory extends Component {
                     required: false
                   }}
                 />
-              { this.state.listOfLocations.map( (location, i) => (
+              {this.state.listOfLocations.map( (location, i) => (
                   <CountrySelect
                     key={i}
                     id="country"
@@ -259,21 +319,6 @@ export default class AddNewMemory extends Component {
                     handleDrag={this.handleDrag}
                     delimiters={[Keys.TAB, Keys.SPACE, Keys.COMMA]}
                 />
-
-              {/*<CustomInput
-                  labelText="Enter your tags"
-                  id="tags"
-                  value={this.state.listOfTags}
-                  inputProps={{
-                    name:"listOfTags",
-                    type:"text",
-                    onChange: event => this.setState({ listOfTags: event.target.value }),
-                  }}
-                  formControlProps={{
-                    fullWidth: true,
-                    required: false
-                  }}
-                />*/}
               </GridItem>
             </GridContainer>
 
@@ -410,18 +455,10 @@ export default class AddNewMemory extends Component {
                 />
               </GridItem>
             </GridContainer>
-
-            <tr>
-              <td className="center">
-              <Button
-                onClick={this.handleAddNewMemory}
-                round
-                color="info"
-              >Add New Memory
-              </Button>
-              </td>
-            </tr>
           </CardBody>
+          <CardFooter>
+          <Button onClick={this.handleAddNewMemory} round color="info"> Add New Memory </Button>
+          </CardFooter>
         </Card>
       </GridItem>
     </GridContainer>

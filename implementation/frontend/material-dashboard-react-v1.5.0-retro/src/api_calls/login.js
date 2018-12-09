@@ -27,6 +27,13 @@ class LoginRepository {
     });
   }
 
+  // TODO implement once backend is ready.
+    static activate(email) {
+      return axios.post(`${constants.API}/forget`, {        
+        email: email
+      });
+    }
+
   static register(registerNickname, registerFirstName, registerLastName, registerEmail, registerPassword) {
       return axios.post(`${constants.API}/register`, {
         email: registerEmail,

@@ -24,7 +24,7 @@ class UserRepository {
   }
 
   static async updateProfile(user) {
-    console.log('user: ', user);
+    //console.log('user: ', user);
     const response = await axios(
       {
         method: 'PUT',

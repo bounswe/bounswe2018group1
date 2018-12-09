@@ -28,6 +28,12 @@ export default class Login extends Component {
 
     this.loginValidator = new FormValidator([
       {
+        field: 'loginEmail',
+        method: this.loginFilledCheck,
+        validWhen: false,
+        message: 'A nickname or an email is required.'
+      },
+      {
         field: 'loginPassword',
         method: 'isEmpty',
         validWhen: false,
@@ -113,6 +119,8 @@ export default class Login extends Component {
     }
 
   }
+
+  loginFilledCheck = (email, state) => (state.loginNickname === "" && email === "")
 
   // It makes the most sense to perform the password checks below only during register period.
 
@@ -217,6 +225,7 @@ validatePasswordFormat() {
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      className={loginValidation.loginEmail.isInvalid && 'has-error'}
                       labelText="Nickname"
                       id="loginNickname"
                       value={this.state.loginNickname}
@@ -230,11 +239,13 @@ validatePasswordFormat() {
                         required: false
                       }}
                     />
+                    <HelpBlock>{loginValidation.loginEmail.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={10} sm={10} md={8}>
                     <CustomInput
+                      className={loginValidation.loginEmail.isInvalid && 'has-error'}
                       labelText="Email address"
                       id="loginEmail"
                       value={this.state.loginEmail}
@@ -247,6 +258,7 @@ validatePasswordFormat() {
                         fullWidth: true
                       }}
                     />
+                    <HelpBlock>{loginValidation.loginEmail.message}</HelpBlock>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>

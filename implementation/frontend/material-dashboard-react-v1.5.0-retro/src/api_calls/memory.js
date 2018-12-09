@@ -9,8 +9,7 @@ axios.defaults.headers.common["JSESSIONID"] = token;
 class MemoryRepository {
 
     static async createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
-          //Time format: "2018-11-10T21:17:30.548Z"
-          //Processing is done here.
+        //Time format: "2018-11-10T21:17:30.548Z"
         var currentdate = new Date();
 
         const response = await axios(
@@ -43,46 +42,48 @@ class MemoryRepository {
         )
     }
 
-    static updateMemory(id, listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
+    static async updateMemory(memoryID, listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
       var memoryData;
       memoryData.listOfItems = listOfItems;
-      memoryData.listOfItems = listOfLocations;
-      memoryData.listOfItems = listOfTags;
-      memoryData.listOfItems = headline;
-      memoryData.listOfItems = endDateDD;
-      memoryData.listOfItems = endDateHH;
-      memoryData.listOfItems = endDateMM;
-      memoryData.listOfItems = endDateYYYY;
-      memoryData.listOfItems = startDateDD;
-      memoryData.listOfItems = startDateHH;
-      memoryData.listOfItems = startDateMM;
-      memoryData.listOfItems = startDateYYYY;
+      memoryData.listOfLocations = listOfLocations;
+      memoryData.listOfTags = listOfTags;
+      memoryData.headline = headline;
+      memoryData.endDateDD = endDateDD;
+      memoryData.endDateHH = endDateHH;
+      memoryData.endDateMM = endDateMM;
+      memoryData.endDateYYYY = endDateYYYY;
+      memoryData.startDateDD = startDateDD;
+      memoryData.startDateHH = startDateHH;
+      memoryData.startDateMM = startDateMM;
+      memoryData.startDateYYYY = startDateYYYY;
 
       return axios.put(`${constants.API}/memory`, {
-        id: id,
+        id: memoryID,
         updateMemoryRequestBody: memoryData
       });
     }
 
-    static deleteMemory() {
-        //TODO add once implemented on backend.
+    static async deleteMemory(memoryID) {
+      return axios.delete(`${constants.API}/memory`, {
+        id: memoryID
+      });
     }
 
     // TODO: bunu ayır. Log in olmayan user da görsün
-    static getMemory(id) {
+    static async getMemory(memoryID) {
       return axios.get(`${constants.API}/memory`, {
-        id: id
+        id: memoryID
       });
     }
 
-    static getUserMemories(id) {
+    static async getUserMemories(userID) {
       return axios.get(`${constants.API}/memory/user`, {
-        id: id
+        id: userID
       });
     }
 
     // TODO: bunu ayır. Log in olmayan user da görsün
-    static getAllMemories() {
+    static async getAllMemories() {
       return axios.get(`${constants.API}/memory/all`);
     }
 
