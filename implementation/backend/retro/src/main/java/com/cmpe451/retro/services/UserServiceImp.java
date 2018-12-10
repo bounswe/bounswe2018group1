@@ -81,6 +81,11 @@ public class UserServiceImp implements UserService {
                 user.setLastName(updateUserInfoBody.getLastName());
             }
 
+            //update nickname
+            if(updateUserInfoBody.getNickname() != null && !updateUserInfoBody.getNickname().equals("")){
+                user.setNickname(updateUserInfoBody.getNickname());
+            }
+
             //update password
             if (updateUserInfoBody.getNewPassword() != null && updateUserInfoBody.getOldPassword() != null &&
                     !updateUserInfoBody.getNewPassword().equals("") && !updateUserInfoBody.getOldPassword().equals("")) {

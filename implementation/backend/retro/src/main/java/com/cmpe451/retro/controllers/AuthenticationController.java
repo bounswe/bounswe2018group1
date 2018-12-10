@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials ="true", allowedHeaders ="*",
+        methods = {RequestMethod.HEAD,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RestController
 public class AuthenticationController {
 
