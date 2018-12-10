@@ -1,13 +1,6 @@
 package com.cmpe451.retro.data.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -83,6 +76,10 @@ public class Memory {
     @OneToMany(targetEntity=Item.class)
     private List<Item> listOfItems;
 
+    @NotNull
+    @OneToMany(targetEntity=Comment.class)
+    @OrderBy("dateTime ASC")
+    private  List<Comment> listOfComments;
 
     public Memory(){
 
@@ -254,5 +251,13 @@ public class Memory {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Comment> getListOfComments() {
+        return listOfComments;
+    }
+
+    public void setListOfComments(List<Comment> listOfComments) {
+        this.listOfComments = listOfComments;
     }
 }
