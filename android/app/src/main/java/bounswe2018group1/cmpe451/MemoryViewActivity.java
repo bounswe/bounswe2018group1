@@ -8,6 +8,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -112,7 +113,16 @@ public class MemoryViewActivity extends AppCompatActivity {
             }
         }
         // TODO: ListView inside ScrollView does not expand, FIX IT!!!
-        //setListViewHeightBasedOnChildren(this.itemListView);
+//        this.itemListView.setOnTouchListener(new View.OnTouchListener() {
+//            // Setting on Touch Listener for handling the touch inside ScrollView
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                // Disallow the touch request for parent scroll on touch of child view
+//                //v.getParent().requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
+//        setListViewHeightBasedOnChildren(this.itemListView);
 
         this.itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -150,18 +160,13 @@ public class MemoryViewActivity extends AppCompatActivity {
         View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             view = listAdapter.getView(i, view, listView);
-            if (i == 0) view.setLayoutParams(new
-                    ViewGroup.LayoutParams(desiredWidth,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            view.measure(0, 0);
             totalHeight += view.getMeasuredHeight();
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
 
-        params.height = totalHeight + (listView.getDividerHeight() *
-                (listAdapter.getCount() - 1));
+        params.height = totalHeight;
 
         listView.setLayoutParams(params);
         listView.requestLayout();

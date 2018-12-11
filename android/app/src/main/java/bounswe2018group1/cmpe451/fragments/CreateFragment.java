@@ -1,16 +1,10 @@
 package bounswe2018group1.cmpe451.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +18,8 @@ import android.widget.VideoView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsCreateActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;

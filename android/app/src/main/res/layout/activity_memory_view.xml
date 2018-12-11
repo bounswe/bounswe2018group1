@@ -109,10 +109,10 @@
             app:layout_constraintTop_toBottomOf="@+id/memoryTitle"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ListView
+        <bounswe2018group1.cmpe451.helpers.NestedListView
             android:id="@+id/itemListView"
             android:layout_width="match_parent"
-            android:layout_height="256dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorBackground"
             app:layout_constraintTop_toBottomOf="@+id/separator" />
 
