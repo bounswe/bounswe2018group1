@@ -2,6 +2,8 @@ package bounswe2018group1.cmpe451.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -23,6 +26,7 @@ import java.util.Calendar;
 
 import bounswe2018group1.cmpe451.LoginActivity;
 import bounswe2018group1.cmpe451.MainActivity;
+import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
 
 public class ClientAPI {
@@ -51,7 +55,72 @@ public class ClientAPI {
         return mInstance;
     }
 
+    public void printAvatar(ImageView view, String userId, Context context) {
+        if(userId != null && userId.isEmpty()) return;
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER_withID(userId), postParams,
+                new PrintAvatarResponseListener(view),
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("printAvatar returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, context);
+
+    }
+
+    private class PrintAvatarResponseListener implements Response.Listener {
+        private ImageView imageView;
+
+        PrintAvatarResponseListener(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        @Override
+        public void onResponse(Object response) {
+            if (response == null) {
+                System.err.println("printAvatar failed!");
+            } else if (response instanceof org.json.JSONObject) {
+                //Success Callback
+                org.json.JSONObject r = (org.json.JSONObject) response;
+                System.out.println("Response: " + r.toString());
+                if(!r.isNull("profilePictureUrl")) {
+                    try {
+                        Uri itemUri = Uri.parse(r.getString("profilePictureUrl"));
+                        Picasso.get()
+                                .load(itemUri)
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.error)
+                                .fit()
+                                .centerInside()
+                                .transform(new CircleTransform())
+                                .into(imageView);
+                    } catch (org.json.JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                System.err.println("printAvatar unexpected response!");
+                System.err.println("Response: " + response.toString());
+            }
+        }
+    }
+
     public void writeAuthor(TextView view, String userId, Context context) {
+        if(userId != null && userId.isEmpty()) return;
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER_withID(userId), postParams,
                 new WriteAuthorResponseListener(view),

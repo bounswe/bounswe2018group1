@@ -78,6 +78,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         String[] fullName = new String[]{
                 memory.get("userFirstName").getAsString(),
                 memory.get("userLastName").getAsString()};
+        clientAPI.printAvatar(this.avatar, memory.get("userId").getAsString(), this);
         this.authorName.setText(StringUtility.join(" ", fullName));
         this.postDate.setText("Posted " + formattedTime);
         this.memoryDate.setText(StringUtility.memoryDate(memory));
