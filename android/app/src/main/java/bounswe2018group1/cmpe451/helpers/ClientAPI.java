@@ -156,6 +156,7 @@ public class ClientAPI {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
+                        Toast.makeText(context, "Failed to login!", Toast.LENGTH_LONG).show();
                         System.err.println("sendLoginRequest returned error response!");
                         if (error.networkResponse != null && error.networkResponse.data != null) {
                             try {
@@ -207,7 +208,7 @@ public class ClientAPI {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
-                        Toast.makeText(context, "Registration fail!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Failed to register!", Toast.LENGTH_LONG).show();
                         System.err.println("sendRegisterRequest returned error response!");
                         if (error.networkResponse.data != null) {
                             try {
