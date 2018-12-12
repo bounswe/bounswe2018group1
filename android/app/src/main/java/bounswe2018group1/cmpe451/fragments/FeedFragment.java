@@ -22,16 +22,17 @@ import bounswe2018group1.cmpe451.MemoryViewActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
 import bounswe2018group1.cmpe451.helpers.MemoryAdapter;
+import bounswe2018group1.cmpe451.helpers.Pointer;
 import bounswe2018group1.cmpe451.helpers.ServerCallBack;
 
 public class FeedFragment extends Fragment {
 
-    private JsonArray dataSource = null;
+    private Pointer<JsonArray> dataSourcePtr = null;
     private Semaphore dataSourceUpdateLock = null;
     private SwipeRefreshLayout swipeRefreshLayout = null;
     private ListView listView = null;
     private ClientAPI clientAPI = null;
-    private int pageSize = 5;
+    private int pageSize = 3;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -46,9 +47,9 @@ public class FeedFragment extends Fragment {
         if (listView == null) listView = rootView.findViewById(R.id.listView);
         if(clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
 
-        if (dataSource == null) dataSource = new JsonArray();
+        if (dataSourcePtr == null) dataSourcePtr = new Pointer<>(new JsonArray());
         if(dataSourceUpdateLock == null) dataSourceUpdateLock = new Semaphore(1);
-        MemoryAdapter adapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSource);
+        MemoryAdapter adapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSourcePtr);
         listView.setAdapter(adapter);
 
         updateListView(adapter);
@@ -82,9 +83,7 @@ public class FeedFragment extends Fragment {
         public void onRefresh() {
             try {
                 dataSourceUpdateLock.acquire();
-                dataSource = new JsonArray();
-                memoryAdapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSource);
-                listView.setAdapter(memoryAdapter);
+                dataSourcePtr.data = new JsonArray();
                 memoryAdapter.notifyDataSetChanged();
                 dataSourceUpdateLock.release();
                 updateListView(memoryAdapter);
@@ -132,7 +131,7 @@ public class FeedFragment extends Fragment {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
             if(scrollState == SCROLL_STATE_IDLE && listView.getLastVisiblePosition() ==
-                    dataSource.size() - 1){
+                    dataSourcePtr.data.size() - 1){
                 updateListView(adapter);
             }
         }
@@ -145,7 +144,7 @@ public class FeedFragment extends Fragment {
     private void updateListView(MemoryAdapter adapter) {
         if(dataSourceUpdateLock.tryAcquire()){
 
-            clientAPI.getMemoryAll(dataSource.size()/pageSize, pageSize,
+            clientAPI.getMemoryAll(dataSourcePtr.data.size()/pageSize, pageSize,
                     new MyServerCallBack(adapter), getContext());
 
         }
@@ -166,10 +165,10 @@ public class FeedFragment extends Fragment {
                         result.getJSONArray("content").toString(),
                         JsonArray.class);
                 JsonArray contentDifference = new JsonArray();
-                for(int i = dataSource.size()%pageSize, size = content.size(); i < size; ++i){
+                for(int i = dataSourcePtr.data.size()%pageSize, size = content.size(); i < size; ++i){
                     contentDifference.add(content.get(i));
                 }
-                dataSource.addAll(contentDifference);
+                dataSourcePtr.data.addAll(contentDifference);
                 adapter.notifyDataSetChanged();
             } catch (org.json.JSONException e) {
                 e.printStackTrace();

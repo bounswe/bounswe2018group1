@@ -19,24 +19,24 @@ public class MemoryAdapter extends BaseAdapter {
 
     protected Context context;
     private int layoutResource;
-    private JsonArray dataSource;
+    private Pointer<JsonArray> dataSourcePtr;
     private ClientAPI clientAPI;
 
-    public MemoryAdapter(Context context, int resource, JsonArray dataSource) {
+    public MemoryAdapter(Context context, int resource, Pointer<JsonArray> dataSourcePtr) {
         this.context = context;
         this.layoutResource = resource;
-        this.dataSource = dataSource;
+        this.dataSourcePtr = dataSourcePtr;
         this.clientAPI = ClientAPI.getInstance(context);
     }
 
     @Override
     public int getCount() {
-        return dataSource.size();
+        return dataSourcePtr.data.size();
     }
 
     @Override
     public JsonObject getItem(int position) {
-        return dataSource.get(position).getAsJsonObject();
+        return dataSourcePtr.data.get(position).getAsJsonObject();
     }
 
     @Override
