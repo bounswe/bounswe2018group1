@@ -1,17 +1,18 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
+import bounswe2018group1.cmpe451.helpers.CommentRowHolder;
 import bounswe2018group1.cmpe451.helpers.ItemAdapter;
 import bounswe2018group1.cmpe451.helpers.ServerCallBack;
 import bounswe2018group1.cmpe451.helpers.StringUtility;
@@ -40,12 +42,14 @@ public class MemoryViewActivity extends AppCompatActivity {
     private ImageView avatar = null;
     private TextView authorName = null, postDate = null,
             memoryDate = null, memoryLocation = null, memoryTitle = null;
-    private ListView itemListView = null;
+    private LinearLayout itemListView = null;
     private LinearLayout memoryTagLayout = null;
     private Button editButton = null;
-    private ImageView like;
+    private ImageView like = null;
     private int likeAmount;
-    private TextView likesText;
+    private TextView likesText = null;
+    private TextView commentsText = null;
+    private LinearLayout commentLayout = null;
     private ClientAPI clientAPI = null;
 
     private void initLocalVariables() {
@@ -60,6 +64,8 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (editButton == null) editButton = findViewById(R.id.editButton);
         if (like == null) like = findViewById(R.id.like);
         if (likesText == null) likesText = findViewById(R.id.likesText);
+        if (commentsText == null) commentsText = findViewById(R.id.commentsText);
+        if (commentLayout == null) commentLayout = findViewById(R.id.commentLayout);
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
 
         if (memory == null) {
@@ -69,9 +75,21 @@ public class MemoryViewActivity extends AppCompatActivity {
         }
     }
 
+    private void initItems(ItemAdapter adapter) {
+        if(memory.get("listOfItems").getAsJsonArray().size() == 0) { // If there are no items
+            this.commentsText.setVisibility(View.GONE);
+            this.commentLayout.setVisibility(View.GONE);
+        } else {
+            for(int i = 0, sz = adapter.getCount(); i < sz; ++i) {
+                View itemRow = adapter.getView(i, null, this.itemListView);
+                this.itemListView.addView(itemRow);
+            }
+        }
+    }
+
     private void initMemoryTags() {
         if(memory.get("listOfTags").getAsJsonArray().size() == 0) {
-            this.memoryTagLayout.setVisibility(View.INVISIBLE);
+            this.memoryTagLayout.setVisibility(View.GONE);
         } else {
             for(int i = 0, tag_size = memory.get("listOfTags").getAsJsonArray().size(); i < tag_size; ++i) {
                 TextView tag_text = new TextView(this);
@@ -96,12 +114,6 @@ public class MemoryViewActivity extends AppCompatActivity {
     }
 
     private void initEventHandlers() {
-        this.itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: action for when an item is clicked
-            }
-        });
         this.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +137,31 @@ public class MemoryViewActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initComments() {
+        // TODO: GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
+        if(false) { // If there are no comments
+            this.commentsText.setVisibility(View.GONE);
+            this.commentLayout.setVisibility(View.GONE);
+        } else {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View commentRow = inflater.inflate(R.layout.comment_row, null);
+            CommentRowHolder holder = new CommentRowHolder(commentRow);
+            commentRow.setTag(holder);
+            holder.authorName.setText("Ali Veli Deli");
+            holder.postDate.setText("Posted 2019-01-01 00:00:00");
+            holder.commentText.setText("Happy new year to everybody guys!");
+            this.commentLayout.addView(commentRow);
+
+            commentRow = inflater.inflate(R.layout.comment_row, null);
+            holder = new CommentRowHolder(commentRow);
+            commentRow.setTag(holder);
+            holder.authorName.setText("James Bond");
+            holder.postDate.setText("Posted 2020-01-01 00:00:00");
+            holder.commentText.setText("Happy new 2020!");
+            this.commentLayout.addView(commentRow);
+        }
     }
 
     @Override
@@ -160,29 +197,17 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.memoryTitle.setText(memoryTitle);
         //Prepare items
         if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
-        final ItemAdapter adapter = new ItemAdapter(this, R.layout.item_row, itemDataSource);
-        this.itemListView.setAdapter(adapter);
+        this.initItems(new ItemAdapter(this, R.layout.item_row, itemDataSource));
         this.initMemoryTags();
         // Show 'Edit' button if the current user owns it
         if(!memory.get("userId").isJsonNull()) {
             clientAPI.getCurrentUser(new EditButtonServerCallBack(editButton,
                     memory.get("userId").getAsInt()), this);
         }
-        // Initially the like button is grey (not liked yet)
+        // TODO: GET LIKE STATUS OF THE CURRENT USER
         this.like.setTag(R.drawable.ic_thumb_up_black_24dp);
         this.likesText.setText("" + likeAmount + " likes");
-
-        // TODO: ListView inside ScrollView does not expand, FIX IT!!!
-//        this.itemListView.setOnTouchListener(new View.OnTouchListener() {
-//            // Setting on Touch Listener for handling the touch inside ScrollView
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                // Disallow the touch request for parent scroll on touch of child view
-//                //v.getParent().requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
-//        setListViewHeightBasedOnChildren(this.itemListView);
+        this.initComments();
 
         this.initEventHandlers();
     }
@@ -229,27 +254,6 @@ public class MemoryViewActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
-        if (listAdapter == null) return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
-                View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            view.measure(0, 0);
-            totalHeight += view.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-
-        params.height = totalHeight;
-
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 
 }

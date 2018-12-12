@@ -102,24 +102,24 @@
         <View
             android:id="@+id/separator"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="2dp"
             android:background="#c0c0c0"
             app:layout_constraintBottom_toTopOf="@+id/itemListView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/memoryTitle"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ListView
+        <LinearLayout
             android:id="@+id/itemListView"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:background="@color/colorBackground"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/separator" />
 
         <View
             android:id="@+id/separator2"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="2dp"
             android:background="#c0c0c0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/itemListView"
@@ -158,6 +158,7 @@
             android:id="@+id/likeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/editButton"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,6 +175,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/likeLayout" />
+
+        <TextView
+            android:id="@+id/commentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Comments:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator3" />
+
+        <LinearLayout
+            android:id="@+id/commentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentsText">
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
