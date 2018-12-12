@@ -579,4 +579,48 @@ public class ClientAPI {
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_UPD_TAG, context);
     }
 
+    public void getCurrentUser(final ServerCallBack serverCallBack,
+                             final Context context) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.err.println("getCurrentUser failed!");
+                            serverCallBack.onError();
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            serverCallBack.onSuccess(r);
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("getCurrentUser unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                            serverCallBack.onError();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("getCurrentUser returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                        serverCallBack.onError();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, context);
+    }
+
 }
