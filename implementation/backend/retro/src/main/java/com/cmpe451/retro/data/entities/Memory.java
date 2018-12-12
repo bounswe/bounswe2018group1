@@ -23,12 +23,6 @@ public class Memory {
     @NotNull
     private long userId;
 
-    private String userNickname;
-
-    private String userFirstName;
-
-    private String userLastName;
-
     @NotNull
     private String headline;
 
@@ -36,7 +30,7 @@ public class Memory {
     private Date dateOfCreation;
 
 //    @NotNull
-//    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)w
 //    private Date startDate;
 //
 //    @NotNull
@@ -209,27 +203,4 @@ public class Memory {
         this.listOfItems = listOfItems;
     }
 
-    public String getUserNickname() {
-        return userNickname;
-    }
-
-    public void setUserNickname(String userNickname) {
-        this.userNickname = userNickname;
-    }
-
-    public String getUserFirstName() {
-        return userFirstName;
-    }
-
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
-
-    public String getUserLastName() {
-        return userLastName;
-    }
-
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
 }

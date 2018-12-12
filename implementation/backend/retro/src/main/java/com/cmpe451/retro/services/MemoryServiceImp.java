@@ -58,9 +58,6 @@ public class MemoryServiceImp implements MemoryService {
         Memory memory = new Memory();
         memory.setHeadline(requestBody.getHeadline());
         memory.setUserId(userId);
-        memory.setUserFirstName(user.getFirstName());
-        memory.setUserLastName(user.getLastName());
-        memory.setUserNickname(user.getNickname());
         memory.setDateOfCreation(new Date());
         memory.setStartDateHH(requestBody.getStartDateHH());
         memory.setStartDateDD(requestBody.getStartDateDD());
@@ -96,8 +93,14 @@ public class MemoryServiceImp implements MemoryService {
         Optional<Memory> memoryOptional = memoryRepository.findById(id);
         if (memoryOptional.isPresent()) {
             Memory memory = memoryOptional.get();
-            return new GetMemoryResponseBody(memory);
-
+            Optional<User> userOptional = userRepository.findById(memory.getUserId());
+            if(userOptional.isPresent()){
+                User user = userOptional.get();
+                return new GetMemoryResponseBody(memory,user);
+            }
+            else{
+                throw new RetroException("Memory not found.", HttpStatus.NOT_FOUND);
+            }
         } else {
             throw new RetroException("Memory not found.", HttpStatus.NOT_FOUND);
         }
@@ -109,7 +112,8 @@ public class MemoryServiceImp implements MemoryService {
         List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll(pageable));
         List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
         for (Memory memory : listOfMemories) {
-            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+            Optional<User> userOptional = userRepository.findById(memory.getUserId());
+            userOptional.ifPresent(user -> listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory, user)));
         }
         return new PageImpl<>(listOfMemoryResponseBodies, pageable, listOfMemories.size());
     }
@@ -119,7 +123,8 @@ public class MemoryServiceImp implements MemoryService {
         List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findByUserId(userId, pageable));
         List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
         for (Memory memory : listOfMemories) {
-            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+            Optional<User> userOptional = userRepository.findById(memory.getUserId());
+            userOptional.ifPresent(user -> listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory,user)));
         }
         return new PageImpl<>(listOfMemoryResponseBodies, pageable, listOfMemories.size());
     }

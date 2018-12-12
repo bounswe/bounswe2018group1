@@ -4,6 +4,7 @@ import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Tag;
+import com.cmpe451.retro.data.entities.User;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,8 @@ public class GetMemoryResponseBody {
     private String userFirstName;
 
     private String userLastName;
+
+    private String userProfilePicUrl;
 
     private String headline;
 
@@ -47,15 +50,17 @@ public class GetMemoryResponseBody {
     private Date updatedTime;
 
 
+
     public GetMemoryResponseBody() {
     }
 
 
-    public GetMemoryResponseBody(Memory memory) {
-        this.userId = memory.getUserId();
-        this.userNickname = memory.getUserNickname();
-        this.userFirstName = memory.getUserFirstName();
-        this.userLastName = memory.getUserLastName();
+    public GetMemoryResponseBody(Memory memory, User user) {
+        this.userId = user.getId();
+        this.userNickname = user.getNickname();
+        this.userFirstName = user.getFirstName();
+        this.userLastName = user.getLastName();
+        this.userProfilePicUrl = user.getProfilePictureUrl();
         this.headline = memory.getHeadline();
         this.dateOfCreation = memory.getDateOfCreation();
         this.startDateHH = memory.getStartDateHH();
@@ -214,5 +219,13 @@ public class GetMemoryResponseBody {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public String getUserProfilePicUrl() {
+        return userProfilePicUrl;
+    }
+
+    public void setUserProfilePicUrl(String userProfilePicUrl) {
+        this.userProfilePicUrl = userProfilePicUrl;
     }
 }
