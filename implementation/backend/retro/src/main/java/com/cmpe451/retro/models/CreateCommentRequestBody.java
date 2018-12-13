@@ -7,11 +7,6 @@ public class CreateCommentRequestBody {
 
     private long userId;
 
-    private String userNickname;
-
-    private String userFirstName;
-
-    private String userLastName;
 
     private String commentText;
 
@@ -29,30 +24,6 @@ public class CreateCommentRequestBody {
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public String getUserNickname() {
-        return userNickname;
-    }
-
-    public void setUserNickname(String userNickname) {
-        this.userNickname = userNickname;
-    }
-
-    public String getUserFirstName() {
-        return userFirstName;
-    }
-
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
-
-    public String getUserLastName() {
-        return userLastName;
-    }
-
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
     }
 
     public String getCommentText() {

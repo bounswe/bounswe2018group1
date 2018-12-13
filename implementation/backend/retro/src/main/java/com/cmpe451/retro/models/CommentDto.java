@@ -1,6 +1,9 @@
 package com.cmpe451.retro.models;
 
 
+//TODO: is there a need for CommentDto
+
+
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.User;
 

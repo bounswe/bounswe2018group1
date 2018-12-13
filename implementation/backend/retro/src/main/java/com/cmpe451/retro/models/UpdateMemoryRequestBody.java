@@ -32,7 +32,6 @@ public class UpdateMemoryRequestBody {
 
     private List<ItemDto> listOfItems;
 
-    private List<CommentDto> listOfComments;
 
     private Date updatedTime;
 
@@ -151,11 +150,4 @@ public class UpdateMemoryRequestBody {
         this.updatedTime = updatedTime;
     }
 
-    public List<CommentDto> getListOfComments() {
-        return listOfComments;
-    }
-
-    public void setListOfComments(List<CommentDto> listOfComments) {
-        this.listOfComments = listOfComments;
-    }
 }

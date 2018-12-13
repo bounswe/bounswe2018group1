@@ -28,13 +28,6 @@ public class Memory {
     @NotNull
     private Date dateOfCreation;
 
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date startDate;
-//
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date endDate;
 
     private int startDateHH;
 
@@ -78,7 +71,6 @@ public class Memory {
 
     @NotNull
     @OneToMany(targetEntity=Comment.class)
-    @OrderBy("dateTime ASC")
     private  List<Comment> listOfComments;
 
     public Memory(){

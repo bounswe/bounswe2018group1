@@ -17,10 +17,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,7 +67,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
-        memory.setListOfComments(new ArrayList<>());
+        memory.setListOfComments(Collections.emptyList());
 
         memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
 
@@ -83,7 +80,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.getListOfTags().forEach(entityManager::persist);
         memory.getListOfItems().forEach(entityManager::persist);
         memory.getListOfLocations().forEach(entityManager::persist);
-        memory.getListOfComments().forEach(entityManager::persist); //TODO check
+        //memory.getListOfComments().forEach(entityManager::persist); //TODO check
         entityManager.persist(user);
         entityManager.persist(memory);
 
@@ -243,9 +240,6 @@ public class MemoryServiceImp implements MemoryService {
                 comment.setCommentText(createCommentRequestBody.getCommentText());
                 comment.setMemoryId(createCommentRequestBody.getMemoryId());
                 comment.setUserId(createCommentRequestBody.getUserId());
-                comment.setUserFirstName(createCommentRequestBody.getUserFirstName());
-                comment.setUserLastName(createCommentRequestBody.getUserLastName());
-                comment.setUserNickname(createCommentRequestBody.getUserNickname());
 
                 List<Comment> comments = memory.getListOfComments();
                 comments.add(comment);
@@ -254,7 +248,7 @@ public class MemoryServiceImp implements MemoryService {
                 throw new RetroException("You can not post an empty comment", HttpStatus.EXPECTATION_FAILED);
             }
 
-            memory.getListOfComments().forEach(entityManager::persist);
+            //memory.getListOfComments().forEach(entityManager::persist);
             entityManager.persist(memory);
             entityManager.flush();
 

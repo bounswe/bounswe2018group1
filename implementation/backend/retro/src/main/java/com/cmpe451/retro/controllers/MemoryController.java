@@ -1,10 +1,6 @@
 package com.cmpe451.retro.controllers;
 
-import com.cmpe451.retro.models.CreateMemoryRequestBody;
-import com.cmpe451.retro.models.CreateMemoryResponseBody;
-import com.cmpe451.retro.models.FilterBody;
-import com.cmpe451.retro.models.GetMemoryResponseBody;
-import com.cmpe451.retro.models.UpdateMemoryRequestBody;
+import com.cmpe451.retro.models.*;
 import com.cmpe451.retro.services.MemoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,5 +56,10 @@ public class MemoryController {
         return memoryService.getMemoriesWithFilter(filterbody,pageable);
     }
 
+    @RequestMapping(value = "/memory/comment",method = RequestMethod.PUT)
+    public void addCommentToMemory(@RequestParam Long id, @RequestBody CreateCommentRequestBody createCommentRequestBody){
+        long userId = authenticationController.getUserId();
+        memoryService.addCommentToMemory(id, userId,createCommentRequestBody);
+    }
 
 }
