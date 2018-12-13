@@ -46,8 +46,6 @@ public class Comment {
     @JoinColumn(name = "memory_id", nullable = false)
     private Memory memory;*/
 
-    @Column(nullable = false)
-    private boolean deleted = false;
 
     public Comment(){}
 
@@ -61,7 +59,6 @@ public class Comment {
         this.userFirstName = commentDto.getUserFirstName();
         this.userLastName = commentDto.getUserLastName();
         this.userNickname = commentDto.getUserNickname();
-        this.deleted = commentDto.isDeleted();
 
     }
 
@@ -137,11 +134,4 @@ public class Comment {
         this.userLastName = userLastName;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }

@@ -56,10 +56,10 @@ public class MemoryController {
         return memoryService.getMemoriesWithFilter(filterbody,pageable);
     }
 
-    @RequestMapping(value = "/memory/comment",method = RequestMethod.PUT)
+    /*@RequestMapping(value = "/memory/comment",method = RequestMethod.PUT)
     public void addCommentToMemory(@RequestParam Long id, @RequestBody CreateCommentRequestBody createCommentRequestBody){
         long userId = authenticationController.getUserId();
         memoryService.addCommentToMemory(id, userId,createCommentRequestBody);
-    }
+    }*/
 
 }

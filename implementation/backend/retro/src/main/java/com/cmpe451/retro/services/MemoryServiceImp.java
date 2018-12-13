@@ -155,6 +155,11 @@ public class MemoryServiceImp implements MemoryService {
                 memory.getListOfItems().forEach(entityManager::persist);
             }
 
+            if(updateMemoryRequestBody.getListOfComments() != null && !updateMemoryRequestBody.getListOfComments().isEmpty()){
+                memory.setListOfComments(updateMemoryRequestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
+                memory.getListOfComments().forEach(entityManager::persist);
+            }
+
             if(!isZero(updateMemoryRequestBody.getStartDateHH()) &&
                     !isZero(updateMemoryRequestBody.getStartDateDD()) &&
                     !isZero(updateMemoryRequestBody.getStartDateMM()) &&
@@ -229,7 +234,7 @@ public class MemoryServiceImp implements MemoryService {
         return new PageImpl<>(retList, pageable, total);
     }
 
-    @Override
+    /*@Override
     public void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody) {
         Optional<Memory> memoryOptional = memoryRepository.findById(memoryId);
         if(memoryOptional.isPresent()){
@@ -243,21 +248,22 @@ public class MemoryServiceImp implements MemoryService {
 
                 List<Comment> comments = memory.getListOfComments();
                 comments.add(comment);
-                memory.setListOfComments(comments);
+                memory.setListOfComments(comments.stream().map().collect(Collectors.toList()));
+
             }else{
                 throw new RetroException("You can not post an empty comment", HttpStatus.EXPECTATION_FAILED);
             }
 
             //memory.getListOfComments().forEach(entityManager::persist);
-            entityManager.persist(memory);
-            entityManager.flush();
+            //entityManager.persist(memory);
+            //entityManager.flush();
 
         }else{
             throw new RetroException("Memory not found.",HttpStatus.BAD_REQUEST);
         }
 
 
-    }
+    }*/
 
     private boolean isNullOrEmpty(String s){
         return (s==null || s.isEmpty());

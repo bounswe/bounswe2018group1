@@ -11,8 +11,6 @@ import java.util.Date;
 
 public class CommentDto {
 
-    private long id;
-
     private String commentText;
 
     private Date dateOfCreation;
@@ -29,15 +27,6 @@ public class CommentDto {
 
     private String userLastName;
 
-    private boolean deleted = false;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getCommentText() {
         return commentText;
@@ -103,11 +92,4 @@ public class CommentDto {
         this.userLastName = userLastName;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }

@@ -1,6 +1,6 @@
 package com.cmpe451.retro.models;
 
-
+//TODO: delete
 public class CreateCommentRequestBody {
 
     private long memoryId;

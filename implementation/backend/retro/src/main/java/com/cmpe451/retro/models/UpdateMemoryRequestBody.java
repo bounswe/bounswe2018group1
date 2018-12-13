@@ -1,6 +1,8 @@
 package com.cmpe451.retro.models;
 
 
+import com.cmpe451.retro.data.entities.Comment;
+
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class UpdateMemoryRequestBody {
 
     private List<ItemDto> listOfItems;
 
+    private List<CommentDto> listOfComments;
 
     private Date updatedTime;
 
@@ -150,4 +153,11 @@ public class UpdateMemoryRequestBody {
         this.updatedTime = updatedTime;
     }
 
+    public List<CommentDto> getListOfComments() {
+        return listOfComments;
+    }
+
+    public void setListOfComments(List<CommentDto> listOfComments) {
+        this.listOfComments = listOfComments;
+    }
 }

@@ -20,8 +20,4 @@ public class CommentServiceImp implements CommentService {
 
     }
 
-    @Override
-    public void updateComment(Comment newCommentData, Long commentId) {
-
-    }
 }
