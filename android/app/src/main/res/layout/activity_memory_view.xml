@@ -145,12 +145,22 @@
 
         <Button
             android:id="@+id/editButton"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="35dp"
             android:text="Edit"
             android:textAllCaps="false"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/addCommentButton"
+            app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
+
+        <Button
+            android:id="@+id/addCommentButton"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:text="Comment"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/editButton"
             app:layout_constraintEnd_toStartOf="@id/likeLayout"
             app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
 
@@ -160,7 +170,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@id/editButton"
+            app:layout_constraintStart_toEndOf="@id/addCommentButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/memoryTagLayout">
             <ImageView
@@ -171,6 +181,7 @@
 
             <TextView
                 android:id="@+id/likesText"
+                android:maxWidth="150dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
