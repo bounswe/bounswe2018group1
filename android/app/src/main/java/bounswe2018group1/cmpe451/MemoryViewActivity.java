@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -12,23 +13,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import bounswe2018group1.cmpe451.helpers.CircleTransform;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
 import bounswe2018group1.cmpe451.helpers.CommentRowHolder;
 import bounswe2018group1.cmpe451.helpers.ItemAdapter;
@@ -72,6 +72,21 @@ public class MemoryViewActivity extends AppCompatActivity {
             memory = new JsonParser().parse(
                     getIntent().getStringExtra("memory")
             ).getAsJsonObject();
+        }
+    }
+
+    private void initProfilePicture() {
+        if(!memory.get("userProfilePicUrl").isJsonNull() &&
+                !memory.get("userProfilePicUrl").getAsString().isEmpty()) {
+            Uri itemUri = Uri.parse(memory.get("userProfilePicUrl").getAsString());
+            Picasso.get()
+                    .load(itemUri)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .fit()
+                    .centerInside()
+                    .transform(new CircleTransform())
+                    .into(this.avatar);
         }
     }
 
@@ -188,7 +203,7 @@ public class MemoryViewActivity extends AppCompatActivity {
                 memory.get("userLastName").getAsString()};
         // TODO: GET THE AMOUNT OF LIKES AND LIKE STATUS OF THE CURRENT USER
         likeAmount = 1731;
-        clientAPI.printAvatar(this.avatar, memory.get("userId").getAsString(), this);
+        this.initProfilePicture();
         this.authorName.setText(StringUtility.join(" ", fullName));
         this.postDate.setText("Posted " + formattedTime);
         this.memoryDate.setText(StringUtility.memoryDate(memory));

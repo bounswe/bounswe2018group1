@@ -1,32 +1,35 @@
 package bounswe2018group1.cmpe451.helpers;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import bounswe2018group1.cmpe451.R;
+
 public class MemoryAdapter extends BaseAdapter {
 
     protected Context context;
     private int layoutResource;
     private Pointer<JsonArray> dataSourcePtr;
-    private ClientAPI clientAPI;
 
     public MemoryAdapter(Context context, int resource, Pointer<JsonArray> dataSourcePtr) {
         this.context = context;
         this.layoutResource = resource;
         this.dataSourcePtr = dataSourcePtr;
-        this.clientAPI = ClientAPI.getInstance(context);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class MemoryAdapter extends BaseAdapter {
         String[] fullName = new String[]{
                 memory.get("userFirstName").getAsString(),
                 memory.get("userLastName").getAsString()};
-        clientAPI.printAvatar(holder.avatar, memory.get("userId").getAsString(), context);
+        this.initProfilePicture(memory, holder.avatar);
         holder.authorName.setText(StringUtility.join(" ", fullName));
         holder.postDate.setText("Posted " + formattedTime);
         holder.memoryDate.setText(StringUtility.memoryDate(memory));
@@ -96,6 +99,21 @@ public class MemoryAdapter extends BaseAdapter {
         );
 
         return row;
+    }
+
+    private void initProfilePicture(JsonObject memory, ImageView avatar) {
+        if(!memory.get("userProfilePicUrl").isJsonNull() &&
+                !memory.get("userProfilePicUrl").getAsString().isEmpty()) {
+            Uri itemUri = Uri.parse(memory.get("userProfilePicUrl").getAsString());
+            Picasso.get()
+                    .load(itemUri)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .fit()
+                    .centerInside()
+                    .transform(new CircleTransform())
+                    .into(avatar);
+        }
     }
 
     class MyOnGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
