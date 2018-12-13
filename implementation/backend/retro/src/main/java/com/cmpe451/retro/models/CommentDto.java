@@ -1,55 +1,26 @@
-package com.cmpe451.retro.data.entities;
+package com.cmpe451.retro.models;
 
 
-import com.cmpe451.retro.models.CommentDto;
+import com.cmpe451.retro.data.entities.Memory;
+import com.cmpe451.retro.data.entities.User;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity
-@Table
-public class Comment {
+public class CommentDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Lob
-    @Column(nullable = false)
-    @NotNull
     private String commentText;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfCreation;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfUpdate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memory_id", nullable = false)
     private Memory memory;
 
-    @Column(nullable = false)
     private boolean deleted = false;
-
-    public Comment(){}
-
-    public Comment(CommentDto commentDto) {
-
-        this.commentText = commentDto.getCommentText();
-        this.dateOfCreation = commentDto.getDateOfCreation();
-        this.dateOfUpdate = commentDto.getDateOfUpdate();
-        this.user = commentDto.getUser();
-        this.memory = commentDto.getMemory();
-        this.deleted = commentDto.isDeleted();
-
-    }
-
 
     public long getId() {
         return id;

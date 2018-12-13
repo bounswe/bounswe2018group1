@@ -79,6 +79,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
+        memory.setListOfComments(requestBody.getL);
         memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
 
         if(requestBody.getEndDateYYYY()!=0){

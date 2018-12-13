@@ -28,6 +28,8 @@ public class CreateMemoryRequestBody {
 
     private List<ItemDto> listOfItems;
 
+
+
     public String getHeadline() {
         return headline;
     }
