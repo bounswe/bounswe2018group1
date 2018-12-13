@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -68,6 +67,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
         memory.setListOfComments(Collections.emptyList());
+        memory.setListOfMemoryLikes(Collections.emptyList());
 
         memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
 
@@ -158,6 +158,11 @@ public class MemoryServiceImp implements MemoryService {
             if(updateMemoryRequestBody.getListOfComments() != null && !updateMemoryRequestBody.getListOfComments().isEmpty()){
                 memory.setListOfComments(updateMemoryRequestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
                 memory.getListOfComments().forEach(entityManager::persist);
+            }
+
+            if(updateMemoryRequestBody.getListOfLikes() != null && !updateMemoryRequestBody.getListOfLikes().isEmpty()){
+                memory.setListOfMemoryLikes(updateMemoryRequestBody.getListOfLikes().stream().map(MemoryLike::new).collect(Collectors.toList()));
+                memory.getListOfMemoryLikes().forEach(entityManager::persist);
             }
 
             if(!isZero(updateMemoryRequestBody.getStartDateHH()) &&

@@ -36,6 +36,8 @@ public class UpdateMemoryRequestBody {
 
     private List<CommentDto> listOfComments;
 
+    private List<LikeDto> listOfLikes;
+
     private Date updatedTime;
 
     public UpdateMemoryRequestBody() {
@@ -159,5 +161,13 @@ public class UpdateMemoryRequestBody {
 
     public void setListOfComments(List<CommentDto> listOfComments) {
         this.listOfComments = listOfComments;
+    }
+
+    public List<LikeDto> getListOfLikes() {
+        return listOfLikes;
+    }
+
+    public void setListOfLikes(List<LikeDto> listOfLikes) {
+        this.listOfLikes = listOfLikes;
     }
 }

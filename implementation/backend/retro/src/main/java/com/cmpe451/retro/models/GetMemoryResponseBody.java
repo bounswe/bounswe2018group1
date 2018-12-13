@@ -45,6 +45,8 @@ public class GetMemoryResponseBody {
 
     private List<Comment> listOfComments;
 
+    private List<MemoryLike> listOfMemoryLikes;
+
     public GetMemoryResponseBody() {
     }
 
@@ -69,6 +71,7 @@ public class GetMemoryResponseBody {
         this.listOfTags = memory.getListOfTags();
         this.listOfItems = memory.getListOfItems();
         this.listOfComments = memory.getListOfComments();
+        this.listOfMemoryLikes = memory.getListOfMemoryLikes();
     }
 
     public long getUserId() {
@@ -221,5 +224,13 @@ public class GetMemoryResponseBody {
 
     public void setListOfComments(List<Comment> listOfComments) {
         this.listOfComments = listOfComments;
+    }
+
+    public List<MemoryLike> getListOfMemoryLikes() {
+        return listOfMemoryLikes;
+    }
+
+    public void setListOfMemoryLikes(List<MemoryLike> listOfMemoryLikes) {
+        this.listOfMemoryLikes = listOfMemoryLikes;
     }
 }

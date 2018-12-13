@@ -73,6 +73,10 @@ public class Memory {
     @OneToMany(targetEntity=Comment.class)
     private  List<Comment> listOfComments;
 
+    @NotNull
+    @OneToMany(targetEntity=MemoryLike.class)
+    private  List<MemoryLike> listOfMemoryLikes;
+
     public Memory(){
 
     }
@@ -251,5 +255,13 @@ public class Memory {
 
     public void setListOfComments(List<Comment> listOfComments) {
         this.listOfComments = listOfComments;
+    }
+
+    public List<MemoryLike> getListOfMemoryLikes() {
+        return listOfMemoryLikes;
+    }
+
+    public void setListOfMemoryLikes(List<MemoryLike> listOfMemoryLikes) {
+        this.listOfMemoryLikes = listOfMemoryLikes;
     }
 }
