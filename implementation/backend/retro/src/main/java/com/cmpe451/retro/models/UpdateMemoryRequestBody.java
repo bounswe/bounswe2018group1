@@ -20,7 +20,6 @@ public class UpdateMemoryRequestBody {
 
     private int startDateYYYY;
 
-
     private int endDateHH;
 
     private int endDateDD;

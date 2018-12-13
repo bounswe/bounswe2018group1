@@ -1,10 +1,7 @@
 package com.cmpe451.retro.services;
 
-import com.cmpe451.retro.models.CreateMemoryRequestBody;
-import com.cmpe451.retro.models.CreateMemoryResponseBody;
-import com.cmpe451.retro.models.FilterBody;
-import com.cmpe451.retro.models.GetMemoryResponseBody;
-import com.cmpe451.retro.models.UpdateMemoryRequestBody;
+import com.cmpe451.retro.data.entities.Comment;
+import com.cmpe451.retro.models.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,5 +18,7 @@ public interface MemoryService {
 
     void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody,Long userId);
 
-    public Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody,Pageable pageable);
+    Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody,Pageable pageable);
+
+    void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody);
 }

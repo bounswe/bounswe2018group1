@@ -28,8 +28,6 @@ public class CreateMemoryRequestBody {
 
     private List<ItemDto> listOfItems;
 
-    private List<CommentDto> listOfComments;
-
     public String getHeadline() {
         return headline;
     }
@@ -126,11 +124,4 @@ public class CreateMemoryRequestBody {
         return listOfLocations;
     }
 
-    public List<CommentDto> getListOfComments() {
-        return listOfComments;
-    }
-
-    public void setListOfComments(List<CommentDto> listOfComments) {
-        this.listOfComments = listOfComments;
-    }
 }

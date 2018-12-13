@@ -3,12 +3,7 @@ package com.cmpe451.retro.services;
 import com.cmpe451.retro.data.entities.*;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
-import com.cmpe451.retro.models.CreateMemoryRequestBody;
-import com.cmpe451.retro.models.CreateMemoryResponseBody;
-import com.cmpe451.retro.models.FilterBody;
-import com.cmpe451.retro.models.GetMemoryResponseBody;
-import com.cmpe451.retro.models.RetroException;
-import com.cmpe451.retro.models.UpdateMemoryRequestBody;
+import com.cmpe451.retro.models.*;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,18 +70,20 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
-        memory.setListOfComments(requestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
+        memory.setListOfComments(new ArrayList<>());
+
         memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
 
         if(requestBody.getEndDateYYYY()!=0){
             memory.setEndDate(convertToDate(requestBody.getEndDateDD(),requestBody.getEndDateMM(),requestBody.getEndDateYYYY()));
         }
 
-        user.getMemoryList().add(memory);//TODO: check
+        user.getMemoryList().add(memory);
 
         memory.getListOfTags().forEach(entityManager::persist);
         memory.getListOfItems().forEach(entityManager::persist);
         memory.getListOfLocations().forEach(entityManager::persist);
+        memory.getListOfComments().forEach(entityManager::persist); //TODO check
         entityManager.persist(user);
         entityManager.persist(memory);
 
@@ -151,10 +148,6 @@ public class MemoryServiceImp implements MemoryService {
                 memory.getListOfTags().forEach(entityManager::persist);
             }
 
-            if(updateMemoryRequestBody.getListOfComments() != null && !updateMemoryRequestBody.getListOfComments().isEmpty()){
-                memory.setListOfComments(updateMemoryRequestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
-                memory.getListOfComments().forEach(entityManager::persist);
-            }
 
             if(!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
@@ -237,6 +230,39 @@ public class MemoryServiceImp implements MemoryService {
         int total = page1.getTotalPages() + page2.getTotalPages() + page3.getTotalPages();
 
         return new PageImpl<>(retList, pageable, total);
+    }
+
+    @Override
+    public void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody) {
+        Optional<Memory> memoryOptional = memoryRepository.findById(memoryId);
+        if(memoryOptional.isPresent()){
+            Memory memory = memoryOptional.get();
+            if(createCommentRequestBody != null && !createCommentRequestBody.getCommentText().equals("")){
+
+                Comment comment = new Comment();
+                comment.setCommentText(createCommentRequestBody.getCommentText());
+                comment.setMemoryId(createCommentRequestBody.getMemoryId());
+                comment.setUserId(createCommentRequestBody.getUserId());
+                comment.setUserFirstName(createCommentRequestBody.getUserFirstName());
+                comment.setUserLastName(createCommentRequestBody.getUserLastName());
+                comment.setUserNickname(createCommentRequestBody.getUserNickname());
+
+                List<Comment> comments = memory.getListOfComments();
+                comments.add(comment);
+                memory.setListOfComments(comments);
+            }else{
+                throw new RetroException("You can not post an empty comment", HttpStatus.EXPECTATION_FAILED);
+            }
+
+            memory.getListOfComments().forEach(entityManager::persist);
+            entityManager.persist(memory);
+            entityManager.flush();
+
+        }else{
+            throw new RetroException("Memory not found.",HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
     private boolean isNullOrEmpty(String s){

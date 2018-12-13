@@ -8,7 +8,7 @@ public interface CommentService {
 
     Comment getComment(Long id);
 
-    Long saveNewComment(Comment comment, Memory memory);
+    Long addComment(Comment comment, Memory memory);
 
     void deleteComment(Long commentId);
 
