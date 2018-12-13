@@ -16,9 +16,15 @@ public class CommentDto {
 
     private Date dateOfUpdate;
 
-    private User user;
+    private long memoryId;
 
-    private Memory memory;
+    private long userId;
+
+    private String userNickname;
+
+    private String userFirstName;
+
+    private String userLastName;
 
     private boolean deleted = false;
 
@@ -54,20 +60,44 @@ public class CommentDto {
         this.dateOfUpdate = dateOfUpdate;
     }
 
-    public User getUser() {
-        return user;
+    public long getMemoryId() {
+        return memoryId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMemoryId(long memoryId) {
+        this.memoryId = memoryId;
     }
 
-    public Memory getMemory() {
-        return memory;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setMemory(Memory memory) {
-        this.memory = memory;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public boolean isDeleted() {

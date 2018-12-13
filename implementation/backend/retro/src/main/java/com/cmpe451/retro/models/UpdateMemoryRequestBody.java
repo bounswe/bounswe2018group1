@@ -8,8 +8,6 @@ public class UpdateMemoryRequestBody {
 
     private String headline;
 
-    private String text;
-
     private Date dateOfCreation;
 
     private List<LocationDto> listOfLocations;
@@ -34,6 +32,8 @@ public class UpdateMemoryRequestBody {
     private List<TagDto> listOfTags;
 
     private List<ItemDto> listOfItems;
+
+    private List<CommentDto> listOfComments;
 
     private Date updatedTime;
 
@@ -150,5 +150,13 @@ public class UpdateMemoryRequestBody {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public List<CommentDto> getListOfComments() {
+        return listOfComments;
+    }
+
+    public void setListOfComments(List<CommentDto> listOfComments) {
+        this.listOfComments = listOfComments;
     }
 }

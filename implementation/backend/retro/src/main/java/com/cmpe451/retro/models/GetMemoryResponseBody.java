@@ -1,9 +1,6 @@
 package com.cmpe451.retro.models;
 
-import com.cmpe451.retro.data.entities.Item;
-import com.cmpe451.retro.data.entities.Location;
-import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.data.entities.Tag;
+import com.cmpe451.retro.data.entities.*;
 
 import java.util.Date;
 import java.util.List;
@@ -46,6 +43,7 @@ public class GetMemoryResponseBody {
 
     private Date updatedTime;
 
+    private List<Comment> listOfComments;
 
     public GetMemoryResponseBody() {
     }
@@ -70,6 +68,7 @@ public class GetMemoryResponseBody {
         this.listOfLocations = memory.getListOfLocations();
         this.listOfTags = memory.getListOfTags();
         this.listOfItems = memory.getListOfItems();
+        this.listOfComments = memory.getListOfComments();
     }
 
     public long getUserId() {
@@ -214,5 +213,13 @@ public class GetMemoryResponseBody {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public List<Comment> getListOfComments() {
+        return listOfComments;
+    }
+
+    public void setListOfComments(List<Comment> listOfComments) {
+        this.listOfComments = listOfComments;
     }
 }

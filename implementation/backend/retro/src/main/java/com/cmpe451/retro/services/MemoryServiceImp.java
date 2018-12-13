@@ -1,10 +1,6 @@
 package com.cmpe451.retro.services;
 
-import com.cmpe451.retro.data.entities.Item;
-import com.cmpe451.retro.data.entities.Location;
-import com.cmpe451.retro.data.entities.Memory;
-import com.cmpe451.retro.data.entities.Tag;
-import com.cmpe451.retro.data.entities.User;
+import com.cmpe451.retro.data.entities.*;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
@@ -79,7 +75,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
-        memory.setListOfComments(requestBody.getL);
+        memory.setListOfComments(requestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
         memory.setStartDate(convertToDate(requestBody.getStartDateDD(),requestBody.getStartDateMM(),requestBody.getStartDateYYYY()));
 
         if(requestBody.getEndDateYYYY()!=0){
@@ -153,6 +149,11 @@ public class MemoryServiceImp implements MemoryService {
             if(updateMemoryRequestBody.getListOfTags() != null && !updateMemoryRequestBody.getListOfTags().isEmpty()){
                 memory.setListOfTags(updateMemoryRequestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
                 memory.getListOfTags().forEach(entityManager::persist);
+            }
+
+            if(updateMemoryRequestBody.getListOfComments() != null && !updateMemoryRequestBody.getListOfComments().isEmpty()){
+                memory.setListOfComments(updateMemoryRequestBody.getListOfComments().stream().map(Comment::new).collect(Collectors.toList()));
+                memory.getListOfComments().forEach(entityManager::persist);
             }
 
             if(!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {

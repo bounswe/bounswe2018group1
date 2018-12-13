@@ -15,6 +15,18 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
+    private long memoryId;
+
+    @NotNull
+    private long userId;
+
+    private String userNickname;
+
+    private String userFirstName;
+
+    private String userLastName;
+
     @Lob
     @Column(nullable = false)
     @NotNull
@@ -26,13 +38,13 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfUpdate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memory_id", nullable = false)
-    private Memory memory;
+    private Memory memory;*/
 
     @Column(nullable = false)
     private boolean deleted = false;
@@ -44,8 +56,11 @@ public class Comment {
         this.commentText = commentDto.getCommentText();
         this.dateOfCreation = commentDto.getDateOfCreation();
         this.dateOfUpdate = commentDto.getDateOfUpdate();
-        this.user = commentDto.getUser();
-        this.memory = commentDto.getMemory();
+        this.memoryId = commentDto.getMemoryId();
+        this.userId = commentDto.getUserId();
+        this.userFirstName = commentDto.getUserFirstName();
+        this.userLastName = commentDto.getUserLastName();
+        this.userNickname = commentDto.getUserNickname();
         this.deleted = commentDto.isDeleted();
 
     }
@@ -83,20 +98,44 @@ public class Comment {
         this.dateOfUpdate = dateOfUpdate;
     }
 
-    public User getUser() {
-        return user;
+    public long getMemoryId() {
+        return memoryId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMemoryId(long memoryId) {
+        this.memoryId = memoryId;
     }
 
-    public Memory getMemory() {
-        return memory;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setMemory(Memory memory) {
-        this.memory = memory;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public boolean isDeleted() {
