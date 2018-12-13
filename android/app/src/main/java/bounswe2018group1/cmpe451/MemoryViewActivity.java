@@ -93,7 +93,6 @@ public class MemoryViewActivity extends AppCompatActivity {
     private void initItems(ItemAdapter adapter) {
         if(memory.get("listOfItems").getAsJsonArray().size() == 0) { // If there are no items
             this.commentsText.setVisibility(View.GONE);
-            this.commentLayout.setVisibility(View.GONE);
         } else {
             for(int i = 0, sz = adapter.getCount(); i < sz; ++i) {
                 View itemRow = adapter.getView(i, null, this.itemListView);
@@ -128,6 +127,43 @@ public class MemoryViewActivity extends AppCompatActivity {
         }
     }
 
+    private void initComments() {
+        // TODO: GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
+        if(false) { // If there are no comments
+            this.commentsText.setVisibility(View.GONE);
+            this.commentLayout.setVisibility(View.GONE);
+        } else {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View commentRow = inflater.inflate(R.layout.comment_row, null);
+            CommentRowHolder holder = new CommentRowHolder(commentRow);
+            commentRow.setTag(holder);
+            holder.authorName.setText("Ali Veli Deli");
+            holder.postDate.setText("Posted 2019-01-01 00:00:00");
+            holder.commentText.setText("Happy new year to everybody guys!");
+            holder.hookCommentText();
+            this.commentLayout.addView(commentRow);
+            holder.btnSeeMore.setOnClickListener(
+                    new ButtonSeeMoreOnClickListener(holder)
+            );
+
+            commentRow = inflater.inflate(R.layout.comment_row, null);
+            holder = new CommentRowHolder(commentRow);
+            commentRow.setTag(holder);
+            holder.authorName.setText("James Bond");
+            holder.postDate.setText("Posted 2020-01-01 00:00:00");
+            holder.commentText.setText("Happy new 2020!");
+            holder.hookCommentText();
+            this.commentLayout.addView(commentRow);
+            holder.btnSeeMore.setOnClickListener(
+                    new ButtonSeeMoreOnClickListener(holder)
+            );
+            // TODO: CHECK IF THE CURRENT USER OWNS THIS COMMENT
+            holder.commentEditButton.setOnClickListener(new CommentEditButtonOnClickListener(holder));
+            holder.commentEditButton.setVisibility(View.VISIBLE);
+            holder.commentEditSend.setOnClickListener(new CommentEditSendOnClickListener(holder));
+        }
+    }
+
     private void initEventHandlers() {
         this.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,31 +188,6 @@ public class MemoryViewActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void initComments() {
-        // TODO: GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
-        if(false) { // If there are no comments
-            this.commentsText.setVisibility(View.GONE);
-            this.commentLayout.setVisibility(View.GONE);
-        } else {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View commentRow = inflater.inflate(R.layout.comment_row, null);
-            CommentRowHolder holder = new CommentRowHolder(commentRow);
-            commentRow.setTag(holder);
-            holder.authorName.setText("Ali Veli Deli");
-            holder.postDate.setText("Posted 2019-01-01 00:00:00");
-            holder.commentText.setText("Happy new year to everybody guys!");
-            this.commentLayout.addView(commentRow);
-
-            commentRow = inflater.inflate(R.layout.comment_row, null);
-            holder = new CommentRowHolder(commentRow);
-            commentRow.setTag(holder);
-            holder.authorName.setText("James Bond");
-            holder.postDate.setText("Posted 2020-01-01 00:00:00");
-            holder.commentText.setText("Happy new 2020!");
-            this.commentLayout.addView(commentRow);
-        }
     }
 
     @Override
@@ -271,4 +282,64 @@ public class MemoryViewActivity extends AppCompatActivity {
         }
     }
 
+    class ButtonSeeMoreOnClickListener implements View.OnClickListener {
+        CommentRowHolder holder;
+
+        public ButtonSeeMoreOnClickListener(CommentRowHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            holder.alternateButtonSeeMore();
+        }
+    }
+
+    class CommentEditButtonOnClickListener implements View.OnClickListener {
+
+        CommentRowHolder holder;
+
+        CommentEditButtonOnClickListener(CommentRowHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(!holder.isEditing) {
+                holder.commentEditText.setText(holder.commentText.getText(), TextView.BufferType.EDITABLE);
+                holder.commentText.setVisibility(View.GONE);
+                holder.removeButtonSeeMore();
+                holder.commentEditText.setVisibility(View.VISIBLE);
+                holder.commentEditSend.setVisibility(View.VISIBLE);
+            } else {
+                holder.commentEditText.setVisibility(View.GONE);
+                holder.commentEditSend.setVisibility(View.GONE);
+                holder.commentText.setVisibility(View.VISIBLE);
+                holder.initButtonSeeMore();
+            }
+            holder.isEditing = !holder.isEditing;
+        }
+    }
+
+    class CommentEditSendOnClickListener implements View.OnClickListener {
+
+        CommentRowHolder holder;
+
+        CommentEditSendOnClickListener(CommentRowHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(holder.isEditing) {
+                holder.commentText.setText(holder.commentEditText.getText());
+                holder.commentEditText.setVisibility(View.GONE);
+                holder.commentEditSend.setVisibility(View.GONE);
+                holder.commentText.setVisibility(View.VISIBLE);
+                holder.isEditing = false;
+                holder.initButtonSeeMore();
+                // TODO: TAKE THE 'commentEditText' AND UPDATE THIS COMMENT
+            }
+        }
+    }
 }
