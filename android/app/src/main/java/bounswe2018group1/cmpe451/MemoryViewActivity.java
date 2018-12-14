@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -43,6 +45,7 @@ public class MemoryViewActivity extends AppCompatActivity {
 
     private JsonArray itemDataSource = null;
     private JsonObject memory = null;
+    private SwipeRefreshLayout swipeRefreshLayout = null;
     private ImageView avatar = null;
     private TextView authorName = null, postDate = null,
             memoryDate = null, memoryLocation = null, memoryTitle = null;
@@ -60,6 +63,7 @@ public class MemoryViewActivity extends AppCompatActivity {
     private ClientAPI clientAPI = null;
 
     private void initLocalVariables() {
+        if (swipeRefreshLayout == null) swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         if (avatar == null) avatar = findViewById(R.id.avatar);
         if (authorName == null) authorName = findViewById(R.id.authorName);
         if (postDate == null) postDate = findViewById(R.id.postDate);
@@ -101,6 +105,7 @@ public class MemoryViewActivity extends AppCompatActivity {
     }
 
     private void initItems(ItemAdapter adapter) {
+        this.itemListView.removeAllViews();
         for(int i = 0, sz = adapter.getCount(); i < sz; ++i) {
             View itemRow = adapter.getView(i, null, this.itemListView);
             this.itemListView.addView(itemRow);
@@ -108,6 +113,10 @@ public class MemoryViewActivity extends AppCompatActivity {
     }
 
     private void initMemoryTags() {
+        // Remove all tags (there is the 'Memory Tags:' text in the first view)
+        for(int i = this.memoryTagLayout.getChildCount() - 1; i > 0; --i) {
+            this.memoryTagLayout.removeViewAt(i);
+        }
         if(memory.getAsJsonArray("listOfTags").size() == 0) {
             this.memoryTagLayout.setVisibility(View.GONE);
         } else {
@@ -134,6 +143,7 @@ public class MemoryViewActivity extends AppCompatActivity {
     }
 
     private void initComments(CommentAdapter adapter) {
+        this.commentLayout.removeAllViews();
         if(adapter.getCount() == 0) { // If there are no comments
             this.commentsText.setVisibility(View.GONE);
             this.commentLayout.setVisibility(View.GONE);
@@ -146,6 +156,28 @@ public class MemoryViewActivity extends AppCompatActivity {
     }
 
     private void initEventHandlers() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //TODO: UPDATE 'memory' VARIABLE
+
+                // Update the memory view page
+                preparePageFromMemory();
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 500); // Delay in millis
+            }
+        });
+        // Scheme colors for animation
+        swipeRefreshLayout.setColorSchemeColors(
+                getResources().getColor(android.R.color.holo_blue_bright),
+                getResources().getColor(android.R.color.holo_green_light),
+                getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light)
+        );
         this.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,12 +228,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memory_view);
-        this.initLocalVariables();
-
+    private void preparePageFromMemory() {
         //Prepare memory
         String postDate = memory.get("dateOfCreation").getAsString();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
@@ -250,6 +277,15 @@ public class MemoryViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         this.initComments(new CommentAdapter(this, R.layout.comment_row, commentDataSource));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_memory_view);
+        this.initLocalVariables();
+
+        this.preparePageFromMemory();
 
         this.initEventHandlers();
     }

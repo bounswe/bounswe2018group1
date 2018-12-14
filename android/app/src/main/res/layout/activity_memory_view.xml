@@ -1,261 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/swipeRefreshLayout" >
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MemoryViewActivity">
-
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/avatar_description"
-            android:src="@drawable/old_man_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/nameDateLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MemoryViewActivity">
 
-            <TextView
-                android:id="@+id/authorName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:text="User Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                app:layout_constraintBottom_toTopOf="@id/postDate"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/avatar_description"
+                android:src="@drawable/old_man_avatar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/postDate"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_vertical"
-                android:text="Post Date"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/nameDateLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/authorName" />
+                app:layout_constraintStart_toEndOf="@+id/avatar"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/authorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:text="User Name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_constraintBottom_toTopOf="@id/postDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.Barrier
-            android:id="@+id/labelBarrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar,nameDateLayout"/>
+                <TextView
+                    android:id="@+id/postDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:text="Post Date"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/authorName" />
 
-        <TextView
-            android:id="@+id/memoryDate"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:text="Memory Date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelBarrier" />
+            </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/memoryLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:text="Memory Location"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memoryDate" />
-
-        <TextView
-            android:id="@+id/memoryTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:paddingBottom="8dp"
-            android:text="Memory Title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memoryLocation" />
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#c0c0c0"
-            app:layout_constraintBottom_toTopOf="@+id/itemListView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memoryTitle"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/itemListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/separator" />
-
-        <View
-            android:id="@+id/separator2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#c0c0c0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemListView"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/memoryTagLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/separator2">
-            <TextView
+            <android.support.constraint.Barrier
+                android:id="@+id/labelBarrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Memory Tags:" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:text="Edit"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/addCommentButton"
-            app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
-
-        <Button
-            android:id="@+id/addCommentButton"
-            android:layout_width="90dp"
-            android:layout_height="35dp"
-            android:text="Comment"
-            android:textAllCaps="false"
-            app:layout_constraintStart_toEndOf="@id/editButton"
-            app:layout_constraintEnd_toStartOf="@id/likeLayout"
-            app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
-
-        <LinearLayout
-            android:id="@+id/likeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@id/addCommentButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/memoryTagLayout">
-            <ImageView
-                android:id="@+id/like"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_thumb_up_black_24dp" />
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="avatar,nameDateLayout"/>
 
             <TextView
-                android:id="@+id/likesText"
-                android:maxWidth="150dp"
+                android:id="@+id/memoryDate"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:text="Memory Date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelBarrier" />
+
+            <TextView
+                android:id="@+id/memoryLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:text="Memory Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/memoryDate" />
+
+            <TextView
+                android:id="@+id/memoryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="Memory Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/memoryLocation" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#c0c0c0"
+                app:layout_constraintBottom_toTopOf="@+id/itemListView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/memoryTitle" />
+
+            <LinearLayout
+                android:id="@+id/itemListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/separator" />
+
+            <View
+                android:id="@+id/separator2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itemListView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/memoryTagLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Memory Tags:" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/addCommentButton"
+                app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
+
+            <Button
+                android:id="@+id/addCommentButton"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:text="Comment"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toEndOf="@id/editButton"
+                app:layout_constraintEnd_toStartOf="@id/likeLayout"
+                app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
+
+            <LinearLayout
+                android:id="@+id/likeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@id/addCommentButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/memoryTagLayout">
+                <ImageView
+                    android:id="@+id/like"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_thumb_up_black_24dp" />
+
+                <TextView
+                    android:id="@+id/likesText"
+                    android:maxWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <android.support.constraint.Barrier
+                android:id="@+id/labelBarrier2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="editButton,addCommentButton,likeLayout"/>
+
+            <EditText
+                android:id="@+id/createCommentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelBarrier2" />
+
+            <Button
+                android:id="@+id/createCommentSend"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textAllCaps="false"
+                android:text="Send"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/createCommentText"/>
+
+            <View
+                android:id="@+id/separator3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/createCommentSend" />
+
+            <TextView
+                android:id="@+id/commentsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
+                android:layout_marginTop="8dp"
+                android:text="Comments:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator3" />
 
-        <android.support.constraint.Barrier
-            android:id="@+id/labelBarrier2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="editButton,addCommentButton,likeLayout"/>
+            <LinearLayout
+                android:id="@+id/commentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentsText">
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/createCommentText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:visibility="gone"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelBarrier2" />
+        </android.support.constraint.ConstraintLayout>
 
-        <Button
-            android:id="@+id/createCommentSend"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:textAllCaps="false"
-            android:text="Send"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createCommentText"/>
+    </ScrollView>
 
-        <View
-            android:id="@+id/separator3"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#c0c0c0"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createCommentSend" />
-
-        <TextView
-            android:id="@+id/commentsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Comments:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator3" />
-
-        <LinearLayout
-            android:id="@+id/commentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/commentsText">
-        </LinearLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-</ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

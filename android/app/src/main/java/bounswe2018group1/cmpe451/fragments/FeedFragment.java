@@ -55,7 +55,7 @@ public class FeedFragment extends Fragment {
         updateListView(adapter);
         implementScrollListener(adapter);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefreshListener(adapter, rootView));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefreshListener(adapter));
         // Scheme colors for animation
         swipeRefreshLayout.setColorSchemeColors(
                 getResources().getColor(android.R.color.holo_blue_bright),
@@ -72,11 +72,9 @@ public class FeedFragment extends Fragment {
     class SwipeRefreshLayoutOnRefreshListener implements SwipeRefreshLayout.OnRefreshListener {
 
         private MemoryAdapter memoryAdapter;
-        private View rootView;
 
-        SwipeRefreshLayoutOnRefreshListener(MemoryAdapter memoryAdapter, View rootView) {
+        SwipeRefreshLayoutOnRefreshListener(MemoryAdapter memoryAdapter) {
             this.memoryAdapter = memoryAdapter;
-            this.rootView = rootView;
         }
 
         @Override
