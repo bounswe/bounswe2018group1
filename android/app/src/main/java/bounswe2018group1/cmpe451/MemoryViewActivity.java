@@ -12,9 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -51,6 +53,8 @@ public class MemoryViewActivity extends AppCompatActivity {
     private ImageView like = null;
     private int likeAmount;
     private TextView likesText = null;
+    private EditText createCommentText = null;
+    private Button createCommentSend = null;
     private TextView commentsText = null;
     private LinearLayout commentLayout = null;
     private ClientAPI clientAPI = null;
@@ -68,6 +72,8 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (addCommentButton == null) addCommentButton = findViewById(R.id.addCommentButton);
         if (like == null) like = findViewById(R.id.like);
         if (likesText == null) likesText = findViewById(R.id.likesText);
+        if (createCommentText == null) createCommentText = findViewById(R.id.createCommentText);
+        if (createCommentSend == null) createCommentSend = findViewById(R.id.createCommentSend);
         if (commentsText == null) commentsText = findViewById(R.id.commentsText);
         if (commentLayout == null) commentLayout = findViewById(R.id.commentLayout);
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(this);
@@ -148,6 +154,19 @@ public class MemoryViewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        this.addCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(createCommentText.getVisibility() == View.GONE) {
+                    createCommentText.setVisibility(View.VISIBLE);
+                    createCommentSend.setVisibility(View.VISIBLE);
+                } else {
+                    createCommentText.setVisibility(View.GONE);
+                    createCommentSend.setVisibility(View.GONE);
+                    createCommentText.setText("", TextView.BufferType.EDITABLE);
+                }
+            }
+        });
         this.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +180,18 @@ public class MemoryViewActivity extends AppCompatActivity {
                     like.setTag(R.drawable.ic_thumb_up_black_24dp);
                     likesText.setText("" + --likeAmount + " likes");
                 }
+            }
+        });
+        this.createCommentSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: SEND THE COMMENT
+
+                // Notify success, clear the content and make it gone
+                Toast.makeText(MemoryViewActivity.this, "Comment created!", Toast.LENGTH_LONG).show();
+                createCommentText.setVisibility(View.GONE);
+                createCommentSend.setVisibility(View.GONE);
+                createCommentText.setText("", TextView.BufferType.EDITABLE);
             }
         });
     }

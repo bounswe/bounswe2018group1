@@ -196,6 +196,35 @@
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
 
+        <android.support.constraint.Barrier
+            android:id="@+id/labelBarrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="editButton,addCommentButton,likeLayout"/>
+
+        <EditText
+            android:id="@+id/createCommentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelBarrier2" />
+
+        <Button
+            android:id="@+id/createCommentSend"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAllCaps="false"
+            android:text="Send"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createCommentText"/>
+
         <View
             android:id="@+id/separator3"
             android:layout_width="match_parent"
@@ -204,7 +233,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/likeLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/createCommentSend" />
 
         <TextView
             android:id="@+id/commentsText"
