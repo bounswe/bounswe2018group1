@@ -46,39 +46,6 @@ const styles = {
       lineHeight: "1"
     }
   },
-  tableUpgradeWrapper: {
-    display: "block",
-    width: "100%",
-    overflowX: "auto",
-    WebkitOverflowScrolling: "touch",
-    MsOverflowStyle: "-ms-autohiding-scrollbar"
-  },
-  table: {
-    width: "100%",
-    maxWidth: "100%",
-    marginBottom: "1rem",
-    backgroundColor: "transparent",
-    borderCollapse: "collapse",
-    display: "table",
-    borderSpacing: "2px",
-    borderColor: "grey",
-    "& thdead tr th": {
-      fontSize: "1.063rem",
-      padding: "12px 8px",
-      verticalAlign: "middle",
-      fontWeight: "300",
-      borderTopWidth: "0",
-      borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
-    },
-    "& tbody tr td": {
-      padding: "12px 8px",
-      verticalAlign: "middle",
-      borderTop: "1px solid rgba(0, 0, 0, 0.06)"
-    },
-    "& td, & th": {
-      display: "table-cell"
-    }
-  },
 };
 
 export default class AddNewMemory extends Component {
@@ -102,6 +69,8 @@ export default class AddNewMemory extends Component {
       progress: 0
     };
     this.handleAddNewLocation = this.handleAddNewLocation.bind(this);
+    this.handleAddNewMedia = this.handleAddNewMedia.bind(this);
+    this.handleAddNewText = this.handleAddNewText.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
@@ -121,6 +90,7 @@ export default class AddNewMemory extends Component {
         console.log(err);
       });
       // TODO: Bunu res in icine tasi.
+      window.location.reload();
       const { history } = this.props;
       history.push("/show-memory");
   }
@@ -144,6 +114,18 @@ export default class AddNewMemory extends Component {
         ...this.state.listOfItems,
         {
           "body": "",
+          "id": 0,
+          "url": ""
+        }
+      ]
+    });
+  }
+  handleAddNewText() {
+    this.setState({
+      listOfItems: [
+        ...this.state.listOfItems,
+        {
+          "body": " ",
           "id": 0,
           "url": ""
         }
@@ -209,7 +191,7 @@ export default class AddNewMemory extends Component {
           </CardHeader>
           <CardBody>
             <GridContainer>
-              <GridItem xs={10} sm={10} md={8}>
+              <GridItem xs={10} sm={10} md={10}>
                 <CustomInput
                   labelText="Title"
                   id="headline"
@@ -228,7 +210,7 @@ export default class AddNewMemory extends Component {
             </GridContainer>
 
             <GridContainer>
-              <GridItem xs={10} sm={10} md={8}>
+              <GridItem xs={10} sm={10} md={10}>
                 <CustomInput
                   labelText="Add the details of your memory"
                   id="details"
@@ -243,7 +225,7 @@ export default class AddNewMemory extends Component {
                 />
               </GridItem>
 
-              <GridItem xs={10} sm={10} md={8}>
+              <GridItem xs={10} sm={10} md={10}>
                 <CustomInput
                   id="media"
                   inputProps={{
@@ -256,25 +238,65 @@ export default class AddNewMemory extends Component {
                     required: false,
                   }}
                   />
-              <Button onClick={this.handleFileUpload}> Upload </Button>
-              <ProgressBar now={this.progress} />
               </GridItem>
 
-              {/*<GridItem xs={10} sm={10} md={10}>
-              Add more...
+              <GridItem xs={10} sm={10} md={10}>
+                {this.state.listOfItems.map( (item, i) => (
+                  item.body == '' ?
+                    <CustomInput
+                      id="media"
+                      inputProps={{
+                        name:"media",
+                        type:"file",
+                        onChange: this.handleFileSelect
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: false,
+                      }}
+                      />
+                    :
+                    <CustomInput
+                      labelText="Add the details of your memory"
+                      id="details"
+                      inputProps={{
+                        name:"details",
+                        type:"text"
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                    />
+                  ))}
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={3}>
                 <Button
                   onClick={this.handleAddNewMedia}
-                  justIcon
                   color="transparent"
-                >
-                  <Icon style={{ fontSize: 30 }}>
-                    add_circle
-                  </Icon>
+                > Add more media
                 </Button>
-              </GridItem>*/}
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={3}>
+                <Button
+                  onClick={this.handleAddNewText}
+                  color="transparent"
+                > Add more text
+                </Button>
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={3}>
+                <Button
+                  onClick={this.handleFileUpload}
+                  round
+                  color="info"
+                > Upload
+                </Button>
+                <ProgressBar now={this.progress} />
+              </GridItem>
             </GridContainer>
-
-
 
             <GridContainer>
               <GridItem xs={10} sm={10} md={4}>
@@ -311,7 +333,7 @@ export default class AddNewMemory extends Component {
             </GridContainer>
 
             <GridContainer>
-              <GridItem xs={10} sm={10} md={8}>
+              <GridItem xs={10} sm={10} md={10}>
 
                 <ReactTags
                     handleDelete={this.handleDelete}
@@ -323,7 +345,7 @@ export default class AddNewMemory extends Component {
             </GridContainer>
 
             <GridContainer>
-              <GridItem xs={10} sm={10} md={2}>
+              <GridItem xs={10} sm={10} md={3}>
                 <CustomInput
                   labelText="Year (YYYY)"
                   id="start_date_yyyy"
@@ -371,7 +393,7 @@ export default class AddNewMemory extends Component {
                   }}
                 />
               </GridItem>
-              <GridItem xs={10} sm={10} md={2}>
+              <GridItem xs={10} sm={10} md={3}>
                 <CustomInput
                   labelText="Hour (0-23)"
                   id="start_date_hh"
@@ -390,7 +412,7 @@ export default class AddNewMemory extends Component {
             </GridContainer>
 
             <GridContainer>
-              <GridItem xs={10} sm={10} md={2}>
+              <GridItem xs={10} sm={10} md={3}>
                 <CustomInput
                   labelText="Year (YYYY)"
                   id="end_date_yyyy"
@@ -438,7 +460,7 @@ export default class AddNewMemory extends Component {
                   }}
                 />
               </GridItem>
-              <GridItem xs={10} sm={10} md={2}>
+              <GridItem xs={10} sm={10} md={3}>
                 <CustomInput
                   labelText="Hour (0-23)"
                   id="end_date_hh"

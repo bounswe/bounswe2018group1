@@ -4,7 +4,7 @@ import constants from "../constants";
 
 const token = Cookies.get("JSESSIONID");
 axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["JSESSIONID"] = token;
+axios.defaults.withCredentials = true;
 
 class MediaRepository {
 

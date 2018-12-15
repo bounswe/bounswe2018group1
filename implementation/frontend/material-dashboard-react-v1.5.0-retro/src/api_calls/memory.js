@@ -4,7 +4,7 @@ import constants from "../constants";
 
 const token = Cookies.get("JSESSIONID");
 axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["JSESSIONID"] = token;
+axios.defaults.withCredentials = true;
 
 class MemoryRepository {
 
@@ -84,9 +84,19 @@ class MemoryRepository {
 
     // TODO: bunu ayır. Log in olmayan user da görsün
     static async getAllMemories() {
-      return axios.get(`${constants.API}/memory/all`);
+      const response = await axios(
+        {
+          method: 'GET',
+          url: `${constants.API}/memory/all`,
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        }
+      )
+      return response.data;
     }
-
 }
 
 export default MemoryRepository;

@@ -5,7 +5,7 @@ import constants from "../constants";
 // Cookies.set('JSESSIONID', "5861644F58803FEE504C7974F92C750F");
 const token = Cookies.get("JSESSIONID");
 axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["JSESSIONID"] = token;
+axios.defaults.withCredentials = true;
 
 class UserRepository {
   static async user() {
@@ -16,7 +16,7 @@ class UserRepository {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Accept": "application/json",
         }
       }
     )
@@ -24,7 +24,6 @@ class UserRepository {
   }
 
   static async updateProfile(user) {
-    //console.log('user: ', user);
     const response = await axios(
       {
         method: 'PUT',

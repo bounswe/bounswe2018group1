@@ -21,18 +21,59 @@ import image2 from "assets/img/pamukkale.png";
 import { bugs, website, server } from "variables/general.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import MemoryRepository from '../../api_calls/memory.js';
 
 class ShowMemory extends React.Component {
-  state = {
-    value: 0
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
+  constructor(props) {
+      super(props);
+      this.state = {
+          memory: {
+            dateOfCreation: '',
+            endDateDD: 0,
+            endDateHH: 0,
+            endDateMM: 0,
+            endDateYYYY: 0,
+            headline: '',
+            listOfItems: [
+              {
+                body: '',
+                id: 0,
+                url: ''
+              }
+            ],
+            listOfLocations: [
+              {
+                latitude: 0,
+                locationName: '',
+                longitude: 0
+              }
+            ],
+            listOfTags: [
+              {
+                text: ''
+              }
+            ],
+            startDateDD: 0,
+            startDateHH: 0,
+            startDateMM: 0,
+            startDateYYYY: 0,
+            updatedTime: '',
+            userFirstName: '',
+            userId: 0,
+            userLastName: '',
+            userNickname: '',
+            userProfilePicUrl: ''
+          }
+      };
+  }
 
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+  // get memory çalışmalı
+
+  componentDidMount() {
+    MemoryRepository.getMemory().then(memory => {
+      this.setState({memory: memory});
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -42,7 +83,7 @@ class ShowMemory extends React.Component {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Our little Denizli tour</h4>
+                <h4 className={classes.cardTitleWhite}>{this.state.memory.headline}</h4>
                 <p className={classes.cardCategoryWhite}>
                   Start Date: 2018.10.19.11:00
                 </p>
@@ -55,10 +96,16 @@ class ShowMemory extends React.Component {
               </CardHeader>
               <CardBody>
               <p> Locations: </p>
+
+{/* listOfLocations dönülecek ve içindeki her şey basılacak */}
+
               <ul>
                 <li> Pamukkale, Denizli </li>
                 <li> Denizli, Turkey </li>
               </ul>
+
+{/* listOfItems dönülecek ve içindeki her şey basılacak */}
+
               <p> We had a wonderful time together with our Cmpe451 group. Travertines are not very crowded early in the morning so there are cool photo opportunities. But you must see them while the sun
               sets, it is a gorgeous view.</p>
               <img
@@ -68,53 +115,15 @@ class ShowMemory extends React.Component {
                 src={image2}
                 data-holder-rendered="true"
               />
+
+{/* listOfTags dönülecek ve içindeki her şey basılacak */}
+
               <p> Tags: #pamukkale    #friends</p>
+
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
                   <AccessTime /> added on 2018.10.23
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
-
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="warning">
-                <h4 className={classes.cardTitleWhite}>Our big Edirne Tour</h4>
-                <p className={classes.cardCategoryWhite}>
-                  Start Date: 2018.07.18.18:00
-                </p>
-                <p className={classes.cardCategoryWhite}>
-                  End Date: 2018.07.18.20:00
-                </p>
-                <p className={classes.cardCategoryWhite}>
-                  Added by EceAta20
-                </p>
-              </CardHeader>
-              <CardBody>
-              <p> Locations: </p>
-              <ul>
-                <li> Edirne Merkez/Edirne </li>
-                <li> Edirne, Turkey </li>
-                <li> Selimiye Mosque, Turkey </li>
-              </ul>
-              <p> Edirne has many historical places like Selimiye Mosque, but not a single one is famed more. Designed by Mimar Sinan, famous architect of the Ottoman Empire
-              by orders from Selim II (son of Suleyman the Magnificent). It has very tall minarets and 999 windows, we confirmed it by counting ourselves. </p>
-              <img
-                className={classes.cardImgTop}
-                alt="100%x180"
-                style={{ height: "300px", width: "33%", display: "block" }}
-                src={image1}
-                data-holder-rendered="true"
-              />
-              <p> Tags: #religion    #peace</p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> added on 2018.07.19
                 </div>
               </CardFooter>
             </Card>

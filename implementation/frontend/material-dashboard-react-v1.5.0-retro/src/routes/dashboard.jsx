@@ -1,19 +1,13 @@
 import Cookies from "js-cookie";
-//import React from "react";
-//import PropTypes from "prop-types";
+
 // @material-ui/icons
 import Home from "@material-ui/icons/Home";
 import Person from "@material-ui/icons/Person";
-// import ContentPaste from "@material-ui/icons/ContentPaste";
 import AddCircle from "@material-ui/icons/AddCircle";
 import Memory from "@material-ui/icons/Memory";
 import HowToReg from "@material-ui/icons/HowToReg";
-//import LibraryBooks from "@material-ui/icons/LibraryBooks";
-//import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
-//import Notifications from "@material-ui/icons/Notifications";
-//import Unarchive from "@material-ui/icons/Unarchive";
-// core components/views
+
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
@@ -26,7 +20,6 @@ import MemoryFeed from "views/MemoryFeed/MemoryFeed.jsx";
 import Login from "views/Login/Login.jsx";
 
 const userToken = Cookies.get("JSESSIONID");
-console.log(userToken);
 
 const dashboardRoutes = [
   {
@@ -37,33 +30,12 @@ const dashboardRoutes = [
     component: MemoryFeed
   },
   {
-   path: "/user",
-   sidebarName: "User Profile",
-   navbarName: "Profile",
-   icon: Person,
-   component: UserProfile
+    path: "/show-memory",
+    sidebarName: "Story",
+    navbarName: "Story",
+    icon: Home,
+    component: ShowMemory
   },
-  // {
-  //   path: "/table",
-  //   sidebarName: "Table List",
-  //   navbarName: "Table List",
-  //   icon: "content_paste",
-  //   component: TableList
-  // },
-  // {
-  //   path: "/typography",
-  //   sidebarName: "Typography",
-  //   navbarName: "Typography",
-  //   icon: LibraryBooks,
-  //   component: Typography
-  // },
-  // {
-  //   path: "/icons",
-  //   sidebarName: "Icons",
-  //   navbarName: "Icons",
-  //   icon: BubbleChart,
-  //   component: Icons
-  // },
   {
     path: "/maps",
     sidebarName: "Maps",
@@ -71,13 +43,13 @@ const dashboardRoutes = [
     icon: LocationOn,
     component: Maps
   },
-  // {
-  //   path: "/notifications",
-  //   sidebarName: "Notifications",
-  //   navbarName: "Notifications",
-  //   icon: Notifications,
-  //   component: NotificationsPage
-  // },
+  userToken ? {
+   path: "/user",
+   sidebarName: "User Profile",
+   navbarName: "Profile",
+   icon: Person,
+   component: UserProfile
+  } : null,
   userToken ? {
     path: "/add-new-memory",
     sidebarName: "Add new Memory",
@@ -85,14 +57,7 @@ const dashboardRoutes = [
     icon: AddCircle,
     component: AddNewMemory
   } : null,
-  // {
-  //   path: "/home-page",
-  //   sidebarName: "Home",
-  //   navbarName: "Home",
-  //   icon: Home,
-  //   component: ShowMemory
-  // },
-  {
+  userToken ? null : {
     path: "/login",
     sidebarName: "Login",
     navbarName: "Login",

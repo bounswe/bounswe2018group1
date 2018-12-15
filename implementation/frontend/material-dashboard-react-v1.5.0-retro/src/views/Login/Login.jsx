@@ -164,6 +164,8 @@ validatePasswordFormat() {
         .then(res => {
           console.log(res);
           window.location.reload();
+          const { history } = this.props;
+          history.push("/user");
         })
         .catch(err => {
           console.log(err);
