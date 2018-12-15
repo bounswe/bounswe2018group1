@@ -15,6 +15,8 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
+import Search from "views/Search/Search.jsx";
+
 function Header({ ...props }) {
   function makeBrand() {
     var name;
@@ -38,10 +40,7 @@ function Header({ ...props }) {
           <Button color="transparent" href="#" className={classes.title}>
             {makeBrand()}
           </Button>
-        </div>
-        <Hidden smDown implementation="css">
-          <HeaderLinks />
-        </Hidden>
+        </div>                
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"

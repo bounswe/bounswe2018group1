@@ -108,14 +108,14 @@ export default class AddNewMemory extends Component {
     });
   }
 
-  handleAddNewMedia() {
+  handleAddNewMedia(url) {
     this.setState({
       listOfItems: [
         ...this.state.listOfItems,
         {
           "body": "",
           "id": 0,
-          "url": ""
+          "url": url
         }
       ]
     });
@@ -144,7 +144,7 @@ export default class AddNewMemory extends Component {
           this.setState({ progress: Math.round((progressEvent.loaded / progressEvent.total)*100) })
         }
       })
-        .then(res => {});
+        .then(res => this.handleAddNewMedia(res)); //here here
     }
   }
 
@@ -239,7 +239,6 @@ export default class AddNewMemory extends Component {
                   }}
                   />
               </GridItem>
-
               <GridItem xs={10} sm={10} md={10}>
                 {this.state.listOfItems.map( (item, i) => (
                   item.body == '' ?
@@ -278,6 +277,7 @@ export default class AddNewMemory extends Component {
                 > Add more media
                 </Button>
               </GridItem>
+            </GridContainer>
 
               <GridItem xs={10} sm={10} md={3}>
                 <Button
