@@ -69,33 +69,10 @@ class MemoryRepository {
       });
     }
 
-    // TODO: bunu ayır. Log in olmayan user da görsün
-    static async getMemory(memoryID) {
-      return axios.get(`${constants.API}/memory`, {
-        id: memoryID
-      });
-    }
-
     static async getUserMemories(userID) {
       return axios.get(`${constants.API}/memory/user`, {
         id: userID
       });
-    }
-
-    // TODO: bunu ayır. Log in olmayan user da görsün
-    static async getAllMemories() {
-      const response = await axios(
-        {
-          method: 'GET',
-          url: `${constants.API}/memory/all`,
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          }
-        }
-      )
-      return response.data;
     }
 }
 

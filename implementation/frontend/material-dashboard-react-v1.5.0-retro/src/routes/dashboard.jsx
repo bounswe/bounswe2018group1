@@ -15,8 +15,7 @@ import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import AddNewMemory from "views/AddNewMemory/AddNewMemory.jsx";
-import ShowMemory from "views/ShowMemory/ShowMemory.jsx";
-import MemoryFeed from "views/MemoryFeed/MemoryFeed.jsx";
+import HomePage from "views/Home";
 import Login from "views/Login/Login.jsx";
 
 const userToken = Cookies.get("JSESSIONID");
@@ -27,15 +26,9 @@ const dashboardRoutes = [
     sidebarName: "Home",
     navbarName: "Home",
     icon: Home,
-    component: MemoryFeed
+    component: HomePage
   },
-  {
-    path: "/show-memory",
-    sidebarName: "Story",
-    navbarName: "Story",
-    icon: Home,
-    component: ShowMemory
-  },
+
   {
     path: "/maps",
     sidebarName: "Maps",
@@ -43,27 +36,33 @@ const dashboardRoutes = [
     icon: LocationOn,
     component: Maps
   },
-  userToken ? {
-   path: "/user",
-   sidebarName: "User Profile",
-   navbarName: "Profile",
-   icon: Person,
-   component: UserProfile
-  } : null,
-  userToken ? {
-    path: "/add-new-memory",
-    sidebarName: "Add new Memory",
-    navbarName: "Add new Memory",
-    icon: AddCircle,
-    component: AddNewMemory
-  } : null,
-  userToken ? null : {
-    path: "/login",
-    sidebarName: "Login",
-    navbarName: "Login",
-    icon: HowToReg,
-    component: Login
-  },
+  userToken
+    ? {
+        path: "/user",
+        sidebarName: "User Profile",
+        navbarName: "Profile",
+        icon: Person,
+        component: UserProfile
+      }
+    : null,
+  userToken
+    ? {
+        path: "/add-new-memory",
+        sidebarName: "Add new Memory",
+        navbarName: "Add new Memory",
+        icon: AddCircle,
+        component: AddNewMemory
+      }
+    : null,
+  userToken
+    ? null
+    : {
+        path: "/login",
+        sidebarName: "Login",
+        navbarName: "Login",
+        icon: HowToReg,
+        component: Login
+      },
   { redirect: true, path: "/", to: "/home", navbarName: "Redirect" }
 ];
 

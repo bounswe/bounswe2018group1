@@ -15,7 +15,7 @@ import Icon from '@material-ui/core/Icon';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { ProgressBar } from 'react-bootstrap';
 
-import MemoryRepository from '../../api_calls/memory.js';
+import MemoryRepository from '../../api_calls/memory_with_userId.js';
 import MediaRepository from '../../api_calls/media.js';
 
 const styles = {
