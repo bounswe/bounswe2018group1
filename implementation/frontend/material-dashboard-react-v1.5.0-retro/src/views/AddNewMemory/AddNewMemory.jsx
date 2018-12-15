@@ -279,6 +279,7 @@ export default class AddNewMemory extends Component {
               </GridItem>
             </GridContainer>
 
+            <GridContainer>
               <GridItem xs={10} sm={10} md={3}>
                 <Button
                   onClick={this.handleAddNewText}
