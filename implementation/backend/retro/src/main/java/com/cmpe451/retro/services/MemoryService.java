@@ -20,5 +20,5 @@ public interface MemoryService {
 
     void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody, Long userId);
 
-    void deleteMemory(Long id);
+    void deleteMemory(Long id, long userId);
 }

@@ -5,6 +5,7 @@ import com.cmpe451.retro.models.CreateMemoryResponseBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import com.cmpe451.retro.services.MemoryService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,8 @@ public class MemoryController {
     @Autowired
     AuthenticationController authenticationController;
 
+    @ApiOperation(notes = "Valid item types: TEXT,PHOTO,VIDEO,AUDIO.",
+            value = "")
     @RequestMapping(value = "/memory",method = RequestMethod.POST)
     public CreateMemoryResponseBody createMemory(@RequestBody CreateMemoryRequestBody requestBody){
         long userId  = authenticationController.getUserId();
@@ -52,6 +55,12 @@ public class MemoryController {
             id = authenticationController.getUserId();
         }
         return memoryService.getAllMemoriesOfUser(id,pageable);
+    }
+
+    @RequestMapping(value = "/memory", method = RequestMethod.DELETE)
+    public void deleteMemory(long id){
+        long userId = authenticationController.getUserId();
+        memoryService.deleteMemory(id,userId);
     }
 
 

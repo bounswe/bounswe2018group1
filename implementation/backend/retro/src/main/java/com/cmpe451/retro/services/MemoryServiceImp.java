@@ -1,5 +1,6 @@
 package com.cmpe451.retro.services;
 
+import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
@@ -222,8 +223,15 @@ public class MemoryServiceImp implements MemoryService {
     }
 
     @Override
-    public void deleteMemory(Long id) {
-        memoryRepository.deleteById(id);
+    public void deleteMemory(Long id, long userId) {
+        Optional<Memory> memoryOptional = memoryRepository.findById(id);
+        if(!memoryOptional.isPresent())
+            return;
+        Memory memory = memoryOptional.get();
+        if(memory.getUserId()==userId)
+            memoryRepository.deleteById(id);
+        else
+            throw new RetroException("You can only delete your memories",HttpStatus.UNAUTHORIZED);
     }
 
     public boolean isNullOrEmpty(String s){
