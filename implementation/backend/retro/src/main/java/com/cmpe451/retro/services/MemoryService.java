@@ -20,5 +20,5 @@ public interface MemoryService {
 
     Page<GetMemoryResponseBody> getMemoriesWithFilter(FilterBody filterbody,Pageable pageable);
 
-    //void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody);
+    void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody);
 }

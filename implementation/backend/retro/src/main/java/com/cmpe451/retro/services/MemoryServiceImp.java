@@ -239,7 +239,7 @@ public class MemoryServiceImp implements MemoryService {
         return new PageImpl<>(retList, pageable, total);
     }
 
-    /*@Override
+    @Override
     public void addCommentToMemory(Long memoryId, Long userId, CreateCommentRequestBody createCommentRequestBody) {
         Optional<Memory> memoryOptional = memoryRepository.findById(memoryId);
         if(memoryOptional.isPresent()){
@@ -250,25 +250,35 @@ public class MemoryServiceImp implements MemoryService {
                 comment.setCommentText(createCommentRequestBody.getCommentText());
                 comment.setMemoryId(createCommentRequestBody.getMemoryId());
                 comment.setUserId(createCommentRequestBody.getUserId());
+                comment.setUserNickname(createCommentRequestBody.getUserNickname());
+                comment.setUserFirstName(createCommentRequestBody.getUserFirstName());
+                comment.setUserLastName(createCommentRequestBody.getUserLastName());
+                comment.setDateOfCreation(new Date());
 
-                List<Comment> comments = memory.getListOfComments();
+                List<Comment> comments = Collections.emptyList();
+
+                if(memory.getListOfComments() == null){
+                    memory.setListOfComments(Collections.emptyList());
+
+                }
+                comments = memory.getListOfComments();
                 comments.add(comment);
-                memory.setListOfComments(comments.stream().map().collect(Collectors.toList()));
+                memory.setListOfComments(comments);
 
             }else{
                 throw new RetroException("You can not post an empty comment", HttpStatus.EXPECTATION_FAILED);
             }
 
-            //memory.getListOfComments().forEach(entityManager::persist);
-            //entityManager.persist(memory);
-            //entityManager.flush();
+            memory.getListOfComments().forEach(entityManager::persist);
+            entityManager.persist(memory);
+            entityManager.flush();
 
         }else{
             throw new RetroException("Memory not found.",HttpStatus.BAD_REQUEST);
         }
 
 
-    }*/
+    }
 
     private boolean isNullOrEmpty(String s){
         return (s==null || s.isEmpty());

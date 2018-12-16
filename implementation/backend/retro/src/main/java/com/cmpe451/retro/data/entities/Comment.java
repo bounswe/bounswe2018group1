@@ -35,16 +35,6 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfCreation;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfUpdate;
-
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memory_id", nullable = false)
-    private Memory memory;*/
 
 
     public Comment(){}
@@ -53,7 +43,6 @@ public class Comment {
 
         this.commentText = commentDto.getCommentText();
         this.dateOfCreation = commentDto.getDateOfCreation();
-        this.dateOfUpdate = commentDto.getDateOfUpdate();
         this.memoryId = commentDto.getMemoryId();
         this.userId = commentDto.getUserId();
         this.userFirstName = commentDto.getUserFirstName();
@@ -84,14 +73,6 @@ public class Comment {
 
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
-    }
-
-    public Date getDateOfUpdate() {
-        return dateOfUpdate;
-    }
-
-    public void setDateOfUpdate(Date dateOfUpdate) {
-        this.dateOfUpdate = dateOfUpdate;
     }
 
     public long getMemoryId() {
