@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GetMemoryResponseBody {
 
+    private long id;
+
     private long userId;
 
     private String userNickname;
@@ -52,6 +54,7 @@ public class GetMemoryResponseBody {
 
 
     public GetMemoryResponseBody(Memory memory) {
+        this.id = memory.getId();
         this.userId = memory.getUserId();
         this.userNickname = memory.getUserNickname();
         this.userFirstName = memory.getUserFirstName();
@@ -70,6 +73,14 @@ public class GetMemoryResponseBody {
         this.listOfLocations = memory.getListOfLocations();
         this.listOfTags = memory.getListOfTags();
         this.listOfItems = memory.getListOfItems();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getUserId() {
