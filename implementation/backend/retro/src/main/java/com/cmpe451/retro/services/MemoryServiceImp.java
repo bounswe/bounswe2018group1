@@ -50,8 +50,8 @@ public class MemoryServiceImp implements MemoryService {
         Optional<User> userOptional = userRepository.findById(userId);
         User user = null;
 
-        if (!userOptional.isPresent())
-            throw new RetroException("User not found.", HttpStatus.UNAUTHORIZED);
+        if(!userOptional.isPresent())
+            throw new RetroException("User not found.",HttpStatus.UNAUTHORIZED);
         else
             user = userOptional.get();
 
@@ -88,17 +88,23 @@ public class MemoryServiceImp implements MemoryService {
         entityManager.flush();
 
         return new CreateMemoryResponseBody(memory.getId());
-    }
+        }
+
 
 
     @Override
-    public GetMemoryResponseBody getMemory(Long id) {
+    public GetMemoryResponseBody getMemory(Long id){
         Optional<Memory> memoryOptional = memoryRepository.findById(id);
-        if (memoryOptional.isPresent()) {
+        if(memoryOptional.isPresent()){
             Memory memory = memoryOptional.get();
-            return new GetMemoryResponseBody(memory);
-
-        } else {
+            Optional<User> userOptional = userRepository.findById(memory.getUserId());
+            if (userOptional.isPresent()){
+                return new GetMemoryResponseBody(memory,userOptional.get());
+            }
+            else {
+                throw new RetroException("Memory not found.", HttpStatus.NOT_FOUND);
+            }
+        }else{
             throw new RetroException("Memory not found.", HttpStatus.NOT_FOUND);
         }
 
@@ -108,99 +114,109 @@ public class MemoryServiceImp implements MemoryService {
     public Page<GetMemoryResponseBody> getAllMemories(Pageable pageable) {
         List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findAll(pageable));
         List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
-        for (Memory memory : listOfMemories) {
-            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+        for(Memory memory: listOfMemories){
+            Optional<User> userOptional = userRepository.findById(memory.getUserId());
+            userOptional.ifPresent(user -> listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory, user)));
         }
-        return new PageImpl<>(listOfMemoryResponseBodies, pageable, listOfMemories.size());
+        return new PageImpl<>(listOfMemoryResponseBodies,pageable,listOfMemories.size());
     }
 
     @Override
-    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId, Pageable pageable) {
-        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findByUserId(userId, pageable));
-        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
-        for (Memory memory : listOfMemories) {
-            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory));
+    public Page<GetMemoryResponseBody> getAllMemoriesOfUser(Long userId,Pageable pageable) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user;
+        if(userOptional.isPresent()){
+            user = userOptional.get();
         }
-        return new PageImpl<>(listOfMemoryResponseBodies, pageable, listOfMemories.size());
+        else {
+            throw new RetroException("User not found.",HttpStatus.NOT_FOUND);
+        }
+        List<Memory> listOfMemories = Lists.newArrayList(memoryRepository.findByUserId(userId,pageable));
+        List<GetMemoryResponseBody> listOfMemoryResponseBodies = new ArrayList<>();
+
+        for(Memory memory: listOfMemories){
+            listOfMemoryResponseBodies.add(new GetMemoryResponseBody(memory, user));
+        }
+        return new PageImpl<>(listOfMemoryResponseBodies,pageable,listOfMemories.size());
     }
 
     @Override
     @Transactional
-    public void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody, Long userId) {
+    public void updateMemory(Long id, UpdateMemoryRequestBody updateMemoryRequestBody,Long userId) {
         Optional<Memory> memoryOptional = memoryRepository.findById(id);
-        if (memoryOptional.isPresent()) {
+        if(memoryOptional.isPresent()){
             Memory memory = memoryOptional.get();
-            if (memory.getUserId() != userId) {
-                throw new RetroException("You can not update a memory that you have not created.", HttpStatus.UNAUTHORIZED);
+            if(memory.getUserId() != userId){
+                throw new RetroException("You can not update a memory that you have not created.",HttpStatus.UNAUTHORIZED);
             }
 
-            if (updateMemoryRequestBody.getListOfLocations() != null && !updateMemoryRequestBody.getListOfLocations().isEmpty()) {
+            if(updateMemoryRequestBody.getListOfLocations() != null && !updateMemoryRequestBody.getListOfLocations().isEmpty()){
                 memory.setListOfLocations(updateMemoryRequestBody.getListOfLocations().stream().map(Location::new).collect(Collectors.toList()));
                 memory.getListOfLocations().forEach(entityManager::persist);
 
             }
 
-            if (updateMemoryRequestBody.getListOfTags() != null && !updateMemoryRequestBody.getListOfTags().isEmpty()) {
+            if(updateMemoryRequestBody.getListOfTags() != null && !updateMemoryRequestBody.getListOfTags().isEmpty()){
                 memory.setListOfTags(updateMemoryRequestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
                 memory.getListOfTags().forEach(entityManager::persist);
             }
 
-            if (!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {
+            if(!isNullOrEmpty(updateMemoryRequestBody.getHeadline())) {
                 memory.setHeadline(updateMemoryRequestBody.getHeadline());
             }
 
-            if (updateMemoryRequestBody.getListOfItems() != null && !updateMemoryRequestBody.getListOfItems().isEmpty()) {
+            if(updateMemoryRequestBody.getListOfItems() != null && !updateMemoryRequestBody.getListOfItems().isEmpty()){
                 memory.setListOfItems(updateMemoryRequestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
                 memory.getListOfItems().forEach(entityManager::persist);
             }
 
-            if (!isZero(updateMemoryRequestBody.getStartDateHH()) &&
+            if(!isZero(updateMemoryRequestBody.getStartDateHH()) &&
                     !isZero(updateMemoryRequestBody.getStartDateDD()) &&
                     !isZero(updateMemoryRequestBody.getStartDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getStartDateYYYY())) {
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
                 memory.setStartDateHH(updateMemoryRequestBody.getStartDateHH());
                 memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
                 memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
                 memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
-            } else if (!isZero(updateMemoryRequestBody.getStartDateDD()) &&
+            }else if(!isZero(updateMemoryRequestBody.getStartDateDD()) &&
                     !isZero(updateMemoryRequestBody.getStartDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getStartDateYYYY())) {
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
                 memory.setStartDateDD(updateMemoryRequestBody.getStartDateDD());
                 memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
                 memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
-            } else if (!isZero(updateMemoryRequestBody.getStartDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getStartDateYYYY())) {
+            }else if( !isZero(updateMemoryRequestBody.getStartDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getStartDateYYYY())){
                 memory.setStartDateMM(updateMemoryRequestBody.getStartDateMM());
                 memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
-            } else {
+            }else{
                 memory.setStartDateYYYY(updateMemoryRequestBody.getStartDateYYYY());
             }
 
-            if (!isZero(updateMemoryRequestBody.getEndDateHH()) &&
+            if(!isZero(updateMemoryRequestBody.getEndDateHH()) &&
                     !isZero(updateMemoryRequestBody.getEndDateDD()) &&
                     !isZero(updateMemoryRequestBody.getEndDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getEndDateYYYY())) {
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
                 memory.setEndDateHH(updateMemoryRequestBody.getEndDateHH());
                 memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
                 memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
                 memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
-            } else if (!isZero(updateMemoryRequestBody.getEndDateDD()) &&
+            }else if(!isZero(updateMemoryRequestBody.getEndDateDD()) &&
                     !isZero(updateMemoryRequestBody.getEndDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getEndDateYYYY())) {
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
                 memory.setEndDateDD(updateMemoryRequestBody.getEndDateDD());
                 memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
                 memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
-            } else if (!isZero(updateMemoryRequestBody.getEndDateMM()) &&
-                    !isZero(updateMemoryRequestBody.getEndDateYYYY())) {
+            }else if( !isZero(updateMemoryRequestBody.getEndDateMM()) &&
+                    !isZero(updateMemoryRequestBody.getEndDateYYYY())){
                 memory.setEndDateMM(updateMemoryRequestBody.getEndDateMM());
                 memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
-            } else {
+            }else{
                 memory.setEndDateYYYY(updateMemoryRequestBody.getEndDateYYYY());
             }
 
             entityManager.persist(memory);
             entityManager.flush();
-        } else {
+        }else{
             throw new RetroException("Could not find the memory", HttpStatus.EXPECTATION_FAILED);
         }
     }
@@ -210,14 +226,12 @@ public class MemoryServiceImp implements MemoryService {
         memoryRepository.deleteById(id);
     }
 
-    public boolean isNullOrEmpty(String s) {
-        return (s == null || s.isEmpty());
+    public boolean isNullOrEmpty(String s){
+        return (s==null || s.isEmpty());
     }
 
-    public boolean isZero(int i) {
-        return i == 0;
+    public boolean isZero(int i){
+        return i==0;
     }
-
-
 
 }

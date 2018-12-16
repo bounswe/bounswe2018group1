@@ -16,7 +16,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
-        if(httpServletRequest.getMethod().equals("OPTIONS")) {
+        if(httpServletRequest.getMethod().equals("OPTIONS") || httpServletRequest.getMethod().equals("GET")) {
             return true;
         }
         HttpSession session = httpServletRequest.getSession();
