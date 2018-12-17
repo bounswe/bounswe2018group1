@@ -125,6 +125,16 @@
                 android:inputType="number" />
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Or you can choose decades(Optinal)"
+            android:textAllCaps="false"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/intervals"
+            />
 
         <Button
             android:id="@+id/addLocation"

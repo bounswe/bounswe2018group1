@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -19,7 +21,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
+import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsCreateActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
@@ -59,6 +63,7 @@ public class CreateFragment extends Fragment {
     private Button addVideo;
     private Button addAudio;
     private Button addText;
+    private Spinner intervalTime;
     private ClientAPI clientAPI;
 
     private Uri imageUri;
@@ -237,11 +242,20 @@ public class CreateFragment extends Fragment {
         addAudio = rootView.findViewById(R.id.addAudio);
         addText = rootView.findViewById(R.id.addText);
         addVideo = rootView.findViewById(R.id.addVideo);
+        intervalTime = rootView.findViewById(R.id.intervals);
         // List of location fields
         locationLayoutList = new ArrayList<LinearLayout>();
         locationTextList = new ArrayList<EditText>();
         locationButtonList = new ArrayList<Button>();
         locationMapList = new ArrayList<Button>();
+
+        List<Integer> list = new ArrayList<>();
+        for(int i = 1900; i < 2018 ; i+=10)
+            list.add(i);
+
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        intervalTime.setAdapter(adapter);
 
         addLocation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -433,7 +447,9 @@ public class CreateFragment extends Fragment {
                     e.printStackTrace();
                     endDateHHInt = 0;
                 }
-                
+                if((startDateDDInt+startDateHHInt+startDateMMInt+startDateYYYYInt) == 0 ){
+                    startDateYYYYInt = (int)intervalTime.getSelectedItem();
+                }
                 String[] locations = new String[locationTextList.size()];
                 for (int i = 0; i < locationTextList.size(); i ++) {
                     locations[i] = locationTextList.get(i).getText().toString();
