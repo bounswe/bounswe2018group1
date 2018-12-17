@@ -3,6 +3,9 @@ package bounswe2018group1.cmpe451.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.wifi.hotspot2.pps.Credential;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -11,6 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.auth.api.credentials.Credentials;
+import com.google.android.gms.auth.api.credentials.CredentialsClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.PrivateKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +36,8 @@ import bounswe2018group1.cmpe451.LoginActivity;
 import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.fragments.ProfileFragment;
+
+import static com.android.volley.VolleyLog.TAG;
 
 public class ClientAPI {
 
@@ -122,7 +133,7 @@ public class ClientAPI {
         volleySingleton.getRequestQueue(context).cancelAll(tag);
     }
 
-    public void sendLoginRequest(String loginName, String password, final Context context) {
+    public void sendLoginRequest(final String loginName, final String password, final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("password", password);
@@ -154,6 +165,8 @@ public class ClientAPI {
                                 Intent i = new Intent(context, MainActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 i.putExtra("SessionID", r.getString("jsessionID"));
+                                i.putExtra("LoginName" , loginName);
+                                i.putExtra("Password" , password);
                                 context.startActivity(i);
                             } catch (org.json.JSONException e) {
                                 e.printStackTrace();
