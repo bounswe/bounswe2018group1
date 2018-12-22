@@ -8,6 +8,8 @@ import com.cmpe451.retro.data.entities.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GetMemoryResponseBody {
 
@@ -51,6 +53,9 @@ public class GetMemoryResponseBody {
 
     private Date updatedTime;
 
+    private Set<Long> likedUsers;
+
+    private List<GetCommentDto> comments;
 
     public GetMemoryResponseBody() {
     }
@@ -77,6 +82,8 @@ public class GetMemoryResponseBody {
         this.listOfTags = memory.getListOfTags();
         this.listOfItems = memory.getListOfItems();
         this.id = memory.getId();
+        this.likedUsers = memory.getLikedUsers();
+        this.comments = memory.getComments().stream().map(GetCommentDto::new).collect(Collectors.toList());
     }
 
     public long getUserId() {
@@ -237,5 +244,21 @@ public class GetMemoryResponseBody {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Set<Long> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(Set<Long> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
+
+    public List<GetCommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<GetCommentDto> comments) {
+        this.comments = comments;
     }
 }

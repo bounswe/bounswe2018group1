@@ -3,6 +3,7 @@ package com.cmpe451.retro.controllers;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
+import com.cmpe451.retro.models.PostCommentBody;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import com.cmpe451.retro.services.MemoryService;
 import io.swagger.annotations.ApiOperation;
@@ -62,6 +63,31 @@ public class MemoryController {
         long userId = authenticationController.getUserId();
         memoryService.deleteMemory(id,userId);
     }
+
+    @RequestMapping(value = "/memory/like",method = RequestMethod.POST)
+    public void likeMemory(@RequestParam long memoryId){
+        long userId  = authenticationController.getUserId();
+        memoryService.likeMemory(userId,memoryId);
+    }
+
+    @RequestMapping(value = "/memory/unlike",method = RequestMethod.POST)
+    public void unlikeMemory(@RequestParam long memoryId){
+        long userId  = authenticationController.getUserId();
+        memoryService.unlikeMemory(userId,memoryId);
+    }
+
+    @RequestMapping(value = "/memory/comment",method = RequestMethod.POST)
+    public void comment(@RequestBody PostCommentBody postCommentBody){
+        long userId  = authenticationController.getUserId();
+        memoryService.comment(userId,postCommentBody);
+    }
+
+    @RequestMapping(value = "/memory/comment",method = RequestMethod.DELETE)
+    public void deleteComment(@RequestParam Long commentId){
+        long userId  = authenticationController.getUserId();
+        memoryService.deleteComment(userId,commentId);
+    }
+
 
 
 }

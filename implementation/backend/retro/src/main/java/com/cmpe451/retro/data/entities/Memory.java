@@ -1,5 +1,6 @@
 package com.cmpe451.retro.data.entities;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +10,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -34,6 +38,12 @@ public class Memory {
 
     @NotNull
     private Date dateOfCreation;
+
+    @ElementCollection
+    Set<Long> likedUsers;
+
+    @OneToMany
+    List<Comment> comments;
 
 //    @NotNull
 //    @Temporal(TemporalType.DATE)
@@ -78,6 +88,8 @@ public class Memory {
 
 
     public Memory() {
+        this.likedUsers = new HashSet<>();
+        this.comments = new ArrayList<>();
 
     }
 
@@ -231,5 +243,21 @@ public class Memory {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public Set<Long> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(Set<Long> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

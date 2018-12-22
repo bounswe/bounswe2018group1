@@ -1,16 +1,18 @@
 package com.cmpe451.retro.services;
 
-import com.amazonaws.services.dynamodbv2.xspec.M;
+import com.cmpe451.retro.data.entities.Comment;
 import com.cmpe451.retro.data.entities.Item;
 import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Tag;
 import com.cmpe451.retro.data.entities.User;
+import com.cmpe451.retro.data.repositories.CommentRepository;
 import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
+import com.cmpe451.retro.models.PostCommentBody;
 import com.cmpe451.retro.models.RetroException;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
 import com.google.common.collect.Lists;
@@ -30,6 +32,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class MemoryServiceImp implements MemoryService {
 
     @Autowired
@@ -43,6 +46,9 @@ public class MemoryServiceImp implements MemoryService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Override
     @Transactional
@@ -232,6 +238,58 @@ public class MemoryServiceImp implements MemoryService {
             memoryRepository.deleteById(id);
         else
             throw new RetroException("You can only delete your memories",HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    public void likeMemory(long userId, long memoryId) {
+        Optional<Memory> memoryOptional = memoryRepository.findById(memoryId);
+        if(!memoryOptional.isPresent())
+            throw new RetroException("Memory not found", HttpStatus.NOT_FOUND);
+        Memory memory = memoryOptional.get();
+        memory.getLikedUsers().add(userId);
+        memoryRepository.save(memory);
+    }
+
+    @Override
+    public void unlikeMemory(long userId, long memoryId) {
+        Optional<Memory> memoryOptional = memoryRepository.findById(memoryId);
+        if(!memoryOptional.isPresent())
+            throw new RetroException("Memory not found", HttpStatus.NOT_FOUND);
+        Memory memory = memoryOptional.get();
+        memory.getLikedUsers().remove(userId);
+        memoryRepository.save(memory);
+    }
+
+    public void comment(long userId, PostCommentBody postCommentBody){
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Memory> memoryOptional = memoryRepository.findById(postCommentBody.getMemoryId());
+        if(!userOptional.isPresent() || !memoryOptional.isPresent()){
+            throw new RetroException("Memory not found.",HttpStatus.NOT_FOUND);
+        }
+        User user = userOptional.get();
+        Memory memory = memoryOptional.get();
+        Comment comment = new Comment();
+        comment.setMemory(memory);
+        comment.setUser(user);
+        comment.setComment(postCommentBody.getComment());
+        memory.getComments().add(comment);
+        entityManager.persist(comment);
+        entityManager.persist(memory);
+        entityManager.flush();
+    }
+
+    public void deleteComment(long userId, Long commentId){
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+        if(!commentOptional.isPresent())
+            throw new RetroException("Comment not found.",HttpStatus.NOT_FOUND);
+        Comment comment = commentOptional.get();
+        if(comment.getUser().getId() != userId)
+            throw new RetroException("You can only delete your comments.",HttpStatus.UNAUTHORIZED);
+        Memory memory = comment.getMemory();
+        memory.getComments().remove(comment);
+        entityManager.remove(comment);
+        entityManager.persist(memory);
+        entityManager.flush();
     }
 
     public boolean isNullOrEmpty(String s){
