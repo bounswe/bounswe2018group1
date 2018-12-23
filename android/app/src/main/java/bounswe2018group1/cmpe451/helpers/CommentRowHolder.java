@@ -3,26 +3,28 @@ package bounswe2018group1.cmpe451.helpers;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import bounswe2018group1.cmpe451.R;
 
 public class CommentRowHolder {
-    public ImageView avatar, commentEditButton, commentEditSend;
+    public ImageView avatar;
+    public ImageButton commentOptionsButton, commentEditButton, commentEditSend;
     public TextView authorName, postDate, commentText, btnSeeMore;
     public EditText commentEditText;
     public boolean expanded, isEditing;
+    public int id;
 
     public CommentRowHolder(View v) {
         avatar = v.findViewById(R.id.avatar);
-        commentEditButton = v.findViewById(R.id.commentEditButton);
+        commentOptionsButton = v.findViewById(R.id.commentOptionsButton);
         authorName = v.findViewById(R.id.authorName);
         postDate = v.findViewById(R.id.postDate);
         commentText = v.findViewById(R.id.commentText);
         btnSeeMore = v.findViewById(R.id.btnSeeMore);
         commentEditText = v.findViewById(R.id.commentEditText);
-        commentEditSend = v.findViewById(R.id.commentEditSend);
         expanded = true;
         isEditing = false;
     }

@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@id/commentEditButton"
+        app:layout_constraintEnd_toStartOf="@id/commentOptionsButton"
         app:layout_constraintStart_toEndOf="@+id/avatar"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -59,27 +59,44 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="avatar,nameDateLayout"/>
 
-    <ImageView
+    <ImageButton
+        android:id="@+id/commentOptionsButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_overflow_holo_light"
+        android:background="@null"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/nameDateLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+    <ImageButton
         android:id="@+id/commentEditButton"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_edit_blue_24dp"
+        android:background="@null"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/nameDateLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/commentEditSend"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_send_green_24dp"
+        android:background="@null"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commentEditButton" />
+    -->
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/commentLayout"

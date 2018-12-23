@@ -3,15 +3,19 @@ package bounswe2018group1.cmpe451.helpers;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,11 +29,13 @@ public class CommentAdapter extends BaseAdapter {
     protected Context context;
     private int layoutResource;
     private JsonArray commentDataSource;
+    private ClientAPI clientAPI;
 
     public CommentAdapter(Context context, int resource, JsonArray commentDataSource) {
         this.context = context;
         this.layoutResource = resource;
         this.commentDataSource = commentDataSource;
+        this.clientAPI = ClientAPI.getInstance(context);
     }
 
     @Override
@@ -83,13 +89,17 @@ public class CommentAdapter extends BaseAdapter {
         holder.postDate.setText("Posted " + formattedTime);
         holder.commentText.setText(commentText);
         holder.hookCommentText();
+        holder.id = comment.get("id").getAsInt();
 
-        // TODO: CHECK IF THE CURRENT USER OWNS THIS COMMENT
-        if(comment.get("userId").getAsInt() == 1) {
-            holder.commentEditButton.setOnClickListener(new CommentEditButtonOnClickListener(holder));
-            holder.commentEditButton.setVisibility(View.VISIBLE);
-            holder.commentEditSend.setOnClickListener(new CommentEditSendOnClickListener(holder));
-        }
+        // TODO: CHECK IF THE CURRENT USER OWNS THIS COMMENT ????????????????????????????????????????????????
+        holder.commentOptionsButton.setOnClickListener(
+                new CommentOptionsButtonOnClickListener(holder, parent, row));
+        clientAPI.getCurrentUser(
+                new CommentOptionsButtonServerCallBack(holder, comment.get("userId").getAsInt()),
+                context);
+//        holder.commentEditButton.setOnClickListener(new CommentEditButtonOnClickListener(holder));
+//        holder.commentEditButton.setVisibility(View.VISIBLE);
+//        holder.commentEditSend.setOnClickListener(new CommentEditSendOnClickListener(holder));
 
         holder.btnSeeMore.setOnClickListener(
                 new ButtonSeeMoreOnClickListener(holder)
@@ -126,6 +136,80 @@ public class CommentAdapter extends BaseAdapter {
         }
     }
 
+    class CommentOptionsButtonServerCallBack implements ServerCallBack {
+
+        CommentRowHolder holder;
+        private int commentUserId;
+
+        CommentOptionsButtonServerCallBack(CommentRowHolder holder, int commentUserId) {
+            this.holder = holder;
+            this.commentUserId = commentUserId;
+        }
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            try {
+                if(result.getInt("id") == commentUserId) {
+                    holder.commentOptionsButton.setVisibility(View.VISIBLE);
+                }
+            } catch (org.json.JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onError() {}
+    }
+
+    class CommentOptionsButtonOnClickListener implements View.OnClickListener {
+
+        CommentRowHolder holder;
+        ViewGroup parent;
+        View row;
+
+        CommentOptionsButtonOnClickListener(CommentRowHolder holder, ViewGroup parent, View row) {
+            this.holder = holder;
+            this.parent = parent;
+            this.row = row;
+        }
+
+        @Override
+        public void onClick(View v) {
+            PopupMenu dropDownMenu = new PopupMenu(context, holder.commentOptionsButton);
+            dropDownMenu.getMenuInflater().inflate(R.menu.comment_menu, dropDownMenu.getMenu());
+            dropDownMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    // In case there are more than 1 menu items in the future
+                    switch (item.getItemId()) {
+                        case R.id.delete_item:
+                            clientAPI.deleteComment(holder.id,
+                                    new DeleteCommentServerCallBack(), context);
+                            break;
+                    }
+                    return true;
+                }
+            });
+            dropDownMenu.show();
+        }
+
+        class DeleteCommentServerCallBack implements ServerCallBack {
+
+            @Override
+            public void onSuccess(JSONObject result) {
+                if(parent.indexOfChild(row) != -1) {
+                    parent.removeView(row);
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(context, "Failed to delete comment!", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+/*
     class CommentEditButtonOnClickListener implements View.OnClickListener {
 
         CommentRowHolder holder;
@@ -173,6 +257,6 @@ public class CommentAdapter extends BaseAdapter {
                 // TODO: TAKE THE 'commentEditText' AND UPDATE THIS COMMENT
             }
         }
-    }
+    }*/
 
 }

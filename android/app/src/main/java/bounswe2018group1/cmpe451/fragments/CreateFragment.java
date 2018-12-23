@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsCreateActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;

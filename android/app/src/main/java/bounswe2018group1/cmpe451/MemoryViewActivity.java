@@ -5,13 +5,9 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,10 +21,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -120,6 +114,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         if(memory.getAsJsonArray("listOfTags").size() == 0) {
             this.memoryTagLayout.setVisibility(View.GONE);
         } else {
+            this.memoryTagLayout.setVisibility(View.VISIBLE);
             for(int i = 0, tag_size = memory.getAsJsonArray("listOfTags").size(); i < tag_size; ++i) {
                 TextView tag_text = new TextView(this);
                 tag_text.setText(memory.getAsJsonArray("listOfTags").get(i).
@@ -148,6 +143,8 @@ public class MemoryViewActivity extends AppCompatActivity {
             this.commentsText.setVisibility(View.GONE);
             this.commentLayout.setVisibility(View.GONE);
         } else {
+            this.commentsText.setVisibility(View.VISIBLE);
+            this.commentLayout.setVisibility(View.VISIBLE);
             for(int i = 0, sz = adapter.getCount(); i < sz; ++i) {
                 View commentRow = adapter.getView(i, null, this.commentLayout);
                 this.commentLayout.addView(commentRow);
@@ -159,16 +156,11 @@ public class MemoryViewActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //TODO: UPDATE 'memory' VARIABLE
-
-                // Update the memory view page
-                preparePageFromMemory();
-                new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 500); // Delay in millis
+                // UPDATE 'memory' VARIABLE
+                clientAPI.getMemory(
+                        memory.get("id").getAsInt(),
+                        new GetMemoryServerCallBack(),
+                        MemoryViewActivity.this);
             }
         });
         // Scheme colors for animation
@@ -217,10 +209,13 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.createCommentSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: SEND THE COMMENT
-
-                // Notify success, clear the content and make it gone
-                Toast.makeText(MemoryViewActivity.this, "Comment created!", Toast.LENGTH_LONG).show();
+                // SEND THE COMMENT
+                clientAPI.createComment(
+                        createCommentText.getText().toString(),
+                        memory.get("id").getAsInt(),
+                        new CreateCommentServerCallBack(),
+                        MemoryViewActivity.this);
+                // clear the content and make it gone
                 createCommentText.setVisibility(View.GONE);
                 createCommentSend.setVisibility(View.GONE);
                 createCommentText.setText("", TextView.BufferType.EDITABLE);
@@ -255,7 +250,7 @@ public class MemoryViewActivity extends AppCompatActivity {
                 StringUtility.memoryLocation(memory.getAsJsonArray("listOfLocations")));
         this.memoryTitle.setText(memoryTitle);
         //Prepare items
-        if (itemDataSource == null) itemDataSource = memory.getAsJsonArray("listOfItems");
+        itemDataSource = memory.getAsJsonArray("listOfItems");
         this.initItems(new ItemAdapter(this, R.layout.item_row, itemDataSource));
         this.initMemoryTags();
         // Show 'Edit' button if the current user owns it
@@ -266,16 +261,8 @@ public class MemoryViewActivity extends AppCompatActivity {
         // TODO: GET LIKE STATUS OF THE CURRENT USER
         this.like.setTag(R.drawable.ic_thumb_up_black_24dp);
         this.likesText.setText("" + likeAmount + " likes");
-        // TODO: GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
-        JsonArray commentDataSource = null;
-        InputStream is = getResources().openRawResource(R.raw.comment_json_file);
-        try {
-            commentDataSource = new JsonParser().parse(
-                    new BufferedReader(new InputStreamReader(is, "UTF-8"))
-            ).getAsJsonArray();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        // GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
+        JsonArray commentDataSource = memory.getAsJsonArray("comments");
         this.initComments(new CommentAdapter(this, R.layout.comment_row, commentDataSource));
     }
 
@@ -290,7 +277,38 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.initEventHandlers();
     }
 
-    private class EditButtonServerCallBack implements ServerCallBack {
+    class GetMemoryServerCallBack implements ServerCallBack {
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            memory = new JsonParser().parse(
+                    result.toString()
+            ).getAsJsonObject();
+            preparePageFromMemory();
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+        @Override
+        public void onError() {
+            Toast.makeText(MemoryViewActivity.this, "Failed to refresh!", Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    class CreateCommentServerCallBack implements ServerCallBack {
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            Toast.makeText(MemoryViewActivity.this, "Comment created, swipe to refresh.", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError() {
+            Toast.makeText(MemoryViewActivity.this, "Failed to create comment!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    class EditButtonServerCallBack implements ServerCallBack {
 
         private Button editButton;
         private int memoryUserId;
@@ -305,6 +323,8 @@ public class MemoryViewActivity extends AppCompatActivity {
             try {
                 if(result.getInt("id") == memoryUserId) {
                     editButton.setVisibility(View.VISIBLE);
+                } else {
+                    editButton.setVisibility(View.GONE);
                 }
             } catch (org.json.JSONException e) {
                 e.printStackTrace();
@@ -314,24 +334,6 @@ public class MemoryViewActivity extends AppCompatActivity {
         @Override
         public void onError() {}
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuSettings:
-                // TODO: open settings
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 }

@@ -17,6 +17,8 @@ public class URLs {
     public static final String URL_USER_ALL = "http://52.7.87.173:8080/user/all";
     public static final String URL_USER_INFO = "http://52.7.87.173:8080/user/info";
 
+    public static final String URL_MEMORY_COMMENT = "http://52.7.87.173:8080/memory/comment";
+
     public static String URL_USER_withID(String id) {
         return URL_USER + '/' + id;
     }
