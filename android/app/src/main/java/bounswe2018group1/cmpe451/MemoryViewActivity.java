@@ -51,9 +51,9 @@ public class MemoryViewActivity extends AppCompatActivity {
     private FlexboxLayout memoryTagLayout = null;
     private Button editButton = null, deleteButton = null,
             addCommentButton = null, createCommentSend = null;
-    private int likeAmount;
     private EditText createCommentText = null;
     private ClientAPI clientAPI = null;
+    private int likeAmount;
 
     private void initLocalVariables() {
         if (swipeRefreshLayout == null) swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -221,12 +221,20 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: SEND THE ACTUAL LIKE REQUEST TO BACKEND
+                // SEND THE ACTUAL LIKE REQUEST TO BACKEND
                 if(like.getTag().equals(R.drawable.ic_thumb_up_black_24dp)) {
+                    clientAPI.likeMemory(
+                            memory.get("id").getAsInt(),
+                            new LikeMemoryServerCallBack(),
+                            MemoryViewActivity.this);
                     like.setImageResource(R.drawable.ic_thumb_up_blue_24dp);
                     like.setTag(R.drawable.ic_thumb_up_blue_24dp);
                     likesText.setText("" + ++likeAmount + " likes");
                 } else if(like.getTag().equals(R.drawable.ic_thumb_up_blue_24dp)) {
+                    clientAPI.unlikeMemory(
+                            memory.get("id").getAsInt(),
+                            new UnlikeMemoryServerCallBack(),
+                            MemoryViewActivity.this);
                     like.setImageResource(R.drawable.ic_thumb_up_black_24dp);
                     like.setTag(R.drawable.ic_thumb_up_black_24dp);
                     likesText.setText("" + --likeAmount + " likes");
@@ -267,8 +275,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         String[] fullName = new String[]{
                 memory.get("userFirstName").getAsString(),
                 memory.get("userLastName").getAsString()};
-        // TODO: GET THE AMOUNT OF LIKES AND LIKE STATUS OF THE CURRENT USER
-        likeAmount = 1731;
+        likeAmount = memory.getAsJsonArray("likedUsers").size();
         this.initProfilePicture();
         this.authorName.setText(StringUtility.join(" ", fullName));
         this.postDate.setText("Posted " + formattedTime);
@@ -280,14 +287,13 @@ public class MemoryViewActivity extends AppCompatActivity {
         itemDataSource = memory.getAsJsonArray("listOfItems");
         this.initItems(new ItemAdapter(this, R.layout.item_row, itemDataSource));
         this.initMemoryTags();
-        // Show 'Edit' button if the current user owns it
-        if(!memory.get("userId").isJsonNull()) {
-            clientAPI.getCurrentUser(new GetCurrentUserServerCallBack(editButton, deleteButton,
-                    memory.get("userId").getAsInt()), this);
-        }
-        // TODO: GET LIKE STATUS OF THE CURRENT USER
         this.like.setTag(R.drawable.ic_thumb_up_black_24dp);
         this.likesText.setText("" + likeAmount + " likes");
+        // Show 'Edit' button if the current user owns it and
+        // GET LIKE STATUS OF THE CURRENT USER
+        if(!memory.get("userId").isJsonNull()) {
+            clientAPI.getCurrentUser(new GetCurrentUserServerCallBack(), this);
+        }
         // GET THE ACTUAL COMMENTS BELONGING TO THIS MEMORY
         JsonArray commentDataSource = memory.getAsJsonArray("comments");
         this.initComments(new CommentAdapter(this, R.layout.comment_row, commentDataSource));
@@ -302,6 +308,38 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.preparePageFromMemory();
 
         this.initEventHandlers();
+    }
+
+    class UnlikeMemoryServerCallBack implements ServerCallBack {
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            Toast.makeText(MemoryViewActivity.this, "Unliked.", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError() {
+            Toast.makeText(MemoryViewActivity.this, "Failed to unlike!", Toast.LENGTH_SHORT).show();
+            like.setImageResource(R.drawable.ic_thumb_up_blue_24dp);
+            like.setTag(R.drawable.ic_thumb_up_blue_24dp);
+            likesText.setText("" + ++likeAmount + " likes");
+        }
+    }
+
+    class LikeMemoryServerCallBack implements ServerCallBack {
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            Toast.makeText(MemoryViewActivity.this, "Liked.", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError() {
+            Toast.makeText(MemoryViewActivity.this, "Failed to like!", Toast.LENGTH_SHORT).show();
+            like.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+            like.setTag(R.drawable.ic_thumb_up_black_24dp);
+            likesText.setText("" + --likeAmount + " likes");
+        }
     }
 
     class DeleteMemoryServerCallBack implements ServerCallBack {
@@ -353,24 +391,31 @@ public class MemoryViewActivity extends AppCompatActivity {
 
     class GetCurrentUserServerCallBack implements ServerCallBack {
 
-        private Button editButton, deleteButton;
-        private int memoryUserId;
-
-        GetCurrentUserServerCallBack(Button editButton, Button deleteButton, int memoryUserId) {
-            this.editButton = editButton;
-            this.deleteButton = deleteButton;
-            this.memoryUserId = memoryUserId;
-        }
-
         @Override
         public void onSuccess(org.json.JSONObject result) {
             try {
-                if(result.getInt("id") == memoryUserId) {
+                if(result.getInt("id") == memory.get("userId").getAsInt()) {
                     editButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
                 } else {
                     editButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);
+                }
+
+                boolean currentUserLiked = false;
+                for(int i = 0; i < likeAmount; ++i) {
+                    if(result.getInt("id") ==
+                            memory.getAsJsonArray("likedUsers").get(i).getAsInt()) {
+                        currentUserLiked = true;
+                        break;
+                    }
+                }
+                if(currentUserLiked) {
+                    like.setImageResource(R.drawable.ic_thumb_up_blue_24dp);
+                    like.setTag(R.drawable.ic_thumb_up_blue_24dp);
+                } else {
+                    like.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                    like.setTag(R.drawable.ic_thumb_up_black_24dp);
                 }
             } catch (org.json.JSONException e) {
                 e.printStackTrace();
