@@ -1,11 +1,13 @@
 package bounswe2018group1.cmpe451;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -40,20 +43,16 @@ public class MemoryViewActivity extends AppCompatActivity {
     private JsonArray itemDataSource = null;
     private JsonObject memory = null;
     private SwipeRefreshLayout swipeRefreshLayout = null;
-    private ImageView avatar = null;
+    private ImageView avatar = null, like = null;
     private TextView authorName = null, postDate = null,
-            memoryDate = null, memoryLocation = null, memoryTitle = null;
-    private LinearLayout itemListView = null;
-    private LinearLayout memoryTagLayout = null;
-    private Button editButton = null;
-    private Button addCommentButton = null;
-    private ImageView like = null;
+            memoryDate = null, memoryLocation = null, memoryTitle = null,
+            likesText = null, commentsText = null;
+    private LinearLayout itemListView = null, commentLayout = null;
+    private FlexboxLayout memoryTagLayout = null;
+    private Button editButton = null, deleteButton = null,
+            addCommentButton = null, createCommentSend = null;
     private int likeAmount;
-    private TextView likesText = null;
     private EditText createCommentText = null;
-    private Button createCommentSend = null;
-    private TextView commentsText = null;
-    private LinearLayout commentLayout = null;
     private ClientAPI clientAPI = null;
 
     private void initLocalVariables() {
@@ -67,6 +66,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         if (itemListView == null) itemListView = findViewById(R.id.itemListView);
         if (memoryTagLayout == null) memoryTagLayout = findViewById(R.id.memoryTagLayout);
         if (editButton == null) editButton = findViewById(R.id.editButton);
+        if (deleteButton == null) deleteButton = findViewById(R.id.deleteButton);
         if (addCommentButton == null) addCommentButton = findViewById(R.id.addCommentButton);
         if (like == null) like = findViewById(R.id.like);
         if (likesText == null) likesText = findViewById(R.id.likesText);
@@ -178,6 +178,33 @@ public class MemoryViewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        this.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MemoryViewActivity.this,
+                        R.style.Theme_MaterialComponents_Dialog_Alert);
+                builder.setTitle("Delete memory").
+                        setMessage("Are you sure you want to delete this memory?").
+                        setPositiveButton("Yes",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        clientAPI.deleteMemory(
+                                                memory.get("id").getAsInt(),
+                                                new DeleteMemoryServerCallBack(),
+                                                MemoryViewActivity.this);
+                                    }
+                                }).
+                        setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Do nothing
+                                    }
+                                }).
+                        setIcon(R.drawable.ic_warning_black_24dp).show();
+            }
+        });
         this.addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,7 +282,7 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.initMemoryTags();
         // Show 'Edit' button if the current user owns it
         if(!memory.get("userId").isJsonNull()) {
-            clientAPI.getCurrentUser(new EditButtonServerCallBack(editButton,
+            clientAPI.getCurrentUser(new GetCurrentUserServerCallBack(editButton, deleteButton,
                     memory.get("userId").getAsInt()), this);
         }
         // TODO: GET LIKE STATUS OF THE CURRENT USER
@@ -275,6 +302,22 @@ public class MemoryViewActivity extends AppCompatActivity {
         this.preparePageFromMemory();
 
         this.initEventHandlers();
+    }
+
+    class DeleteMemoryServerCallBack implements ServerCallBack {
+
+        @Override
+        public void onSuccess(JSONObject result) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("isDeleted", true);
+            resultIntent.putExtra("deletedIndex",
+                    getIntent().getIntExtra("memoryIndex", -1));
+            MemoryViewActivity.this.setResult(RESULT_OK, resultIntent);
+            MemoryViewActivity.this.finish();
+        }
+
+        @Override
+        public void onError() {}
     }
 
     class GetMemoryServerCallBack implements ServerCallBack {
@@ -308,13 +351,14 @@ public class MemoryViewActivity extends AppCompatActivity {
         }
     }
 
-    class EditButtonServerCallBack implements ServerCallBack {
+    class GetCurrentUserServerCallBack implements ServerCallBack {
 
-        private Button editButton;
+        private Button editButton, deleteButton;
         private int memoryUserId;
 
-        EditButtonServerCallBack(Button editButton, int memoryUserId) {
+        GetCurrentUserServerCallBack(Button editButton, Button deleteButton, int memoryUserId) {
             this.editButton = editButton;
+            this.deleteButton = deleteButton;
             this.memoryUserId = memoryUserId;
         }
 
@@ -323,8 +367,10 @@ public class MemoryViewActivity extends AppCompatActivity {
             try {
                 if(result.getInt("id") == memoryUserId) {
                     editButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
                 } else {
                     editButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
                 }
             } catch (org.json.JSONException e) {
                 e.printStackTrace();

@@ -139,11 +139,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/itemListView"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <LinearLayout
+            <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/memoryTagLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                app:flexWrap="wrap"
+                app:flexDirection="row"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -155,59 +156,75 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Memory Tags:" />
-            </LinearLayout>
+            </com.google.android.flexbox.FlexboxLayout>
 
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
-                android:text="Edit"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/addCommentButton"
-                app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
-
-            <Button
-                android:id="@+id/addCommentButton"
-                android:layout_width="90dp"
-                android:layout_height="35dp"
-                android:text="Comment"
-                android:textAllCaps="false"
-                app:layout_constraintStart_toEndOf="@id/editButton"
-                app:layout_constraintEnd_toStartOf="@id/likeLayout"
-                app:layout_constraintTop_toBottomOf="@id/memoryTagLayout" />
-
-            <LinearLayout
-                android:id="@+id/likeLayout"
-                android:layout_width="wrap_content"
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/actionsLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@id/addCommentButton"
+                app:flexWrap="wrap"
+                app:flexDirection="row"
+                app:justifyContent="space_between"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/memoryTagLayout">
-                <ImageView
-                    android:id="@+id/like"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_thumb_up_black_24dp" />
 
-                <TextView
-                    android:id="@+id/likesText"
-                    android:maxWidth="150dp"
+                <Button
+                    android:id="@+id/editButton"
+                    android:layout_width="60dp"
+                    android:layout_height="35dp"
+                    android:text="Edit"
+                    android:textAllCaps="false"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/deleteButton"
+                    android:layout_width="65dp"
+                    android:layout_height="35dp"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/addCommentButton"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:text="Comment"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="8dp"/>
+
+                <LinearLayout
+                    android:id="@+id/likeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/like"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_thumb_up_black_24dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/likesText"
+                        android:maxWidth="150dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="123 likes"/>
+                </LinearLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
 
             <android.support.constraint.Barrier
                 android:id="@+id/labelBarrier2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="editButton,addCommentButton,likeLayout"/>
+                app:constraint_referenced_ids="actionsLayout"/>
 
             <EditText
                 android:id="@+id/createCommentText"

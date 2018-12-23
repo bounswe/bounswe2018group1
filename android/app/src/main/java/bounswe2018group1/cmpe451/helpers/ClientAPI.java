@@ -42,6 +42,7 @@ public class ClientAPI {
         public static final String MEMORY_UPD_TAG = "memory_update_tag";
         public static final String MEMORY_CREATE_TAG = "memory_create_tag";
         public static final String MEMORY_GET_TAG = "memory_get_tag";
+        public static final String MEMORY_DELETE_TAG = "memory_delete_tag";
         public static final String COMMENT_CREATE_TAG = "comment_create_tag";
         public static final String COMMENT_DELETE_TAG = "comment_delete_tag";
     }
@@ -708,6 +709,51 @@ public class ClientAPI {
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_GET_TAG, context);
+    }
+
+    public void deleteMemory(int id, final ServerCallBack serverCallBack,
+                             final Context context) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.DELETE,
+                URLs.URL_MEMORY + "?id=" + id, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.err.println("deleteMemory returned null response!");
+                            serverCallBack.onSuccess(null);
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            serverCallBack.onSuccess(r);
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("deleteMemory unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                            serverCallBack.onError();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("deleteMemory returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                        serverCallBack.onError();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_DELETE_TAG, context);
     }
 
 }

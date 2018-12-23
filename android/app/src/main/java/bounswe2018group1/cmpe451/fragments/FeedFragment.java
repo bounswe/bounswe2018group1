@@ -1,5 +1,6 @@
 package bounswe2018group1.cmpe451.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,8 +32,10 @@ public class FeedFragment extends Fragment {
     private Semaphore dataSourceUpdateLock = null;
     private SwipeRefreshLayout swipeRefreshLayout = null;
     private ListView listView = null;
+    private MemoryAdapter adapter = null;
     private ClientAPI clientAPI = null;
     private int pageSize = 3;
+    private static int MY_CHILD_ACTIVITY = MemoryViewActivity.class.hashCode() & 0xFFFF;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -49,7 +52,7 @@ public class FeedFragment extends Fragment {
 
         if (dataSourcePtr == null) dataSourcePtr = new Pointer<>(new JsonArray());
         if(dataSourceUpdateLock == null) dataSourceUpdateLock = new Semaphore(1);
-        MemoryAdapter adapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSourcePtr);
+        if(adapter == null) adapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSourcePtr);
         listView.setAdapter(adapter);
 
         updateListView(adapter);
@@ -109,7 +112,24 @@ public class FeedFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent i = new Intent(getActivity(), MemoryViewActivity.class);
             i.putExtra("memory", memoryAdapter.getItem(position).toString());
-            startActivity(i);
+            i.putExtra("memoryIndex", position);
+            startActivityForResult(i, MY_CHILD_ACTIVITY);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == MY_CHILD_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                // TODO Extract the data returned from the child Activity.
+                boolean isDeleted = data.getBooleanExtra("isDeleted", false);
+                if(isDeleted) {
+                    int deletedIndex = data.getIntExtra("deletedIndex", -1);
+                    dataSourcePtr.data.remove(deletedIndex);
+                    adapter.notifyDataSetChanged();
+                }
+            }
         }
     }
 
