@@ -10,6 +10,7 @@ import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import AccessTime from "@material-ui/icons/AccessTime";
+
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -23,11 +24,15 @@ import { bugs, website, server } from "variables/general.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import MemoryRepository from "api_calls/memory_without_userId.js";
 
+import LikePage from "views/Like_Comment/Like.jsx";
+import CommentPage from "views/Like_Comment/Comment.jsx";
+
 class ShowMemory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       memory: {
+        id: null,
         dateOfCreation: "",
         endDateDD: 0,
         endDateHH: 0,
@@ -68,15 +73,18 @@ class ShowMemory extends React.Component {
   }
 
   // get memory çalışmalı
-
   componentDidMount() {
-    MemoryRepository.getMemory().then(memory => {
+    const { id } = this.props;
+    MemoryRepository.getMemory(id).then(memory => {
+      console.log(memory);
       this.setState({memory: memory});
     });
   }
 
   render() {
     const { classes } = this.props;
+    console.log(this.state.memory.id);
+
     return (
       <div>
         <GridContainer>
@@ -88,17 +96,17 @@ class ShowMemory extends React.Component {
                 </h4>
                 <p className={classes.cardCategoryWhite}>
                   Start Date:
-                  {this.state.memory.startDateYYYY == '' ? '' : this.state.memory.startDateYYYY}
-                  {this.state.memory.startDateMM == '' ? '' : '/' + this.state.memory.startDateMM}
-                  {this.state.memory.startDateDD == '' ? '' : '/' + this.state.memory.startDateDD}
-                  {this.state.memory.startDateHH == '' ? '' : ' - ' + this.state.memory.startDateHH}
+                  {this.state.memory.startDateYYYY === '' ? '' : this.state.memory.startDateYYYY}
+                  {this.state.memory.startDateMM === '' ? '' : '/' + this.state.memory.startDateMM}
+                  {this.state.memory.startDateDD === '' ? '' : '/' + this.state.memory.startDateDD}
+                  {this.state.memory.startDateHH === '' ? '' : ' - ' + this.state.memory.startDateHH}
                 </p>
                 <p className={classes.cardCategoryWhite}>
                   End Date:
-                  {this.state.memory.endDateYYYY == '' ? '' : this.state.memory.endDateYYYY}
-                  {this.state.memory.endDateMM == '' ? '' : '/' + this.state.memory.endDateMM}
-                  {this.state.memory.endDateDD == '' ? '' : '/' + this.state.memory.endDateDD}
-                  {this.state.memory.endDateHH == '' ? '' : ' - ' + this.state.memory.endDateHH}
+                  {this.state.memory.endDateYYYY === '' ? '' : this.state.memory.endDateYYYY}
+                  {this.state.memory.endDateMM === '' ? '' : '/' + this.state.memory.endDateMM}
+                  {this.state.memory.endDateDD === '' ? '' : '/' + this.state.memory.endDateDD}
+                  {this.state.memory.endDateHH === '' ? '' : ' - ' + this.state.memory.endDateHH}
                 </p>
                 <p className={classes.cardCategoryWhite}>
                   Added by {this.state.memory.userNickname}
@@ -114,12 +122,16 @@ class ShowMemory extends React.Component {
                   })}
                 </ul>
 
-                {/* listOfItems dönülecek ve içindeki her şey basılacak */}
-
                 {this.state.memory.listOfItems.map((prop, key) => {
                   if (prop.body === '') {
                     return (
-                      <p> {prop.url} </p>
+                      <img
+                        className={classes.cardImgTop}
+                        alt="100%x180"
+                        style={{ height: "300px", width: "33%", display: "block" }}
+                        src={prop.url}
+                        data-holder-rendered="true"
+                      />
                     );
                   } else {
                     return (
@@ -148,6 +160,17 @@ class ShowMemory extends React.Component {
                   <AccessTime />
                   added on {this.state.memory.dateOfCreation}
                 </div>
+              </CardFooter>
+
+              <CardFooter chart>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <LikePage memory={ this.state.memory } />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CommentPage memory={ this.state.memory } />
+                  </GridItem>
+                </GridContainer>
               </CardFooter>
             </Card>
           </GridItem>

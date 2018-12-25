@@ -19,7 +19,6 @@ class MediaRepository {
         fileUrl: url
       });
     }
-
 }
 
 export default MediaRepository;

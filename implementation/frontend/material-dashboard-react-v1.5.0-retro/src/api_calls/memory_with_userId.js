@@ -42,7 +42,7 @@ class MemoryRepository {
         )
     }
 
-    static async updateMemory(memoryID, listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
+    static async updateMemory(id, listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
       var memoryData;
       memoryData.listOfItems = listOfItems;
       memoryData.listOfLocations = listOfLocations;
@@ -58,14 +58,14 @@ class MemoryRepository {
       memoryData.startDateYYYY = startDateYYYY;
 
       return axios.put(`${constants.API}/memory`, {
-        id: memoryID,
+        id: id,
         updateMemoryRequestBody: memoryData
       });
     }
 
-    static async deleteMemory(memoryID) {
+    static async deleteMemory(id) {
       return axios.delete(`${constants.API}/memory`, {
-        id: memoryID
+        id: id
       });
     }
 

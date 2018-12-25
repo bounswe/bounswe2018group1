@@ -9,35 +9,34 @@ axios.defaults.headers.common["JSESSIONID"] = token;
 //Change once implemented
 class Like_CommentRepository {
 
-    static async comment(userId, memoryId, text) {
-      return axios.post(`${constants.API}/comment`, {
-        text: text,
-        memoryId: memoryId,
-        userId: userId
+    static async comment(comment, memoryId) {
+      return axios.post(`${constants.API}/memory/comment`, {
+        comment: comment,
+        memoryId: memoryId
       });
     }
 
     static async getComment(commentId) {
-      return axios.get(`${constants.API}/comment`, {
+      return axios.get(`${constants.API}/memory/comment`, {
         commentId: commentId
       });
     }
 
     static async getLikes(memoryId) {
-      return axios.get(`${constants.API}/like`, {        
+      return axios.get(`${constants.API}/memory/like`, {
         memoryId: memoryId
       });
     }
 
     static async like(owner, memoryId) {
-      return axios.post(`${constants.API}/like`, {
+      return axios.post(`${constants.API}/memory/like`, {
         owner: owner,
         memoryId: memoryId
       });
     }
 
     static async unlike(owner, memoryId) {
-      return axios.post(`${constants.API}/like`, {
+      return axios.post(`${constants.API}/memory/like`, {
         owner: owner,
         memoryId: memoryId
       });

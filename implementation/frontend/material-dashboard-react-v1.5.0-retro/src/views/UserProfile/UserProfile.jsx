@@ -8,6 +8,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 
 // core components
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -19,10 +20,10 @@ import UserProfileAccountSettings from "views/UserProfileAccountSettings/UserPro
 
 import LoginRepository from '../../api_calls/login.js';
 import UserRepository from '../../api_calls/user.js';
-
-import avatar from "assets/img/faces/girl.jpg";
+import MediaRepository from '../../api_calls/media.js';
 
 import Cookies from "js-cookie";
+import { ProgressBar } from 'react-bootstrap';
 
 const styles = {
 };
@@ -35,15 +36,22 @@ class UserProfile extends React.Component {
         country: '',
         region: '',
         user: {
-          id: 0,
-          firstName: '',
-          lastName: '',
-          nickname: '',
-          email: '',
+          bio: '',
           birthday: null,
-          listOfLocations: [],
+          email: '',
+          firstName: '',
           gender: '',
-          bio: ''
+          id: 0,
+          lastName: '',
+          listOfLocations: [
+            {
+              latitude: 0,
+              locationName: '',
+              longitude: 0
+            }
+          ],
+          nickname: '',
+          profilePictureUrl: ''
         }
      };
 
@@ -90,6 +98,21 @@ class UserProfile extends React.Component {
       });
     }
 
+    handleFileSelect = event => {this.setState({selectedFile: event.target.files[0]}) }
+
+    handleFileUpload = () => {
+      if(this.state.selectedFile != null) {
+        const fd = new FormData();
+        fd.append('media', this.state.selectedFile, this.state.selectedFile.name)
+        MediaRepository.upload(fd, {
+          onUploadProgress: progressEvent => {
+            this.setState({ progress: Math.round((progressEvent.loaded / progressEvent.total)*100) })
+          }
+        })
+          .then(res => this.handleChangeField(this.state.user.profilePictureUrl, res)); //here here
+      }
+    }
+
     componentDidMount() {
       UserRepository.user().then(user => {
         this.setState({user: user});
@@ -106,9 +129,39 @@ class UserProfile extends React.Component {
               <Card profile>
                 <CardAvatar profile>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={avatar} alt="..." />
+                    <img
+                      className={classes.cardImgTop}
+                      alt="100%x180"
+                      style={{ height: "300px", width: "33%", display: "block" }}
+                      src={this.state.user.profilePictureUrl}
+                      data-holder-rendered="true"
+                    />
                   </a>
                 </CardAvatar>
+
+                  <CustomInput
+                    id="media"
+                    inputProps={{
+                      name:"media",
+                      type:"file",
+                      onChange: this.handleFileSelect
+                    }}
+                    formControlProps={{
+                      fullWidth: true,
+                      required: false,
+                    }}
+                  />
+
+                <GridItem xs={10} sm={10} md={3}>
+                  <Button
+                    onClick={this.handleFileUpload}
+                    round
+                    color="info"
+                  > Upload
+                  </Button>
+                  <ProgressBar now={this.progress} />
+                </GridItem>
+
                 <CardBody profile>
                   <h6> { this.state.user.firstName + " " + this.state.user.lastName } | { this.state.user.nickname } </h6>
                   <p>

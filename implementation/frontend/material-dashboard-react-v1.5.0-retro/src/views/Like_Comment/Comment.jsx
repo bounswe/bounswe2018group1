@@ -12,22 +12,17 @@ import Like_CommentRepository from '../../api_calls/like_comment.js';
 export default class Comment extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      text: "",
-      userId: 0,
-      memoryId: 0,
+      comment: ""
     };
-
-    //this.handleAddNewLocation = this.handleAddNewLocation.bind(this);
-
+    this.handleAddNewComment = this.handleAddNewComment.bind(this);
   }
 
   handleAddNewComment = event => {
     event.preventDefault();
     console.log(this.state); //Remove after development is complete.
 
-    Like_CommentRepository.comment(this.state.userId, this.state.memoryId, this.state.text)
+    Like_CommentRepository.comment(this.state.comment, this.props.memory.id)
       .then(res => {
         console.log(res);
       })
@@ -40,14 +35,14 @@ export default class Comment extends React.Component {
 
    return (
      <GridContainer>
-       <GridItem xs={10} sm={10} md={8}>
+       <GridItem xs={10} sm={10} md={10}>
          <CustomInput
-           placeholder="Write a comment"
+           labelText="Write a comment"
            id="comment"
            inputProps={{
              name:"comment",
              type:"text",
-             onChange: event => this.setState({ content: event.target.value })
+             onChange: event => this.setState({ comment: event.target.value })
            }}
            formControlProps={{
              fullWidth: true,
@@ -55,10 +50,10 @@ export default class Comment extends React.Component {
            }}
          />
        </GridItem>
-       <Button onClick={this.handleAddNewComment} color="info"> </Button>
+       <GridItem xs={10} sm={10} md={2}>
+         <Button onClick={this.handleAddNewComment} color="info">Send Comment</Button>
+       </GridItem>
       </GridContainer>
-
      );
    }
-
 }

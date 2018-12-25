@@ -41,10 +41,13 @@ class MemoryFeed extends React.Component {
     this.setState({ value: index });
   };
 
-  handleMemoryDetail = event => {
-    event.preventDefault();
+  handleMemoryDetail (id) {
+
     const { history } = this.props;
-    history.push("/home/show-memory");
+    history.push({
+      pathname: "/home/show-memory",
+      state: { id }
+    });
   };
 
   componentDidMount() {
@@ -59,23 +62,24 @@ class MemoryFeed extends React.Component {
     var memoryList = (
       <GridContainer>
         {listOfMemories.map((prop, key) => {
+
           return (
-            <GridItem xs={12} sm={12} md={12}>
+            <GridItem xs={12} sm={12} md={6}>
               <Card>
                 <CardHeader color="warning">
                   <h4 className={classes.cardTitleWhite}> {prop.headline}</h4>
                   <p className={classes.cardCategoryWhite}>
                     Start Date:
-                    {prop.startDateYYYY == '' ? '' : prop.startDateYYYY}
-                    {prop.startDateMM == '' ? '' : '/' + prop.startDateMM}
-                    {prop.startDateDD == '' ? '' : '/' + prop.startDateDD}
-                    {prop.startDateHH == '' ? '' : ' - ' + prop.startDateHH}
+                    {prop.startDateYYYY === '' ? '' : prop.startDateYYYY}
+                    {prop.startDateMM === '' ? '' : '/' + prop.startDateMM}
+                    {prop.startDateDD === '' ? '' : '/' + prop.startDateDD}
+                    {prop.startDateHH === '' ? '' : ' - ' + prop.startDateHH}
                   </p>
                   <p className={classes.cardCategoryWhite}>
-                    {prop.endDateYYYY == '' ? '' : 'End Date: ' + prop.endDateYYYY}
-                    {prop.endDateMM == '' ? '' : '/' + prop.endDateMM}
-                    {prop.endDateDD == '' ? '' : '/' + prop.endDateDD}
-                    {prop.endDateHH == '' ? '' : ' - ' + prop.endDateHH}
+                    {prop.endDateYYYY === '' ? '' : 'End Date: ' + prop.endDateYYYY}
+                    {prop.endDateMM === '' ? '' : '/' + prop.endDateMM}
+                    {prop.endDateDD === '' ? '' : '/' + prop.endDateDD}
+                    {prop.endDateHH === '' ? '' : ' - ' + prop.endDateHH}
                   </p>
                   <p className={classes.cardCategoryWhite}>Added by {prop.userNickname}</p>
                 </CardHeader>
@@ -95,7 +99,7 @@ class MemoryFeed extends React.Component {
                         <img
                           className={classes.cardImgTop}
                           alt="100%x180"
-                          style={{ height: "300px", width: "33%", display: "block" }}
+                          style={{ height: "300px", width: "60%", display: "block" }}
                           src={propOfItems.url}
                           data-holder-rendered="true"
                         />
@@ -112,7 +116,7 @@ class MemoryFeed extends React.Component {
                       <p> #{propOfTags.text} </p>
                     );
                   })}
-                  <Button color="transparent" memoryID={prop.memoryID} onClick={this.handleMemoryDetail}>
+                  <Button color="transparent" onClick={()=>this.handleMemoryDetail(prop.id)}>
                     more about this memory
                   </Button>
                 </CardBody>

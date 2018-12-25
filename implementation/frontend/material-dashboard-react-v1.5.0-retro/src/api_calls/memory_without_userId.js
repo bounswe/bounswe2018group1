@@ -1,13 +1,11 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import constants from "../constants";
 
-const token = Cookies.get("JSESSIONID");
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 
 class MemoryRepositoryWithoutUser {
-    static async getMemory(memoryID) {
+    static async getMemory(id) {
       const response = await axios(
         {
           method: 'GET',
@@ -18,7 +16,7 @@ class MemoryRepositoryWithoutUser {
             "Accept": "application/json",
           },
           params:{
-            id: 47
+            id: id
           }
         }
       )

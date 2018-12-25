@@ -8,8 +8,8 @@ class Home extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/home" component={MemoryFeed} />} />
-          <Route path="/home/show-memory" component={ShowMemory} />
+          <Route exact path="/home" component={MemoryFeed} />
+          <Route path="/home/show-memory" render={({ location }) => <ShowMemory id={location.state.id} />} />
         </Switch>
       </div>
     );
