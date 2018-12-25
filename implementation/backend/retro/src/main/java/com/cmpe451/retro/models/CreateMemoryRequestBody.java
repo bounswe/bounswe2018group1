@@ -25,6 +25,8 @@ public class CreateMemoryRequestBody {
 
     private int endDateYYYY;
 
+    private int yearRange;
+
     private List<TagDto> listOfTags;
 
     private List<ItemDto> listOfItems;
@@ -133,5 +135,13 @@ public class CreateMemoryRequestBody {
 
     public List<LocationDto> getListOfLocations() {
         return listOfLocations;
+    }
+
+    public int getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(int yearRange) {
+        this.yearRange = yearRange;
     }
 }

@@ -73,6 +73,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setStartDateDD(requestBody.getStartDateDD());
         memory.setStartDateMM(requestBody.getStartDateMM());
         memory.setStartDateYYYY(requestBody.getStartDateYYYY());
+        memory.setYearRange(requestBody.getYearRange());
 
         memory.setEndDateHH(requestBody.getEndDateHH());
         memory.setEndDateDD(requestBody.getEndDateDD());
@@ -84,7 +85,7 @@ public class MemoryServiceImp implements MemoryService {
         memory.setListOfTags(requestBody.getListOfTags().stream().map(Tag::new).collect(Collectors.toList()));
         memory.setListOfItems(requestBody.getListOfItems().stream().map(Item::new).collect(Collectors.toList()));
 
-        user.getMemoryList().add(memory);//TODO: check
+        user.getMemoryList().add(memory);
 
         memory.getListOfTags().forEach(entityManager::persist);
         memory.getListOfItems().forEach(entityManager::persist);

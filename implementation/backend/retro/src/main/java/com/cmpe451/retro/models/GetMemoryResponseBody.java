@@ -39,6 +39,8 @@ public class GetMemoryResponseBody {
 
     private int startDateYYYY;
 
+    private int yearRange;
+
     private int endDateHH;
 
     private int endDateDD;
@@ -84,6 +86,7 @@ public class GetMemoryResponseBody {
         this.id = memory.getId();
         this.likedUsers = memory.getLikedUsers();
         this.comments = memory.getComments().stream().map(GetCommentDto::new).collect(Collectors.toList());
+        this.yearRange = memory.getYearRange();
     }
 
     public long getUserId() {
@@ -260,5 +263,13 @@ public class GetMemoryResponseBody {
 
     public void setComments(List<GetCommentDto> comments) {
         this.comments = comments;
+    }
+
+    public int getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(int yearRange) {
+        this.yearRange = yearRange;
     }
 }

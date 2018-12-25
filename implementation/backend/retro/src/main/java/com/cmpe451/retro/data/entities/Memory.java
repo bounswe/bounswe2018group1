@@ -62,6 +62,7 @@ public class Memory {
     @NotNull
     private int startDateYYYY;
 
+    private int yearRange;
 
     private int endDateHH;
 
@@ -259,5 +260,13 @@ public class Memory {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public int getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(int yearRange) {
+        this.yearRange = yearRange;
     }
 }
