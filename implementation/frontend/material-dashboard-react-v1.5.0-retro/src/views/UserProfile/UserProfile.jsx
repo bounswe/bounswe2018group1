@@ -127,54 +127,61 @@ class UserProfile extends React.Component {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card profile>
-                <CardAvatar profile>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img
-                      className={classes.cardImgTop}
-                      alt="100%x180"
-                      style={{ height: "300px", width: "33%", display: "block" }}
-                      src={this.state.user.profilePictureUrl}
-                      data-holder-rendered="true"
-                    />
-                  </a>
-                </CardAvatar>
-
-                  <CustomInput
-                    id="media"
-                    inputProps={{
-                      name:"media",
-                      type:"file",
-                      onChange: this.handleFileSelect
-                    }}
-                    formControlProps={{
-                      fullWidth: true,
-                      required: false,
-                    }}
-                  />
-
-                <GridItem xs={10} sm={10} md={3}>
-                  <Button
-                    onClick={this.handleFileUpload}
-                    round
-                    color="info"
-                  > Upload
-                  </Button>
-                  <ProgressBar now={this.progress} />
+                <GridItem xs={12} sm={12} md={12}>
+                  <CardAvatar profile>
+                    <a href="#pablo" onClick={e => e.preventDefault()}>
+                      <img
+                        className={classes.cardImgTop}
+                        src={this.state.user.profilePictureUrl}
+                      />
+                    </a>
+                  </CardAvatar>
                 </GridItem>
 
-                <CardBody profile>
-                  <h6> { this.state.user.firstName + " " + this.state.user.lastName } | { this.state.user.nickname } </h6>
-                  <p>
-                    { this.state.user.bio }
-                  </p>
-                  <h5>
-                    { this.state.user.birthday }
-                    {this.state.user.birthday !== null && this.state.user.gender !== 'NOT_TO_DISCLOSE' &&
-                      <span>|</span>
-                    }
-                    { this.state.user.gender === 'NOT_TO_DISCLOSE' ? '' : this.state.user.gender }
-                  </h5>
-                </CardBody>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CardBody profile>
+                    <h6> { this.state.user.firstName + " " + this.state.user.lastName } | { this.state.user.nickname } </h6>
+                    <p>
+                      { this.state.user.bio }
+                    </p>
+                    <h5>
+                      { this.state.user.birthday }
+                      {this.state.user.birthday !== null && this.state.user.gender !== 'NOT_TO_DISCLOSE' &&
+                        <span>|</span>
+                      }
+                      { this.state.user.gender === 'NOT_TO_DISCLOSE' ? '' : this.state.user.gender }
+                    </h5>
+                  </CardBody>
+                </GridItem>
+
+                <GridItem xs={10} sm={10} md={4}>
+                  <Card>
+                    <GridItem xs={10} sm={10} md={12}>
+                      Change or Upload Profile Picture
+                      <CustomInput
+                        id="media"
+                        inputProps={{
+                          name:"media",
+                          type:"file",
+                          onChange: this.handleFileSelect
+                        }}
+                        formControlProps={{
+                          fullWidth: true,
+                          required: false,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={10} sm={10} md={12}>
+                      <Button
+                        onClick={this.handleFileUpload}
+                        round
+                        color="primary"
+                      > Upload
+                      </Button>
+                      <ProgressBar now={this.progress} />
+                    </GridItem>
+                  </Card>
+                </GridItem>
               </Card>
             </GridItem>
           </GridContainer>

@@ -14,6 +14,7 @@ import CountrySelect from "components/CountrySelect/CountrySelect.jsx";
 import Icon from '@material-ui/core/Icon';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { ProgressBar } from 'react-bootstrap';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 import MemoryRepository from '../../api_calls/memory_with_userId.js';
 import MediaRepository from '../../api_calls/media.js';
@@ -66,7 +67,8 @@ export default class AddNewMemory extends Component {
       listOfLocations: [],
       tags: [],
       selectedFile: null,
-      progress: 0
+      progress: 0,
+      yearRange: 0
     };
     this.handleAddNewLocation = this.handleAddNewLocation.bind(this);
     this.handleAddNewMedia = this.handleAddNewMedia.bind(this);
@@ -82,7 +84,7 @@ export default class AddNewMemory extends Component {
     var listOfTags = this.state.tags.map((prop, key) => { return {text: prop.text}});
     //MemoryRepository.createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY)
     MemoryRepository.createMemory(this.state.listOfItems, this.state.listOfLocations, listOfTags, this.state.headline, this.state.endDateDD, this.state.endDateHH, this.state.endDateMM,
-      this.state.endDateYYYY, this.state.startDateDD, this.state.startDateHH, this.state.startDateMM, this.state.startDateYYYY)
+      this.state.endDateYYYY, this.state.startDateDD, this.state.startDateHH, this.state.startDateMM, this.state.startDateYYYY, this.state.yearRange)
       .then(res => {
         console.log(res);
       })
@@ -115,6 +117,7 @@ export default class AddNewMemory extends Component {
         {
           "body": "",
           "id": 0,
+          "type": "",
           "url": url
         }
       ]
@@ -127,6 +130,7 @@ export default class AddNewMemory extends Component {
         {
           "body": " ",
           "id": 0,
+          "type": "",
           "url": ""
         }
       ]
@@ -224,21 +228,69 @@ export default class AddNewMemory extends Component {
                   }}
                 />
               </GridItem>
-
-              <GridItem xs={10} sm={10} md={10}>
-                <CustomInput
-                  id="media"
-                  inputProps={{
-                    name:"media",
-                    type:"file",
-                    onChange: this.handleFileSelect
-                  }}
-                  formControlProps={{
-                    fullWidth: true,
-                    required: false,
-                  }}
-                  />
+              <GridItem xs={10} sm={10} md={4}>
+                <Card>
+                  <CardBody>
+                      Add photo
+                      <CustomInput
+                        labelText="Add photo"
+                        id="media"
+                        inputProps={{
+                          name:"media",
+                          type:"file",
+                          onChange: this.handleFileSelect
+                        }}
+                        formControlProps={{
+                          fullWidth: true,
+                          required: false,
+                        }}
+                        />
+                  </CardBody>
+                </Card>
               </GridItem>
+
+              <GridItem xs={10} sm={10} md={4}>
+                <Card>
+                  <CardBody>
+                    Add video
+                    <CustomInput
+                      labelText="Add video"
+                      id="media"
+                      inputProps={{
+                        name:"media",
+                        type:"file",
+                        onChange: this.handleFileSelect
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: false,
+                      }}
+                      />
+                    </CardBody>
+                  </Card>
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={4}>
+                <Card>
+                  <CardBody>
+                  Add audio
+                  <CustomInput
+                    id="media"
+                    labelText="Add audio"
+                    inputProps={{
+                      name:"media",
+                      type:"file",
+                      onChange: this.handleFileSelect
+                    }}
+                    formControlProps={{
+                      fullWidth: true,
+                      required: false,
+                    }}
+                    />
+                  </CardBody>
+                </Card>
+              </GridItem>
+
               <GridItem xs={10} sm={10} md={10}>
                 {this.state.listOfItems.map( (item, i) => (
                   item.body == '' ?
@@ -470,6 +522,41 @@ export default class AddNewMemory extends Component {
                     name:"endDateHH",
                     type:"text",
                     onChange: event => this.setState({ endDateHH: event.target.value }),
+                  }}
+                  formControlProps={{
+                    fullWidth: true,
+                    required: false
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={10} sm={10} md={3}>
+                <CustomInput
+                  labelText="10-year range"
+                  id="start_date_yyyy"
+                  value={this.state.startDateYYYY}
+                  inputProps={{
+                    name:"startDateYYYY",
+                    type:"text",
+                    onChange: event => this.setState({ startDateYYYY: event.target.value, yearRange: "10"}),
+                  }}
+                  formControlProps={{
+                    fullWidth: true,
+                    required: false
+                  }}
+                />
+              </GridItem>
+              <GridItem xs={10} sm={10} md={3}>
+                <CustomInput
+                  labelText="100-year range"
+                  id="start_date_yyyy"
+                  value={this.state.startDateYYYY}
+                  inputProps={{
+                    name:"startDateYYYY",
+                    type:"text",
+                    onChange: event => this.setState({ startDateYYYY: event.target.value, yearRange: "100"}),
                   }}
                   formControlProps={{
                     fullWidth: true,

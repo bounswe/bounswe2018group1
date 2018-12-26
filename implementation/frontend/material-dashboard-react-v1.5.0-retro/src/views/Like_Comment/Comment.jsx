@@ -25,6 +25,7 @@ export default class Comment extends React.Component {
     Like_CommentRepository.comment(this.state.comment, this.props.memory.id)
       .then(res => {
         console.log(res);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);

@@ -10,6 +10,7 @@ import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import AccessTime from "@material-ui/icons/AccessTime";
+import CommentIcon from "@material-ui/icons/Comment";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -32,6 +33,19 @@ class ShowMemory extends React.Component {
     super(props);
     this.state = {
       memory: {
+        comments: [
+          {
+            dateOfCreation: "",
+            id: 0,
+            memoryId: 0,
+            text: "",
+            userFirstName: "",
+            userId: 0,
+            userLastName: "",
+            userNickname: "",
+            userProfilePicUrl: ""
+          }
+        ],
         id: null,
         dateOfCreation: "",
         endDateDD: 0,
@@ -83,12 +97,18 @@ class ShowMemory extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.memory.id);
+
+    const comms = this.state.memory.comments.sort(function(a, b) {
+        return (new Date(a.dateOfCreation)).getTime() - (new Date(b.dateOfCreation)).getTime();
+    });
+
+    const creationDate = new Date(this.state.memory.dateOfCreation);
+
 
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
+          <GridItem xs={12} sm={12} md={8}>
             <Card>
               <CardHeader color="warning">
                 <h4 className={classes.cardTitleWhite}>
@@ -123,15 +143,23 @@ class ShowMemory extends React.Component {
                 </ul>
 
                 {this.state.memory.listOfItems.map((prop, key) => {
-                  if (prop.body === '') {
+                  if (prop.type == 'PHOTO') {
                     return (
                       <img
                         className={classes.cardImgTop}
                         alt="100%x180"
-                        style={{ height: "300px", width: "33%", display: "block" }}
+                        style={{ height: "300px", width: "43%", display: "block" }}
                         src={prop.url}
                         data-holder-rendered="true"
                       />
+                    );
+                  } else if (prop.type == 'VIDEO') {
+                    return (
+                      true
+                    );
+                  } else if (prop.type == 'AUDIO') {
+                    return (
+                      true
                     );
                   } else {
                     return (
@@ -143,7 +171,7 @@ class ShowMemory extends React.Component {
                 {/* <img
                   className={classes.cardImgTop}
                   alt="100%x180"
-                  style={{ height: "300px", width: "33%", display: "block" }}
+                  style={{ height: "300px", width: "43%", display: "block" }}
                   src={image2}
                   data-holder-rendered="true"
                 /> */}
@@ -158,20 +186,59 @@ class ShowMemory extends React.Component {
               <CardFooter chart>
                 <div className={classes.stats}>
                   <AccessTime />
-                  added on {this.state.memory.dateOfCreation}
+                  added on {creationDate.getDate() + "-" + (creationDate.getMonth()+1) + "-" + creationDate.getFullYear() + " / " + ("0" + creationDate.getHours()).slice(-2) + ":" + ("0" + creationDate.getMinutes()).slice(-2)}
                 </div>
               </CardFooter>
 
-              <CardFooter chart>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <LikePage memory={ this.state.memory } />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <CommentPage memory={ this.state.memory } />
-                  </GridItem>
-                </GridContainer>
-              </CardFooter>
+              <GridItem xs={10} sm={10} md={12}>
+                <CardBody>
+                  {comms.map((prop, key) => {
+                    const date = new Date(prop.dateOfCreation);
+
+                    return (
+                      <GridContainer>
+                        <GridItem xs={12} sm={12} md={12}>
+                          <Card>
+                            <CardHeader>
+                              <GridItem xs={12} sm={12} md={12}>
+                                <b>
+                                  {prop.userFirstName} {prop.userLastName}
+                                </b>
+                              </GridItem>
+                              <GridItem xs={12} sm={12} md={12}>
+                                <p>
+                                  {prop.text}
+                                </p>
+                              </GridItem>
+                            </CardHeader>
+                            <CardFooter chart>
+                              <div className={classes.stats}>
+                                <AccessTime />
+                                {date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear() + " / " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                              </div>
+                            </CardFooter>
+                          </Card>
+                        </GridItem>
+                      </GridContainer>
+                    );
+                  })}
+                </CardBody>
+              </GridItem>
+
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                  <CardBody>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={3}>
+                        <LikePage memory={ this.state.memory } />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <CommentPage memory={ this.state.memory } />
+                      </GridItem>
+                    </GridContainer>
+                  </CardBody>
+                </Card>
+              </GridItem>
             </Card>
           </GridItem>
         </GridContainer>
