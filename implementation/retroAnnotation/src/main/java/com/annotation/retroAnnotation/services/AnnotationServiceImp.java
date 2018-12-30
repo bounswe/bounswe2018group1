@@ -66,4 +66,19 @@ public class AnnotationServiceImp implements AnnotationService{
 
         return listOfAnnotationResponseBodies;
     }
+
+    @Override
+    public void deleteAnnotation(Long id, Long userId) throws Exception {
+        Optional<Annotation> annotationOptional = annotationRepository.findById(id);
+        if(annotationOptional.isPresent()){
+            Annotation annotation = annotationOptional.get();
+            if(annotation.getUserId() == userId){
+                annotationRepository.deleteById(id);
+            }else{
+                throw new Exception("You are not allowed to delete this annotation");
+            }
+        }else{
+            throw new Exception("Annotation not found");
+        }
+    }
 }

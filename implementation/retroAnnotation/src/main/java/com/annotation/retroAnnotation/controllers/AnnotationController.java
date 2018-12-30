@@ -34,5 +34,11 @@ public class AnnotationController {
         return annotationService.getAnnotationsOfItem(itemId);
     }
 
+    @RequestMapping(value = "/annotation",method = RequestMethod.DELETE)
+    public void deleteAnnotation(Long id, Long userId) throws Exception {
+        annotationService.deleteAnnotation(id,userId);
+    }
+
+
 
 }

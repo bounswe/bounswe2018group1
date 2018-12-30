@@ -15,4 +15,6 @@ public interface AnnotationService {
 
     List<GetAnnotationResponseBody> getAnnotationsOfItem(Long itemId);
 
+    void deleteAnnotation(Long id, Long userId) throws Exception;
+
 }
