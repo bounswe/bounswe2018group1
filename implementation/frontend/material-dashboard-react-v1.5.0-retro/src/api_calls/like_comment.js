@@ -16,6 +16,12 @@ class Like_CommentRepository {
       });
     }
 
+    static async deleteComment(commentId) {
+      return axios.delete(`${constants.API}/memory/comment`, {
+        commentId: commentId
+      });
+    }
+
     static async getComment(commentId) {
       return axios.get(`${constants.API}/memory/comment`, {
         commentId: commentId

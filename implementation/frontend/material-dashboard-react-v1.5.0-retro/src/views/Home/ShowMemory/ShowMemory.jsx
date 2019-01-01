@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 // @material-ui/core
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Table from "components/Table/Table.jsx";
 import Tasks from "components/Tasks/Tasks.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import AccessTime from "@material-ui/icons/AccessTime";
@@ -23,7 +25,9 @@ import image2 from "assets/img/pamukkale.png";
 import { bugs, website, server } from "variables/general.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import Like_CommentRepository from "api_calls/like_comment.js";
 import MemoryRepository from "api_calls/memory_without_userId.js";
+import UserRepository from "api_calls/user.js";
 
 import LikePage from "views/Like_Comment/Like.jsx";
 import CommentPage from "views/Like_Comment/Comment.jsx";
@@ -32,6 +36,25 @@ class ShowMemory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {
+        bio: '',
+        birthday: null,
+        email: '',
+        firstName: '',
+        gender: '',
+        id: 0,
+        lastName: '',
+        listOfLocations: [
+          {
+            latitude: 0,
+            locationName: '',
+            longitude: 0
+          }
+        ],
+        nickname: '',
+        profilePictureUrl: ''
+      },
+
       memory: {
         comments: [
           {
@@ -82,8 +105,68 @@ class ShowMemory extends React.Component {
         userLastName: "",
         userNickname: "",
         userProfilePicUrl: ""
-      }
+      },
+      contextMenu: null,
+      addingAnnotation: false,
+      annotationText: ""
     };
+
+    this.handleDeleteComment = this.handleDeleteComment.bind(this);
+    this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.handleContextMenuClose = this.handleContextMenuClose.bind(this);
+    this.handleAddAnnotationClick = this.handleAddAnnotationClick.bind(this);
+    this.handleResetAnnotation = this.handleResetAnnotation.bind(this);
+  }
+
+  handleDeleteComment(id) {
+    Like_CommentRepository.deleteComment(id).then(memory => {
+      console.log(memory);
+    });
+  }
+
+  handleContextMenu(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    this.setState({
+      contextMenu: {
+        x: ev.screenX - 260,
+        y: ev.screenY + 50
+      }
+    });
+
+    window.addEventListener("click", this.handleContextMenuClose);
+  }
+
+  handleContextMenuClose() {
+    this.setState({
+      contextMenu: null
+    });
+
+    window.removeEventListener("click", this.handleContextMenuClose);
+  }
+
+  handleAddAnnotationClick(ev) {
+    ev.stopPropagation();
+
+    const selection = window.getSelection();
+    console.log(selection.getRangeAt(0));
+    this.setState({
+      contextMenu: null,
+      addingAnnotation: true,
+      selection: {
+        text: selection.toString(),
+        range: selection.getRangeAt(0)
+      }
+    });
+  }
+
+  handleResetAnnotation() {
+    this.setState({
+      contextMenu: null,
+      addingAnnotation: false,
+      selection: null
+    });
   }
 
   // get memory çalışmalı
@@ -93,6 +176,15 @@ class ShowMemory extends React.Component {
       console.log(memory);
       this.setState({memory: memory});
     });
+    UserRepository.user().then(user => {
+      this.setState({user: user});
+    });
+
+    window.addEventListener("click", this.handleResetAnnotation);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.handleResetAnnotation);
   }
 
   render() {
@@ -107,6 +199,11 @@ class ShowMemory extends React.Component {
 
     return (
       <div>
+        {this.state.contextMenu && (
+          <div onClick={this.handleAddAnnotationClick} style={{ position: "absolute", background: "#fff", cursor: "pointer", userSelect: "none", top: this.state.contextMenu.y, padding: 5, border: "1px solid #000", left: this.state.contextMenu.x, zIndex: 9999 }}>
+            Add annotation
+          </div>
+        )}
         <GridContainer>
           <GridItem xs={12} sm={12} md={8}>
             <Card>
@@ -163,7 +260,7 @@ class ShowMemory extends React.Component {
                     );
                   } else {
                     return (
-                      <p> {prop.body} </p>
+                      <p onContextMenu={this.handleContextMenu}> {prop.body} </p>
                     );
                   }
                 })}
@@ -217,6 +314,11 @@ class ShowMemory extends React.Component {
                                 {date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear() + " / " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
                               </div>
                             </CardFooter>
+                            {(prop.userId === this.state.user.id) ?
+                              <Button onClick={() => this.handleDeleteComment(prop.id)} round color="transparent">
+                                <i class="far fa-trash-alt"></i>  Delete Comment
+                              </Button>: null
+                            }
                           </Card>
                         </GridItem>
                       </GridContainer>
@@ -240,6 +342,30 @@ class ShowMemory extends React.Component {
                 </Card>
               </GridItem>
             </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={4}>
+            {this.state.addingAnnotation && (
+              <div>
+                <Card onClick={ev => ev.stopPropagation()}>
+                  <CardBody>
+                    <CustomInput
+                      labelText={`Add annotation for ${this.state.selection.text.toString()}`}
+                      id="annotationText"
+                      value={this.state.annotationText}
+                      inputProps={{
+                        name:"annotationText",
+                        type:"text",
+                        onChange: event => this.setState({ annotationText: event.target.value }),
+                      }}
+                      formControlProps={{
+                        fullWidth: true,
+                        required: true
+                      }}
+                    />
+                  </CardBody>
+                </Card>
+              </div>
+            )}
           </GridItem>
         </GridContainer>
       </div>
