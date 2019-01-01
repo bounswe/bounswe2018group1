@@ -2,6 +2,7 @@ package com.cmpe451.retro.controllers;
 
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.FilterMemoryRequest;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.PostCommentBody;
 import com.cmpe451.retro.models.UpdateMemoryRequestBody;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowCredentials ="true", allowedHeaders ="*",
         methods = {RequestMethod.HEAD,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
@@ -34,6 +37,11 @@ public class MemoryController {
     public CreateMemoryResponseBody createMemory(@RequestBody CreateMemoryRequestBody requestBody){
         long userId  = authenticationController.getUserId();
         return memoryService.createMemory(requestBody,userId);
+    }
+
+    @RequestMapping(value = "/memory/filter",method = RequestMethod.POST)
+    public List<GetMemoryResponseBody> filterMemory(@RequestBody FilterMemoryRequest requestBody){
+        return memoryService.filterMemory(requestBody);
     }
 
     @RequestMapping(value = "/memory",method = RequestMethod.GET)

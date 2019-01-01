@@ -5,7 +5,15 @@ import com.cmpe451.retro.data.entities.Location;
 import com.cmpe451.retro.data.entities.Memory;
 import com.cmpe451.retro.data.entities.Tag;
 import com.cmpe451.retro.data.entities.User;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;

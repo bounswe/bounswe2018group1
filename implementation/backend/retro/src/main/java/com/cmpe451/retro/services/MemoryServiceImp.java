@@ -11,6 +11,7 @@ import com.cmpe451.retro.data.repositories.MemoryRepository;
 import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
+import com.cmpe451.retro.models.FilterMemoryRequest;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.PostCommentBody;
 import com.cmpe451.retro.models.RetroException;
@@ -25,9 +26,12 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,6 +78,102 @@ public class MemoryServiceImp implements MemoryService {
         memory.setStartDateMM(requestBody.getStartDateMM());
         memory.setStartDateYYYY(requestBody.getStartDateYYYY());
         memory.setYearRange(requestBody.getYearRange());
+
+        String pattern = "yyyy-MM-dd-hh";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String startYear = String.valueOf(requestBody.getStartDateYYYY());
+        String startMonth;
+        String startDay;
+        String startHour;
+        while(startYear.length()<4){
+            startYear = "0" + startYear;
+        }
+        if(Objects.nonNull(requestBody.getStartDateMM())){
+            startMonth = String.valueOf(requestBody.getStartDateMM());
+            if(startMonth.length()<2){
+                startMonth = "0" + startMonth;
+            }
+        }
+        else {
+            startMonth = "00";
+        }
+        if(Objects.nonNull(requestBody.getStartDateDD())){
+            startDay = String.valueOf(requestBody.getStartDateDD());
+            if(startDay.length()<2){
+                startDay = "0" + startDay;
+            }
+        }
+        else {
+            startDay = "00";
+        }
+        if(Objects.nonNull(requestBody.getStartDateHH())){
+            startHour = String.valueOf(requestBody.getStartDateHH());
+            if(startHour.length()<2){
+                startHour = "0" + startHour;
+            }
+        }
+        else {
+            startHour = "00";
+        }
+
+        String parsableDate = startYear + "-" + startMonth + "-" +startDay + "-" + startHour;
+
+        try {
+            Date date = simpleDateFormat.parse(parsableDate);
+            memory.setStartDate(date);
+        } catch (ParseException e) {
+            throw new RetroException("Invalid start date", HttpStatus.BAD_REQUEST);
+        }
+
+        String endYear;
+        String endMonth;
+        String endDay;
+        String endHour;
+
+        if(Objects.nonNull(requestBody.getEndDateYYYY())){
+            endYear = String.valueOf(requestBody.getEndDateYYYY());
+        }
+        else {
+            endYear = "";
+        }
+        if(Objects.nonNull(requestBody.getEndDateMM())){
+            endMonth = String.valueOf(requestBody.getEndDateMM());
+            if(endMonth.length()<2){
+                endMonth = "0" + endMonth;
+            }
+        }
+        else {
+            endMonth = "00";
+        }
+        if(Objects.nonNull(requestBody.getEndDateDD())){
+            endDay = String.valueOf(requestBody.getEndDateDD());
+            if(endDay.length()<2){
+                endDay = "0" + endDay;
+            }
+        }
+        else {
+            endDay = "00";
+        }
+        if(Objects.nonNull(requestBody.getEndDateHH())){
+            endHour = String.valueOf(requestBody.getEndDateHH());
+            if(endHour.length()<2){
+                endHour = "0" + endHour;
+            }
+        }
+        else {
+            endHour = "00";
+        }
+
+        if(!endYear.equals("")){
+            String parsableDate2 = endYear + "-" + endMonth + "-" +endDay + "-" + endHour;
+            try {
+                Date date = simpleDateFormat.parse(parsableDate2);
+                memory.setEndDate(date);
+            } catch (ParseException e) {
+                throw new RetroException("Invalid end date", HttpStatus.BAD_REQUEST);
+            }
+        }
 
         memory.setEndDateHH(requestBody.getEndDateHH());
         memory.setEndDateDD(requestBody.getEndDateDD());
@@ -291,6 +391,11 @@ public class MemoryServiceImp implements MemoryService {
         entityManager.remove(comment);
         entityManager.persist(memory);
         entityManager.flush();
+    }
+
+    @Override
+    public List<GetMemoryResponseBody> filterMemory(FilterMemoryRequest requestBody) {
+        return memoryRepository.findMemoriesWithFilter(requestBody);
     }
 
     public boolean isNullOrEmpty(String s){

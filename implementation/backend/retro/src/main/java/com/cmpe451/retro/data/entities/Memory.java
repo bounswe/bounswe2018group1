@@ -45,13 +45,11 @@ public class Memory {
     @OneToMany
     List<Comment> comments;
 
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date startDate;
-//
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date endDate;
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     private int startDateHH;
 
@@ -268,5 +266,21 @@ public class Memory {
 
     public void setYearRange(int yearRange) {
         this.yearRange = yearRange;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }
