@@ -3,6 +3,7 @@ package bounswe2018group1.cmpe451.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -404,13 +405,13 @@ public class ClientAPI {
 
     public void createMemory(int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
                              int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,
-                             String headline, ArrayList<String> listOfItems, String[] listOfLocations, final Context context) {
+                             String headline, ArrayList<Pair<String, String>> listOfItems, String[] listOfLocations, final Context context) {
         // Get current date and time
         DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         String createDate = createTime.format(Calendar.getInstance().getTime());
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
-            postParams.put("dateOfCreation", createDate);
+            //postParams.put("dateOfCreation", createDate);
             postParams.put("startDateYYYY", startDateYYYY);
             postParams.put("startDateMM", startDateMM);
             postParams.put("startDateDD", startDateDD);
@@ -429,9 +430,11 @@ public class ClientAPI {
             postParams.put("listOfTags", tagArray);
             // Convert item strings to JSON Array
             JSONArray itemArray = new JSONArray();
-            for (String item : listOfItems) {
+            for (Pair<String , String> item : listOfItems) {
                 JSONObject items = new JSONObject();
-                items.put("body", item);
+                if(item.first.equals("text")) items.put("body", item.second);
+                items.put("type", item.first.toUpperCase());
+                if (!item.first.equals("text"))items.put("url" , item.second);
                 itemArray.put(items);
             }
             postParams.put("listOfItems", itemArray);

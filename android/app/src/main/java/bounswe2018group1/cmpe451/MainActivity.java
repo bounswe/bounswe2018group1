@@ -145,4 +145,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public String getSessionID () {
+        return sessionID;
+    }
 }

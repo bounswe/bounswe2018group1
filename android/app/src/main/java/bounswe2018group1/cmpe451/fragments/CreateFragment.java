@@ -1,10 +1,15 @@
 package bounswe2018group1.cmpe451.fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +25,24 @@ import android.widget.VideoView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsCreateActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
+import bounswe2018group1.cmpe451.helpers.RealPathUtil;
+import bounswe2018group1.cmpe451.helpers.URLs;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -64,23 +81,72 @@ public class CreateFragment extends Fragment {
     private Button addText;
     private Spinner intervalTime;
     private ClientAPI clientAPI;
-
+    private View rootView;
+    private int flag = 0;
     private Uri imageUri;
     private Uri videoUri;
     private Uri audioUri;
-    private ArrayList<String> items = new ArrayList<String>();
+    private ArrayList<Pair<String , String> > items = new ArrayList<>();
 
     public CreateFragment() {
         // Required empty public constructor
     }
 
+    public void enableUI(){
+        rootView.findViewById(R.id.loadingPanel).setVisibility(View.INVISIBLE);
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         // Pick image from gallery
         if(PICK_IMAGE == requestCode && resultCode == RESULT_OK && data != null && data.getData() != null){
             imageUri = data.getData();
-            items.add(imageUri.toString());
+
+            File imageFile = new File(RealPathUtil.getRealPath(getContext() , imageUri));
+
+            // Prepare request and send
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("file", imageFile.getName(), RequestBody.create(MediaType.parse("image"), imageFile))  // TODO add extension to image, .bmp .png .jpg
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(URLs.URL_MEDIA)
+                    .addHeader("Cookie", ("JSESSIONID=" + ((MainActivity) getActivity()).getSessionID()))
+                    .post(body)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            flag = 1;
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    System.err.println("Create Fragment:  picture upload failed in send");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        System.out.println("Create Fragment:  picture upload success");
+                        try {
+                            String url = response.body().string();
+                            items.add(new Pair<String, String>("photo" , url));
+                            System.out.println("Uploaded picture url -> " + url);
+                            enableUI();
+                            flag = 0;
+
+                        } catch(IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Create Fragment:  picture upload failed in return");
+                    }
+                }
+            });
+
             itemLayoutList.add(new LinearLayout(getContext()));
             itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
             itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
@@ -120,7 +186,47 @@ public class CreateFragment extends Fragment {
         }
         else if(PICK_VIDEO == requestCode &&resultCode == RESULT_OK && data != null && data.getData() != null){
             videoUri = data.getData();
-            items.add(videoUri.toString());
+            File videoFile = new File(RealPathUtil.getRealPath(getContext() , videoUri));
+
+            // Prepare request and send
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("file", videoFile.getName(), RequestBody.create(MediaType.parse("video"), videoFile))  // TODO add extension to image, .bmp .png .jpg
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(URLs.URL_MEDIA)
+                    .addHeader("Cookie", ("JSESSIONID=" + ((MainActivity) getActivity()).getSessionID()))
+                    .post(body)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            flag = 1;
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    System.err.println("Create Fragment:  video upload failed in send");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        System.out.println("Create Fragment:  videp upload success");
+                        try {
+                            String url = response.body().string();
+                            items.add(new Pair<String, String>("video" , url));
+                            System.out.println("Uploaded video url -> " + url);
+                            enableUI();
+                            flag = 0;
+                        } catch(IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Create Fragment:  video upload failed in return");
+                    }
+                }
+            });
             itemLayoutList.add(new LinearLayout(getContext()));
             itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
             itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
@@ -160,8 +266,48 @@ public class CreateFragment extends Fragment {
         }
         else if(PICK_AUDIO == requestCode &&resultCode == RESULT_OK && data != null && data.getData() != null) {
             audioUri = data.getData();
-            items.add(audioUri.toString());
-            itemLayoutList.add(new LinearLayout(getContext()));
+            File audioFile = new File(RealPathUtil.getRealPath(getContext() , audioUri));
+
+            // Prepare request and send
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("file", audioFile.getName(), RequestBody.create(MediaType.parse("audio"), audioFile))  // TODO add extension to image, .bmp .png .jpg
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(URLs.URL_MEDIA)
+                    .addHeader("Cookie", ("JSESSIONID=" + ((MainActivity) getActivity()).getSessionID()))
+                    .post(body)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            flag = 1;
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    System.err.println("Create Fragment:  audio upload failed in send");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        System.out.println("Create Fragment:  audio upload success");
+                        try {
+                            String url = response.body().string();
+                            items.add(new Pair<String, String>("audio" , url));
+                            System.out.println("Uploaded audio url -> " + url);
+                            enableUI();
+                            flag = 0;
+                        } catch(IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Create Fragment:  audio upload failed in return");
+                    }
+                }
+            });            itemLayoutList.add(new LinearLayout(getContext()));
             itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
             itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
             itemLayoutList.get(itemLayoutList.size() - 1).setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -217,7 +363,7 @@ public class CreateFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_create, container, false);
+        rootView = inflater.inflate(R.layout.fragment_create, container, false);
 
         // Server calls
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
@@ -320,7 +466,9 @@ public class CreateFragment extends Fragment {
         addText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.add("*");
+                if(flag == 1)
+                    return;
+                items.add(new Pair<String, String>("text", ""));
                 itemLayoutList.add(new LinearLayout(getContext()));
                 itemLayoutList.get(itemLayoutList.size() - 1).setTag("L" + itemTag);
                 itemLayoutList.get(itemLayoutList.size() - 1).setOrientation(LinearLayout.HORIZONTAL);
@@ -362,6 +510,8 @@ public class CreateFragment extends Fragment {
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(flag == 1)
+                    return;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
@@ -371,6 +521,8 @@ public class CreateFragment extends Fragment {
         addVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(flag == 1)
+                    return;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("video/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Video") , PICK_VIDEO);
@@ -380,6 +532,8 @@ public class CreateFragment extends Fragment {
         addAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(flag == 1)
+                    return;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("audio/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Audio") , PICK_AUDIO);
@@ -390,6 +544,8 @@ public class CreateFragment extends Fragment {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(flag == 1)
+                    return;
                 int startDateYYYYInt;
                 int startDateMMInt;
                 int startDateDDInt;
@@ -455,12 +611,9 @@ public class CreateFragment extends Fragment {
                 }
 
                 for (int i = 0; i < items.size() ; i++){
-                    if( items.get(i).equals("*")){
-                        items.set(i, ((EditText)itemViewList.get(i)).getText().toString());
-                    }
-                    else{
-
-                         //TODO upload files
+                    if( items.get(i).first.equals("text")){
+                        System.out.println(i);
+                        items.set(i, new Pair<String, String>("text" ,((EditText)itemViewList.get(i)).getText().toString()));
                     }
                 }
                 clientAPI.createMemory(startDateYYYYInt, startDateMMInt, startDateDDInt, startDateHHInt,
