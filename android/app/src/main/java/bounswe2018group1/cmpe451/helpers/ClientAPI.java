@@ -282,7 +282,7 @@ public class ClientAPI {
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.LOGOUT_REQ_TAG, context);
     }
 
-    public void loadProfile(final ProfileFragment profileFragment) {
+    /*public void loadProfile(final ProfileFragment profileFragment) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
                 new Response.Listener() {
@@ -335,9 +335,9 @@ public class ClientAPI {
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, profileFragment.getContext());
 
-    }
+    }*/
 
-    public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $birth, String $gender, String $locations, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
+    /*public void updateProfile(String $firstName, String $lastName, String $nickname, String $bio, String $birth, String $gender, String $locations, String $email, String $oldPassword, String $newPassword, final ProfileFragment profileFragment) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
             postParams.put("firstName", $firstName);
@@ -394,7 +394,7 @@ public class ClientAPI {
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
-    }
+    }*/
 
     public void createMemory(int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
                              int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,

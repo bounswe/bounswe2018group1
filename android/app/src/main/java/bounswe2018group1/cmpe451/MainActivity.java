@@ -1,6 +1,7 @@
 package bounswe2018group1.cmpe451;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(fragmentCreate);
         transaction.commit();
 
+        // Set session id
+        Intent i = getIntent();
+        sessionID = i.getStringExtra("SessionID");
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -143,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
             transaction.show(fragment);
         }
         transaction.commit();
+    }
+
+    public String getSessionID () {
+        return sessionID;
     }
 
 }

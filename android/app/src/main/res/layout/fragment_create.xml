@@ -130,10 +130,10 @@
             android:id="@+id/addLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
+            android:layout_marginLeft="72dp"
             android:layout_marginTop="18dp"
-            android:layout_marginRight="48dp"
-            android:text="Add Location"
+            android:layout_marginRight="72dp"
+            android:text="Location"
             android:textAllCaps="false" />
 
         <LinearLayout
@@ -145,34 +145,38 @@
             android:orientation="vertical"></LinearLayout>
 
         <LinearLayout
+            android:id="@+id/addItemLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/addImage"
-                android:text="Add Image"
-                android:textAllCaps="false"
-            />
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Image"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addVideo"
-                android:text="Add Video"
-                android:textAllCaps="false"/>
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Video"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addAudio"
-                android:text="Add Audio"
-                android:textAllCaps="false"/>
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Audio"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addText"
-                android:text="Add Text"
-                android:textAllCaps="false"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Text"
+                android:textAllCaps="false" />
 
         </LinearLayout>
 
@@ -185,18 +189,19 @@
             android:orientation="vertical"></LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="48dp"
             android:text="Share"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <RelativeLayout
             android:id="@+id/loadingPanel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center" >
+            android:gravity="center">
 
             <ProgressBar
                 android:layout_width="wrap_content"
