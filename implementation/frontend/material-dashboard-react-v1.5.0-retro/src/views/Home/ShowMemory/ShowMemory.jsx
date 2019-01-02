@@ -34,6 +34,19 @@ import AnnotationRepository from 'api_calls/annotation_calls.js';
 import LikePage from "views/Like_Comment/Like.jsx";
 import CommentPage from "views/Like_Comment/Comment.jsx";
 
+
+function AnnotationItem({ annotation }) {
+  return <li>
+    {annotation.annotationText}
+  </li>;
+}
+
+function AnnotationList({ annotations }) {
+  return <ul>
+    {annotations.map(annotation => <AnnotationItem annotation={annotation} />)}
+  </ul>;
+}
+
 class ShowMemory extends React.Component {
   constructor(props) {
     super(props);
