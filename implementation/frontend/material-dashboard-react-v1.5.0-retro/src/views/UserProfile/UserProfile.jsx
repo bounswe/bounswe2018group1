@@ -222,11 +222,7 @@ class UserProfile extends React.Component {
 
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card profile>
-                <CardBody profile>
-                  <MemoryFeed0/>
-                </CardBody>
-              </Card>
+              <MemoryFeed0/>
             </GridItem>
           </GridContainer>
         </div>
