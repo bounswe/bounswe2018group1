@@ -22,6 +22,7 @@ import LoginRepository from '../../api_calls/login.js';
 import UserRepository from '../../api_calls/user.js';
 import MediaRepository from '../../api_calls/media.js';
 
+import MemoryFeed0 from "views/Home/MemoryFeed/MemoryFeed0.jsx";
 import Cookies from "js-cookie";
 import { ProgressBar } from 'react-bootstrap';
 
@@ -53,7 +54,7 @@ class UserProfile extends React.Component {
           nickname: '',
           profilePictureUrl: ''
         }
-     };
+      };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -223,7 +224,7 @@ class UserProfile extends React.Component {
             <GridItem xs={12} sm={12} md={12}>
               <Card profile>
                 <CardBody profile>
-                  <h6> memory </h6>
+                  <MemoryFeed0/>
                 </CardBody>
               </Card>
             </GridItem>
