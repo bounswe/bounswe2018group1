@@ -3,15 +3,19 @@ import Cookies from "js-cookie";
 import constants from "../constants";
 
 const token = Cookies.get("JSESSIONID");
-axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.withCredentials = true;
 
 class MediaRepository {
 
     static async upload(media) {
-      return axios.post(`${constants.API}/media`, {
-        file: media
-      });
+        var http = new XMLHttpRequest();
+        var url = constants.API + '/media';
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'multipart/form-data');
+        http.setRequestHeader('JSESSIONID', token);
+        http.withCredentials = true;
+        http.send(media);
+
+        return http.response;
     }
 
     static async delete(url) {

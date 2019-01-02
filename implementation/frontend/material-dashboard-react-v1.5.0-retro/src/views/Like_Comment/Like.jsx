@@ -11,20 +11,23 @@ export default class Like extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      likes: 0,
-      liked: false,
-      owner: "",
-      memoryId: 0
+      likes: [],
+      liked: false
     };
 
+    this.handleLikeCounts = this.handleLikeCounts.bind(this);
     this.handleLike = this.handleLike.bind(this);
     this.handleUnlike = this.handleUnlike.bind(this);
+
+  }
+
+  handleLikeCounts() {
+      this.setState({ likes: this.props.memory.likedUsers });
   }
 
   handleLike() {
-    console.log(this.state); //Remove after development is complete.
 
-    Like_CommentRepository.like(this.state.owner)
+    Like_CommentRepository.like(this.props.memory.id)
       .then(res => {
         console.log(res);
       })
@@ -34,9 +37,8 @@ export default class Like extends React.Component {
   }
 
   handleUnlike() {
-    console.log(this.state); //Remove after development is complete.
 
-    Like_CommentRepository.unlike(this.state.owner)
+    Like_CommentRepository.unlike(this.props.memory.id)
       .then(res => {
         console.log(res);
       })
@@ -47,11 +49,12 @@ export default class Like extends React.Component {
 
   updateLikes = event => {
     event.preventDefault();
+    this.handleLikeCounts();
 
     if(!this.state.liked) {
-      this.setState((prevState, props) => {
+      this.setState((props) => {
         return {
-          likes: prevState.likes + 1,
+          likes: this.state.likes + 1,
           liked: true
         };
       });
@@ -59,9 +62,9 @@ export default class Like extends React.Component {
 
     } else {
 
-      this.setState((prevState, props) => {
+      this.setState((props) => {
         return {
-          likes: prevState.likes - 1,
+          likes: this.state.likes - 1,
           liked: false
         };
       });

@@ -22,28 +22,15 @@ class Like_CommentRepository {
       });
     }
 
-    static async getComment(commentId) {
-      return axios.get(`${constants.API}/memory/comment`, {
-        commentId: commentId
-      });
-    }
-
-    static async getLikes(memoryId) {
-      return axios.get(`${constants.API}/memory/like`, {
+    static async like(memoryId) {
+      //console.log(typeof memoryId);
+      return axios.post(`${constants.API}/memory/like`, {
         memoryId: memoryId
       });
     }
 
-    static async like(owner, memoryId) {
-      return axios.post(`${constants.API}/memory/like`, {
-        owner: owner,
-        memoryId: memoryId
-      });
-    }
-
-    static async unlike(owner, memoryId) {
-      return axios.post(`${constants.API}/memory/like`, {
-        owner: owner,
+    static async unlike(memoryId) {
+      return axios.post(`${constants.API}/memory/unlike`, {
         memoryId: memoryId
       });
     }

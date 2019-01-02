@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import "../../assets/css/material-dashboard-react.css";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 import { HelpBlock } from 'react-bootstrap';
 // core components/views
