@@ -12,6 +12,7 @@ import com.cmpe451.retro.data.repositories.UserRepository;
 import com.cmpe451.retro.models.CreateMemoryRequestBody;
 import com.cmpe451.retro.models.CreateMemoryResponseBody;
 import com.cmpe451.retro.models.FilterMemoryRequest;
+import com.cmpe451.retro.models.FilterResponseBody;
 import com.cmpe451.retro.models.GetMemoryResponseBody;
 import com.cmpe451.retro.models.PostCommentBody;
 import com.cmpe451.retro.models.RetroException;
@@ -394,8 +395,11 @@ public class MemoryServiceImp implements MemoryService {
     }
 
     @Override
-    public List<GetMemoryResponseBody> filterMemory(FilterMemoryRequest requestBody) {
-        return memoryRepository.findMemoriesWithFilter(requestBody);
+    public FilterResponseBody filterMemory(FilterMemoryRequest requestBody) {
+        List<GetMemoryResponseBody> content = memoryRepository.findMemoriesWithFilter(requestBody);
+        FilterResponseBody response = new FilterResponseBody();
+        response.setContent(content);
+        return response;
     }
 
     public boolean isNullOrEmpty(String s){

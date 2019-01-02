@@ -39,8 +39,8 @@ public class MemorySearchRepositoryImpl implements MemorySearchRepository {
                 "       left join retro.memory_list_of_tags as memtag on mem.id = memtag.memory_id " +
                 "       left join retro.tag as tag on memtag.list_of_tags_id = tag.id ";
 
-        Date startDate = null;
-        Date endDate = null;
+        String startDate = null;
+        String endDate = null;
         List<String> contraints = new ArrayList<>();
         if(Objects.nonNull(filterMemoryRequest.getStartDateYYYY())){
             startDate = createDateFromInts(filterMemoryRequest.getStartDateYYYY(), filterMemoryRequest.getStartDateMM(),
@@ -48,20 +48,25 @@ public class MemorySearchRepositoryImpl implements MemorySearchRepository {
         }
 
         if(Objects.nonNull(filterMemoryRequest.getEndDateYYYY())){
-            endDate = createDateFromInts(filterMemoryRequest.getStartDateYYYY(), filterMemoryRequest.getStartDateMM(),
-                    filterMemoryRequest.getStartDateDD(), filterMemoryRequest.getStartDateHH());
+            endDate = createDateFromInts(filterMemoryRequest.getEndDateYYYY(), filterMemoryRequest.getEndDateMM(),
+                    filterMemoryRequest.getEndDateDD(), filterMemoryRequest.getEndDateHH());
         }
 
         String timeQuery = null;
-        if(Objects.nonNull(startDate) && Objects.nonNull(endDate)){
+        /*if(Objects.nonNull(startDate) && Objects.nonNull(endDate)){
              timeQuery = String.format("((mem.start_date >= %d and mem.start_date <= %d) or (mem.end_date >= %d and mem.end_date <= %d))"
                     , startDate.getTime(), endDate.getTime(), startDate.getTime(), endDate.getTime());
         }
+        */
+        if(Objects.nonNull(startDate) && Objects.nonNull(endDate)){
+            timeQuery = String.format("( not (mem.start_date > '%s' or mem.end_date < '%s'))"
+                    , endDate, startDate);
+        }
         else if (Objects.nonNull(startDate)){
-            timeQuery = String.format("(mem.start_date >= %d or mem.end_date >= %d)", startDate.getTime(),startDate.getTime());
+            timeQuery = String.format("(mem.start_date >= '%s' or mem.end_date >= '%s')", startDate,startDate);
         }
         else if (Objects.nonNull(endDate)){
-            timeQuery = String.format("(mem.start_date <= %d or mem.end_date <= %d)", endDate.getTime(),endDate.getTime());
+            timeQuery = String.format("(mem.start_date <= '%s' or mem.end_date <= '%s')", endDate,endDate);
         }
 
         if(Objects.nonNull(timeQuery)){
@@ -74,6 +79,11 @@ public class MemorySearchRepositoryImpl implements MemorySearchRepository {
 
             String tagQuery = String.format("tag.text in %s",tagList);
             contraints.add(tagQuery);
+        }
+
+        if(Objects.nonNull(filterMemoryRequest.getText())){
+            String textQuery = "(mem.headline like '%" + filterMemoryRequest.getText() + "%')";
+            contraints.add(textQuery);
         }
 
         if(contraints.size()>0){
@@ -98,7 +108,7 @@ public class MemorySearchRepositoryImpl implements MemorySearchRepository {
         return memoryResponseBodyList;
     }
 
-    private Date createDateFromInts(Integer year, Integer month, Integer day, Integer hour){
+    private String createDateFromInts(Integer year, Integer month, Integer day, Integer hour){
         if(!Objects.nonNull(year)){
             return null;
         }
@@ -114,14 +124,7 @@ public class MemorySearchRepositoryImpl implements MemorySearchRepository {
         }
 
         String pattern = "yyyy-MM-dd-hh";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String parsableDate = yearString + "-" + monthString + "-" + dayString + "-" + hourString;
-
-        try {
-            return simpleDateFormat.parse(parsableDate);
-        } catch (ParseException e) {
-            throw new RetroException("Invalid start date", HttpStatus.BAD_REQUEST);
-        }
+        return yearString + "-" + monthString + "-" + dayString + "-" + hourString;
 
 
     }
