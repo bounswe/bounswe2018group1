@@ -24,15 +24,11 @@ class Like_CommentRepository {
 
     static async like(memoryId) {
       //console.log(typeof memoryId);
-      return axios.post(`${constants.API}/memory/like`, {
-        memoryId: memoryId
-      });
+      return axios.post(`${constants.API}/memory/like` + '?memoryId=' + memoryId);
     }
 
     static async unlike(memoryId) {
-      return axios.post(`${constants.API}/memory/unlike`, {
-        memoryId: memoryId
-      });
+      return axios.post(`${constants.API}/memory/unlike`+ '?memoryId=' + memoryId);
     }
 }
 
