@@ -17,6 +17,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/picture"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginBottom="18dp"
@@ -104,6 +105,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/editPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="18dp"
+                    android:text="Picture"
+                    android:textAllCaps="false"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="match_parent"

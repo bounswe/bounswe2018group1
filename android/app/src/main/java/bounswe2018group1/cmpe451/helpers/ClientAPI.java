@@ -312,6 +312,8 @@ public class ClientAPI {
                                         r.getString("birthday"),
                                         r.getString("gender"),
                                         r.getJSONArray("listOfLocations"));
+                                System.out.println("Profile Picture URL: " + r.getString("profilePictureUrl"));
+                                profileFragment.loadProfilePicture(r.getString("profilePictureUrl"));
                             } catch (org.json.JSONException e) {
                                 e.printStackTrace();
                             }
@@ -387,6 +389,51 @@ public class ClientAPI {
                     public void onErrorResponse(VolleyError error) {
                         //Failure Callback
                         System.err.println("updateProfile returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_INFO_TAG, profileFragment.getContext());
+    }
+
+    public void updateProfilePicture(final String $url, final ProfileFragment profileFragment) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        try {
+            postParams.put("profilePictureUrl", $url);
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.PUT, URLs.URL_USER_INFO, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.out.println("updateProfilePicture has done.");
+                            profileFragment.loadProfilePicture($url);
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("updateProfile unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("updateProfilePicture returned error response!");
                         if (error.networkResponse.data != null) {
                             try {
                                 String jsonString = new String(error.networkResponse.data,

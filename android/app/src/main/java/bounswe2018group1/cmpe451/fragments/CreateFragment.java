@@ -214,7 +214,7 @@ public class CreateFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) {
                     if (response.isSuccessful()) {
-                        System.out.println("Create Fragment:  videp upload success");
+                        System.out.println("Create Fragment: video upload success");
                         try {
                             String url = response.body().string();
                             items.add(new Pair<String, String>("video" , url));

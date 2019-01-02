@@ -1,7 +1,13 @@
 package bounswe2018group1.cmpe451.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,8 +26,26 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.R;
 import bounswe2018group1.cmpe451.helpers.ClientAPI;
+import bounswe2018group1.cmpe451.helpers.RealPathUtil;
+import bounswe2018group1.cmpe451.helpers.URLs;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
 
@@ -49,9 +74,59 @@ public class ProfileFragment extends Fragment {
     private Button editProfileSend = null;
     private ClientAPI clientAPI = null;
     private InputMethodManager inputManager = null;
+    private Button editPicture;
+    private static final int PICK_IMAGE = 1;
+    private Uri imageUri;
+    private ImageView picture;
+    private static final int MESSAGE_LOAD_PROFILE_PICTURE = 111;
+    private Handler updateUIHandler = null;
 
     public ProfileFragment() {
         // Required empty public constructor
+    }
+
+    public void onActivityResult(int requestCode, final int resultCode, Intent data) {
+        // Pick image from gallery
+        if (PICK_IMAGE == requestCode && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+
+            File imageFile = new File(RealPathUtil.getRealPath(getContext(), imageUri));
+
+            // Prepare request and send
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("file", imageFile.getName(), RequestBody.create(MediaType.parse("image"), imageFile))  // TODO add extension to image, .bmp .png .jpg
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(URLs.URL_MEDIA)
+                    .addHeader("Cookie", ("JSESSIONID=" + ((MainActivity) getActivity()).getSessionID()))
+                    .post(body)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    System.err.println("Profile Fragment: Profile picture upload failed in send");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        System.out.println("Profile Fragment: Profile picture upload success");
+                        try {
+                            String url = response.body().string();
+                            clientAPI.updateProfilePicture(url, getThis());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Profile Fragment: Profile picture upload failed in return");
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -62,7 +137,7 @@ public class ProfileFragment extends Fragment {
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
 
         // Keyboard
-        if(inputManager == null)
+        if (inputManager == null)
             inputManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         // Connect fields
@@ -89,6 +164,11 @@ public class ProfileFragment extends Fragment {
         if (editNewPassword == null) editNewPassword = v.findViewById(R.id.editNewPassword);
         if (editOldPassword == null) editOldPassword = v.findViewById(R.id.editOldPassword);
         if (editProfileSend == null) editProfileSend = v.findViewById(R.id.editProfileSend);
+        editPicture = v.findViewById(R.id.editPicture);
+        picture = v.findViewById(R.id.picture);
+
+        // Child thread cannot reach parent thread views
+        createUpdateUiHandler();
 
         // Hide edits
         editProfileLayout.setVisibility(View.GONE);
@@ -126,14 +206,11 @@ public class ProfileFragment extends Fragment {
                 int id = genderGroup.getCheckedRadioButtonId();
                 if (genderFemale.getId() == id) {
                     gender = "FEMALE";
-                }
-                else if (genderMale.getId() == id) {
+                } else if (genderMale.getId() == id) {
                     gender = "MALE";
-                }
-                else if (genderOther.getId() == id) {
+                } else if (genderOther.getId() == id) {
                     gender = "OTHER";
-                }
-                else {
+                } else {
                     gender = "NOT_TO_DISCLOSE";
                 }
                 String birth = "" + editBirth.getYear() + "-";
@@ -160,6 +237,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        editPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
         return v;
     }
 
@@ -177,8 +264,7 @@ public class ProfileFragment extends Fragment {
         birth.setText($birth);
         if ($birth.equals("null")) {
             birth.setText("Birthday");
-        }
-        else {
+        } else {
             int year;
             int month;
             int day;
@@ -218,22 +304,19 @@ public class ProfileFragment extends Fragment {
         if ($gender.equals("FEMALE")) {
             gender.setText("Female");
             genderFemale.setChecked(true);
-        }
-        else if ($gender.equals("MALE")) {
+        } else if ($gender.equals("MALE")) {
             gender.setText("Male");
             genderMale.setChecked(true);
-        }
-        else if ($gender.equals("OTHER")) {
+        } else if ($gender.equals("OTHER")) {
             gender.setText("Other");
             genderOther.setChecked(true);
-        }
-        else {
+        } else {
             gender.setText("Not to disclose");
             genderNo.setChecked(true);
         }
         // Set locations, ignore map points
         String locationList = "";
-        for (int i = 0; i < $locations.length(); i ++) {
+        for (int i = 0; i < $locations.length(); i++) {
             String location = "";
             try {
                 location = $locations.optJSONObject(i).getString("locationName");
@@ -253,6 +336,57 @@ public class ProfileFragment extends Fragment {
             locations.setText("Locations");
         }
         editLocations.setText(locationList);
+    }
+
+    public void loadProfilePicture(String url) {
+        if (url.equals("null")) {
+            System.err.println("Profile Picture Url is null");
+            return;
+        }
+        // Prepare request and send
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.err.println("Profile Fragment: Load profile picture failed in send");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    System.out.println("Profile Fragment: Load profile picture success");
+                    InputStream inputStream = response.body().byteStream();
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                    Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                    // Send to parent
+                    Message message = new Message();
+                    message.what = MESSAGE_LOAD_PROFILE_PICTURE;
+                    message.obj = bitmap;
+                    updateUIHandler.sendMessage(message);
+                } else {
+                    System.err.println("Profile Fragment: Load profile picture failed in return");
+                }
+            }
+        });
+    }
+
+    private void createUpdateUiHandler() {
+        if (updateUIHandler == null) {
+            updateUIHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == MESSAGE_LOAD_PROFILE_PICTURE) {
+                        Bitmap bitmap = (Bitmap) msg.obj;
+                        picture.setImageBitmap(bitmap);
+                    }
+                }
+            };
+        }
     }
 
 }
