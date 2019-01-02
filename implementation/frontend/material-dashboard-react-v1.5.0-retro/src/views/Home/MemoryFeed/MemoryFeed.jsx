@@ -17,6 +17,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import PVideo from "components/PVideo/index.js";
 
 import image1 from "assets/img/selimiye.jpg";
 import image2 from "assets/img/pamukkale.png";
@@ -94,7 +95,14 @@ class MemoryFeed extends React.Component {
                   </ul>
 
                   {prop.listOfItems.map((propOfItems, keyOfItems) => {
-                    if (propOfItems.body === '') {
+                    if (propOfItems.type === 'VIDEO') {
+                      return (
+                        <PVideo
+                          key={keyOfItems}
+                          url={propOfItems.url}
+                        />
+                      );
+                    } else if (propOfItems.type === 'PHOTO') {
                       return (
                         <img
                           className={classes.cardImgTop}
@@ -109,6 +117,8 @@ class MemoryFeed extends React.Component {
                         <p> {propOfItems.body} </p>
                       );
                     }
+
+
                   })}
                   <p> Tags: </p>
                   {prop.listOfTags.map((propOfTags, keyOfTags) => {

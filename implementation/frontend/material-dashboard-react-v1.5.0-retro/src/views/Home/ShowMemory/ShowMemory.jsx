@@ -13,6 +13,7 @@ import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import AccessTime from "@material-ui/icons/AccessTime";
 import CommentIcon from "@material-ui/icons/Comment";
+import PVideo from "components/PVideo/index.js";
 
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -240,21 +241,24 @@ class ShowMemory extends React.Component {
                 </ul>
 
                 {this.state.memory.listOfItems.map((prop, key) => {
-                  if (prop.type == 'PHOTO') {
+                  if (prop.type === 'VIDEO') {
+                    return (
+                      <PVideo
+                        key={key}
+                        url={prop.url}
+                      />
+                    );
+                  } else if (prop.type === 'PHOTO') {
                     return (
                       <img
                         className={classes.cardImgTop}
                         alt="100%x180"
-                        style={{ height: "300px", width: "43%", display: "block" }}
+                        style={{ height: "300px", width: "60%", display: "block" }}
                         src={prop.url}
                         data-holder-rendered="true"
                       />
                     );
-                  } else if (prop.type == 'VIDEO') {
-                    return (
-                      true
-                    );
-                  } else if (prop.type == 'AUDIO') {
+                  } else if (prop.type === 'AUDIO') {
                     return (
                       true
                     );

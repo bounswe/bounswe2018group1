@@ -19,14 +19,14 @@
     "moment": "^2.22.2",
     "npm-run-all": "4.1.5",
     "perfect-scrollbar": "1.4.0",
-    "react": "16.5.2",
+    "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-date-picker": "^5.1.0",
     "react-chartist": "0.13.1",
     "react-country-region-selector-material-ui": "^1.0.0",
     "react-country-region-selector-material-ui-new": "^1.5.2",
     "react-datepicker": "^1.8.0",
-    "react-dom": "16.5.2",
+    "react-dom": "^16.5.2",
     "react-google-maps": "9.4.5",
     "react-password-mask": "^3.3.1",
     "react-router-dom": "4.3.1",
@@ -35,7 +35,9 @@
     "react-swipeable-views": "0.12.17",
     "react-tag-input": "^6.1.0",
     "reactstrap": "^6.5.0",
-    "validator": "^10.9.0"
+    "redux": "^4.0.1",
+    "validator": "^10.9.0",
+    "video-react": "^0.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
