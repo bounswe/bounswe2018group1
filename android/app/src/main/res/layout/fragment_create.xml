@@ -217,21 +217,11 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="96dp"
             android:layout_marginRight="96dp"
+            android:layout_marginBottom="96dp"
             android:text="Share"
             android:textAllCaps="false" />
 
 
-        <RelativeLayout
-            android:id="@+id/loadingPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" >
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true" />
-        </RelativeLayout>
     </LinearLayout>
 
 

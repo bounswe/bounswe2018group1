@@ -92,10 +92,10 @@ public class CreateFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void enableUI(){
+    /*public void enableUI(){
         rootView.findViewById(R.id.loadingPanel).setVisibility(View.INVISIBLE);
 
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -118,7 +118,7 @@ public class CreateFragment extends Fragment {
 
             OkHttpClient client = new OkHttpClient();
 
-            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            //rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
             flag = 1;
 
             client.newCall(request).enqueue(new Callback() {
@@ -135,7 +135,7 @@ public class CreateFragment extends Fragment {
                             String url = response.body().string();
                             items.add(new Pair<String, String>("photo" , url));
                             System.out.println("Uploaded picture url -> " + url);
-                            enableUI();
+                            //enableUI();
                             flag = 0;
 
                         } catch(IOException e) {
@@ -202,7 +202,7 @@ public class CreateFragment extends Fragment {
                     .build();
 
             OkHttpClient client = new OkHttpClient();
-            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            //rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
             flag = 1;
 
             client.newCall(request).enqueue(new Callback() {
@@ -219,7 +219,7 @@ public class CreateFragment extends Fragment {
                             String url = response.body().string();
                             items.add(new Pair<String, String>("video" , url));
                             System.out.println("Uploaded video url -> " + url);
-                            enableUI();
+                            //enableUI();
                             flag = 0;
                         } catch(IOException e) {
                             e.printStackTrace();
@@ -285,7 +285,7 @@ public class CreateFragment extends Fragment {
 
             OkHttpClient client = new OkHttpClient();
 
-            rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            //rootView.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
             flag = 1;
 
             client.newCall(request).enqueue(new Callback() {
@@ -302,7 +302,7 @@ public class CreateFragment extends Fragment {
                             String url = response.body().string();
                             items.add(new Pair<String, String>("audio" , url));
                             System.out.println("Uploaded audio url -> " + url);
-                            enableUI();
+                            //enableUI();
                             flag = 0;
                         } catch(IOException e) {
                             e.printStackTrace();
@@ -373,7 +373,7 @@ public class CreateFragment extends Fragment {
 
         // Server calls
         if (clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
-        rootView.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        //rootView.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         // Connect fields
         headline = rootView.findViewById(R.id.headline);
