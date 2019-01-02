@@ -10,43 +10,155 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
-        android:id="@+id/search"
+        android:id="@+id/searchText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
         android:ems="10"
-        android:hint="What do you want see today?"
+        android:hint="Search by Text"
         android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Start Date (Optional)"
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="18dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="18dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/memorySearch"
+        <EditText
+            android:id="@+id/endDateYYYY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Memories"
-            android:textAllCaps="false" />
+            android:ems="10"
+            android:hint="Year"
+            android:inputType="numberSigned" />
 
-        <Button
-            android:id="@+id/userSearch"
+        <EditText
+            android:id="@+id/endDateMM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="People"
-            android:textAllCaps="false" />
+            android:ems="10"
+            android:hint="Month"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/endDateDD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Day"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/endDateHH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Hour"
+            android:inputType="number" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="End Date (Optional)"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="18dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/startDateYYYY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Year"
+            android:inputType="numberSigned" />
+
+        <EditText
+            android:id="@+id/startDateMM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Month"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/startDateDD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Day"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/startDateHH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Hour"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/searchTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:ems="10"
+        android:hint="Search by Tag (Separate with comma)"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/searchLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:ems="10"
+        android:hint="Search by Location"
+        android:inputType="text" />
+
     <Button
-        android:id="@+id/mapSearch"
+        android:id="@+id/searchMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="72dp"
-        android:text="Map"
+        android:layout_marginBottom="18dp"
+        android:text="Area on Map"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="72dp"
+        android:text="Search"
         android:textAllCaps="false" />
 
 </LinearLayout>

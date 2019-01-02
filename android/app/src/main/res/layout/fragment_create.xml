@@ -78,7 +78,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End Day (Optional)"
+            android:text="End Date (Optional)"
             android:textAlignment="center" />
 
         <LinearLayout
@@ -125,11 +125,12 @@
                 android:inputType="number" />
 
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Or you can choose decades(Optinal)"
-            android:textAllCaps="false"/>
+            android:text="Or you can choose decades (Optional)"
+            android:textAllCaps="false" />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,10 +141,10 @@
             android:id="@+id/addLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="18dp"
-            android:layout_marginRight="48dp"
-            android:text="Add Location"
+            android:layout_marginRight="60dp"
+            android:text="Location"
             android:textAllCaps="false" />
 
         <LinearLayout
@@ -158,43 +159,47 @@
             android:layout_height="wrap_content"
             android:text="List of Tags"
             android:textAllCaps="false"/>
+
         <EditText
+            android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tags(Seperate with comma)"
-            android:id="@+id/tags"
-            android:textAllCaps="false"/>
+            android:hint="Tags (Separate with comma)"
+            android:textAllCaps="false" />
 
         <LinearLayout
             android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/addImage"
-                android:text="Add Image"
-                android:textAllCaps="false"
-            />
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Image"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addVideo"
-                android:text="Add Video"
-                android:textAllCaps="false"/>
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Video"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addAudio"
-                android:text="Add Audio"
-                android:textAllCaps="false"/>
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Audio"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/addText"
-                android:text="Add Text"
-                android:textAllCaps="false"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Text"
+                android:textAllCaps="false" />
 
         </LinearLayout>
 
@@ -207,11 +212,13 @@
             android:orientation="vertical"></LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="96dp"
+            android:layout_marginRight="96dp"
             android:text="Share"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <RelativeLayout
