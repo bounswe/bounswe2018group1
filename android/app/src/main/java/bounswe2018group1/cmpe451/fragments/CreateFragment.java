@@ -171,6 +171,8 @@ public class CreateFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     // Find and remove pressed button and item
+                    if(flag == 1)
+                        return;
                     for (int i = 0; i < itemLayoutList.size(); i++) {
                         if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
                             itemList.removeView(itemList.findViewWithTag(itemLayoutList.get(i).getTag()));
@@ -250,6 +252,8 @@ public class CreateFragment extends Fragment {
             itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(flag==1)
+                        return;
                     // Find and remove pressed button and item
                     for (int i = 0; i < itemLayoutList.size(); i++) {
                         if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
@@ -330,6 +334,8 @@ public class CreateFragment extends Fragment {
             itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(flag==1)
+                        return;
                     // Find and remove pressed button and item
                     for (int i = 0; i < itemLayoutList.size(); i++) {
                         if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
@@ -491,6 +497,8 @@ public class CreateFragment extends Fragment {
                 itemButtonList.get(itemButtonList.size() - 1).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(flag==1)
+                            return;
                         // Find and remove pressed button and item
                         for (int i = 0; i < itemLayoutList.size(); i++) {
                             if (view.getTag().equals(itemLayoutList.get(i).getTag() + "B")) {
@@ -616,9 +624,10 @@ public class CreateFragment extends Fragment {
                         items.set(i, new Pair<String, String>("text" ,((EditText)itemViewList.get(i)).getText().toString()));
                     }
                 }
+
                 clientAPI.createMemory(startDateYYYYInt, startDateMMInt, startDateDDInt, startDateHHInt,
                         endDateYYYYInt, endDateMMInt, endDateDDInt, endDateHHInt,
-                        headline.getText().toString(), items, locations, getContext());
+                        headline.getText().toString(), items, locations, getContext() , ((EditText)rootView.findViewById(R.id.tags)).getText().toString().split(","));
             }
         });
 

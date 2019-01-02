@@ -153,6 +153,17 @@
             android:layout_marginTop="18dp"
             android:layout_marginBottom="18dp"
             android:orientation="vertical"></LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List of Tags"
+            android:textAllCaps="false"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tags(Seperate with comma)"
+            android:id="@+id/tags"
+            android:textAllCaps="false"/>
 
         <LinearLayout
             android:id="@+id/addButton"

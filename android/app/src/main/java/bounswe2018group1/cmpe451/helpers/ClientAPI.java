@@ -405,7 +405,7 @@ public class ClientAPI {
 
     public void createMemory(int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
                              int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,
-                             String headline, ArrayList<Pair<String, String>> listOfItems, String[] listOfLocations, final Context context) {
+                             String headline, ArrayList<Pair<String, String>> listOfItems, String[] listOfLocations, final Context context , String[] listOfTags) {
         // Get current date and time
         DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         String createDate = createTime.format(Calendar.getInstance().getTime());
@@ -424,9 +424,11 @@ public class ClientAPI {
             postParams.put("updatedTime", createDate);
             // TODO Do or remove from backend, Tags
             JSONArray tagArray = new JSONArray();
-            JSONObject tag = new JSONObject();
-            tag.put("text", "Tag");
-            tagArray.put(tag);
+            for(String s : listOfTags){
+                JSONObject tag = new JSONObject();
+                tag.put("text", s);
+                tagArray.put(tag);
+            }
             postParams.put("listOfTags", tagArray);
             // Convert item strings to JSON Array
             JSONArray itemArray = new JSONArray();
