@@ -10,8 +10,6 @@ class LoginRepository {
       nickname: loginNickname,
       password: loginPassword
     }).then((response) => {
-      // const token = response.token;
-      // Cookies.set("retroToken", token);
       const token = response.data.jsessionID;
       Cookies.set("JSESSIONID", token);
       console.log(response.data);
@@ -58,10 +56,6 @@ class LoginRepository {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          // "Authorization": "bearer " + token
-          // "Access-Control-Allow-Origin": 'http://localhost:1337',
-          // "Access-Control-Allow-Methods": 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-          // 'Access-Control-Allow-Headers': "Content-Type"
           },
         }
       )

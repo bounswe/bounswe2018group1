@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 
 class MemoryRepository {
 
-    static async createMemory(listOfItems, listOfLocations, listOfTags, headline, endDateDD, endDateHH, endDateMM, endDateYYYY, startDateDD, startDateHH, startDateMM, startDateYYYY) {
+    static async createMemory(memory) {
         //Time format: "2018-11-10T21:17:30.548Z"
         var currentdate = new Date();
 
@@ -22,22 +22,7 @@ class MemoryRepository {
               "Content-Type": "application/json",
               "Accept": "application/json",
             },
-            data: {
-              listOfItems: listOfItems,
-              listOfLocations: listOfLocations,
-              listOfTags: listOfTags,
-              headline: headline,
-              dateOfCreation: currentdate,
-              endDateDD: endDateDD,
-              endDateHH: endDateHH,
-              endDateMM: endDateMM,
-              endDateYYYY: endDateYYYY,
-              startDateDD: startDateDD,
-              startDateHH: startDateHH,
-              startDateMM: startDateMM,
-              startDateYYYY: startDateYYYY,
-              updatedTime: currentdate
-            }
+            data: memory
           }
         )
     }

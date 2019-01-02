@@ -29,6 +29,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardS
 import Like_CommentRepository from "api_calls/like_comment.js";
 import MemoryRepository from "api_calls/memory_without_userId.js";
 import UserRepository from "api_calls/user.js";
+import AnnotationRepository from 'api_calls/annotation_calls.js';
 
 import LikePage from "views/Like_Comment/Like.jsx";
 import CommentPage from "views/Like_Comment/Comment.jsx";
@@ -109,7 +110,8 @@ class ShowMemory extends React.Component {
       },
       contextMenu: null,
       addingAnnotation: false,
-      annotationText: ""
+      annotationText: "",
+      listOfAnnotation: []
     };
 
     this.handleDeleteComment = this.handleDeleteComment.bind(this);
@@ -121,7 +123,7 @@ class ShowMemory extends React.Component {
 
   handleDeleteComment(id) {
     Like_CommentRepository.deleteComment(id).then(memory => {
-      console.log(memory);
+      window.location.reload();
     });
   }
 
@@ -170,6 +172,21 @@ class ShowMemory extends React.Component {
     });
   }
 
+  handleAddNewAnnotation = event => {
+    event.preventDefault();
+    console.log(this.state); //Remove after development is complete.
+
+    AnnotationRepository.annotation(this.state.annotationText, this.state.selection.range.endOffset,
+      this.state.itemId, this.state.selection.range.startOffset, this.state.memory.listOfItems.type, this.state.user.id)
+      .then(res => {
+        console.log(res);
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   // get memory çalışmalı
   componentDidMount() {
     const { id } = this.props;
@@ -179,6 +196,9 @@ class ShowMemory extends React.Component {
     });
     UserRepository.user().then(user => {
       this.setState({user: user});
+    });
+    AnnotationRepository.getAllAnnotations().then(listOfAnnotation => {
+      this.setState({ listOfAnnotation: listOfAnnotation.content });
     });
 
     window.addEventListener("click", this.handleResetAnnotation);
@@ -196,7 +216,6 @@ class ShowMemory extends React.Component {
     });
 
     const creationDate = new Date(this.state.memory.dateOfCreation);
-
 
     return (
       <div>
@@ -269,14 +288,6 @@ class ShowMemory extends React.Component {
                   }
                 })}
 
-                {/* <img
-                  className={classes.cardImgTop}
-                  alt="100%x180"
-                  style={{ height: "300px", width: "43%", display: "block" }}
-                  src={image2}
-                  data-holder-rendered="true"
-                /> */}
-
                 <p> Tags: </p>
                 {this.state.memory.listOfTags.map((prop, key) => {
                   return (
@@ -320,7 +331,7 @@ class ShowMemory extends React.Component {
                             </CardFooter>
                             {(prop.userId === this.state.user.id) ?
                               <Button onClick={() => this.handleDeleteComment(prop.id)} round color="transparent">
-                                <i class="far fa-trash-alt"></i>  Delete Comment
+                                <i class="far fa-trash-alt"></i> Delete Comment
                               </Button>: null
                             }
                           </Card>
@@ -366,6 +377,7 @@ class ShowMemory extends React.Component {
                         required: true
                       }}
                     />
+                  <Button onClick={this.handleAddNewAnnotation} color="info">Send Annotation</Button>
                   </CardBody>
                 </Card>
               </div>
