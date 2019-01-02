@@ -48,7 +48,8 @@
         <activity
             android:name=".MapsSearchActivity"
             android:label=".MapsSearchActivity" />
-        <activity android:name=".MemoryEditActivity"></activity>
+        <activity android:name=".MemoryEditActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import bounswe2018group1.cmpe451.MainActivity;
 import bounswe2018group1.cmpe451.MapsSearchActivity;
 import bounswe2018group1.cmpe451.R;
+import bounswe2018group1.cmpe451.SearchActivity;
 
 
 /**
@@ -56,7 +58,12 @@ public class MapFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(getActivity(), SearchActivity.class);
+                //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.putExtra("SessionID", ((MainActivity) getActivity()).getSessionID());
+                i.putExtra("Text", searchText.getText().toString());
+                //i.putExtra("S")
+                startActivity(i);
             }
         });
 

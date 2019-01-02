@@ -11,11 +11,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -48,6 +50,7 @@ public class ClientAPI {
         public static final String COMMENT_DELETE_TAG = "comment_delete_tag";
         public static final String LIKE_MEMORY_TAG = "like_memory_tag";
         public static final String UNLIKE_MEMORY_TAG = "unlike_memory_tag";
+        public static final String MEMORY_FILTER_TAG = "memory_filter_tag";
     }
 
     private ClientAPI(Context context) {
@@ -535,7 +538,7 @@ public class ClientAPI {
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_CREATE_TAG, context);
     }
 
-    public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack serverCallBack,
+    public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack ServerCallBack,
                                   final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET,
@@ -545,16 +548,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("getMemoryAll returned null response!");
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("getMemoryAll unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -573,14 +576,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_UPD_TAG, context);
     }
 
-    public void getCurrentUser(final ServerCallBack serverCallBack,
+    public void getCurrentUser(final ServerCallBack ServerCallBack,
                              final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET, URLs.URL_USER, postParams,
@@ -589,16 +592,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("getCurrentUser returned null response!");
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("getCurrentUser unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -617,14 +620,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.USER_REQ_TAG, context);
     }
 
-    public void deleteComment(int id, final ServerCallBack serverCallBack,
+    public void deleteComment(int id, final ServerCallBack ServerCallBack,
                               final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.DELETE,
@@ -634,16 +637,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("deleteComment returned null response!");
-                            serverCallBack.onSuccess(null);
+                            ServerCallBack.onSuccess(null);
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("deleteComment unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -662,14 +665,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.COMMENT_DELETE_TAG, context);
     }
 
-    public void createComment(String comment, int memoryId, final ServerCallBack serverCallBack,
+    public void createComment(String comment, int memoryId, final ServerCallBack ServerCallBack,
                               final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         try {
@@ -685,16 +688,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("createComment returned null response!");
-                            serverCallBack.onSuccess(null);
+                            ServerCallBack.onSuccess(null);
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("createComment unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -713,14 +716,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.COMMENT_CREATE_TAG, context);
     }
 
-    public void getMemory(int id, final ServerCallBack serverCallBack,
+    public void getMemory(int id, final ServerCallBack ServerCallBack,
                           final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.GET,
@@ -730,16 +733,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("getMemory returned null response!");
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("getMemory unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -758,14 +761,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_GET_TAG, context);
     }
 
-    public void deleteMemory(int id, final ServerCallBack serverCallBack,
+    public void deleteMemory(int id, final ServerCallBack ServerCallBack,
                              final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.DELETE,
@@ -775,16 +778,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("deleteMemory returned null response!");
-                            serverCallBack.onSuccess(null);
+                            ServerCallBack.onSuccess(null);
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("deleteMemory unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -803,14 +806,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_DELETE_TAG, context);
     }
 
-    public void likeMemory(int id, final ServerCallBack serverCallBack,
+    public void likeMemory(int id, final ServerCallBack ServerCallBack,
                            final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST,
@@ -820,16 +823,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("likeMemory returned null response!");
-                            serverCallBack.onSuccess(null);
+                            ServerCallBack.onSuccess(null);
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("likeMemory unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -848,14 +851,14 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.LIKE_MEMORY_TAG, context);
     }
 
-    public void unlikeMemory(int id, final ServerCallBack serverCallBack,
+    public void unlikeMemory(int id, final ServerCallBack ServerCallBack,
                            final Context context) {
         org.json.JSONObject postParams = new org.json.JSONObject();
         JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.POST,
@@ -865,16 +868,16 @@ public class ClientAPI {
                     public void onResponse(Object response) {
                         if (response == null) {
                             System.err.println("unlikeMemory returned null response!");
-                            serverCallBack.onSuccess(null);
+                            ServerCallBack.onSuccess(null);
                         } else if (response instanceof org.json.JSONObject) {
                             //Success Callback
                             org.json.JSONObject r = (org.json.JSONObject) response;
-                            serverCallBack.onSuccess(r);
+                            ServerCallBack.onSuccess(r);
                             System.out.println("Response: " + r.toString());
                         } else {
                             System.err.println("unlikeMemory unexpected response!");
                             System.err.println("Response: " + response.toString());
-                            serverCallBack.onError();
+                            ServerCallBack.onError();
                         }
                     }
                 },
@@ -893,11 +896,68 @@ public class ClientAPI {
                             }
                         }
                         error.printStackTrace();
-                        serverCallBack.onError();
+                        ServerCallBack.onError();
                     }
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.UNLIKE_MEMORY_TAG, context);
     }
+
+    public void filterMemory(String text, final ServerCallBack ServerCallBack,
+                           final Context context) {
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        try {
+            JSONArray tagArray = new JSONArray();
+            for (String item : text.split(",")) {
+                JSONObject items = new JSONObject();
+                items.put("text", item);
+                tagArray.put(items);
+            }
+            postParams.put("listOfTags", tagArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                URLs.URL_MEMORY_FILTER, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.err.println("filterMemory returned null response!");
+                            ServerCallBack.onError();
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            ServerCallBack.onSuccess(r);
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("filterMemory unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                            ServerCallBack.onError();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("filterMemory returned error response!");
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                        ServerCallBack.onError();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_FILTER_TAG, context);
+    }
+
 
 }
