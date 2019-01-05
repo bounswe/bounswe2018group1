@@ -101,9 +101,13 @@ public class StringUtility {
         StringBuilder result = new StringBuilder();
         result.append("List Of Locations:" + System.getProperty("line.separator"));
         for(int i = 0, size = listOfLocations.size(); i < size; ++i) {
-            result.append(String.valueOf(i+1) + ") " +
-                    listOfLocations.get(i).getAsJsonObject().get("locationName").getAsString() +
-                    System.getProperty("line.separator"));
+            String locStr = listOfLocations.get(i).getAsJsonObject().get("locationName").getAsString();
+            if(locStr.isEmpty()) {
+                locStr = "(" + listOfLocations.get(i).getAsJsonObject().get("latitude").getAsDouble() +
+                        ", " +
+                        listOfLocations.get(i).getAsJsonObject().get("longitude").getAsDouble() + ")";
+            }
+            result.append(String.valueOf(i+1) + ") " + locStr + System.getProperty("line.separator"));
         }
 
         return result.toString();
