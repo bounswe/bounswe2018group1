@@ -35,6 +35,8 @@ public class FeedFragment extends Fragment {
     private MemoryAdapter adapter = null;
     private ClientAPI clientAPI = null;
     private int pageSize = 3;
+    private String sessionID;
+
     private static int MY_CHILD_ACTIVITY = MemoryViewActivity.class.hashCode() & 0xFFFF;
 
     public FeedFragment() {
@@ -46,10 +48,13 @@ public class FeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            sessionID = bundle.getString("sessionID");
+        }
         if (swipeRefreshLayout == null) swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
         if (listView == null) listView = rootView.findViewById(R.id.listView);
         if(clientAPI == null) clientAPI = ClientAPI.getInstance(getContext());
-
         if (dataSourcePtr == null) dataSourcePtr = new Pointer<>(new JsonArray());
         if(dataSourceUpdateLock == null) dataSourceUpdateLock = new Semaphore(1);
         if(adapter == null) adapter = new MemoryAdapter(rootView.getContext(), R.layout.memory_row, dataSourcePtr);
@@ -113,6 +118,7 @@ public class FeedFragment extends Fragment {
             Intent i = new Intent(getActivity(), MemoryViewActivity.class);
             i.putExtra("memory", memoryAdapter.getItem(position).toString());
             i.putExtra("memoryIndex", position);
+            i.putExtra("sessionID", sessionID);
             startActivityForResult(i, MY_CHILD_ACTIVITY);
         }
     }

@@ -3,6 +3,8 @@ package bounswe2018group1.cmpe451.helpers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 public class StringUtility {
 
     public static String join(String delimiter, String[] argStrings) {
@@ -97,9 +99,8 @@ public class StringUtility {
         return result.toString();
     }
 
-    public static String memoryLocation(JsonArray listOfLocations) {
-        StringBuilder result = new StringBuilder();
-        result.append("List Of Locations:" + System.getProperty("line.separator"));
+    public static ArrayList<String> memoryLocationList(JsonArray listOfLocations) {
+        ArrayList<String> res = new ArrayList<>();
         for(int i = 0, size = listOfLocations.size(); i < size; ++i) {
             String locStr = listOfLocations.get(i).getAsJsonObject().get("locationName").getAsString();
             if(locStr.isEmpty()) {
@@ -107,7 +108,17 @@ public class StringUtility {
                         ", " +
                         listOfLocations.get(i).getAsJsonObject().get("longitude").getAsDouble() + ")";
             }
-            result.append(String.valueOf(i+1) + ") " + locStr + System.getProperty("line.separator"));
+            res.add(locStr);
+        }
+        return res;
+    }
+
+    public static String memoryLocation(JsonArray listOfLocations) {
+        StringBuilder result = new StringBuilder();
+        ArrayList<String> locations = memoryLocationList(listOfLocations);
+        result.append("List Of Locations:" + System.getProperty("line.separator"));
+        for(int i = 0, size = locations.size(); i < size; ++i) {
+            result.append(String.valueOf(i+1) + ") " + locations.get(i) + System.getProperty("line.separator"));
         }
 
         return result.toString();

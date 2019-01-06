@@ -54,6 +54,7 @@ public class MemoryViewActivity extends AppCompatActivity {
     private EditText createCommentText = null;
     private ClientAPI clientAPI = null;
     private int likeAmount;
+    private String sessionID;
 
     private void initLocalVariables() {
         if (swipeRefreshLayout == null) swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -81,6 +82,7 @@ public class MemoryViewActivity extends AppCompatActivity {
                     getIntent().getStringExtra("memory")
             ).getAsJsonObject();
         }
+        sessionID = getIntent().getStringExtra("sessionID");
     }
 
     private void initProfilePicture() {
@@ -175,6 +177,7 @@ public class MemoryViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MemoryViewActivity.this, MemoryEditActivity.class);
                 i.putExtra("memory", memory.toString());
+                i.putExtra("sessionID", sessionID);
                 startActivity(i);
             }
         });

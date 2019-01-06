@@ -11,7 +11,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +43,7 @@ public class ClientAPI {
         public static final String USER_INFO_TAG = "user_info_tag";
         public static final String MEMORY_UPD_TAG = "memory_update_tag";
         public static final String MEMORY_CREATE_TAG = "memory_create_tag";
+        public static final String MEMORY_PUT_TAG = "memory_put_tag";
         public static final String MEMORY_GET_TAG = "memory_get_tag";
         public static final String MEMORY_DELETE_TAG = "memory_delete_tag";
         public static final String COMMENT_CREATE_TAG = "comment_create_tag";
@@ -536,6 +536,94 @@ public class ClientAPI {
                 }
         );
         volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_CREATE_TAG, context);
+    }
+
+    public void putMemory(int id, int startDateYYYY, int startDateMM, int startDateDD, int startDateHH,
+                             int endDateYYYY, int endDateMM, int endDateDD, int endDateHH,
+                             String headline, ArrayList<Pair<String, String>> listOfItems, String[] listOfLocations,
+                          final Context context , String[] listOfTags) {
+        // Get current date and time
+        DateFormat createTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        String createDate = createTime.format(Calendar.getInstance().getTime());
+        org.json.JSONObject postParams = new org.json.JSONObject();
+        try {
+            //postParams.put("dateOfCreation", createDate);
+            postParams.put("id", id);
+            postParams.put("startDateYYYY", startDateYYYY);
+            postParams.put("startDateMM", startDateMM);
+            postParams.put("startDateDD", startDateDD);
+            postParams.put("startDateHH", startDateHH);
+            postParams.put("endDateYYYY", endDateYYYY);
+            postParams.put("endDateMM", endDateMM);
+            postParams.put("endDateDD", endDateDD);
+            postParams.put("endDateHH", endDateHH);
+            postParams.put("headline", headline);
+            postParams.put("updatedTime", createDate);
+            // TODO Do or remove from backend, Tags
+            JSONArray tagArray = new JSONArray();
+            for(String s : listOfTags){
+                JSONObject tag = new JSONObject();
+                tag.put("text", s);
+                tagArray.put(tag);
+            }
+            postParams.put("listOfTags", tagArray);
+            // Convert item strings to JSON Array
+            JSONArray itemArray = new JSONArray();
+            for (Pair<String , String> item : listOfItems) {
+                JSONObject items = new JSONObject();
+                if(item.first.equals("text")) items.put("body", item.second);
+                items.put("type", item.first.toUpperCase());
+                if (!item.first.equals("text"))items.put("url" , item.second);
+                itemArray.put(items);
+            }
+            postParams.put("listOfItems", itemArray);
+            // Convert location strings to JSON Array
+            JSONArray locationArray = new JSONArray();
+            for (String location : listOfLocations) {
+                JSONObject locations = new JSONObject();
+                locations.put("locationName", location);
+                locationArray.put(locations);
+            }
+            postParams.put("listOfLocations", locationArray);
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new NullResponseJsonObjectRequest(Request.Method.PUT,
+                URLs.URL_MEMORY + "?id=" + id, postParams,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if (response == null) {
+                            System.err.println("ID did not return");
+                        } else if (response instanceof org.json.JSONObject) {
+                            //Success Callback
+                            org.json.JSONObject r = (org.json.JSONObject) response;
+                            System.out.println("Response: " + r.toString());
+                        } else {
+                            System.err.println("putMemory unexpected response!");
+                            System.err.println("Response: " + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        System.err.println("putMemory returned error response!");
+                        if (error.networkResponse.data != null) {
+                            try {
+                                String jsonString = new String(error.networkResponse.data,
+                                        HttpHeaderParser.parseCharset(error.networkResponse.headers, "utf-8"));
+                                System.err.println(jsonString);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        error.printStackTrace();
+                    }
+                }
+        );
+        volleySingleton.addToRequestQueue(jsonObjReq, Tags.MEMORY_PUT_TAG, context);
     }
 
     public void getMemoryAll(int pageNum, int pageSize, final ServerCallBack ServerCallBack,

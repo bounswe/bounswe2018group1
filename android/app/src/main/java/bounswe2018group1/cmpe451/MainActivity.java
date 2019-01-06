@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Create fragments
         fragmentFeed = new FeedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("sessionID", sessionID);
+        fragmentFeed.setArguments(bundle);
         fragmentMap = new MapFragment();
         fragmentProfile = new ProfileFragment();
         fragmentCreate = new CreateFragment();

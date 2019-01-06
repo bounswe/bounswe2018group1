@@ -66,13 +66,13 @@ public class ItemAdapter extends BaseAdapter {
         }
         holder.setAllGone();
 
-        JsonObject memory = getItem(position);
+        JsonObject item = getItem(position);
         String htmlBody = null;
         Boolean isHtml = true;
-        if(!memory.get("body").isJsonNull() && !memory.get("body").getAsString().isEmpty()) {
-            htmlBody = memory.get("body").getAsString();
-        } else if(!memory.get("url").isJsonNull()) {
-            Uri itemUri = Uri.parse(memory.get("url").getAsString());
+        if(!item.get("body").isJsonNull() && !item.get("body").getAsString().isEmpty()) {
+            htmlBody = item.get("body").getAsString();
+        } else if(!item.get("url").isJsonNull()) {
+            Uri itemUri = Uri.parse(item.get("url").getAsString());
             String type = getMimeType(itemUri, context);
             if(type.startsWith("image")) {
                 isHtml = false;
