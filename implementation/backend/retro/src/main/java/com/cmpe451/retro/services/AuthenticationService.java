@@ -10,4 +10,6 @@ public interface AuthenticationService {
 
     long register(RegisterRequestBody registerRequestBody);
 
+    long activate(String email, String randomCode);
+
 }
