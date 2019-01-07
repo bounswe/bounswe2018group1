@@ -4,9 +4,11 @@ import com.cmpe451.retro.core.Constants;
 import com.cmpe451.retro.models.AuthenticationResponseModel;
 import com.cmpe451.retro.models.LoginRequestBody;
 import com.cmpe451.retro.models.RegisterRequestBody;
+import com.cmpe451.retro.models.RetroException;
 import com.cmpe451.retro.services.AuthenticationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +61,12 @@ public class AuthenticationController {
 
 
     long getUserId(){
-        return (long) httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        try{
+            return (long) httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        }
+        catch (NullPointerException e){
+            throw new RetroException("User not found.", HttpStatus.NOT_FOUND);
+        }
     }
 
 

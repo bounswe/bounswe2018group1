@@ -7,8 +7,6 @@ public class CreateMemoryRequestBody {
 
     private String headline;
 
-    private Date dateOfCreation;
-
     private List<LocationDto> listOfLocations;
 
     private int startDateHH;
@@ -27,6 +25,8 @@ public class CreateMemoryRequestBody {
 
     private int endDateYYYY;
 
+    private int yearRange;
+
     private List<TagDto> listOfTags;
 
     private List<ItemDto> listOfItems;
@@ -39,14 +39,6 @@ public class CreateMemoryRequestBody {
 
     public void setHeadline(String headline) {
         this.headline = headline;
-    }
-
-    public Date getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
     }
 
     public int getStartDateHH() {
@@ -143,5 +135,13 @@ public class CreateMemoryRequestBody {
 
     public List<LocationDto> getListOfLocations() {
         return listOfLocations;
+    }
+
+    public int getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(int yearRange) {
+        this.yearRange = yearRange;
     }
 }

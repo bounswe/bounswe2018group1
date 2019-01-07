@@ -1,5 +1,6 @@
 package com.cmpe451.retro.data.entities;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +10,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -35,13 +39,17 @@ public class Memory {
     @NotNull
     private Date dateOfCreation;
 
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date startDate;
-//
-//    @NotNull
-//    @Temporal(TemporalType.DATE)
-//    private Date endDate;
+    @ElementCollection
+    Set<Long> likedUsers;
+
+    @OneToMany
+    List<Comment> comments;
+
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     private int startDateHH;
 
@@ -52,6 +60,7 @@ public class Memory {
     @NotNull
     private int startDateYYYY;
 
+    private int yearRange;
 
     private int endDateHH;
 
@@ -66,18 +75,20 @@ public class Memory {
     private Date updatedTime;
 
     @NotNull
-    @OneToMany(targetEntity=Location.class)
+    @OneToMany(targetEntity = Location.class)
     private List<Location> listOfLocations;
 
-    @OneToMany(targetEntity=Tag.class)
+    @OneToMany(targetEntity = Tag.class)
     private List<Tag> listOfTags;
 
     @NotNull
-    @OneToMany(targetEntity=Item.class)
+    @OneToMany(targetEntity = Item.class)
     private List<Item> listOfItems;
 
 
-    public Memory(){
+    public Memory() {
+        this.likedUsers = new HashSet<>();
+        this.comments = new ArrayList<>();
 
     }
 
@@ -231,5 +242,45 @@ public class Memory {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public Set<Long> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(Set<Long> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public int getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(int yearRange) {
+        this.yearRange = yearRange;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

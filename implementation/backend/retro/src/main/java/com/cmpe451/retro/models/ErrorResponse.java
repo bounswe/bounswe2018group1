@@ -1,7 +1,6 @@
 package com.cmpe451.retro.models;
 
 
-
 public class ErrorResponse {
 
     private String message;

@@ -37,8 +37,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserResponseModel getCurrentUser() {
-
-        long userID = (long)httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        long userID;
+        try{
+            userID = (long) httpServletRequest.getSession().getAttribute(Constants.USER_ID_SESSION_ATTRIBUTE);
+        }
+        catch (NullPointerException e){
+            throw new RetroException("User not found.",HttpStatus.NOT_FOUND);
+        }
         Optional<User> user = userRepository.findById(userID);
 
         if(user.isPresent())
@@ -102,22 +107,22 @@ public class UserServiceImp implements UserService {
             }
 
             //update profile picture
-            if(updateUserInfoBody.getProfilePictureUrl() != null){
+            if (updateUserInfoBody.getProfilePictureUrl() != null) {
                 user.setProfilePictureUrl(updateUserInfoBody.getProfilePictureUrl());
             }
 
             //update set of locations
-            if( updateUserInfoBody.getListOfLocations() != null && !updateUserInfoBody.getListOfLocations().isEmpty()){
+            if (updateUserInfoBody.getListOfLocations() != null && !updateUserInfoBody.getListOfLocations().isEmpty()) {
                 user.setListOfLocations(updateUserInfoBody.getListOfLocations());
             }
 
             //update gender
-            if(updateUserInfoBody.getGender() != null){
+            if (updateUserInfoBody.getGender() != null) {
                 user.setGender(updateUserInfoBody.getGender());
             }
 
             //update bio
-            if(updateUserInfoBody.getBio() != null && !updateUserInfoBody.getBio().equals("")){
+            if (updateUserInfoBody.getBio() != null && !updateUserInfoBody.getBio().equals("")) {
                 user.setBio(updateUserInfoBody.getBio());
             }
 
