@@ -1,0 +1,20 @@
+[
+  {
+    "userFirstName" : "Ali Veli",
+    "userLastName" : "Deli",
+    "dateOfCreation": "2019-01-01T00:00:00.000Z",
+    "text" : "Happy new year to everybody guys!",
+    "userProfilePicUrl" : "https://cdn0.iconfinder.com/data/icons/avatar-15/512/ninja-512.png",
+    "userId" : 0,
+    "id" : 1
+  },
+  {
+    "userFirstName" : "James",
+    "userLastName" : "Bond",
+    "dateOfCreation": "2020-01-01T00:00:00.000Z",
+    "text" : "Happy new 2020!",
+    "userProfilePicUrl" : "https://img.etimg.com/thumb/msid-67043363,width-643,imgsize-242525,resizemode-4/james-bond.jpg",
+    "userId" : 1,
+    "id" : 2
+  }
+]
